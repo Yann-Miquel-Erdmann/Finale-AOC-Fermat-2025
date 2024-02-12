@@ -1,13 +1,14 @@
 # Syntaxe
 ## Règle générale
-Il doit y avoir une majuscule en début de phrase (ligne) et un point à la fin de celle-ci 
-Les mots de liaison doivent être compté avec le mot qui suit ex: "l'entier" compte comme un mot, tout comme "le flottant"
-Les nombres doivent être écrits en toutes lettres
-Les opérateurs doivent êtres écrits en toutes lettres 
-Les noms de variables doivent être uniques et en un seul mot
-Les types doivent être uniques et en un seul mot
-Mettre un point d'interrogation à la fin d'une expression qui doit renvoyer une  
+- Il doit y avoir une majuscule en début de phrase (ligne) et un point à la fin de celle-ci  
+- Mettre un point d'interrogation à la fin d'une expression qui doit renvoyer une  
 valeur.
+- Les mots de liaison doivent être compté avec le mot qui suit ex: "l'entier" compte comme un mot, tout comme "le flottant"  
+- Les nombres doivent être écrits en toutes lettres  
+- Les opérateurs doivent êtres écrits en toutes lettres  
+- Les noms de variables doivent être uniques et en un seul mot  
+- Les types doivent être uniques et en un seul mot  
+
 
 # Structures de données
 ### Variable
