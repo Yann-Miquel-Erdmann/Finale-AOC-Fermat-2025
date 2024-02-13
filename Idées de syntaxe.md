@@ -4,19 +4,52 @@
 - Mettre un point d'interrogation à la fin d'une expression qui doit renvoyer une  
 valeur.
 - Les mots de liaison doivent être compté avec le mot qui suit ex: "l'entier" compte comme un mot, tout comme "le flottant"  
-- Les nombres doivent être écrits en toutes lettres  
+- Les nombres doivent être écrits en toutes lettres comme [ceci](https://fr.wikipedia.org/wiki/**Rectifications_orthographiques_du_fran**%C3%A7ais_en_1990#D%C3%A9tails)
 - Les opérateurs doivent êtres écrits en toutes lettres  
 - Les noms de variables doivent être uniques et en un seul mot  
 - Les types doivent être uniques et en un seul mot   
+
+## Types
+- le booléen
+- l'entier (signé)
+- le flottant (signé)
+- la chaîne de caractères (peut-être)
+
+## expressions
+les expressions sont terminées par un point d’interrogation car elles renvoient une valeur
+
+### entier
+```
+L'entier {entier en toutes lettres}?
+```
+### flottant
+```
+Le flottant {entier en toutes lettres} virgule {entier en toutes lettres}?
+```
+### booléen
+```
+Le booléen {Vrai ou Faux}?
+```
+
+### booléen
+```
+La chaîne de caractères "{chaîne de caractères}"?
+```
+
+
+
 
 ## Structures de données
 ### Variable
 #### création
 
 ```
-Soit {nom de variable} la variable initialisée à le {type} {valeur}.
+Soit {nom de variable} la variable initialisée à {expression}.
 ```
-
+Exemple:
+```
+Soit var la variable initialisée à L'entier cinq cent quatre-vingt-dix-neuf?.
+```
 #### accession
 ```
 La variable {nom de la variable}?
@@ -41,12 +74,12 @@ La liste {nom de la liste} à l'indice {indice}?
 
 #### modification
 ```
-Que la liste {nom de la variable} à l'indice {indice} prenne le {type} {valeur}.
+Que la liste {nom de la variable} à l'indice {indice} prenne {expression}.
 ```
 
 #### ajout
 ```
-Ajouter à la liste {nom de la liste} le {type} {valeur}.
+Ajouter à la liste {nom de la liste} {expression}.
 ```
 
 #### retrait
@@ -58,12 +91,6 @@ Retirer de la liste {nom de la liste}?
 ```
 La taille de la liste {nom de la liste}?
 ```
-
-## Types
-- le booléen
-- l'entier (signé)
-- le flottant (signé)
-- la chaîne de caractères (peut-être)
 
 
 ## Opérateurs
