@@ -148,7 +148,6 @@ types en sortie: booléen
 Non {expression}?
 ```
 
-
 ## Comparateurs
 ### égalité
 types en entrée: (flottants et entiers) ou booléens ou  chaînes de caractères  
@@ -194,8 +193,10 @@ types en sortie: booléen
 ### Si ... alors
 ```
 Si {condition} alors:
-{instructions}
-Fin de la condition.
+{instruction 1},
+{instruction 2}
+...
+{instruction 3}.
 ```
 
 ### Si ... alors ... sinon
@@ -203,13 +204,15 @@ Fin de la condition.
 Si {condition} alors:
 {instructions}
 Sinon faire :
-{instructions}
-Fin de la condition.
+{instruction 1},
+{instruction 2},
+...
+{instruction n}.
 ```
 
 ## Boucles
 ### utilisation globale
-Chaque phrase doit être séparée d'une virgule ou d'un point virgule (à choisir).
+Chaque phrase doit être séparée d'une virgule ou d'un point virgule (à choisir, pourrait également s'appliquer au conditions en général).
 Si une phrase termine par un point, c'est la fin de la boucle.
 
 ### Tant que
@@ -228,7 +231,6 @@ Pour {definition variable} allant jusqu'à {expression}? faire:
 {instruction 2},
 ...
 {instruction n}.
-Fin de la boucle pour.
 ```
 Note: le pour remplace le soit de la definition de la variable
 Exemple:
@@ -238,7 +240,6 @@ Pour i la variable initialisée à 0? allant jusqu'à 10? faire:
 {instruction 2},
 ...
 {instruction n}.
-Fin de la boucle pour.
 ```
 Note: équvalent à une boucle pour avec un pas de 1
 
@@ -249,7 +250,6 @@ Pour {definition variable} allant jusqu'à {expression 1}? en utilisant un pas d
 {instruction 2},
 ...
 {instruction n}.
-Fin de la boucle pour.
 ```
 Note: le pour remplace le soit de la definition de la variable
 Exemple:
@@ -259,7 +259,6 @@ Pour i la variable initialisée à 0? allant jusqu'à 10? en utilisant un pas de
 {instruction 2},
 ...
 {instruction n}.
-Fin de la boucle pour.
 ```
 
 ## affichages dans la console
@@ -288,6 +287,6 @@ Tout sur le tas
 Une pile pour les appels récursifs
 
 ## Notes
-J'ai un peu arrgrandi les syntaxes, elles me parraissent plus claires comme ça, il faudra voir comment on les mettera à la fin
+J'ai un peu agrandi les syntaxes, elles me parraissent plus claires comme ça, il faudra voir comment on les mettera à la fin
 J'ai remarqué que certaines expressions n'ont pas toujours de point d'interrogation à la fin (somme/différence.../comparaisons) est ce que c'est voulu?
 
