@@ -4,7 +4,7 @@
 - Mettre un point d'interrogation à la fin d'une expression qui doit renvoyer une  
 valeur.
 - Les mots de liaison doivent être compté avec le mot qui suit ex: "l'entier" compte comme un mot, tout comme "le flottant"  
-- Les nombres doivent être écrits en toutes lettres comme [ceci](https://fr.wikipedia.org/wiki/**Rectifications_orthographiques_du_fran**%C3%A7ais_en_1990#D%C3%A9tails)
+- Les nombres doivent être écrits en toutes lettres comme [ceci](https://fr.wikipedia.org/wiki/Rectifications_orthographiques_du_fran%C3%A7ais_en_1990#D%C3%A9tails)
 - Les opérateurs doivent êtres écrits en toutes lettres  
 - Les noms de variables doivent être uniques et en un seul mot  
 - Les types doivent être uniques et en un seul mot   
