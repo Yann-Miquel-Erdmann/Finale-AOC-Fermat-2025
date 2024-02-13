@@ -17,6 +17,7 @@ valeur.
 
 ## expressions
 les expressions sont terminées par un point d’interrogation car elles renvoient une valeur
+(ou les expressions commencées par un ?, il me parait plus facilede coder l'interpretation losqu'il est devant, nottament avec le flottant si tu consid§-ère qu'il sagit d'une unique expression)
 
 ### entier
 ```
@@ -24,7 +25,8 @@ L'entier {entier en toutes lettres}?
 ```
 ### flottant
 ```
-Le flottant {entier en toutes lettres} virgule {entier en toutes lettres}?
+Le flottant {entier en toutes lettres}? virgule {entier en toutes lettres}?
+(ici, tu considère que les decux valeurs forment une seule expression?)
 ```
 ### booléen
 ```
@@ -74,7 +76,7 @@ La liste {nom de la liste} à l'indice {indice}?
 
 #### modification
 ```
-Que la liste {nom de la variable} à l'indice {indice} prenne {expression}.
+Que la liste {nom de la variable} à l'indice {indice} devienne {expression}.
 ```
 
 #### ajout
@@ -149,41 +151,36 @@ Non {expression}?
 types en entrée: (flottants et entiers) ou booléens ou  chaînes de caractères  
 types en sortie: booléen  
 ```
-{expression 1} égal à {expression 2}?
+Est {expression 1} égal à {expression 2}?
 ```
-:warning: pour la majuscule en début d'expression
 
 ### plus grand que
 types en entrée: flottants et entiers  
 types en sortie: booléen  
 ```
-{expression 1} plus grand que {expression 2}?
+Est {expression 1} plus grand que {expression 2}?
 ```
-:warning: pour la majuscule en début d'expression
 
 ### plus petit que
 types en entrée: flottants et entiers  
 types en sortie: booléen  
 ```
-{expression 1} plus petit que {expression 2}?
+Est {expression 1} plus petit que {expression 2}?
 ```
-:warning: pour la majuscule en début d'expression
 
 ### strictement plus grand que
 types en entrée: flottants et entiers  
 types en sortie: booléen  
 ```
-{expression 1} strictement plus grand que {expression 2}?
+Est {expression 1} strictement plus grand que {expression 2}?
 ```
-:warning: pour la majuscule en début d'expression
 
 ### strictement plus petit que
 types en entrée: flottants et entiers  
 types en sortie: booléen  
 ```
-{expression 1} strictement plus petit que {expression 2}?
+Est {expression 1} strictement plus petit que {expression 2}?
 ```
-:warning: pour la majuscule en début d'expression
 
 
 
