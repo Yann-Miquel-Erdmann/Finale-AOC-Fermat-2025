@@ -282,6 +282,19 @@ Affiche le message {chaine de caractères}?.
 Affiche le booléen {booléen}?.
 ```
 
+## Fonctions
+### fonctionnement
+Utilise la même syntaxe que les boucles et les conditions i.e. virgules après chaque phrases et un point à la fin de toutes le instructions
+
+### définition
+```
+Soit {nom de la fonction} une fonction qui lorsqu'elle est appelée execute:
+{instruction 1},
+{instruction 2},
+...
+{instruction n}.
+```
+
 ## mémoire
 Tout sur le tas  
 Une pile pour les appels récursifs
