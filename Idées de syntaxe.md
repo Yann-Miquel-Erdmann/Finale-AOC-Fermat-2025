@@ -29,7 +29,6 @@ L'entier {entier en toutes lettres}?
 ```
 Le flottant {entier en toutes lettres}? virgule {entier en toutes lettres}?
 ```
-(ici, tu considère que les decux valeurs forment une seule expression?)
 ### booléen
 ```
 Le booléen {Vrai ou Faux}?
