@@ -15,6 +15,9 @@ valeur.
 - le flottant (signé)
 - la chaîne de caractères (peut-être)
 
+## instructions
+les instructions sont terminées par un point
+
 ## expressions
 les expressions sont terminées par un point d’interrogation car elles renvoient une valeur
 
@@ -45,7 +48,7 @@ La chaîne de caractères "{chaîne de caractères}"?
 ## Structures de données
 ### Variable
 #### création
-
+type: instruction
 ```
 Soit {nom de variable} la variable initialisée à {expression}.
 ```
@@ -55,11 +58,15 @@ Soit var la variable initialisée à L'entier cinq cent quatre-vingt-dix-neuf?.
 ```
 (va-t-on être embettant avec le "à" + "le" qui devient "au" par exemple pour le flottant/booléen)
 #### accession
+type: expression
+
 ```
 La valeur de la variable {nom de la variable}?.
 ```
 
 #### modification
+type: instruction
+
 ```
 Que la variable {nom de la variable} prenne la valeur {valeur}.
 ```
@@ -67,38 +74,52 @@ Que la variable {nom de la variable} prenne la valeur {valeur}.
 
 ### liste
 #### création 
+type: instruction
+
 ```
 Soit {nom de la liste} une liste vide.
 ```
 
 #### accession
+type: expression
+
 ```
 La valeur de l'élément de la liste {nom de la liste} à l'indice {indice}?.
 ```
 
 #### modification
+type: instruction
+
 ```
 Que l'élément de la liste {nom de la variable} à l'indice {indice} devienne {expression}.
 ```
 
 #### ajout
+type: instruction
+
 ```
 Ajouter à la liste {nom de la liste} {expression}.
 ```
 
 #### retrait
+type: expression
+
 ```
 Retirer de la liste {nom de la liste} l'élément à l'indice {indice}.
 ```
 (tu considère un pop?, je pense qu'il serait plus agréable de pouvoir enlever n'importe quel élément de la liste au milieu ou non)
 
 #### taille
+type: expression
+
 ```
 La taille de la liste {nom de la liste}
 ```
 
 
 ## Opérateurs
+tous les opérateurs sont de type expression
+
 ### somme
 types en entrée: flottants et entiers  
 types en sortie: flottants et entiers  
@@ -148,7 +169,10 @@ types en sortie: booléen
 Non {expression}?
 ```
 
-## Comparateurs
+## Comparateurs:
+tous les comparateurs sont de type expression
+
+
 ### égalité
 types en entrée: (flottants et entiers) ou booléens ou  chaînes de caractères  
 types en sortie: booléen  
@@ -198,6 +222,7 @@ Si {condition} alors:
 ...
 {instruction 3}.
 ```
+
 
 ### Si ... alors ... sinon
 ```
@@ -302,4 +327,5 @@ Une pile pour les appels récursifs
 ## Notes
 J'ai un peu agrandi les syntaxes, elles me parraissent plus claires comme ça, il faudra voir comment on les mettera à la fin
 J'ai remarqué que certaines expressions n'ont pas toujours de point d'interrogation à la fin (somme/différence.../comparaisons) est ce que c'est voulu?
+
 
