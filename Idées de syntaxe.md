@@ -21,20 +21,23 @@ les instructions sont terminées par un point
 ## expressions
 les expressions sont terminées par un point d’interrogation car elles renvoient une valeur
 
+(ou les expressions commencées par un point d'interrogation, il me parait plus facile de coder l'interpretation losqu'il est devant, nottament avec le flottant si tu considère qu'il sagit d'une unique expression)
+
 ### entier
 ```
 L'entier {entier en toutes lettres}?
 ```
 ### flottant
 ```
-Le flottant {entier en toutes lettres} virgule {entier en toutes lettres}?
+Le flottant {entier en toutes lettres}? virgule {entier en toutes lettres}?
 ```
+(ici, tu considère que les decux valeurs forment une seule expression?)
 ### booléen
 ```
 Le booléen {Vrai ou Faux}?
 ```
 
-### booléen
+### chaine de caractères
 ```
 La chaîne de caractères "{chaîne de caractères}"?
 ```
@@ -53,11 +56,12 @@ Exemple:
 ```
 Soit var la variable initialisée à L'entier cinq cent quatre-vingt-dix-neuf?.
 ```
+(va-t-on être embettant avec le "à" + "le" qui devient "au" par exemple pour le flottant/booléen)
 #### accession
 type: expression
 
 ```
-La variable {nom de la variable}?
+La valeur de la variable {nom de la variable}?.
 ```
 
 #### modification
@@ -80,14 +84,14 @@ Soit {nom de la liste} une liste vide.
 type: expression
 
 ```
-La liste {nom de la liste} à l'indice {indice}?
+La valeur de l'élément de la liste {nom de la liste} à l'indice {indice}?.
 ```
 
 #### modification
 type: instruction
 
 ```
-Que la liste {nom de la variable} à l'indice {indice} prenne {expression}.
+Que l'élément de la liste {nom de la variable} à l'indice {indice} devienne {expression}.
 ```
 
 #### ajout
@@ -101,14 +105,15 @@ Ajouter à la liste {nom de la liste} {expression}.
 type: expression
 
 ```
-Retirer de la liste {nom de la liste}?
+Retirer de la liste {nom de la liste} l'élément à l'indice {indice}.
 ```
+(tu considère un pop?, je pense qu'il serait plus agréable de pouvoir enlever n'importe quel élément de la liste au milieu ou non)
 
 #### taille
 type: expression
 
 ```
-La taille de la liste {nom de la liste}?
+La taille de la liste {nom de la liste}
 ```
 
 
@@ -119,34 +124,34 @@ tous les opérateurs sont de type expression
 types en entrée: flottants et entiers  
 types en sortie: flottants et entiers  
 ```
-La somme de {expression 1} et {expression 2}?
+La somme de {expression 1}? et de {expression 2}?
 ```
 
 ### différence
 types en entrée: flottants et entiers  
 types en sortie: flottants et entiers  
 ```
-La différence de {expression 1} et {expression 2}?
+La différence de {expression 1}? et de {expression 2}?
 ```
 ### produit
 types en entrée: flottants et entiers  
 types en sortie: flottants et entiers  
 ```
-Le produit de {expression 1} et {expression 2}?
+Le produit de {expression 1}? et de {expression 2}?
 ```
 
 ### quotient
 types en entrée: flottants et entiers  
 types en sortie: flottants et entiers  
 ```
-Le quotient de {expression 1} et {expression 2}?
+Le quotient de {expression 1}? par {expression 2}?
 ```
 
 ### quotient entier
 types en entrée: flottants et entiers  
 types en sortie: entiers  
 ```
-Le quotient entier de {expression 1} et {expression 2}?
+Le quotient entier de {expression 1}? par {expression 2}?
 ```
 
 ### reste
@@ -154,7 +159,7 @@ types en entrée: flottants et entiers
 types en sortie: flottants et entiers  
 
 ```
-Le reste de {expression 1} et {expression 2}?
+Le reste de {expression 1}? par {expression 2}?
 ```
 
 ### non
@@ -164,15 +169,15 @@ types en sortie: booléen
 Non {expression}?
 ```
 
-
 ## Comparateurs:
 tous les comparateurs sont de type expression
+
 
 ### égalité
 types en entrée: (flottants et entiers) ou booléens ou  chaînes de caractères  
 types en sortie: booléen  
 ```
-{expression 1} égal à {expression 2}?
+{expression 1}? est égal à {expression 2}?
 ```
 :warning: pour la majuscule en début d'expression
 
@@ -180,7 +185,7 @@ types en sortie: booléen
 types en entrée: flottants et entiers  
 types en sortie: booléen  
 ```
-{expression 1} plus grand que {expression 2}?
+{expression 1}? est plus grand que {expression 2}?
 ```
 :warning: pour la majuscule en début d'expression
 
@@ -188,7 +193,7 @@ types en sortie: booléen
 types en entrée: flottants et entiers  
 types en sortie: booléen  
 ```
-{expression 1} plus petit que {expression 2}?
+{expression 1}? est plus petit que {expression 2}?
 ```
 :warning: pour la majuscule en début d'expression
 
@@ -196,7 +201,7 @@ types en sortie: booléen
 types en entrée: flottants et entiers  
 types en sortie: booléen  
 ```
-{expression 1} strictement plus grand que {expression 2}?
+{expression 1}? est strictement plus grand que {expression 2}?
 ```
 :warning: pour la majuscule en début d'expression
 
@@ -204,8 +209,123 @@ types en sortie: booléen
 types en entrée: flottants et entiers  
 types en sortie: booléen  
 ```
-{expression 1} strictement plus petit que {expression 2}?
+{expression 1}? est strictement plus petit que {expression 2}?
 ```
 :warning: pour la majuscule en début d'expression
+
+## Conditions
+### Si ... alors
+```
+Si {condition} alors:
+{instruction 1},
+{instruction 2}
+...
+{instruction 3}.
+```
+
+
+### Si ... alors ... sinon
+```
+Si {condition} alors:
+{instructions}
+Sinon faire :
+{instruction 1},
+{instruction 2},
+...
+{instruction n}.
+```
+
+## Boucles
+### utilisation globale
+Chaque phrase doit être séparée d'une virgule ou d'un point virgule (à choisir, pourrait également s'appliquer au conditions en général).
+Si une phrase termine par un point, c'est la fin de la boucle.
+
+### Tant que
+```
+Tant que {condition} alors:
+{instruction 1},
+{instruction 2},
+...
+{instruction n}.
+```
+
+### Pour
+```
+Pour {definition variable} allant jusqu'à {expression}? faire:
+{instruction 1},
+{instruction 2},
+...
+{instruction n}.
+```
+Note: le pour remplace le soit de la definition de la variable
+Exemple:
+```
+Pour i la variable initialisée à 0? allant jusqu'à 10? faire:
+{instruction 1},
+{instruction 2},
+...
+{instruction n}.
+```
+Note: équvalent à une boucle pour avec un pas de 1
+
+### Pour avec un pas
+```
+Pour {definition variable} allant jusqu'à {expression 1}? en utilisant un pas de {expression 2}? faire:
+{instruction 1},
+{instruction 2},
+...
+{instruction n}.
+```
+Note: le pour remplace le soit de la definition de la variable
+Exemple:
+```
+Pour i la variable initialisée à 0? allant jusqu'à 10? en utilisant un pas de 2? faire:
+{instruction 1},
+{instruction 2},
+...
+{instruction n}.
+```
+
+## affichages dans la console
+### entiers
+```
+Affiche l'entier {entier}?.
+```
+
+### flottants
+```
+Affiche le flottant {flottant}?.
+```
+
+### chaine de caractères
+```
+Affiche le message {chaine de caractères}?.
+```
+
+### booléen
+```
+Affiche le booléen {booléen}?.
+```
+
+## Fonctions
+### fonctionnement
+Utilise la même syntaxe que les boucles et les conditions i.e. virgules après chaque phrases et un point à la fin de toutes le instructions
+
+### définition
+```
+Soit {nom de la fonction} une fonction qui lorsqu'elle est appelée execute:
+{instruction 1},
+{instruction 2},
+...
+{instruction n}.
+```
+
+## mémoire
+Tout sur le tas  
+Une pile pour les appels récursifs
+
+## Notes
+J'ai un peu agrandi les syntaxes, elles me parraissent plus claires comme ça, il faudra voir comment on les mettera à la fin
+J'ai remarqué que certaines expressions n'ont pas toujours de point d'interrogation à la fin (somme/différence.../comparaisons) est ce que c'est voulu?
 
 
