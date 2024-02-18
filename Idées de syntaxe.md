@@ -19,9 +19,7 @@ valeur.
 les instructions sont terminées par un point
 
 ## expressions
-les expressions sont terminées par un point d’interrogation car elles renvoient une valeur
-
-(ou les expressions commencées par un point d'interrogation, il me parait plus facile de coder l'interpretation losqu'il est devant, nottament avec le flottant si tu considère qu'il sagit d'une unique expression)
+Les expressions commencent par une majuscule et sont terminées par un point d’interrogation car elles renvoient une valeur
 
 ### entier
 ```
@@ -107,7 +105,6 @@ type: expression
 ```
 Retirer de la liste {nom de la liste} l'élément à l'indice {indice}.
 ```
-(tu considère un pop?, je pense qu'il serait plus agréable de pouvoir enlever n'importe quel élément de la liste au milieu ou non)
 
 #### taille
 type: expression
@@ -214,6 +211,10 @@ types en sortie: booléen
 :warning: pour la majuscule en début d'expression
 
 ## Conditions
+### Utilisation générale
+Chaque phrase doit être séparée d'une virgule ou d'un point virgule.
+Si une phrase termine par un point, c'est la fin de la condition.
+
 ### Si ... alors
 ```
 Si {condition} alors:
@@ -237,7 +238,7 @@ Sinon faire :
 
 ## Boucles
 ### utilisation globale
-Chaque phrase doit être séparée d'une virgule ou d'un point virgule (à choisir, pourrait également s'appliquer au conditions en général).
+Chaque phrase doit être séparée d'une virgule ou d'un point virgule.
 Si une phrase termine par un point, c'est la fin de la boucle.
 
 ### Tant que
