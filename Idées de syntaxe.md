@@ -308,9 +308,21 @@ Affiche le booléen {booléen}?.
 ```
 
 ## Fonctions
-### fonctionnement
+### fonctionnement global
 Utilise la même syntaxe que les boucles et les conditions i.e. virgules après chaque phrases et un point à la fin de toutes le instructions
-
+Pour renvoyer une valeur, on écrit à la fin
+```
+renvoie {expression}?
+```
+Pour récupérer cette expression renvoyée, on écrit:
+```
+La valeur renvoyée par la fonction {nom}( avec les arguments {arg1}, ..., {argn}).
+```
+On pourrait alors avoir:
+```
+Soit x L'entier La valeur renvoyée par la fonction f.
+```
+:warning: Il va falloir que l'on trouve où mettre le type de ce que la fonction renvoie.
 ### définition
 ```
 Soit {nom de la fonction} une fonction qui lorsqu'elle est appelée execute:
@@ -319,7 +331,24 @@ Soit {nom de la fonction} une fonction qui lorsqu'elle est appelée execute:
 ...
 {instruction n}.
 ```
+## Fonction avec des arguments
+### fonctionnement
+Même écriture que la fonction avec quelques ajouts
 
+### définition
+```
+Soit {nom de la fonction} une fonction qui lorsqu'elle est appelée avec {nom variable} {type variable}, ... {nom variable} {type variable} execute:
+{instruction 1},
+{instruction 2},
+...
+{instruction n}.
+```
+
+### exemple
+```
+Soit f une fonction qui lorsqu'elle est appelée avec x Un entier, y Un entier execute:
+
+```
 ## mémoire
 Tout sur le tas  
 Une pile pour les appels récursifs
