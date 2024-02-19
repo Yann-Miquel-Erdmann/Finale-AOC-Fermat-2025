@@ -323,9 +323,3 @@ Soit {nom de la fonction} une fonction qui lorsqu'elle est appelée execute:
 ## mémoire
 Tout sur le tas  
 Une pile pour les appels récursifs
-
-## Notes
-J'ai un peu agrandi les syntaxes, elles me parraissent plus claires comme ça, il faudra voir comment on les mettera à la fin
-J'ai remarqué que certaines expressions n'ont pas toujours de point d'interrogation à la fin (somme/différence.../comparaisons) est ce que c'est voulu?
-
-
