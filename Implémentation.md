@@ -11,8 +11,8 @@ il serait intéressant de ne stocker qu'un seul pointeur
 
 
 ## variables locales
-dans une pile pour éviter de faire un dictionnaire
-pointeur vers une valeur
+* dans une pile pour éviter de faire un dictionnaire (honnètement je trouve qu'un dictionnaire serait plus adapté, ça demande un peu de trvail ma ça sera plus pritique lorsque l'on veut accéder à un élément ne pas avoir une complexité en O(n))
+* pointeur vers une valeur
 
 ## listes
 soit:
