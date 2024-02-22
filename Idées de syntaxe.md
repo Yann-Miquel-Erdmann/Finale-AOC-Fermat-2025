@@ -119,19 +119,22 @@ tous les opérateurs sont de type expression
 ### somme
 types en entrée: flottants et entiers  
 types en sortie: flottants et entiers  
+
 ```
 La somme de {expression 1}? et de {expression 2}?
 ```
 
 ### différence
 types en entrée: flottants et entiers  
-types en sortie: flottants et entiers  
+types en sortie: flottants et entiers
+
 ```
 La différence de {expression 1}? et de {expression 2}?
 ```
 ### produit
 types en entrée: flottants et entiers  
 types en sortie: flottants et entiers  
+
 ```
 Le produit de {expression 1}? et de {expression 2}?
 ```
@@ -139,6 +142,7 @@ Le produit de {expression 1}? et de {expression 2}?
 ### quotient
 types en entrée: flottants et entiers  
 types en sortie: flottants et entiers  
+
 ```
 Le quotient de {expression 1}? par {expression 2}?
 ```
@@ -146,6 +150,7 @@ Le quotient de {expression 1}? par {expression 2}?
 ### quotient entier
 types en entrée: flottants et entiers  
 types en sortie: entiers  
+
 ```
 Le quotient entier de {expression 1}? par {expression 2}?
 ```
@@ -158,56 +163,56 @@ types en sortie: flottants et entiers
 Le reste de {expression 1}? par {expression 2}?
 ```
 
-### non
+### la négation booléenne
 types en entrée: booléen  
 types en sortie: booléen  
+
 ```
-Non {expression}?
+La négation de {expression}?
 ```
 
 ## Comparateurs:
 tous les comparateurs sont de type expression
 
-
 ### égalité
 types en entrée: (flottants et entiers) ou booléens ou  chaînes de caractères  
 types en sortie: booléen  
+
 ```
-{expression 1}? est égal à {expression 2}?
+On a {expression 1}? qui est égal à {expression 2}?
 ```
-:warning: pour la majuscule en début d'expression
 
 ### plus grand que
 types en entrée: flottants et entiers  
 types en sortie: booléen  
+
 ```
-{expression 1}? est plus grand que {expression 2}?
+On a {expression 1}? qui est plus grand que {expression 2}?
 ```
-:warning: pour la majuscule en début d'expression
 
 ### plus petit que
 types en entrée: flottants et entiers  
 types en sortie: booléen  
+
 ```
-{expression 1}? est plus petit que {expression 2}?
+On a {expression 1}? qui est plus petit que {expression 2}?
 ```
-:warning: pour la majuscule en début d'expression
 
 ### strictement plus grand que
 types en entrée: flottants et entiers  
 types en sortie: booléen  
+
 ```
-{expression 1}? est strictement plus grand que {expression 2}?
+On a {expression 1}? qui est strictement plus grand que {expression 2}?
 ```
-:warning: pour la majuscule en début d'expression
 
 ### strictement plus petit que
 types en entrée: flottants et entiers  
 types en sortie: booléen  
+
 ```
-{expression 1}? est strictement plus petit que {expression 2}?
+On a {expression 1}? qui est strictement plus petit que {expression 2}?
 ```
-:warning: pour la majuscule en début d'expression
 
 ## Conditions
 ### Utilisation générale
@@ -227,7 +232,10 @@ Si {condition} alors:
 ### Si ... alors ... sinon
 ```
 Si {condition} alors:
-{instructions}
+{instruction 1},
+{instruction 2},
+...
+{instruction n}.
 Sinon faire :
 {instruction 1},
 {instruction 2},
@@ -257,10 +265,10 @@ Pour {definition variable} allant jusqu'à {expression}? faire:
 ...
 {instruction n}.
 ```
-Note: le pour remplace le soit de la definition de la variable
+Note: le "Pour" remplace le "Soit" de la definition de la variable
 Exemple:
 ```
-Pour i la variable initialisée à 0? allant jusqu'à 10? faire:
+Pour i la variable initialisée à L'entier 0? allant jusqu'à L'entier 10? faire:
 {instruction 1},
 {instruction 2},
 ...
@@ -270,7 +278,7 @@ Note: équvalent à une boucle pour avec un pas de 1
 
 ### Pour avec un pas
 ```
-Pour {definition variable} allant jusqu'à {expression 1}? en utilisant un pas de {expression 2}? faire:
+Pour {definition variable} allant jusqu'à {expression 1}? en utilisant un pas égal à {expression 2}? faire:
 {instruction 1},
 {instruction 2},
 ...
@@ -279,14 +287,14 @@ Pour {definition variable} allant jusqu'à {expression 1}? en utilisant un pas d
 Note: le pour remplace le soit de la definition de la variable
 Exemple:
 ```
-Pour i la variable initialisée à 0? allant jusqu'à 10? en utilisant un pas de 2? faire:
+Pour i la variable initialisée à L'entier 0? allant jusqu'à L'entier 10? en utilisant un pas égal à L'entier 2? faire:
 {instruction 1},
 {instruction 2},
 ...
 {instruction n}.
 ```
 
-## affichages dans la console
+## affichages dans la console (à revoir avec les types)
 ### entiers
 ```
 Affiche l'entier {entier}?.
@@ -347,7 +355,7 @@ Soit {nom de la fonction} une fonction qui lorsqu'elle est appelée avec {nom va
 ### exemple
 ```
 Soit f une fonction qui lorsqu'elle est appelée avec x Un entier, y Un entier execute:
-
+Renvoie La somme de La variable x? et de La variable y?.
 ```
 ## mémoire
 Tout sur le tas  
