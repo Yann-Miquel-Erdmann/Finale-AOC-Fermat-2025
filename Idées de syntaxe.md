@@ -1,8 +1,7 @@
 # Syntaxe
 ## Règle générale
 - Il doit y avoir une majuscule en début de phrase (ligne) et un point à la fin de celle-ci  
-- Mettre un point d'interrogation à la fin d'une expression qui doit renvoyer une  
-valeur.
+- Mettre un point d'interrogation à la fin d'une expression qui doit renvoyer une valeur.
 - Les mots de liaison doivent être compté avec le mot qui suit ex: "l'entier" compte comme un mot, tout comme "le flottant"  
 - Les nombres doivent être écrits en toutes lettres comme [ceci](https://fr.wikipedia.org/wiki/Rectifications_orthographiques_du_fran%C3%A7ais_en_1990#D%C3%A9tails)
 - Les opérateurs doivent êtres écrits en toutes lettres  
@@ -39,9 +38,6 @@ Le booléen {Vrai ou Faux}?
 La chaîne de caractères "{chaîne de caractères}"?
 ```
 
-
-
-
 ## Structures de données
 ### Variable
 #### création
@@ -54,6 +50,26 @@ Exemple:
 Soit var la variable initialisée à L'entier cinq cent quatre-vingt-dix-neuf?.
 ```
 (va-t-on être embettant avec le "à" + "le" qui devient "au" par exemple pour le flottant/booléen)
+#### crétion sans initialisation
+Il peut être utile dans certains cas créer une variable et de lui assicier un type sans lui donner de valeur.
+Par exemple, pour récupérer le résultat d'une fonction on pourrait directement initialiser la variable au résultat de la fonction mais ce n'est pas très agréable.
+On pourrait donc le definir de la manière suivante:
+* entier:
+  ```
+  Soit {nom de la variable} un entier
+  ```
+* flottant:
+  ```
+  Soit {nom de la variable} un entier
+  ```
+* booléen
+  ```
+  Soit {nom de la variable} un booléen
+  ```
+* chaine de carractère
+  ```
+  Soit {nom de la variable} une chaine de carractère
+  ```
 #### accession
 type: expression
 
@@ -245,7 +261,7 @@ Sinon faire :
 
 ## Boucles
 ### utilisation globale
-Chaque phrase doit être séparée d'une virgule ou d'un point virgule.
+Chaque phrase doit être séparée d'une virgule.
 Si une phrase termine par un point, c'est la fin de la boucle.
 
 ### Tant que
@@ -259,7 +275,7 @@ Tant que {condition} alors:
 
 ### Pour
 ```
-Pour {definition variable} allant jusqu'à {expression}? faire:
+Pour {definition variable} allant jusqu'à {expression} faire:
 {instruction 1},
 {instruction 2},
 ...
@@ -278,7 +294,7 @@ Note: équvalent à une boucle pour avec un pas de 1
 
 ### Pour avec un pas
 ```
-Pour {definition variable} allant jusqu'à {expression 1}? en utilisant un pas égal à {expression 2}? faire:
+Pour {definition variable} allant jusqu'à {expression 1} en utilisant un pas égal à {expression 2} faire:
 {instruction 1},
 {instruction 2},
 ...
@@ -297,12 +313,12 @@ Pour i la variable initialisée à L'entier 0? allant jusqu'à L'entier 10? en u
 ## affichages dans la console (à revoir avec les types)
 ### entiers
 ```
-Affiche l'entier {entier}?.
+Affiche {entier}? comme un entier.
 ```
 
 ### flottants
 ```
-Affiche le flottant {flottant}?.
+Affiche {flottant}? comme un flottant.
 ```
 
 ### chaine de caractères
@@ -312,7 +328,7 @@ Affiche le message {chaine de caractères}?.
 
 ### booléen
 ```
-Affiche le booléen {booléen}?.
+Affiche {booléen}? comme un booléen.
 ```
 
 ## Fonctions
@@ -324,7 +340,7 @@ renvoie {expression}?
 ```
 Pour récupérer cette expression renvoyée, on écrit:
 ```
-La valeur renvoyée par la fonction {nom}( avec les arguments {arg1}, ..., {argn}).
+La valeur renvoyée par la fonction {nom}( prenant les arguments {arg1}?, ...?, {argn}?)?.
 ```
 On pourrait alors avoir:
 ```
@@ -342,6 +358,7 @@ Soit {nom de la fonction} une fonction qui lorsqu'elle est appelée execute:
 ## Fonction avec des arguments
 ### fonctionnement
 Même écriture que la fonction avec quelques ajouts
+Il faut mettre devant les variables locales définies soit en argument soit dans la fonction le mot "locale" comme dans l'exemple.
 
 ### définition
 ```
@@ -355,7 +372,7 @@ Soit {nom de la fonction} une fonction qui lorsqu'elle est appelée avec {nom va
 ### exemple
 ```
 Soit f une fonction qui lorsqu'elle est appelée avec x Un entier, y Un entier execute:
-Renvoie La somme de La variable x? et de La variable y?.
+Renvoie La somme de La variable locale x? et de La variable locale y??.
 ```
 ## mémoire
 Tout sur le tas  
