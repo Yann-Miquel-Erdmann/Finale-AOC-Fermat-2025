@@ -60,7 +60,7 @@ On pourrait donc le definir de la manière suivante:
   ```
 * flottant:
   ```
-  Soit {nom de la variable} un entier
+  Soit {nom de la variable} un flottant
   ```
 * booléen
   ```
@@ -81,7 +81,7 @@ La valeur de la variable {nom de la variable}?.
 type: instruction
 
 ```
-Que la variable {nom de la variable} prenne la valeur {valeur}.
+Que la variable {nom de la variable} devienne {valeur}.
 ```
 
 
@@ -334,20 +334,9 @@ Affiche {booléen}? comme un booléen.
 ## Fonctions
 ### fonctionnement global
 Utilise la même syntaxe que les boucles et les conditions i.e. virgules après chaque phrases et un point à la fin de toutes le instructions
-Pour renvoyer une valeur, on écrit à la fin
-```
-renvoie {expression}?
-```
-Pour récupérer cette expression renvoyée, on écrit:
-```
-La valeur renvoyée par la fonction {nom}( prenant les arguments {arg1}?, ...?, {argn}?)?.
-```
-On pourrait alors avoir:
-```
-Soit x L'entier La valeur renvoyée par la fonction f.
-```
-:warning: Il va falloir que l'on trouve où mettre le type de ce que la fonction renvoie.
+
 ### définition
+:warning: Il va falloir que l'on trouve où mettre le type de ce que la fonction renvoie.
 ```
 Soit {nom de la fonction} une fonction qui lorsqu'elle est appelée execute:
 {instruction 1},
@@ -355,6 +344,26 @@ Soit {nom de la fonction} une fonction qui lorsqu'elle est appelée execute:
 ...
 {instruction n}.
 ```
+
+Pour appeler une fonction qui ne renvoie rien, on écrit:
+```
+execute la fonction {nom}( prenant les arguments{arg1}, ..., {argn}).
+```
+
+Pour renvoyer une valeur, on écrit à la fin
+```
+renvoie {expression}?
+```
+Pour récupérer cette expression renvoyée, on écrit:
+```
+La valeur renvoyée par la fonction {nom}( prenant les arguments {arg1}, ..., {argn}).
+```
+On pourrait alors avoir:
+```
+Soit x un entier
+Que la variable x devienne La valeur renvoyée par la fonction f?.
+```
+
 ## Fonction avec des arguments
 ### fonctionnement
 Même écriture que la fonction avec quelques ajouts
