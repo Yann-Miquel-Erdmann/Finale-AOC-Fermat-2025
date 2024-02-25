@@ -114,11 +114,18 @@ type: instruction
 Ajouter à la liste {nom de la liste} {expression}.
 ```
 
-#### retrait
-type: expression
+#### suppression
+type: instruction
 
 ```
-Retirer de la liste {nom de la liste} l'élément à l'indice {indice}.
+Retirer de la liste {nom de la liste} l'élément d'indice {indice}.
+```
+idée: comme il serait difficile syntaxiquement d'écrire clairement le pop, on pourrait à chasue fois stocker la dernière valeur supprimée dans une variable récupérable avec l'instruction suivante
+
+#### retrait
+type: expression
+```
+Le dernier élément supprimé d'une liste
 ```
 
 #### taille
@@ -127,7 +134,6 @@ type: expression
 ```
 La taille de la liste {nom de la liste}
 ```
-
 
 ## Opérateurs
 tous les opérateurs sont de type expression
@@ -232,8 +238,8 @@ On a {expression 1}? qui est strictement plus petit que {expression 2}?
 
 ## Conditions
 ### Utilisation générale
-Chaque phrase doit être séparée d'une virgule ou d'un point virgule.
-Si une phrase termine par un point, c'est la fin de la condition.
+Chaque phrase doit être séparée d'une virgule.
+Si une phrase se termine par un point, c'est la fin de la condition.
 
 ### Si ... alors
 ```
@@ -241,7 +247,7 @@ Si {condition} alors:
 {instruction 1},
 {instruction 2}
 ...
-{instruction 3}.
+{instruction n}.
 ```
 
 
@@ -262,7 +268,7 @@ Sinon faire :
 ## Boucles
 ### utilisation globale
 Chaque phrase doit être séparée d'une virgule.
-Si une phrase termine par un point, c'est la fin de la boucle.
+Si une phrase se termine par un point, c'est la fin de la boucle.
 
 ### Tant que
 ```
@@ -300,25 +306,22 @@ Pour {definition variable} allant jusqu'à {expression 1} en utilisant un pas é
 ...
 {instruction n}.
 ```
-Note: le pour remplace le soit de la definition de la variable
 Exemple:
 ```
+Soit liste une liste vide.
 Pour i la variable initialisée à L'entier 0? allant jusqu'à L'entier 10? en utilisant un pas égal à L'entier 2? faire:
-{instruction 1},
-{instruction 2},
-...
-{instruction n}.
+Ajouter à la liste liste La valeur de la variable i?.
 ```
 
-## affichages dans la console (à revoir avec les types)
+## affichages dans la console
 ### entiers
 ```
-Affiche {entier}? comme un entier.
+Affiche {expression numérique} comme un entier.
 ```
 
 ### flottants
 ```
-Affiche {flottant}? comme un flottant.
+Affiche {expression numérique} comme un flottant.
 ```
 
 ### chaine de caractères
@@ -346,15 +349,18 @@ Soit {nom de la fonction} une fonction qui lorsqu'elle est appelée execute:
 ```
 
 Pour appeler une fonction qui ne renvoie rien, on écrit:
+type: instruction
 ```
 execute la fonction {nom}( prenant les arguments{arg1}, ..., {argn}).
 ```
 
 Pour renvoyer une valeur, on écrit à la fin
+type: instruction
 ```
 renvoie {expression}?
 ```
 Pour récupérer cette expression renvoyée, on écrit:
+type: expression
 ```
 La valeur renvoyée par la fonction {nom}( prenant les arguments {arg1}, ..., {argn}).
 ```
