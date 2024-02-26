@@ -3,9 +3,10 @@
 #include "eval_numbers.h"
 
 int main(void){
-    char* instruction = "On a E{expression 1}? qui est plus grand que E{expression 2}?";
+    char* instruction = "Soit x la variable initialisée à La somme de La somme de L'entier 0? et de L'entier 1?? et de La somme de L'entier 2? et de L'entier 3???.";
+    //instruction = "L'entier 3.";
     expr_t* expr = new_expr();
-    expr->len = (int)strlen(instruction);
+    expr->len = (int)strlen(instruction)+1;
     expr->text = realloc(expr->text, expr->len);
     strcpy(expr->text, instruction);
     split_expr(expr);
@@ -13,6 +14,7 @@ int main(void){
     free_expr(expr);
     
     char* s = "trois-cent-vingt-sept millions deux-cent-quatre-vingt-douze mille six-cent-trente-huit";
+    s = "zero million";
     int* result = eval_number(s, (int)strlen(s));
     
     if (result[0] == 1){
@@ -20,6 +22,6 @@ int main(void){
     }else{
         printf("%s is not a valid number\n", s);
     }
-    
+    free(result);
     return 0;
 }

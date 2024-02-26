@@ -135,5 +135,6 @@ int* eval_number(char* str_num, int len){
     int* l = malloc(2*sizeof(int));
     l[0] = 1;
     l[1] = n;
+    free(str);
     return l;
 }

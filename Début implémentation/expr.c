@@ -14,7 +14,11 @@ expr_t* new_expr(void){
 
 void free_expr(expr_t* expr){
     free(expr->text);
+    for (int i = 0; i<expr->list_len; i++){
+        free_expr(expr->expr_list[i]);
+    }
     free(expr->expr_list);
+    free(expr);
 }
 
 void print_expr_with_tab(expr_t* expr, int tab_num){
