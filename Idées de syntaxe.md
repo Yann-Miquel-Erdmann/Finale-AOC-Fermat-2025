@@ -290,7 +290,7 @@ Pour {definition variable} allant jusqu'à {expression} faire:
 Note: le "Pour" remplace le "Soit" de la definition de la variable
 Exemple:
 ```
-Pour i la variable initialisée à L'entier 0? allant jusqu'à L'entier 10? faire:
+Pour i la variable initialisée à L'entier zero? allant jusqu'à L'entier dix? faire:
 {instruction 1},
 {instruction 2},
 ...
@@ -309,7 +309,7 @@ Pour {definition variable} allant jusqu'à {expression 1} en utilisant un pas é
 Exemple:
 ```
 Soit liste une liste vide.
-Pour i la variable initialisée à L'entier 0? allant jusqu'à L'entier 10? en utilisant un pas égal à L'entier 2? faire:
+Pour i la variable initialisée à L'entier zero? allant jusqu'à L'entier dix? en utilisant un pas égal à L'entier deux? faire:
 Ajouter à la liste liste La valeur de la variable i?.
 ```
 
