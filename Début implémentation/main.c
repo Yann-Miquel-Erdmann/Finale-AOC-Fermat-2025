@@ -14,13 +14,13 @@ int main(void){
     free_expr(expr);
     
     char* s = "moins trois-cent-vingt-sept millions deux-cent-quatre-vingt-douze mille six-cent-trente-huit";
-    //s = "zero million";
+    s = "quatre-vingts";
     int* result = eval_number(s, (int)strlen(s));
     
     if (result[0] == 1){
         printf("%d\n", result[1]);
     }else{
-        printf("%s is not a valid number\n", s);
+        printf("\"%s\" is not a valid number\n", s);
     }
     free(result);
     return 0;
