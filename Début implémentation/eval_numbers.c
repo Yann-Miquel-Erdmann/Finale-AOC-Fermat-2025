@@ -1,7 +1,5 @@
 #include "eval_numbers.h"
 
-// first version without checking the order nor the nonsense like "deux mille mille" qui donnerais 3000 ou "un mille"
-
 int match_num(char* num, bool with_s){
     if (!strcmp(num, "un")){
         return 1;
@@ -66,11 +64,7 @@ int* eval_number(char* str_num, int len){
     int ten_power = 99; // dernière puissance de dix placée pour savoir si les nombres donnés sont bien dans un bon ordre
     for (int i = 0; i<=len; i++){
         if (str_num[i] == ' ' || i == len){ // espace ou fin du nombre
-            if (!strcmp(str, "cent") && last_separator == ' ' && tmp == 0 && ten_power > 2){
-                tmp = 100;
-            }else if (!strcmp(str, "cents") && last_separator == '-' && tmp != 0){
-                tmp *= 100;
-            }else if (!strcmp(str, "mille") && last_separator == ' ' && ten_power > 3){
+            if (!strcmp(str, "mille") && last_separator == ' ' && ten_power > 3){
                 if (tmp == 0){
                     n += 1000;
                 }else{
@@ -115,7 +109,7 @@ int* eval_number(char* str_num, int len){
                         tmp = 80;
                     }else if ((result < 10 && tmp%10 == 0) || (result < 100 && tmp%100 == 0 && result != 20) || (tmp%1000 == 0 && result != 100 && result != 20)){
                         tmp += result;
-                    }else if (result > 9 && result < 20 && (tmp == 60 || tmp == 80)){
+                    }else if (result > 9 && result < 20 && (tmp%100 == 60 || tmp%100 == 80)){
                         tmp += result;
                     }else{
                         valid = false;
@@ -137,16 +131,20 @@ int* eval_number(char* str_num, int len){
             int result = match_num(str, false);
             if (result != -1){
                 
-                if (result == 100){
+                if (result == 100 && tmp < 100){
+                    if (tmp == 0){
+                        tmp = 1;
+                    }
                     tmp *= 100;
                 }else if (result == 20 && tmp%100 == 4 && last_separator == '-'){
                     tmp = tmp - tmp%100 + 80;
-                }else if ((result < 10 && tmp%10 == 0) || (result < 100 && tmp%100 == 0) || tmp%1000 == 0){
+                }else if ((result < 10 && tmp%10 == 0) || (result < 100 && tmp%100 == 0) || tmp == 0){
                     tmp += result;
-                }else if (result > 9 && result < 20 && (tmp == 60 || tmp == 80)){
+                }else if (result > 9 && result < 20 && (tmp%100 == 60 || tmp%100 == 80)){
                     tmp += result;
                 }else{
-                    tmp += result;
+                    valid = false;
+                    break;
                 }
             }else{
                 valid = false;

@@ -14,7 +14,7 @@ int main(void){
     free_expr(expr);
     
     char* s = "moins trois-cent-vingt-sept millions deux-cent-quatre-vingt-douze mille six-cent-trente-huit";
-    s = "quatre-vingts";
+    s = "neuf millions huit-cent-cinquante-quatre mille";
     int* result = eval_number(s, (int)strlen(s));
     
     if (result[0] == 1){
