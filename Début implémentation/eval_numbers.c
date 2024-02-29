@@ -60,6 +60,8 @@ int* eval_number(char* str_num, int len){
     int str_len = 2;
     char* str = malloc(str_len*sizeof(char));
     int index = 0;
+    int sign = 1;
+    bool valid = true;
     for (int i = 0; i<=len; i++){
         if (str_num[i] == ' ' || i == len){
             if (!strcmp(str, "cent") || !strcmp(str, "cents")){
@@ -81,6 +83,8 @@ int* eval_number(char* str_num, int len){
             }else if (!strcmp(str, "milliards") || !strcmp(str, "milliards")){
                 n += tmp * 1000000000;
                 tmp = 0;
+            }else if (!strcmp(str, "moins")){
+                sign = -1;
             }else{
                 int result = match_num(str);
                 if (result != -1){
@@ -98,6 +102,8 @@ int* eval_number(char* str_num, int len){
                             tmp += result;
                         }
                     }
+                }else{
+                    valid = false;
                 }
             }
             if (i == len){
@@ -116,6 +122,8 @@ int* eval_number(char* str_num, int len){
                 }else{
                     tmp += result;
                 }
+            }else{
+                valid = false;
             }
             str_len = 2;
             str = realloc(str, str_len*sizeof(char));
@@ -133,8 +141,8 @@ int* eval_number(char* str_num, int len){
         }
     }
     int* l = malloc(2*sizeof(int));
-    l[0] = 1;
-    l[1] = n;
+    l[0] = (int)valid;
+    l[1] = n*sign;
     free(str);
     return l;
 }

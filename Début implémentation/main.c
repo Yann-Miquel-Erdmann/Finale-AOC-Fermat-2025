@@ -13,8 +13,8 @@ int main(void){
     print_expr(expr);
     free_expr(expr);
     
-    char* s = "trois-cent-vingt-sept millions deux-cent-quatre-vingt-douze mille six-cent-trente-huit";
-    s = "zero million";
+    char* s = "moins trois-cent-vingt-sept millions deux-cent-quatre-vingt-douze mille six-cent-trente-huit";
+    //s = "zero million";
     int* result = eval_number(s, (int)strlen(s));
     
     if (result[0] == 1){
