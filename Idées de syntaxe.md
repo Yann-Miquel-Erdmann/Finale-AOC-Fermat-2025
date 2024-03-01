@@ -303,24 +303,12 @@ Ajouter à la liste liste La valeur de la variable i?.
 ```
 
 ## affichages dans la console
-### entiers
 ```
-Affiche {expression numérique} comme un entier.
+Affiche {expression}.
 ```
-
-### flottants
+Exception chaine de carractères:
 ```
-Affiche {expression numérique} comme un flottant.
-```
-
-### chaîne de caractères
-```
-Affiche le message {chaîne de caractères}?.
-```
-
-### booléen
-```
-Affiche {booléen}? comme un booléen.
+Affiche le message {cchaine de carractères}.
 ```
 
 ## Fonctions
