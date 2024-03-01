@@ -16,3 +16,12 @@ Si on a La valeur de la variable x? qui plus petit que L'entier trois? alors:
     .
 ```
 ce qui n'est pas agréable à voir avec la ponctuation actuelle.
+
+
+Il faudrait avoir un mot à la fin du si
+
+Si Exp? alors:
+    Inst.
+    Inst.
+    Inst.
+.

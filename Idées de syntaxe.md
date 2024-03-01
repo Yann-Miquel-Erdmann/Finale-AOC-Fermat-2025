@@ -33,7 +33,7 @@ Le flottant {entier en toutes lettres}? virgule {entier en toutes lettres}?
 Le booléen {Vrai ou Faux}?
 ```
 
-### chaine de caractères
+### chaîne de caractères
 ```
 La chaîne de caractères "{chaîne de caractères}"?
 ```
@@ -49,32 +49,19 @@ Exemple:
 ```
 Soit var la variable initialisée à L'entier cinq cent quatre-vingt-dix-neuf?.
 ```
-(va-t-on être embettant avec le "à" + "le" qui devient "au" par exemple pour le flottant/booléen)
-#### crétion sans initialisation
-Il peut être utile dans certains cas créer une variable et de lui assicier un type sans lui donner de valeur.
-Par exemple, pour récupérer le résultat d'une fonction on pourrait directement initialiser la variable au résultat de la fonction mais ce n'est pas très agréable.
-On pourrait donc le definir de la manière suivante:
-* entier:
-  ```
-  Soit {nom de la variable} un entier
-  ```
-* flottant:
-  ```
-  Soit {nom de la variable} un flottant
-  ```
-* booléen
-  ```
-  Soit {nom de la variable} un booléen
-  ```
-* chaine de carractère
-  ```
-  Soit {nom de la variable} une chaine de carractère
-  ```
+
+#### création sans initialisation
+type: 
+  
+```
+Soit {nom de la variable} une variable.
+```
+
 #### accession
 type: expression
 
 ```
-La valeur de la variable {nom de la variable}?.
+La variable {nom de la variable}?.
 ```
 
 #### modification
@@ -104,7 +91,7 @@ La valeur de l'élément de la liste {nom de la liste} à l'indice {indice}?.
 type: instruction
 
 ```
-Que l'élément de la liste {nom de la variable} à l'indice {indice} devienne {expression}.
+Remplacer l'élément de la liste {nom de la liste} à l'indice {indice} par     {expression}.
 ```
 
 #### ajout
@@ -118,14 +105,7 @@ Ajouter à la liste {nom de la liste} {expression}.
 type: instruction
 
 ```
-Retirer de la liste {nom de la liste} l'élément d'indice {indice}.
-```
-idée: comme il serait difficile syntaxiquement d'écrire clairement le pop, on pourrait à chasue fois stocker la dernière valeur supprimée dans une variable récupérable avec l'instruction suivante
-
-#### retrait
-type: expression
-```
-Le dernier élément supprimé d'une liste
+Retirer de la liste {nom de la liste} l'élément d'indice {indice}?
 ```
 
 #### taille
@@ -217,7 +197,7 @@ types en entrée: flottants et entiers
 types en sortie: booléen  
 
 ```
-On a {expression 1}? qui est plus petit que {expression 2}?
+La valeur de {expression 1}? est plus petite que la valeur de {expression 2}??
 ```
 
 ### strictement plus grand que
@@ -244,25 +224,29 @@ Si une phrase se termine par un point, c'est la fin de la condition.
 ### Si ... alors
 ```
 Si {condition} alors:
-{instruction 1},
-{instruction 2}
+{instruction 1}.
+{instruction 2}.
 ...
 {instruction n}.
+.
 ```
 
 
 ### Si ... alors ... sinon
 ```
-Si {condition} alors:
-{instruction 1},
-{instruction 2},
+Si {condition} alors faire:
+{instruction 1}.
+{instruction 2}.
 ...
 {instruction n}.
-Sinon faire :
-{instruction 1},
-{instruction 2},
+.
+Sinon faire:
+{instruction 1}.
+{instruction 2}.
 ...
 {instruction n}.
+.
+.
 ```
 
 ## Boucles
@@ -272,39 +256,44 @@ Si une phrase se termine par un point, c'est la fin de la boucle.
 
 ### Tant que
 ```
-Tant que {condition} alors:
-{instruction 1},
-{instruction 2},
+Tant que {condition} alors faire:
+{instruction 1}.
+{instruction 2}.
 ...
 {instruction n}.
+.
+.
 ```
 
 ### Pour
 ```
 Pour {definition variable} allant jusqu'à {expression} faire:
-{instruction 1},
-{instruction 2},
+{instruction 1}.
+{instruction 2}.
 ...
 {instruction n}.
+.
 ```
 Note: le "Pour" remplace le "Soit" de la definition de la variable
 Exemple:
 ```
 Pour i la variable initialisée à L'entier zero? allant jusqu'à L'entier dix? faire:
-{instruction 1},
-{instruction 2},
+{instruction 1}.
+{instruction 2}.
 ...
 {instruction n}.
+.
 ```
 Note: équvalent à une boucle pour avec un pas de 1
 
 ### Pour avec un pas
 ```
 Pour {definition variable} allant jusqu'à {expression 1} en utilisant un pas égal à {expression 2} faire:
-{instruction 1},
-{instruction 2},
+{instruction 1}.
+{instruction 2}.
 ...
 {instruction n}.
+.
 ```
 Exemple:
 ```
@@ -324,9 +313,9 @@ Affiche {expression numérique} comme un entier.
 Affiche {expression numérique} comme un flottant.
 ```
 
-### chaine de caractères
+### chaîne de caractères
 ```
-Affiche le message {chaine de caractères}?.
+Affiche le message {chaîne de caractères}?.
 ```
 
 ### booléen
@@ -342,16 +331,17 @@ Utilise la même syntaxe que les boucles et les conditions i.e. virgules après 
 :warning: Il va falloir que l'on trouve où mettre le type de ce que la fonction renvoie.
 ```
 Soit {nom de la fonction} une fonction qui lorsqu'elle est appelée execute:
-{instruction 1},
-{instruction 2},
+{instruction 1}.
+{instruction 2}.
 ...
 {instruction n}.
+.
 ```
 
 Pour appeler une fonction qui ne renvoie rien, on écrit:
 type: instruction
 ```
-execute la fonction {nom}( prenant les arguments{arg1}, ..., {argn}).
+execute la fonction {nom}( prenant les arguments{arg1}. ..., {argn}).
 ```
 
 Pour renvoyer une valeur, on écrit à la fin
@@ -362,7 +352,7 @@ renvoie {expression}?
 Pour récupérer cette expression renvoyée, on écrit:
 type: expression
 ```
-La valeur renvoyée par la fonction {nom}( prenant les arguments {arg1}, ..., {argn}).
+La valeur renvoyée par la fonction {nom}( prenant les arguments {arg1}. ..., {argn}).
 ```
 On pourrait alors avoir:
 ```
@@ -377,11 +367,12 @@ Il faut mettre devant les variables locales définies soit en argument soit dans
 
 ### définition
 ```
-Soit {nom de la fonction} une fonction qui lorsqu'elle est appelée avec {nom variable} {type variable}, ... {nom variable} {type variable} execute:
-{instruction 1},
-{instruction 2},
+Soit {nom de la fonction} une fonction qui lorsqu'elle est appelée avec {nom variable} {type variable}. ... {nom variable} {type variable} execute:
+{instruction 1}.
+{instruction 2}.
 ...
 {instruction n}.
+.
 ```
 
 ### exemple
