@@ -19,7 +19,7 @@ int match_num(char* num, bool with_s){
         return 8;
     }else if (!strcmp(num, "neuf")){
         return 9;
-    }else if (!strcmp(num, "zero")){
+    }else if (!strcmp(num, "zéro")){
         return 0;
     }else if (!strcmp(num, "dix")){
         return 10;
@@ -64,7 +64,13 @@ int* eval_number(char* str_num, int len){
     int ten_power = 99; // dernière puissance de dix placée pour savoir si les nombres donnés sont bien dans un bon ordre
     for (int i = 0; i<=len; i++){
         if (str_num[i] == ' ' || i == len){ // espace ou fin du nombre
-            if (!strcmp(str, "mille") && last_separator == ' ' && ten_power > 3){
+            if (!strcmp(str, "zéro")){
+                if (i!= len || tmp != 0){
+                    valid = false;
+                    break;
+                }
+            }
+            if (!strcmp(str, "mille") && last_separator == '-' && ten_power > 3 && i == len){
                 if (tmp == 0){
                     n += 1000;
                 }else{
@@ -90,23 +96,29 @@ int* eval_number(char* str_num, int len){
                 ten_power = 9;
             }else if (!strcmp(str, "moins") && n == 0 && tmp == 0){
                 sign = -1;
-            }else if (!strcmp(str, "vingt") && last_separator == ' ' && tmp == 0){
-                tmp = 20;
-            }else if (!strcmp(str, "et") && last_separator == ' ' && tmp%10 == 0 && tmp/10%10 > 1 && tmp/10%10 < 7){
-                last_separator = '*';
+            }else if (!strcmp(str, "vingt") && ((last_separator == ' ' && tmp == 0) || (last_separator == '-' && tmp%100 == 0))){
+                tmp += 20;
+            }else if (!strcmp(str, "cent") && last_separator == ' ' && tmp == 0){
+                tmp = 100;
+            }else if (!strcmp(str, "cents") && last_separator == '-' && tmp > 1 && tmp < 10){
+                tmp *= 100;
             }else if (!strcmp(str, "un") && last_separator == '*' && tmp%10 == 0 && tmp/10%10 > 1 && tmp/10%10 < 7){
                 tmp ++;
+                last_separator = ' ';
+            }else if (!strcmp(str, "onze") && last_separator == '*' && tmp%100 == 60){
+                tmp += 11;
                 last_separator = ' ';
             }else{
                 int result = match_num(str, true);
                 if (result == -1 || last_separator == '*'){
                     valid = false;
+                    printf("%d, %s, %d\n", tmp, str, ten_power);
                     break;
                 }else{
                     if (result == 1 && tmp == 0){
                         tmp ++;
-                    }else if (result == 20 && tmp == 4 && last_separator == '-'){
-                        tmp = 80;
+                    }else if (result == 20 && tmp%100 == 4 && last_separator == '-'){
+                        tmp = tmp - tmp%100 + 80;
                     }else if ((result < 10 && tmp%10 == 0) || (result < 100 && tmp%100 == 0 && result != 20) || (tmp%1000 == 0 && result != 100 && result != 20)){
                         tmp += result;
                     }else if (result > 9 && result < 20 && (tmp%100 == 60 || tmp%100 == 80)){
@@ -130,8 +142,12 @@ int* eval_number(char* str_num, int len){
         }else if (str_num[i] == '-'){
             int result = match_num(str, false);
             if (result != -1){
-                
-                if (result == 100 && tmp < 100){
+                if (result == 0){
+                    if (i!= len || tmp != 0){
+                        valid = false;
+                        break;
+                    }
+                }else if (result == 100 && tmp < 100){
                     if (tmp == 0){
                         tmp = 1;
                     }
@@ -147,13 +163,27 @@ int* eval_number(char* str_num, int len){
                     break;
                 }
             }else{
-                valid = false;
-                break;
+                if (!strcmp(str, "et") && last_separator == '-' && tmp%10 == 0 && tmp/10%10 > 1 && tmp/10%10 < 7){
+                    last_separator = '*';
+                }else if (!strcmp(str, "mille") && ten_power > 3){
+                    if (tmp == 0){
+                        tmp = 1;
+                    }
+                    n += 1000*tmp;
+                    tmp = 0;
+                }else{
+                    valid = false;
+                    printf("0, %s\n", str);
+
+                    break;
+                }
             }
             str_len = 2;
             str = realloc(str, str_len*sizeof(char));
             index = 0;
-            last_separator = '-';
+            if (last_separator != '*'){
+                last_separator = '-';
+            }
         }else{
             if (i<len){
                 if (index+1 == str_len){
