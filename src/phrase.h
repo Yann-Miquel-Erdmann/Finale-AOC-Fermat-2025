@@ -10,9 +10,11 @@
 // structure de l'instruction
 typedef struct phrase {
     char* text; // le texte de l'instruction ou de l'expression
+    int textSize;
     int textLen;
 
     struct phrase ** args;  // arguments de l'instruction: les expressions données en "paramètres"
+    int argsSize;
     int argsLen;
     
     struct phrase * parentPhrase;
@@ -32,9 +34,16 @@ typedef struct phrase {
 
 } phrase_t;
 
-phrase_t* new_phrase();
+phrase_t* new_phrase(phrase_t* parent);
 void free_phrase(phrase_t* phrase);
+
 void doubleInnerSize(phrase_t* phrase);
+void doubleTextSize(phrase_t* phrase);
+void doubleArgsSize(phrase_t* phrase);
+
+void addToArg(phrase_t* phrase, phrase_t* elem);
+void addToInner(phrase_t* phrase, phrase_t* elem);
+void addToText(phrase_t* phrase, char c);
 
 void _printPhrase(phrase_t* phrase, int decalage);
 void printPhrase(phrase_t* phrase);

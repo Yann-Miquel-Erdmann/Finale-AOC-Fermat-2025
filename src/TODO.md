@@ -1,0 +1,1 @@
+<!-- TODO dans l'interpretation s'assurer que la phrase est une instruction -->
