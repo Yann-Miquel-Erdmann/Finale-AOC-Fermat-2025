@@ -49,7 +49,7 @@ void free_phrase(phrase_t* phrase) {
 
 // double la taille du tableau de pointeurs vers les innerPhrase
 void doubleInnerSize(phrase_t* phrase) {
-    phrase->innerPhrase = realloc(phrase->innerPhrase, phrase->innerPhraseSize * 2);
+    phrase->innerPhrase = realloc(phrase->innerPhrase, phrase->innerPhraseSize * 2 * sizeof(phrase_t*));
     if (phrase->innerPhrase == NULL) {
         fprintf(stderr, "manque de mémoire pour innerPhrase\n");
         exit(1);
@@ -58,7 +58,7 @@ void doubleInnerSize(phrase_t* phrase) {
 }
 
 void doubleTextSize(phrase_t* phrase) {
-    phrase->text = realloc(phrase->text, phrase->textSize * 2);
+    phrase->text = realloc(phrase->text, phrase->textSize * 2 * sizeof(char));
     if (phrase->text == NULL) {
         fprintf(stderr, "manque de mémoire pour text\n");
         exit(1);
@@ -67,7 +67,7 @@ void doubleTextSize(phrase_t* phrase) {
 }
 
 void doubleArgsSize(phrase_t* phrase) {
-    phrase->args = realloc(phrase->args, phrase->argsSize * 2);
+    phrase->args = realloc(phrase->args, phrase->argsSize * 2* sizeof(phrase_t*));
     if (phrase->args == NULL) {
         fprintf(stderr, "manque de mémoire pour args\n");
         exit(1);
@@ -76,7 +76,7 @@ void doubleArgsSize(phrase_t* phrase) {
 }
 
 void addToArg(phrase_t* phrase, phrase_t* elem) {
-    if (phrase->argsLen == phrase->argsSize) {
+    if (phrase->argsLen >= phrase->argsSize) {
         doubleArgsSize(phrase);
     }
     phrase->args[phrase->argsLen] = elem;
@@ -84,7 +84,7 @@ void addToArg(phrase_t* phrase, phrase_t* elem) {
 }
 
 void addToInner(phrase_t* phrase, phrase_t* elem) {
-    if (phrase->innerPhraseLen == phrase->innerPhraseSize) {
+    if (phrase->innerPhraseLen >= phrase->innerPhraseSize) {
         doubleInnerSize(phrase);
     }
     phrase->innerPhrase[phrase->innerPhraseLen] = elem;
@@ -92,8 +92,8 @@ void addToInner(phrase_t* phrase, phrase_t* elem) {
 }
 
 void addToText(phrase_t* phrase, char c) {
-    if (phrase->textLen == phrase->textSize) {
-        doubleInnerSize(phrase);
+    if (phrase->textLen >= phrase->textSize) {
+        doubleTextSize(phrase);
     }
     phrase->text[phrase->textLen] = c;
     phrase->textLen++;

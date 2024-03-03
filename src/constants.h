@@ -3,13 +3,18 @@
 #define DEFAULT_PHRASE_ARGS 10
 #define DEFAULT_PHRASE_INNER 20
 
+// val_t type
+#define INT 1
+#define FLOAT 2
+#define BOOL 3
+
 // expressions
 #define EXPR_ENTIER   1
 #define EXPR_FLOTTANT 2
 #define EXPR_BOOLEEN  3
 #define EXPR_CHAINE   4
 
-// structures de donées
+// structures de données
 //  * variable
 #define DEFINITION_VARIABLE_AVEC_INIT 5
 #define CREATION_VARIABLE_SANS_INIT   6
@@ -21,7 +26,7 @@
 #define ACCESSION_LISTE    10
 #define MODIFICATION_LISTE 11
 #define AJOUT_LISTE        12
-#define SUPRESSION_LISTE   13
+#define SUPPRESSION_LISTE  13
 #define TAILLE_LISTE       14
 
 // opérateurs
@@ -52,7 +57,7 @@
 
 // affichage console
 #define AFFICHE_EXPR 32
-#define AFFOCHE_STR  33
+#define AFFICHE_STR  33
 
 // fonctions
 #define DEFINITION_FONCTION          34

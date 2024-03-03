@@ -72,7 +72,7 @@ Que la variable {nom de la variable} devienne {valeur}.
 ```
 
 
-### liste
+### **liste**
 #### création 
 type: instruction
 

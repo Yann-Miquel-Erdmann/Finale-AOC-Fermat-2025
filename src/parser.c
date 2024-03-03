@@ -60,13 +60,14 @@ phrase_t* parse_file(FILE* f) {
                         break;
                     }
 
-                // n'ajoute pas les espaces en debut de ligne ou après un espace
-                if (c == ' ' && (phraseActuelle->textLen == 0 || phraseActuelle->text[phraseActuelle->textLen - 1] == ' ')) {
-                    break;
-                }
+                    // n'ajoute pas les espaces en debut de ligne ou après un espace
+                    if (c == ' ' && (phraseActuelle->textLen == 0 || phraseActuelle->text[phraseActuelle->textLen - 1] == ' ')) {
+                        break;
+                    }
 
-                // ajoute le caractère au texte
-                addToText(phraseActuelle, c);
+                    // ajoute le caractère au texte
+                    addToText(phraseActuelle, c);
+                    break;
             }
         }
     }
