@@ -1,6 +1,7 @@
 #include "phrase.h"
 
 #include "constants.h"
+#include "custom_error.h"
 #include "stdio.h"
 #include "stdlib.h"
 #include "string.h"
@@ -66,7 +67,7 @@ void free_phrase(phrase_t* phrase) {
 void doubleInnerSize(phrase_t* phrase) {
     phrase->innerPhrase = realloc(phrase->innerPhrase, phrase->innerPhraseSize * 2 * sizeof(phrase_t*));
     if (phrase->innerPhrase == NULL) {
-        fprintf(stderr, "manque de mémoire pour innerPhrase\n");
+        custom_error("manque de mémoire pour innerPhrase\n");
         exit(1);
     }
     phrase->innerPhraseSize *= 2;
@@ -75,16 +76,16 @@ void doubleInnerSize(phrase_t* phrase) {
 void doubleTextSize(phrase_t* phrase) {
     phrase->text = realloc(phrase->text, phrase->textSize * 2 * sizeof(char));
     if (phrase->text == NULL) {
-        fprintf(stderr, "manque de mémoire pour text\n");
+        custom_error("manque de mémoire pour text\n");
         exit(1);
     }
     phrase->textSize *= 2;
 }
 
 void doubleArgsSize(phrase_t* phrase) {
-    phrase->args = realloc(phrase->args, phrase->argsSize * 2* sizeof(phrase_t*));
+    phrase->args = realloc(phrase->args, phrase->argsSize * 2 * sizeof(phrase_t*));
     if (phrase->args == NULL) {
-        fprintf(stderr, "manque de mémoire pour args\n");
+        custom_error("manque de mémoire pour args\n");
         exit(1);
     }
     phrase->argsSize *= 2;

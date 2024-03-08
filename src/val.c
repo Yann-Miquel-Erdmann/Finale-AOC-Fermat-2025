@@ -4,11 +4,11 @@
 #include <stdlib.h>
 
 #include "constants.h"
-
-val_t* new_val(void) {
+#include "custom_error.h"
+val_t* new_val() {
     val_t* val = malloc(sizeof(val_t));
     if (val == NULL) {
-        fprintf(stderr, "erreur d'allocation\n");
+        custom_error("erreur d'allocation\n");
         exit(1);
     }
     return val;
@@ -19,15 +19,15 @@ void free_val(val_t* v) {
 };
 
 int get_int(val_t* v) {
-    if (v->type != INT){
-        fprintf(stderr, "le type de val_t ne correspond pas\n");
+    if (v->type != INT) {
+        custom_error("le type de val_t ne correspond pas\n");
         exit(1);
     }
     return *((int*)&(v->value));
 };
 float get_float(val_t* v) {
     if (v->type != FLOAT) {
-        fprintf(stderr, "le type de val_t ne correspond pas\n");
+        custom_error("le type de val_t ne correspond pas\n");
         exit(1);
     }
     return *((float*)&(v->value));
@@ -35,7 +35,7 @@ float get_float(val_t* v) {
 
 bool get_bool(val_t* v) {
     if (v->type != BOOL) {
-        fprintf(stderr, "le type de val_t ne correspond pas\n");
+        custom_error("le type de val_t ne correspond pas\n");
         exit(1);
     }
     return *((bool*)&(v->value));
@@ -71,7 +71,7 @@ void print_val(val_t* v) {
             break;
 
         default:
-            fprintf(stderr, "le type de vat_t n'est pas reconnu\n");
+            custom_error("le type de vat_t n'est pas reconnu\n");
             exit(1);
             break;
     }
