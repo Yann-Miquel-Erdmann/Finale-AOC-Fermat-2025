@@ -5,7 +5,7 @@
 
 #include "constants.h"
 #include "custom_error.h"
-val_t* new_val() {
+val_t* new_val(void) {
     val_t* val = malloc(sizeof(val_t));
     if (val == NULL) {
         custom_error("erreur d'allocation\n");
