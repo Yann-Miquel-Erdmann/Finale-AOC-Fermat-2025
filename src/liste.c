@@ -1,11 +1,13 @@
 #include "liste.h"
 
+#include "custom_error.h"
+
 liste_t* liste_vide() {
     liste_t* l = malloc(sizeof(liste_t));
     l->tete = malloc(sizeof(maillon_t));
     l->queue = malloc(sizeof(maillon_t));
 
-    // TETE <-> QUEUE
+    // TÊTE <-> QUEUE
     l->tete->suiv = l->queue;
     l->tete->prec = NULL;
     l->queue->prec = l->tete;
@@ -148,7 +150,7 @@ int taille_liste(liste_t* l) {
 
 maillon_t* maillon_n(liste_t* l, int indice) {
     if (indice < 0 || indice >= l->taille) {
-        fprintf(stderr, "l'indice de la liste n'est pas valide.\n");
+        custom_error("l'indice de la liste n'est pas valide.\n");
         exit(1);
     }
 
@@ -171,18 +173,18 @@ val_t* accession(liste_t* l, int indice) {
     return valeur_maillon(maillon_n(l, indice));
 };
 
-void modification(liste_t* l, int indice, val_t* v){
+void modification(liste_t* l, int indice, val_t* v) {
     modifier_maillon(maillon_n(l, indice), v);
 };
 
-void ajout(liste_t* l, val_t* v){
+void ajout(liste_t* l, val_t* v) {
     ajoute_arriere(l, v);
 };
 
-void inserer(liste_t* l, int indice, val_t* v){
+void inserer(liste_t* l, int indice, val_t* v) {
     inserer_maillon(maillon_n(l, indice)->prec, v);
 };
 
-void suppression(liste_t* l, int indice){
+void suppression(liste_t* l, int indice) {
     supprimer_maillon(maillon_n(l, indice));
 };
