@@ -2,7 +2,7 @@
 
 #include "custom_error.h"
 
-liste_t* liste_vide() {
+liste_t* liste_vide(void) {
     liste_t* l = malloc(sizeof(liste_t));
     l->tete = malloc(sizeof(maillon_t));
     l->queue = malloc(sizeof(maillon_t));

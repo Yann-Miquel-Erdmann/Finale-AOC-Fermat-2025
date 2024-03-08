@@ -32,6 +32,10 @@ typedef struct phrase {
     bool expr;
     val_t* valeur; // valeur de retour de l'expression
 
+    // variables et fonction appelées dans la phrase actuelle (ne peut y en avoir qu'un par expression)
+    char* function_call;
+    char* variable_call;
+    char* liste_call;
 } phrase_t;
 
 phrase_t* new_phrase(phrase_t* parent);
@@ -47,4 +51,6 @@ void addToText(phrase_t* phrase, char c);
 
 void _printPhrase(phrase_t* phrase, int decalage);
 void printPhrase(phrase_t* phrase);
+
+void phraseCopy(phrase_t* p1, phrase_t* p2);
 #endif

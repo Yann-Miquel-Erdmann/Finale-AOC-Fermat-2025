@@ -26,11 +26,11 @@ L'entier {entier en toutes lettres}?
 ```
 ### flottant
 ```
-Le flottant {entier en toutes lettres}? virgule {entier en toutes lettres}?
+Le flottant {entier en toutes lettres} virgule {entier en toutes lettres}?
 ```
 ### booléen
 ```
-Le booléen {Vrai ou Faux}?
+Le booléen {vrai ou faux}?
 ```
 
 ### chaîne de caractères
@@ -61,7 +61,7 @@ Soit {nom de la variable} une variable.
 type: expression
 
 ```
-La variable {nom de la variable}?.
+La variable {nom de la variable}?
 ```
 
 #### modification
@@ -84,14 +84,14 @@ Soit {nom de la liste} une liste vide.
 type: expression
 
 ```
-La valeur de l'élément de la liste {nom de la liste} à l'indice {indice}?.
+La valeur de l'élément de la liste {nom de la liste} à l'indice {indice}?
 ```
 
 #### modification
 type: instruction
 
 ```
-Remplacer l'élément de la liste {nom de la liste} à l'indice {indice} par     {expression}.
+Remplacer l'élément de la liste {nom de la liste} à l'indice {indice} par {expression}.
 ```
 
 #### ajout
@@ -112,7 +112,7 @@ Retirer de la liste {nom de la liste} l'élément d'indice {indice}?
 type: expression
 
 ```
-La taille de la liste {nom de la liste}
+La taille de la liste {nom de la liste}?
 ```
 
 ## Opérateurs
@@ -329,18 +329,18 @@ Soit {nom de la fonction} une fonction qui lorsqu'elle est appelée execute:
 Pour appeler une fonction qui ne renvoie rien, on écrit:
 type: instruction
 ```
-execute la fonction {nom}( prenant les arguments{arg1}. ..., {argn}).
+Execute la fonction {nom}( prenant les arguments{arg1}. ..., {argn}).
 ```
 
 Pour renvoyer une valeur, on écrit à la fin
 type: instruction
 ```
-renvoie {expression}?
+Renvoie {expression}?
 ```
 Pour récupérer cette expression renvoyée, on écrit:
 type: expression
 ```
-La valeur renvoyée par la fonction {nom}( prenant les arguments {arg1}. ..., {argn}).
+La valeur renvoyée par la fonction {nom}( prenant les arguments {arg1}, ..., {argn})?
 ```
 On pourrait alors avoir:
 ```
@@ -355,7 +355,7 @@ Il faut mettre devant les variables locales définies soit en argument soit dans
 
 ### définition
 ```
-Soit {nom de la fonction} une fonction qui lorsqu'elle est appelée avec {nom variable} {type variable}. ... {nom variable} {type variable} execute:
+Soit {nom de la fonction} une fonction qui lorsqu'elle est appelée avec {nom variable 1}, ..., {nom variable n} execute:
 {instruction 1}.
 {instruction 2}.
 ...
@@ -365,8 +365,10 @@ Soit {nom de la fonction} une fonction qui lorsqu'elle est appelée avec {nom va
 
 ### exemple
 ```
-Soit f une fonction qui lorsqu'elle est appelée avec x Un entier, y Un entier execute:
+Soit x une variable.
+Soit f une fonction qui lorsqu'elle est appelée avec x, y execute:
 Renvoie La somme de La variable locale x? et de La variable locale y??.
+Que x devienne La valeur renvoyée par la fonction f avec les arguments L'entier douze?, L'entier trois??.
 ```
 ## mémoire
 Tout sur le tas  

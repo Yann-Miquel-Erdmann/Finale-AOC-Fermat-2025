@@ -3,8 +3,9 @@
 #include "../src/val.h"
 #include "assert.h"
 #include "stdio.h"
+#include "../src/syntax_convert.h"
 
-void test_parse() {
+void test_parse(void) {
     FILE* f = fopen("testing/test.FC", "r");
     assert(f != NULL);
 
@@ -14,7 +15,7 @@ void test_parse() {
     fclose(f);
 }
 
-void test_val() {
+void test_val(void) {
     val_t* v1 = new_val();
     val_t* v2 = new_val();
     val_t* v3 = new_val();
@@ -39,5 +40,26 @@ void test_val() {
 
 int main(int argc, char const* argv[]) {
     test_val();
+    
+    FILE* f = fopen("testing/test.FC", "r");
+    assert(f != NULL);
+
+    phrase_t* p = parse_file(f);
+    phrase_t* p2 = new_phrase(p->parentPhrase);
+    
+    phraseCopy(p, p2);
+    
+    printPhrase(p);
+    printf("====================================\n");
+    printPhrase(p2);
+
+    phrase_t* p3 = p->innerPhrase[0]->args[0];
+
+    reduce_var_and_num(p3);
+    printf("%s\n", p3->text);
+    
+    free_phrase(p);
+    free_phrase(p2);
+    fclose(f);
     return 0;
 }

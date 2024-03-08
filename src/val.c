@@ -5,7 +5,7 @@
 
 #include "constants.h"
 #include "custom_error.h"
-val_t* new_val() {
+val_t* new_val(void) {
     val_t* val = malloc(sizeof(val_t));
     if (val == NULL) {
         custom_error("erreur d'allocation");
@@ -56,7 +56,7 @@ void print_val(val_t* v) {
             printf("integer: %i\n", get_int(v));
             break;
         case FLOAT:
-            printf("float: %i\n", get_float(v));
+            printf("float: %f\n", get_float(v));
             break;
         case BOOL:
             if (get_int(v) == 1) {
