@@ -52,8 +52,7 @@ void free_phrase(phrase_t* phrase) {
 void doubleInnerSize(phrase_t* phrase) {
     phrase->innerPhrase = realloc(phrase->innerPhrase, phrase->innerPhraseSize * 2 * sizeof(phrase_t*));
     if (phrase->innerPhrase == NULL) {
-        custom_error("manque de mémoire pour innerPhrase\n");
-        exit(1);
+        custom_error("manque de mémoire pour innerPhrase");
     }
     phrase->innerPhraseSize *= 2;
 }
@@ -61,8 +60,7 @@ void doubleInnerSize(phrase_t* phrase) {
 void doubleTextSize(phrase_t* phrase) {
     phrase->text = realloc(phrase->text, phrase->textSize * 2 * sizeof(char));
     if (phrase->text == NULL) {
-        custom_error("manque de mémoire pour text\n");
-        exit(1);
+        custom_error("manque de mémoire pour text");
     }
     phrase->textSize *= 2;
 }
@@ -70,8 +68,7 @@ void doubleTextSize(phrase_t* phrase) {
 void doubleArgsSize(phrase_t* phrase) {
     phrase->args = realloc(phrase->args, phrase->argsSize * 2 * sizeof(phrase_t*));
     if (phrase->args == NULL) {
-        custom_error("manque de mémoire pour args\n");
-        exit(1);
+        custom_error("manque de mémoire pour args");
     }
     phrase->argsSize *= 2;
 }

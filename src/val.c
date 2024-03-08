@@ -8,8 +8,7 @@
 val_t* new_val() {
     val_t* val = malloc(sizeof(val_t));
     if (val == NULL) {
-        custom_error("erreur d'allocation\n");
-        exit(1);
+        custom_error("erreur d'allocation");
     }
     return val;
 };
@@ -20,23 +19,20 @@ void free_val(val_t* v) {
 
 int get_int(val_t* v) {
     if (v->type != INT) {
-        custom_error("le type de val_t ne correspond pas\n");
-        exit(1);
+        custom_error("le type de val_t ne correspond pas");
     }
     return *((int*)&(v->value));
 };
 float get_float(val_t* v) {
     if (v->type != FLOAT) {
-        custom_error("le type de val_t ne correspond pas\n");
-        exit(1);
+        custom_error("le type de val_t ne correspond pas");
     }
     return *((float*)&(v->value));
 };
 
 bool get_bool(val_t* v) {
     if (v->type != BOOL) {
-        custom_error("le type de val_t ne correspond pas\n");
-        exit(1);
+        custom_error("le type de val_t ne correspond pas");
     }
     return *((bool*)&(v->value));
 };
@@ -71,8 +67,7 @@ void print_val(val_t* v) {
             break;
 
         default:
-            custom_error("le type de vat_t n'est pas reconnu\n");
-            exit(1);
+            custom_error("le type de vat_t n'est pas reconnu");
             break;
     }
 };
