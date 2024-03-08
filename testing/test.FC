@@ -1,4 +1,11 @@
-Soit x la variable initialisée à L'entier cinq?.
+Soit x la variable initialisée à La taille de la liste l?.
+Soit y la variable initialisée à La variable x?.
+
 Si La valeur de La variable x? est égale à L'entier vingt-trois?? alors:
 Afficher L'entier treize?.
+Afficher L'entier treize?.
 .
+
+Soit z la variable initialisée à La somme de La valeur de la variable x? et de La valeur de la variable y??.
+
+Afficher z.

@@ -3,7 +3,7 @@
 #include "constants.h"
 #include "stdio.h"
 #include "stdlib.h"
-#include "values.h"
+#include "string.h"
 
 phrase_t* new_phrase(phrase_t* parent) {
     phrase_t* phrase = malloc(sizeof(phrase_t));
@@ -27,7 +27,11 @@ phrase_t* new_phrase(phrase_t* parent) {
 
     phrase->inst = false;
     phrase->expr = false;
-
+    
+    phrase->function_call = NULL;
+    phrase->variable_call = NULL;
+    phrase->liste_call = NULL;
+    
     return phrase;
 }
 
@@ -43,6 +47,17 @@ void free_phrase(phrase_t* phrase) {
         free_phrase(phrase->innerPhrase[i]);
     }
     free(phrase->innerPhrase);
+    
+    if (phrase->function_call != NULL){
+        free(phrase->function_call);
+    }
+    if (phrase->variable_call != NULL){
+        free(phrase->variable_call);
+    }
+    if (phrase->liste_call != NULL){
+        free(phrase->variable_call);
+    }
+
 
     free(phrase);
 }
@@ -132,4 +147,36 @@ void printPhrase(phrase_t* phrase) {
     for (int i = 0; i < phrase->innerPhraseLen; i++) {
         _printPhrase(phrase->innerPhrase[i], 0);
     }
+}
+
+void phraseCopy(phrase_t* p1, phrase_t* p2){
+    p2->text = realloc(p2->text, p1->textSize*sizeof(char));
+    strcpy(p2->text, p1->text);
+    p2->textSize = p1->textSize;
+    p2->textLen = p1->textLen;
+
+    for (int i = 0; i< p1->argsLen; i++){
+        phrase_t* tmp = new_phrase(p2);
+        phraseCopy(p1->args[i], tmp);
+        addToArg(p2, tmp);
+    }
+    
+    p2->argsSize = p1->argsSize;
+    p2->argsLen = p1->argsLen;
+    
+    p2->phraseId = p1->phraseId;
+    
+    p2->inst = p1->inst;
+    
+    for (int i = 0; i< p1->innerPhraseLen; i++){
+        phrase_t* tmp = new_phrase(p2);
+        phraseCopy(p1->innerPhrase[i], tmp);
+        addToInner(p2, tmp);
+    }
+        
+    p2->innerPhraseLen = p1->innerPhraseLen;
+    p2->innerPhraseSize = p2->innerPhraseSize;
+
+    p2->expr = p1->expr;
+    p2->valeur = p1->valeur;
 }

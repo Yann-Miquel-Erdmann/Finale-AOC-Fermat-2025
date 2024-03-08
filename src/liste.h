@@ -30,7 +30,7 @@ typedef struct maillon {
 } maillon_t;
 
 /* Crée une liste vide */
-liste_t* liste_vide();
+liste_t* liste_vide(void);
 
 /* Libère toute la mémoire allouée à l */
 void free_liste(liste_t* l);
