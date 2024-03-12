@@ -60,43 +60,45 @@
 #define AFFICHE_STR  33
 
 // fonctions
-#define DEFINITION_FONCTION          34
-#define EXECUTION_FONCTION           35
-#define RENVOI_FONCTION              36
-#define APPEL_VALEUR_FONCTION        37
-#define DEFINITION_FONCTION_ARGUMENT 38
+#define DEFINITION_FONCTION             34
+#define EXECUTION_FONCTION              35
+#define RENVOI_FONCTION                 36
+#define APPEL_VALEUR_FONCTION           37
+#define DEFINITION_FONCTION_ARGUMENT    38
+#define EXECUTION_FONCTION_ARGUMENT     39
+#define APPEL_VALEUR_FONCTION_ARGUMENT  40
 
 
 // définitions de syntaxe
 // expressions
-#define EXPR_ENTIER_S   "L'entier *?"
-#define EXPR_FLOTTANT_S "Le flottant * virgule *?"
-#define EXPR_BOOLEEN_S  "Le booléen *?"
-#define EXPR_CHAINE_S   "La chaîne de caractères *?"
+#define EXPR_ENTIER_S   "L'entier *?" // fait
+#define EXPR_FLOTTANT_S "Le flottant * virgule *?" // fait
+#define EXPR_BOOLEEN_S  "Le booléen *?" // fait
+#define EXPR_CHAINE_S   "La chaîne de caractères *?" // fait
 
 // structures de données
 //  * variable (fait)
-#define DEFINITION_VARIABLE_AVEC_INIT_S "Soit * la variable initialisée à *." // -> nom de variable
-#define CREATION_VARIABLE_SANS_INIT_S   "Soit * une variable." // -> nom de variable
-#define ACCESSION_VARIABLE_S            "La variable *?" // -> nom de variable
-#define MODIFICATION_VARIABLE_S         "Que la variable * devienne *." // -> nom de variable
+#define DEFINITION_VARIABLE_AVEC_INIT_S "Soit * la variable initialisée à *." // fait
+#define CREATION_VARIABLE_SANS_INIT_S   "Soit * une variable." // fait
+#define ACCESSION_VARIABLE_S            "La variable *?" // fait
+#define MODIFICATION_VARIABLE_S         "Que la variable * devienne *." // fait
 
 //  * liste (fait)
-#define CREATION_LISTE_S     "Soit * une liste vide." // -> nom de variable
-#define ACCESSION_LISTE_S    "La valeur de l'élément de la liste * à l'indice *?" // -> nom de variable
-#define MODIFICATION_LISTE_S "Remplacer l'élément de la liste * à l'indice * par *." // -> nom de variable
-#define AJOUT_LISTE_S        "Ajouter à la liste * *." // -> nom de variable
-#define SUPPRESSION_LISTE_S  "Retirer de la liste * l'élément d'indice *." // -> nom de variable
-#define TAILLE_LISTE_S       "La taille de la liste *?" // -> nom de variable
+#define CREATION_LISTE_S     "Soit * une liste vide." // fait
+#define ACCESSION_LISTE_S    "La valeur de l'élément de la liste * à l'indice *?" // fait
+#define MODIFICATION_LISTE_S "Remplacer l'élément de la liste * à l'indice * par *." // fait
+#define AJOUT_LISTE_S        "Ajouter à la liste * *." // fait
+#define SUPPRESSION_LISTE_S  "Retirer de la liste * l'élément d'indice *." // fait
+#define TAILLE_LISTE_S       "La taille de la liste *?" // dait
 
 // opérateurs
-#define SOMME_S              15
-#define DIFFERENCE_S         16
-#define PRODUIT_S            17
-#define QUOTIENT_S           18
-#define QUOTIENT_ENTIER_S    19
-#define RESTE_S              20
-#define NEGATION_BOOLEENNE_S 21
+#define SOMME_S              "La somme de * et de *?" // fait
+#define DIFFERENCE_S         "La différence de * et de *?" // fait
+#define PRODUIT_S            "Le produit de * et de *?" // fait
+#define QUOTIENT_S           "Le quotient de * par *?"
+#define QUOTIENT_ENTIER_S    "Le quotient entier de * par *?"
+#define RESTE_S              "Le reste de * par *?"
+#define NEGATION_BOOLEENNE_S "La négation bouléenne de *?"
 
 // comparateurs
 
@@ -120,13 +122,12 @@
 #define AFFICHE_STR_S  33
 
 // fonctions
-#define DEFINITION_FONCTION_S               "Soit * une fonction qui lorsqu'elle est appelée execute:" // -> nom de variable
-#define EXECUTION_FONCTION_S                "Execute la fonction *." // -> nom de variable
+#define DEFINITION_FONCTION_S               "Soit * une fonction qui lorsqu'elle est appelée execute:*." // fait
+#define EXECUTION_FONCTION_S                "Execute la fonction *." // fait
 #define RENVOI_FONCTION_S                   "Renvoie *?"
-#define APPEL_VALEUR_FONCTION_S             "La valeur renvoyée par la fonction *?" // -> nom de variable
+#define APPEL_VALEUR_FONCTION_S             "La valeur renvoyée par la fonction *?" // fait
 
-// vont être compliqué avec le nombre variable d'arguments
-#define DEFINITION_FONCTION_ARGUMENT_S      "Execute la fonction * avec les arguments *, ... *." // -> nom de variable
-#define EXECUTION_FONCTION_ARGUMENT_S       "La valeur valeur renvoyée par la fonction * avec les arguments *, ..., *?" // -> nom variable
-#define APPEL_VALEUR_FONCTION_ARGULENT_S    "Soit * une fonction qui lorsqu'elle est appelée avec *, ..., * execute:" // -> nom de variable
+#define DEFINITION_FONCTION_ARGUMENT_S     "Soit * une fonction qui lorsqu'elle est appelée avec * execute:*." // fait
+#define EXECUTION_FONCTION_ARGUMENT_S      "Execute la fonction * avec les arguments *." // fait
+#define APPEL_VALEUR_FONCTION_ARGUMENT_S   "La valeur renvoyée par la fonction * avec les arguments *?" // fait
 

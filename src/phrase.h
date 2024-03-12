@@ -36,6 +36,8 @@ typedef struct phrase {
     char* function_call;
     char* variable_call;
     char* liste_call;
+    
+    bool error;
 } phrase_t;
 
 phrase_t* new_phrase(phrase_t* parent);
@@ -49,7 +51,7 @@ void addToArg(phrase_t* phrase, phrase_t* elem);
 void addToInner(phrase_t* phrase, phrase_t* elem);
 void addToText(phrase_t* phrase, char c);
 
-void _printPhrase(phrase_t* phrase, int decalage);
+void _printPhrase(phrase_t* phrase, int decalage, int last_elem);
 void printPhrase(phrase_t* phrase);
 
 void phraseCopy(phrase_t* p1, phrase_t* p2);

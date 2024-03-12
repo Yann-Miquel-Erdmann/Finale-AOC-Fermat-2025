@@ -150,7 +150,7 @@ int taille_liste(liste_t* l) {
 
 maillon_t* maillon_n(liste_t* l, int indice) {
     if (indice < 0 || indice >= l->taille) {
-        custom_error("l'indice de la liste n'est pas valide.");
+        custom_error("l'indice de la liste n'est pas valide.", NULL);
     }
 
     if (indice <= l->taille - indice) {
