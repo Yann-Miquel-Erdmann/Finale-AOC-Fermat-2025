@@ -8,6 +8,8 @@
 #define FLOAT 2
 #define BOOL 3
 
+#define MAIN_PHRASE 0
+
 // expressions
 #define EXPR_ENTIER   1
 #define EXPR_FLOTTANT 2
@@ -70,6 +72,8 @@
 
 
 // définitions de syntaxe
+#define MAIN_PHRASE_S   "*"
+
 // expressions
 #define EXPR_ENTIER_S   "L'entier *?" // fait
 #define EXPR_FLOTTANT_S "Le flottant * virgule *?" // fait

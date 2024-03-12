@@ -15,6 +15,10 @@ void free_pointers_f(char** ptr, char** ptr1, char** ptr2){
 }
 
 void test_expr_flottant(phrase_t* phrase){
+    if((int)strlen(phrase->text) < 12 || phrase->phraseId != -1){
+        return;
+    }
+    
     char** result_str = cut_a_b(phrase->text, 12, (int)strlen(phrase->text)-12);
     char** result_str_2 = cut_a_b(result_str[2], 0, 1);
     char** result_virgule = split_word(result_str_2[1], "virgule");
@@ -32,8 +36,6 @@ void test_expr_flottant(phrase_t* phrase){
             phrase->phraseId = EXPR_FLOTTANT;
             phrase->valeur = new_val();
             set_float(phrase->valeur, num);
-            free_pointers_f(result_str, result_str_2, result_virgule);
-            return;
         }
         free(result_num);
         free(result_num_2);

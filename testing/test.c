@@ -46,12 +46,11 @@ int main(int argc, char const* argv[]) {
 
     phrase_t* p = parse_file(f);
     
-    phrase_t* p3 = p->innerPhrase[0]->args[0];
 
-    //printf("%s\n", p3->text);
-    tokenise(p3);
-    printPhrase(p);
+    tokenise(p);
     
+    printPhrase(p);
+
     free_phrase(p);
     fclose(f);
     return 0;

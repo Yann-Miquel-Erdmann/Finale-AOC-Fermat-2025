@@ -3,6 +3,12 @@
 #include "eval_numbers.h"
 #include "custom_error.h"
 
+void free_pointers(char** ptr){
+    free(ptr[0]);
+    free(ptr[2]);
+    free(ptr);
+}
+
 char* get_first_n(char* s, int n){
     char* s2 = malloc((n+1)*sizeof(char));
     for (int i = 0; i<n; i++){
@@ -144,6 +150,9 @@ int elem_liste(char* text){
     if (!strcmp(text, NEGATION_BOOLEENNE_S)){
         return NEGATION_BOOLEENNE;
     }
+    if (!strcmp(text, MAIN_PHRASE_S)){
+        return MAIN_PHRASE;
+    }
     return -1;
 }
 
@@ -151,310 +160,30 @@ void reduce_var_and_num(phrase_t* phrase){
     if (phrase == NULL){
         return;
     }
-    char** result_str;
     
     test_expr_entier(phrase);
-    if (phrase->phraseId != -1){
-        return;
-    }
-    
     test_expr_flottant(phrase);
-    if (phrase->phraseId != -1){
-        return;
-    }
-    
     test_expr_booleen(phrase);
-    if (phrase->phraseId != -1){
-        return;
-    }
-    
-    char** result_str_2;
-    
-    result_str = cut_a_b(phrase->text, 26, 1);
-    strcat(result_str[0], result_str[2]);
-    
-    if (!strcmp(result_str[0], EXPR_CHAINE_S)){
-        if (result_str[1][0] == '"' && result_str[1][(int)strlen(result_str[1])-1] == '"'){
-            printf("chaine: %s\n", result_str[1]);
-            phrase->phraseId = EXPR_CHAINE;
-            phrase->textLen = (int)strlen(result_str[1]);
-            strcpy(phrase->text, result_str[1]);
-            phrase->textSize = phrase->textLen;
-            
-            free(result_str[0]);
-            free(result_str[1]);
-            free(result_str[2]);
-            free(result_str);
-            
-            return;
-        }
-    }
-    
-    free(result_str[0]);
-    free(result_str[1]);
-    free(result_str[2]);
-    free(result_str);
-    
-    result_str = cut_a_b(phrase->text, 5, 31);
-    strcat(result_str[0], result_str[2]);
-    
-    if (!strcmp(result_str[0], DEFINITION_VARIABLE_AVEC_INIT_S)){
-        printf("variable init: %s\n", result_str[1]);
-        phrase->phraseId = DEFINITION_VARIABLE_AVEC_INIT;
-        phrase->variable_call = result_str[1];
-        
-    }else{
-        free(result_str[1]);
-    }
-    
-    free(result_str[0]);
-    free(result_str[2]);
-    free(result_str);
-    
-    result_str = cut_a_b(phrase->text, 5, 14);
-    strcat(result_str[0], result_str[2]);
-    
-    if (!strcmp(result_str[0], CREATION_VARIABLE_SANS_INIT_S)){
-        printf("variable sans init: %s\n", result_str[1]);
-        phrase->phraseId = CREATION_VARIABLE_SANS_INIT;
-        phrase->variable_call = result_str[1];
-        
-    }else{
-        free(result_str[1]);
-    }
-    
-    free(result_str[0]);
-    free(result_str[2]);
-    free(result_str);
-    
-    result_str = cut_a_b(phrase->text, 12, 1);
-    strcat(result_str[0], result_str[2]);
-    
-    if (!strcmp(result_str[0], ACCESSION_VARIABLE_S)){
-        printf("valeur de la variable %s\n", result_str[1]);
-        phrase->phraseId = ACCESSION_VARIABLE;
-        phrase->variable_call = result_str[1];
-        
-    }else{
-        free(result_str[1]);
-    }
-    
-    free(result_str[0]);
-    free(result_str[2]);
-    free(result_str);
-    
-    result_str = cut_a_b(phrase->text, 16, 12);
-    strcat(result_str[0], result_str[2]);
-    
-    if (!strcmp(result_str[0], MODIFICATION_VARIABLE_S)){
-        printf("modification de la variable %s\n", result_str[1]);
-        phrase->phraseId = MODIFICATION_VARIABLE;
-        phrase->variable_call = result_str[1];
-        
-    }else{
-        free(result_str[1]);
-    }
-    
-    free(result_str[0]);
-    free(result_str[2]);
-    free(result_str);
-    
-    result_str = cut_a_b(phrase->text, 5, 16);
-    strcat(result_str[0], result_str[2]);
-    
-    
-    if (!strcmp(result_str[0], CREATION_LISTE_S)){
-        printf("création de la liste %s\n", result_str[1]);
-        phrase->phraseId = CREATION_LISTE;
-        phrase->liste_call = result_str[1];
-        
-    }else{
-        free(result_str[1]);
-    }
-    
-    free(result_str[0]);
-    free(result_str[2]);
-    free(result_str);
-    
-    result_str = cut_a_b(phrase->text, 37, 15);
-    strcat(result_str[0], result_str[2]);
-    
-    if (!strcmp(result_str[0],ACCESSION_LISTE_S)){
-        printf("accession de la liste %s\n", result_str[1]);
-        phrase->phraseId = ACCESSION_LISTE;
-        phrase->liste_call = result_str[1];
-        
-    }else{
-        free(result_str[1]);
-    }
-    
-    free(result_str[0]);
-    free(result_str[2]);
-    free(result_str);
-    
-    result_str = cut_a_b(phrase->text, 34, 21);
-    strcat(result_str[0], result_str[2]);
-    
-    if (!strcmp(result_str[0],MODIFICATION_LISTE_S)){
-        printf("modification de la liste %s\n", result_str[1]);
-        phrase->phraseId = MODIFICATION_LISTE;
-        phrase->liste_call = result_str[1];
-        
-    }else{
-        free(result_str[1]);
-    }
-    
-    free(result_str[0]);
-    free(result_str[2]);
-    free(result_str);
-    
-    result_str = cut_a_b(phrase->text, 20, 3);
-    strcat(result_str[0], result_str[2]);
-    if (!strcmp(result_str[0],AJOUT_LISTE_S)){
-        printf("ajout à la liste %s\n", result_str[1]);
-        phrase->phraseId = AJOUT_LISTE;
-        phrase->liste_call = result_str[1];
-        
-    }else{
-        free(result_str[1]);
-    }
-    
-    free(result_str[0]);
-    free(result_str[2]);
-    free(result_str);
-    
-    result_str = cut_a_b(phrase->text, 20, 24);
-    strcat(result_str[0], result_str[2]);
-    
-    if (!strcmp(result_str[0],SUPPRESSION_LISTE_S)){
-        printf("suppression élément de la liste %s\n", result_str[1]);
-        phrase->phraseId = SUPPRESSION_LISTE;
-        phrase->liste_call = result_str[1];
-        
-    }else{
-        free(result_str[1]);
-    }
-    
-    free(result_str[0]);
-    free(result_str[2]);
-    free(result_str);
-    
-    result_str = cut_a_b(phrase->text, 22, 1);
-    strcat(result_str[0], result_str[2]);
-    
-    if (!strcmp(result_str[0],TAILLE_LISTE_S)){
-        printf("la taille de la liste %s\n", result_str[1]);
-        phrase->phraseId = TAILLE_LISTE;
-        phrase->liste_call = result_str[1];
-        
-    }else{
-        free(result_str[1]);
-    }
-    
-    free(result_str[0]);
-    free(result_str[2]);
-    free(result_str);
-    
-    result_str = cut_a_b(phrase->text, 5, 53);
-    strcat(result_str[0], result_str[2]);
-
-    if (!strcmp(result_str[0], DEFINITION_FONCTION_S)){
-        printf("definition de la fonction %s\n", result_str[1]);
-        phrase->phraseId = DEFINITION_FONCTION;
-        phrase->function_call = result_str[1];
-        
-    }else{
-        free(result_str[1]);
-    }
-    
-    free(result_str[0]);
-    free(result_str[2]);
-    free(result_str);
-    
-    result_str = cut_a_b(phrase->text, 20, 1);
-    strcat(result_str[0], result_str[2]);
-    
-    if (!strcmp(result_str[0], EXECUTION_FONCTION_S)){
-        printf("execution de la fonction %s\n", result_str[1]);
-        phrase->phraseId = EXECUTION_FONCTION;
-        phrase->function_call = result_str[1];
-        
-    }else{
-        free(result_str[1]);
-    }
-    
-    free(result_str[0]);
-    free(result_str[2]);
-    free(result_str);
-    
-    result_str = cut_a_b(phrase->text, 36, 1);
-    strcat(result_str[0], result_str[2]);
-    
-    if (!strcmp(result_str[0], APPEL_VALEUR_FONCTION_S)){
-        printf("appel de la fonction %s\n", result_str[1]);
-        phrase->phraseId = APPEL_VALEUR_FONCTION;
-        phrase->function_call = result_str[1];
-        
-    }else{
-        free(result_str[1]);
-    }
-    
-    free(result_str[0]);
-    free(result_str[2]);
-    free(result_str);
-    
-    result_str = cut_a_b(phrase->text, 5, 11);
-    result_str_2 = split_word(result_str[1], "une fonction qui lorsqu'elle est appelée avec");
-    strcat(result_str[0], " une fonction qui lorsqu'elle est appelée avec *");
-    strcat(result_str[0], result_str[2]);
-
-    if (!strcmp(result_str[0], DEFINITION_FONCTION_ARGUMENT_S)){
-        printf("definition de la fonction %s avec arguments\n", result_str[1]);
-        phrase->phraseId = DEFINITION_FONCTION_ARGUMENT;
-        phrase->function_call = result_str_2[0];
-        phrase->variable_call = result_str_2[1];
-        
-    }else{
-        free(result_str[1]);
-    }
-    
-    free(result_str[0]);
-    free(result_str[2]);
-    free(result_str);
-    free(result_str_2);
-    
-    result_str = cut_a_b(phrase->text, 20, 22);
-    strcat(result_str[0], result_str[2]);
-    
-    if (!strcmp(result_str[0], EXECUTION_FONCTION_ARGUMENT_S)){
-        printf("execution de la fonction %s avec arguments\n", result_str[1]);
-        phrase->phraseId = EXECUTION_FONCTION_ARGUMENT;
-        phrase->function_call = result_str[1];
-        
-    }else{
-        free(result_str[1]);
-    }
-    
-    free(result_str[0]);
-    free(result_str[2]);
-    free(result_str);
-    
-    result_str = cut_a_b(phrase->text, 36, 22);
-    strcat(result_str[0], result_str[2]);
-    
-    if (!strcmp(result_str[0], APPEL_VALEUR_FONCTION_ARGUMENT_S)){
-        printf("appel de la fonction %s avec arguments\n", result_str[1]);
-        phrase->phraseId = APPEL_VALEUR_FONCTION_ARGUMENT;
-        phrase->function_call = result_str[1];
-        
-    }else{
-        free(result_str[1]);
-    }
-    
-    free(result_str[0]);
-    free(result_str[2]);
-    free(result_str);
+    test_expr_chaine(phrase);
+    test_inst_var_init(phrase);
+    test_inst_create_var(phrase);
+    test_expr_access_var(phrase);
+    test_inst_modif_var(phrase);
+    test_inst_create_list(phrase);
+    test_expr_access_list(phrase);
+    test_inst_modif_list(phrase);
+    test_inst_modif_list(phrase);
+    test_inst_suppr_list(phrase);
+    test_expr_taille_list(phrase);
+    test_inst_def_func(phrase);
+    test_inst_exec_func(phrase);
+    test_expr_func_call(phrase);
+    test_inst_def_func_args(phrase);
+    test_inst_exec_func_args(phrase);
+    test_expr_func_call_args(phrase);
 }
+
+
 
 int value_type(phrase_t* p1, phrase_t* p2){
     if (p1->valeur->type == FLOAT || p2->valeur->type == FLOAT){
@@ -482,11 +211,16 @@ float return_value(phrase_t* p){
 void tokenise(phrase_t* phrase){
     bool valid = true;
     switch (elem_liste(phrase->text)) {
+        case MAIN_PHRASE:
+            for (int i = 0; i<phrase->innerPhraseLen; i++){
+                tokenise(phrase->innerPhrase[i]);
+            }
+            break;
         case SOMME:
             phrase->phraseId = SOMME;
-            for (int i = 0; i< 2 && valid; i++){
+            for (int i = 0; i < 2; i++){
                 tokenise(phrase->args[i]);
-                if (phrase->args[i]->phraseId == -1){
+                if (phrase->args[i]->phraseId > 3 || phrase->args[i]->phraseId < 1){
                     valid = false;
                 }
             }
@@ -501,9 +235,9 @@ void tokenise(phrase_t* phrase){
 
         case DIFFERENCE:
             phrase->phraseId = DIFFERENCE;
-            for (int i = 0; i< 2 && valid; i++){
+            for (int i = 0; i< 2; i++){
                 tokenise(phrase->args[i]);
-                if (phrase->args[i]->phraseId == -1){
+                if (phrase->args[i]->phraseId > 3 || phrase->args[i]->phraseId < 1){
                     valid = false;
                 }
             }
@@ -517,9 +251,9 @@ void tokenise(phrase_t* phrase){
             break;
         case PRODUIT:
             phrase->phraseId = PRODUIT;
-            for (int i = 0; i< 2 && valid; i++){
+            for (int i = 0; i< 2; i++){
                 tokenise(phrase->args[i]);
-                if (phrase->args[i]->phraseId == -1){
+                if (phrase->args[i]->phraseId > 3 || phrase->args[i]->phraseId < 1){
                     valid = false;
                 }
             }
@@ -532,10 +266,10 @@ void tokenise(phrase_t* phrase){
             }
             break;
         case QUOTIENT:
-            phrase->phraseId = PRODUIT;
-            for (int i = 0; i< 2 && valid; i++){
+            phrase->phraseId = QUOTIENT;
+            for (int i = 0; i< 2; i++){
                 tokenise(phrase->args[i]);
-                if (phrase->args[i]->phraseId == -1){
+                if (phrase->args[i]->phraseId > 3 || phrase->args[i]->phraseId < 1){
                     valid = false;
                 }
             }
@@ -553,6 +287,12 @@ void tokenise(phrase_t* phrase){
             break;
         default:
             reduce_var_and_num(phrase);
+            for (int i = 0; i < phrase->argsLen; i++){
+                tokenise(phrase->args[i]);
+            }
+            for (int i = 0; i < phrase->innerPhraseLen; i++){
+                tokenise(phrase->innerPhrase[i]);
+            }
     }
     
 }
