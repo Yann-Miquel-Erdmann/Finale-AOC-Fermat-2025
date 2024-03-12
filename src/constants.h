@@ -3,6 +3,15 @@
 #define DEFAULT_PHRASE_ARGS 10
 #define DEFAULT_PHRASE_INNER 20
 
+// constantes structures variable_t
+#define DEFAULT_NOM_LEN 128
+
+
+// constantes structures environnement_t
+#define DEFAULT_VARIABLES_LIST_LEN 128
+#define DEFAULT_VARIABLES_LIST 10
+#define DEFAULT_VARIABLES_LIST 20
+
 // val_t type
 #define INT 1
 #define FLOAT 2
