@@ -19,7 +19,7 @@ void test_expr_entier(phrase_t* phrase){
             phrase->phraseId = EXPR_ENTIER;
             set_int(phrase->valeur, result_num[1]);
         }else{
-            char* err = malloc((strlen(result_str[1])+0)*sizeof(char));
+            char* err = malloc((strlen(result_str[1])+32)*sizeof(char));
             
             strcpy(err, result_str[1]);
             strcat(err, " isn't recognized as an integer.");

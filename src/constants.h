@@ -49,8 +49,8 @@
 #define STRICT_PLUS_PETIT 26
 
 // conditions
-#define SI_ALORS       27
-#define SI_ALORS_SINON 28
+#define SI_ALORS    27
+#define SINON       28
 
 // boucles
 #define TANT_QUE      29
@@ -72,7 +72,7 @@
 
 
 // définitions de syntaxe
-#define MAIN_PHRASE_S   "*"
+#define MAIN_PHRASE_S   "*" // fait
 
 // expressions
 #define EXPR_ENTIER_S   "L'entier *?" // fait
@@ -99,31 +99,31 @@
 #define SOMME_S              "La somme de * et de *?" // fait
 #define DIFFERENCE_S         "La différence de * et de *?" // fait
 #define PRODUIT_S            "Le produit de * et de *?" // fait
-#define QUOTIENT_S           "Le quotient de * par *?"
-#define QUOTIENT_ENTIER_S    "Le quotient entier de * par *?"
-#define RESTE_S              "Le reste de * par *?"
-#define NEGATION_BOOLEENNE_S "La négation bouléenne de *?"
+#define QUOTIENT_S           "Le quotient de * par *?" // fait
+#define QUOTIENT_ENTIER_S    "Le quotient entier de * par *?" // fait
+#define RESTE_S              "Le reste de * par *?" // fait
+#define NEGATION_BOOLEENNE_S "La négation bouléenne de *?" // fait
 
 // comparateurs
 
-#define EGALITE_S           22
-#define PLUS_GRAND_S        23
-#define PLUS_PETIT_S        24
-#define STRICT_PLUS_GRAND_S 25
-#define STRICT_PLUS_PETIT_S 26
+#define EGALITE_S           "La valeur de * est égale à la valeur de *?" //fait
+#define PLUS_GRAND_S        "La valeur de * est plus grande que la valeur de *?"
+#define PLUS_PETIT_S        "La valeur de * est plus petite que la valeur de *?"
+#define STRICT_PLUS_GRAND_S "La valeur de * est strictement plus grande que la valeur de *?"
+#define STRICT_PLUS_PETIT_S "La valeur de * est strictement plus petite que la valeur de *?"
 
 // conditions
-#define SI_ALORS_S       27
-#define SI_ALORS_SINON_S 28
+#define SI_ALORS_S  "Si * alors faire:*."
+#define SINON_S     "Sinon faire:*."
 
 // boucles
-#define TANT_QUE_S      29
-#define POUR_SANS_PAS_S 30
-#define POUR_AVEC_PAS_S 31
+#define TANT_QUE_S      "Tant que * faire:*."
+#define POUR_SANS_PAS_S "Pour * allant de * jusqu'à * faire:*."
+#define POUR_AVEC_PAS_S "Pour * allant de * jusqu'à * en utilisant un pas de * faire:*."
 
 // affichage console
-#define AFFICHE_EXPR_S 32
-#define AFFICHE_STR_S  33
+#define AFFICHE_EXPR_S "Affiche *."
+#define AFFICHE_STR_S  "Affiche le message *."
 
 // fonctions
 #define DEFINITION_FONCTION_S               "Soit * une fonction qui lorsqu'elle est appelée execute:*." // fait

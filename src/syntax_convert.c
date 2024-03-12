@@ -160,7 +160,6 @@ void reduce_var_and_num(phrase_t* phrase){
     if (phrase == NULL){
         return;
     }
-    
     test_expr_entier(phrase);
     test_expr_flottant(phrase);
     test_expr_booleen(phrase);
@@ -181,6 +180,10 @@ void reduce_var_and_num(phrase_t* phrase){
     test_inst_def_func_args(phrase);
     test_inst_exec_func_args(phrase);
     test_expr_func_call_args(phrase);
+    if (phrase->phraseId == -1){
+        phrase->error = true;
+        custom_error("Syntaxe Invalide", phrase);
+    }
 }
 
 
@@ -274,15 +277,116 @@ void tokenise(phrase_t* phrase){
                 }
             }
             if (valid){
-                if (return_value(phrase->args[0]) * return_value(phrase->args[1]) == 0){
+                if (return_value(phrase->args[1]) == 0){
                     phrase->error = true;
                     custom_error("Division par 0", phrase);
                 }
                 phrase->valeur = new_val();
-                set_float(phrase->valeur, return_value(phrase->args[0]) * return_value(phrase->args[1]));
-                if (!(phrase->args[0]->valeur->type == FLOAT && phrase->args[1]->valeur->type == FLOAT)){
-                    set_int(phrase->valeur, get_float(phrase->valeur));
+                set_float(phrase->valeur, return_value(phrase->args[0]) / return_value(phrase->args[1]));
+            }
+            break;
+        case QUOTIENT_ENTIER:
+            phrase->phraseId = QUOTIENT_ENTIER;
+            for (int i = 0; i < 2; i++){
+                tokenise(phrase->args[i]);
+                if (phrase->args[i]->phraseId > 3 || phrase->args[i]->phraseId < 1){
+                    valid = false;
                 }
+            }
+            if (valid){
+                if (return_value(phrase->args[1]) == 0){
+                    phrase->error = true;
+                    custom_error("Division par 0", phrase);
+                }
+                phrase->valeur = new_val();
+                set_int(phrase->valeur, (int)(return_value(phrase->args[0]) / return_value(phrase->args[1])));
+            }
+            break;
+        case RESTE:
+            phrase->phraseId = RESTE;
+            for (int i = 0; i < 2; i++){
+                tokenise(phrase->args[i]);
+                if (phrase->args[i]->phraseId > 3 || phrase->args[i]->phraseId < 1){
+                    valid = false;
+                }
+            }
+            if (valid){
+                if (return_value(phrase->args[1]) == 0){
+                    phrase->error = true;
+                    custom_error("Division par 0", phrase);
+                }
+                if (phrase->args[0]->valeur->type != INT || phrase->args[1]->valeur->type != INT){
+                    phrase->error = true;
+                    custom_error("Les deux nombres doivent être entiers", phrase);
+                }
+                phrase->valeur = new_val();
+                set_int(phrase->valeur, get_int(phrase->args[0]->valeur) % get_int(phrase->args[1]->valeur));
+            }
+            break;
+        case NEGATION_BOOLEENNE:
+            phrase->phraseId = NEGATION_BOOLEENNE;
+            if (phrase->args[0]->phraseId <= 3 && phrase->args[0]->phraseId >= 1){
+                set_bool(phrase->valeur, !(bool)return_value(phrase->args[0]));
+            }
+            break;
+        case EGALITE:
+            phrase->phraseId = EGALITE;
+            for (int i = 0; i < 2; i++){
+                tokenise(phrase->args[i]);
+                if (phrase->args[i]->phraseId > 3 || phrase->args[i]->phraseId < 1){
+                    valid = false;
+                }
+            }
+            if (valid){
+                set_bool(phrase->valeur, return_value(phrase->args[0]) == return_value(phrase->args[1]));
+            }
+            break;
+        case PLUS_GRAND:
+            phrase->phraseId = PLUS_GRAND;
+            for (int i = 0; i < 2; i++){
+                tokenise(phrase->args[i]);
+                if (phrase->args[i]->phraseId > 3 || phrase->args[i]->phraseId < 1){
+                    valid = false;
+                }
+            }
+            if (valid){
+                set_bool(phrase->valeur, return_value(phrase->args[0]) >= return_value(phrase->args[1]));
+            }
+            break;
+        case PLUS_PETIT:
+            phrase->phraseId = PLUS_PETIT;
+            for (int i = 0; i < 2; i++){
+                tokenise(phrase->args[i]);
+                if (phrase->args[i]->phraseId > 3 || phrase->args[i]->phraseId < 1){
+                    valid = false;
+                }
+            }
+            if (valid){
+                set_bool(phrase->valeur, return_value(phrase->args[0]) <= return_value(phrase->args[1]));
+            }
+            break;
+        case STRICT_PLUS_GRAND:
+            phrase->phraseId = STRICT_PLUS_GRAND;
+            for (int i = 0; i < 2; i++){
+                tokenise(phrase->args[i]);
+                if (phrase->args[i]->phraseId > 3 || phrase->args[i]->phraseId < 1){
+                    valid = false;
+                }
+            }
+            if (valid){
+                set_bool(phrase->valeur, return_value(phrase->args[0]) > return_value(phrase->args[1]));
+            }
+            break;
+        case STRICT_PLUS_PETIT:
+            phrase->phraseId = STRICT_PLUS_PETIT;
+            for (int i = 0; i < 2; i++){
+                tokenise(phrase->args[i]);
+                if (phrase->args[i]->phraseId > 3 || phrase->args[i]->phraseId < 1){
+                    valid = false;
+                }
+            }
+            if (valid){
+                set_bool(phrase->valeur, return_value(phrase->args[0]) < return_value(phrase->args[1]));
             }
             break;
         default:
