@@ -33,6 +33,8 @@ phrase_t* new_phrase(phrase_t* parent) {
     phrase->variable_call = NULL;
     phrase->liste_call = NULL;
     
+    phrase->error = false;
+    
     return phrase;
 }
 
@@ -56,7 +58,7 @@ void free_phrase(phrase_t* phrase) {
         free(phrase->variable_call);
     }
     if (phrase->liste_call != NULL){
-        free(phrase->variable_call);
+        free(phrase->liste_call);
     }
 
 
@@ -67,7 +69,7 @@ void free_phrase(phrase_t* phrase) {
 void doubleInnerSize(phrase_t* phrase) {
     phrase->innerPhrase = realloc(phrase->innerPhrase, phrase->innerPhraseSize * 2 * sizeof(phrase_t*));
     if (phrase->innerPhrase == NULL) {
-        custom_error("manque de mémoire pour innerPhrase");
+        custom_error("manque de mémoire pour innerPhrase", false);
     }
     phrase->innerPhraseSize *= 2;
 }
@@ -75,7 +77,7 @@ void doubleInnerSize(phrase_t* phrase) {
 void doubleTextSize(phrase_t* phrase) {
     phrase->text = realloc(phrase->text, phrase->textSize * 2 * sizeof(char));
     if (phrase->text == NULL) {
-        custom_error("manque de mémoire pour text");
+        custom_error("manque de mémoire pour text", false);
     }
     phrase->textSize *= 2;
 }
@@ -83,7 +85,7 @@ void doubleTextSize(phrase_t* phrase) {
 void doubleArgsSize(phrase_t* phrase) {
     phrase->args = realloc(phrase->args, phrase->argsSize * 2 * sizeof(phrase_t*));
     if (phrase->args == NULL) {
-        custom_error("manque de mémoire pour args");
+        custom_error("manque de mémoire pour args", false);
     }
     phrase->argsSize *= 2;
 }
@@ -112,11 +114,49 @@ void addToText(phrase_t* phrase, char c) {
     phrase->textLen++;
 }
 
-void _printPhrase(phrase_t* phrase, int decalage) {
-    for (int i = 0; i < decalage; i++) {
+void _printPhrase(phrase_t* phrase, int decalage, int last_elem) {
+    if (phrase->inst){
+        for (int i = 0; i < decalage; i++) {
+            printf("|\t");
+        }
+        printf("\n");
+    }
+    for (int i = 0; i < decalage-last_elem; i++) {
         printf("|\t");
     }
-    printf("%s\n", phrase->text);
+    for (int i = 0; i < last_elem && i < decalage; i++) {
+        if (last_elem && phrase->innerPhraseLen == 0 && phrase->argsLen == 0){
+            printf("\\\t");
+        }else{
+            printf("|\t");
+        }
+    }
+    printf("%s", phrase->text);
+    if (phrase->valeur != NULL && phrase->valeur->type != -1){
+        switch (phrase->valeur->type) {
+            case INT:
+                printf("  ->  %d\n", get_int(phrase->valeur));
+                break;
+            case FLOAT:
+                printf("  ->  %f\n", get_float(phrase->valeur));
+                break;
+            case BOOL:
+                if (get_bool(phrase->valeur)){
+                    printf("  ->  true\n");
+                }else{
+                    printf("  ->  false\n");
+                }
+                
+                break;
+            default:
+                printf("\n");
+                break;
+        }
+    }else if (phrase->error){
+        printf("\t\t\t <= ERROR HERE\n");
+    }else{
+        printf("\n");
+    }
 
     if (phrase->argsLen > 0) {
         for (int i = 0; i < decalage; i++) {
@@ -124,9 +164,10 @@ void _printPhrase(phrase_t* phrase, int decalage) {
         }
 
         printf("args:\n");
-        for (int i = 0; i < phrase->argsLen; i++) {
-            _printPhrase(phrase->args[i], decalage + 1);
+        for (int i = 0; i < phrase->argsLen-1; i++) {
+            _printPhrase(phrase->args[i], decalage + 1, 0);
         }
+        _printPhrase(phrase->args[phrase->argsLen-1], decalage + 1, last_elem + 1);
     }
 
     if (phrase->innerPhraseLen > 0) {
@@ -135,15 +176,16 @@ void _printPhrase(phrase_t* phrase, int decalage) {
         }
 
         printf("inner :\n");
-        for (int i = 0; i < phrase->innerPhraseLen; i++) {
-            _printPhrase(phrase->innerPhrase[i], decalage + 1);
+        for (int i = 0; i < phrase->innerPhraseLen-1; i++) {
+            _printPhrase(phrase->innerPhrase[i], decalage + 1, 0);
         }
+        _printPhrase(phrase->innerPhrase[phrase->innerPhraseLen-1], decalage + 1, last_elem + 1);
     }
 }
 
 void printPhrase(phrase_t* phrase) {
     for (int i = 0; i < phrase->innerPhraseLen; i++) {
-        _printPhrase(phrase->innerPhrase[i], 0);
+        _printPhrase(phrase->innerPhrase[i], 0, false);
     }
 }
 

@@ -39,27 +39,19 @@ void test_val(void) {
 }
 
 int main(int argc, char const* argv[]) {
-    test_val();
+    //test_val();
     
     FILE* f = fopen("testing/test.FC", "r");
     assert(f != NULL);
 
     phrase_t* p = parse_file(f);
-    phrase_t* p2 = new_phrase(p->parentPhrase);
     
-    phraseCopy(p, p2);
+
+    tokenise(p);
     
     printPhrase(p);
-    printf("====================================\n");
-    printPhrase(p2);
 
-    phrase_t* p3 = p->innerPhrase[0]->args[0];
-
-    reduce_var_and_num(p3);
-    printf("%s\n", p3->text);
-    
     free_phrase(p);
-    free_phrase(p2);
     fclose(f);
     return 0;
 }

@@ -112,7 +112,7 @@ int* eval_number(char* str_num, int len){
                 int result = match_num(str, true);
                 if (result == -1 || last_separator == '*'){
                     valid = false;
-                    printf("%d, %s, %d\n", tmp, str, ten_power);
+                    printf("error %d, '%s', %d\n", tmp, str, ten_power);
                     break;
                 }else{
                     if (result == 1 && tmp == 0){
@@ -173,7 +173,7 @@ int* eval_number(char* str_num, int len){
                     tmp = 0;
                 }else{
                     valid = false;
-                    printf("0, %s\n", str);
+                    printf("error 0, %s\n", str);
 
                     break;
                 }
