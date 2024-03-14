@@ -4,6 +4,7 @@
 #include <stdlib.h>
 
 void custom_error(char* err_message, phrase_t* phrase) {
+    phrase->error = true;
     fprintf(stderr, "\n\n========== ERROR ===========\n\n");
     fprintf(stderr, "Une erreur est survenue avec le message suivant:\n%s\n\n", err_message);
     

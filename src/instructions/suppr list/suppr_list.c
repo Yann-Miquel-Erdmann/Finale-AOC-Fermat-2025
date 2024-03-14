@@ -1,4 +1,4 @@
-#include "instructions.h"
+#include "../instructions.h"
 
 void test_inst_suppr_list(phrase_t* phrase){
     if (phrase->phraseId != -1){
@@ -9,7 +9,7 @@ void test_inst_suppr_list(phrase_t* phrase){
     strcat(result_str[0], result_str[2]);
     
     if (!strcmp(result_str[0],SUPPRESSION_LISTE_S)){
-        printf("suppression élément de la liste %s\n", result_str[1]);
+        //printf("suppression élément de la liste %s\n", result_str[1]);
         phrase->phraseId = SUPPRESSION_LISTE;
         phrase->liste_call = result_str[1];
         

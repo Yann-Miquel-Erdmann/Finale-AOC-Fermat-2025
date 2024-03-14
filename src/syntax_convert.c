@@ -18,7 +18,16 @@ char* get_first_n(char* s, int n){
     return s2;
 }
 
-float log_10_entier(int a){
+int log_10_entier(int a){
+    float i = 0;
+    while (a > 0){
+        a /= 10;
+        i += 1;
+    }
+    return i;
+}
+
+int puiss10(int a){
     float i = 1;
     while (a > 0){
         a /= 10;
@@ -43,7 +52,7 @@ char** cut_a_b (char*s, int a, int b){
         
     }else{
         
-        start = malloc(len*sizeof(char));
+        start = malloc((len+1)*sizeof(char));
         middle = malloc((len-(a+b)+1)*sizeof(char));
         end = malloc((b+1)*sizeof(char));
         int index = 0;
@@ -96,6 +105,7 @@ char** split_word(char* str, char* separator){
                 }
             }
             if (!broken){
+                str1[index] = '\0';
                 num = 2;
                 i += sep_len+1;
                 index = 0;
@@ -128,7 +138,6 @@ char** split_word(char* str, char* separator){
 }
 
 int elem_liste(char* text){
-    printf("%s\n", text);
     if (!strcmp(text, SOMME_S)){
         return SOMME;
     }
@@ -150,6 +159,30 @@ int elem_liste(char* text){
     if (!strcmp(text, NEGATION_BOOLEENNE_S)){
         return NEGATION_BOOLEENNE;
     }
+    if (!strcmp(text, SI_ALORS_S)){
+        return SI_ALORS;
+    }
+    if (!strcmp(text, SINON_S)){
+        return SINON;
+    }
+    if (!strcmp(text, TANT_QUE_S)){
+        return TANT_QUE;
+    }
+    if (!strcmp(text, POUR_SANS_PAS_S)){
+        return POUR_SANS_PAS;
+    }
+    if (!strcmp(text, POUR_AVEC_PAS_S)){
+        return POUR_AVEC_PAS;
+    }
+    if (!strcmp(text, AFFICHE_EXPR_S)){
+        return AFFICHE_EXPR;
+    }
+    if (!strcmp(text, AFFICHE_STR_S)){
+        return AFFICHE_STR;
+    }
+    if (!strcmp(text, RENVOI_FONCTION_S)){
+        return RENVOI_FONCTION;
+    }
     if (!strcmp(text, MAIN_PHRASE_S)){
         return MAIN_PHRASE;
     }
@@ -160,10 +193,10 @@ void reduce_var_and_num(phrase_t* phrase){
     if (phrase == NULL){
         return;
     }
+    test_inst_affiche_message(phrase);
     test_expr_entier(phrase);
     test_expr_flottant(phrase);
     test_expr_booleen(phrase);
-    test_expr_chaine(phrase);
     test_inst_var_init(phrase);
     test_inst_create_var(phrase);
     test_expr_access_var(phrase);
@@ -221,6 +254,10 @@ void tokenise(phrase_t* phrase){
             break;
         case SOMME:
             phrase->phraseId = SOMME;
+            if (phrase->innerPhraseLen > 0 || phrase->argsLen != 2){
+                phrase->error = true;
+                custom_error("Invalid Syntax, la somme prend 2 arguments", phrase);
+            }
             for (int i = 0; i < 2; i++){
                 tokenise(phrase->args[i]);
                 if (phrase->args[i]->phraseId > 3 || phrase->args[i]->phraseId < 1){
@@ -228,7 +265,6 @@ void tokenise(phrase_t* phrase){
                 }
             }
             if (valid){
-                phrase->valeur = new_val();
                 set_float(phrase->valeur, return_value(phrase->args[0]) + return_value(phrase->args[1]));
                 if (!(phrase->args[0]->valeur->type == FLOAT && phrase->args[1]->valeur->type == FLOAT)){
                     set_int(phrase->valeur, get_float(phrase->valeur));
@@ -238,6 +274,10 @@ void tokenise(phrase_t* phrase){
 
         case DIFFERENCE:
             phrase->phraseId = DIFFERENCE;
+            if (phrase->innerPhraseLen > 0 || phrase->argsLen != 2){
+                phrase->error = true;
+                custom_error("Invalid Syntax, la différence prend 2 arguments", phrase);
+            }
             for (int i = 0; i< 2; i++){
                 tokenise(phrase->args[i]);
                 if (phrase->args[i]->phraseId > 3 || phrase->args[i]->phraseId < 1){
@@ -245,7 +285,6 @@ void tokenise(phrase_t* phrase){
                 }
             }
             if (valid){
-                phrase->valeur = new_val();
                 set_float(phrase->valeur, return_value(phrase->args[0]) - return_value(phrase->args[1]));
                 if (!(phrase->args[0]->valeur->type == FLOAT && phrase->args[1]->valeur->type == FLOAT)){
                     set_int(phrase->valeur, get_float(phrase->valeur));
@@ -253,6 +292,10 @@ void tokenise(phrase_t* phrase){
             }
             break;
         case PRODUIT:
+            if (phrase->innerPhraseLen > 0 || phrase->argsLen != 2){
+                phrase->error = true;
+                custom_error("Invalid Syntax, le produit prend 2 arguments", phrase);
+            }
             phrase->phraseId = PRODUIT;
             for (int i = 0; i< 2; i++){
                 tokenise(phrase->args[i]);
@@ -261,7 +304,6 @@ void tokenise(phrase_t* phrase){
                 }
             }
             if (valid){
-                phrase->valeur = new_val();
                 set_float(phrase->valeur, return_value(phrase->args[0]) * return_value(phrase->args[1]));
                 if (!(phrase->args[0]->valeur->type == FLOAT && phrase->args[1]->valeur->type == FLOAT)){
                     set_int(phrase->valeur, get_float(phrase->valeur));
@@ -269,6 +311,10 @@ void tokenise(phrase_t* phrase){
             }
             break;
         case QUOTIENT:
+            if (phrase->innerPhraseLen > 0 || phrase->argsLen != 2){
+                phrase->error = true;
+                custom_error("Invalid Syntax, quotient prend 2 arguments", phrase);
+            }
             phrase->phraseId = QUOTIENT;
             for (int i = 0; i< 2; i++){
                 tokenise(phrase->args[i]);
@@ -281,11 +327,14 @@ void tokenise(phrase_t* phrase){
                     phrase->error = true;
                     custom_error("Division par 0", phrase);
                 }
-                phrase->valeur = new_val();
                 set_float(phrase->valeur, return_value(phrase->args[0]) / return_value(phrase->args[1]));
             }
             break;
         case QUOTIENT_ENTIER:
+            if (phrase->innerPhraseLen > 0 || phrase->argsLen != 2){
+                phrase->error = true;
+                custom_error("Invalid Syntax, le quotient entier prend 2 arguments", phrase);
+            }
             phrase->phraseId = QUOTIENT_ENTIER;
             for (int i = 0; i < 2; i++){
                 tokenise(phrase->args[i]);
@@ -298,11 +347,14 @@ void tokenise(phrase_t* phrase){
                     phrase->error = true;
                     custom_error("Division par 0", phrase);
                 }
-                phrase->valeur = new_val();
                 set_int(phrase->valeur, (int)(return_value(phrase->args[0]) / return_value(phrase->args[1])));
             }
             break;
         case RESTE:
+            if (phrase->innerPhraseLen > 0 || phrase->argsLen != 2){
+                phrase->error = true;
+                custom_error("Invalid Syntax, le reste prend 2 arguments", phrase);
+            }
             phrase->phraseId = RESTE;
             for (int i = 0; i < 2; i++){
                 tokenise(phrase->args[i]);
@@ -319,17 +371,24 @@ void tokenise(phrase_t* phrase){
                     phrase->error = true;
                     custom_error("Les deux nombres doivent être entiers", phrase);
                 }
-                phrase->valeur = new_val();
-                set_int(phrase->valeur, get_int(phrase->args[0]->valeur) % get_int(phrase->args[1]->valeur));
+                    set_int(phrase->valeur, get_int(phrase->args[0]->valeur) % get_int(phrase->args[1]->valeur));
             }
             break;
         case NEGATION_BOOLEENNE:
+            if (phrase->innerPhraseLen > 0 || phrase->argsLen != 1){
+                phrase->error = true;
+                custom_error("Invalid Syntax, la négation bouléenne prend 1 argument", phrase);
+            }
             phrase->phraseId = NEGATION_BOOLEENNE;
             if (phrase->args[0]->phraseId <= 3 && phrase->args[0]->phraseId >= 1){
                 set_bool(phrase->valeur, !(bool)return_value(phrase->args[0]));
             }
             break;
         case EGALITE:
+            if (phrase->innerPhraseLen > 0 || phrase->argsLen != 2){
+                phrase->error = true;
+                custom_error("Invalid Syntax, l'égalité prend 2 arguments", phrase);
+            }
             phrase->phraseId = EGALITE;
             for (int i = 0; i < 2; i++){
                 tokenise(phrase->args[i]);
@@ -342,6 +401,10 @@ void tokenise(phrase_t* phrase){
             }
             break;
         case PLUS_GRAND:
+            if (phrase->innerPhraseLen > 0 || phrase->argsLen != 2){
+                phrase->error = true;
+                custom_error("Invalid Syntax, la comparaison prend 2 arguments", phrase);
+            }
             phrase->phraseId = PLUS_GRAND;
             for (int i = 0; i < 2; i++){
                 tokenise(phrase->args[i]);
@@ -354,6 +417,10 @@ void tokenise(phrase_t* phrase){
             }
             break;
         case PLUS_PETIT:
+            if (phrase->innerPhraseLen > 0 || phrase->argsLen != 2){
+                phrase->error = true;
+                custom_error("Invalid Syntax, la comparaison prend 2 arguments", phrase);
+            }
             phrase->phraseId = PLUS_PETIT;
             for (int i = 0; i < 2; i++){
                 tokenise(phrase->args[i]);
@@ -366,6 +433,10 @@ void tokenise(phrase_t* phrase){
             }
             break;
         case STRICT_PLUS_GRAND:
+            if (phrase->innerPhraseLen > 0 || phrase->argsLen != 2){
+                phrase->error = true;
+                custom_error("Invalid Syntax, la comparaison prend 2 arguments", phrase);
+            }
             phrase->phraseId = STRICT_PLUS_GRAND;
             for (int i = 0; i < 2; i++){
                 tokenise(phrase->args[i]);
@@ -378,6 +449,10 @@ void tokenise(phrase_t* phrase){
             }
             break;
         case STRICT_PLUS_PETIT:
+            if (phrase->innerPhraseLen > 0 || phrase->argsLen != 2){
+                phrase->error = true;
+                custom_error("Invalid Syntax, la comparaison prend 2 arguments", phrase);
+            }
             phrase->phraseId = STRICT_PLUS_PETIT;
             for (int i = 0; i < 2; i++){
                 tokenise(phrase->args[i]);
@@ -388,6 +463,89 @@ void tokenise(phrase_t* phrase){
             if (valid){
                 set_bool(phrase->valeur, return_value(phrase->args[0]) < return_value(phrase->args[1]));
             }
+            break;
+        case SI_ALORS:
+            if (phrase->argsLen != 1){
+                phrase->error = true;
+                custom_error("Invalid Syntax, si prend un arguments", phrase);
+            }
+            phrase->phraseId = SI_ALORS;
+            tokenise(phrase->args[0]);
+            for (int i = 0; i<phrase->innerPhraseLen; i++){
+                tokenise(phrase->innerPhrase[i]);
+            }
+            break;
+        case SINON:
+            if (phrase->innerPhraseLen > 0 || phrase->argsLen != 0){
+                phrase->error = true;
+                custom_error("Invalid Syntax, sinon ne prend pas arguments", phrase);
+            }
+            break;
+        case TANT_QUE:
+            if (phrase->argsLen != 1){
+                phrase->error = true;
+                custom_error("Invalid Syntax, tant que prend un arguments", phrase);
+            }
+            phrase->phraseId = TANT_QUE;
+            tokenise(phrase->args[0]);
+            for (int i = 0; i<phrase->innerPhraseLen; i++){
+                tokenise(phrase->innerPhrase[i]);
+            }
+            break;
+        case POUR_SANS_PAS:
+            if (phrase->argsLen != 3){
+                phrase->error = true;
+                custom_error("Invalid Syntax, pour sans pas prend 3 arguments", phrase);
+            }
+            phrase->phraseId = POUR_SANS_PAS;
+            tokenise(phrase->args[0]);
+            tokenise(phrase->args[1]);
+            tokenise(phrase->args[2]);
+            for (int i = 0; i<phrase->innerPhraseLen; i++){
+                tokenise(phrase->innerPhrase[i]);
+            }
+            break;
+        case POUR_AVEC_PAS:
+            if (phrase->argsLen != 4){
+                phrase->error = true;
+                custom_error("Invalid Syntax, pour avec un pas prend 4 arguments", phrase);
+            }
+            phrase->phraseId = POUR_AVEC_PAS;
+            tokenise(phrase->args[0]);
+            tokenise(phrase->args[1]);
+            tokenise(phrase->args[2]);
+            tokenise(phrase->args[3]);
+            for (int i = 0; i<phrase->innerPhraseLen; i++){
+                tokenise(phrase->innerPhrase[i]);
+            }
+            break;
+        case AFFICHE_EXPR:
+            if (phrase->argsLen != 1 || phrase->innerPhraseLen > 0){
+                phrase->error = true;
+                custom_error("Invalid Syntax, affiche expression prend un arguments", phrase);
+            }
+            phrase->phraseId = AFFICHE_EXPR;
+            tokenise(phrase->args[0]);
+            break;
+        case AFFICHE_STR:
+            if (phrase->argsLen != 1 || phrase->innerPhraseLen > 0){
+                phrase->error = true;
+                custom_error("Invalid Syntax, affiche message prend un arguments", phrase);
+            }
+            if (phrase->args[0]->phraseId != EXPR_CHAINE){
+                phrase->error = true;
+                custom_error("Invalid Syntax, affiche message prend un message", phrase);
+            }
+            phrase->phraseId = AFFICHE_STR;
+            tokenise(phrase->args[0]);
+            break;
+        case RENVOI_FONCTION:
+            if (phrase->argsLen != 1 || phrase->innerPhraseLen > 0){
+                phrase->error = true;
+                custom_error("Invalid Syntax, renvoi prend un arguments", phrase);
+            }
+            phrase->phraseId = RENVOI_FONCTION;
+            tokenise(phrase->args[0]);
             break;
         default:
             reduce_var_and_num(phrase);
@@ -401,8 +559,7 @@ void tokenise(phrase_t* phrase){
     
 }
 
-phrase_t* calculate_args(phrase_t* phrase){
+// checks the essential syntax (number of arguments, if can have inners, if the else ius well placed ...)
+void check_syntax(phrase_t* phrase){
     
-    
-    return phrase;
 }

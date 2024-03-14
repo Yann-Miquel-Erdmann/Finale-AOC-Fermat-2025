@@ -116,17 +116,18 @@
 // comparateurs
 
 #define EGALITE_S           "La valeur de * est égale à la valeur de *?" //fait
-#define PLUS_GRAND_S        "La valeur de * est plus grande que la valeur de *?"
-#define PLUS_PETIT_S        "La valeur de * est plus petite que la valeur de *?"
-#define STRICT_PLUS_GRAND_S "La valeur de * est strictement plus grande que la valeur de *?"
-#define STRICT_PLUS_PETIT_S "La valeur de * est strictement plus petite que la valeur de *?"
+#define PLUS_GRAND_S        "La valeur de * est plus grande que la valeur de *?" // fait
+#define PLUS_PETIT_S        "La valeur de * est plus petite que la valeur de *?" // fait
+#define STRICT_PLUS_GRAND_S "La valeur de * est strictement plus grande que la valeur de *?" // fait
+#define STRICT_PLUS_PETIT_S "La valeur de * est strictement plus petite que la valeur de *?" // fait
 
 // conditions
-#define SI_ALORS_S  "Si * alors faire:*."
-#define SINON_S     "Sinon faire:*."
+#define SI_ALORS_S  "Si * alors faire:*." // fait
+#define SINON_S     "Sinon faire:*." // fait
 
 // boucles
-#define TANT_QUE_S      "Tant que * faire:*."
+#define TANT_QUE_S      "Tant que * faire:*." // fait
+
 #define POUR_SANS_PAS_S "Pour * allant de * jusqu'à * faire:*."
 #define POUR_AVEC_PAS_S "Pour * allant de * jusqu'à * en utilisant un pas de * faire:*."
 
