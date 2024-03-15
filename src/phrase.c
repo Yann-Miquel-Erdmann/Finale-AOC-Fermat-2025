@@ -63,6 +63,10 @@ void free_phrase(phrase_t* phrase) {
         free(phrase->liste_call);
     }
 
+    if (phrase->expr){
+        free(phrase->valeur);
+    }
+    
     free(phrase);
 }
 
@@ -116,7 +120,10 @@ void addToText(phrase_t* phrase, char c) {
 }
 
 void _printPhrase(phrase_t* phrase, int decalage, int last_elem) {
-    if (phrase->inst) {
+    if (phrase == NULL){
+        return;
+    }
+    if (phrase->inst){
         for (int i = 0; i < decalage; i++) {
             printf("|\t");
         }
@@ -133,27 +140,27 @@ void _printPhrase(phrase_t* phrase, int decalage, int last_elem) {
         }
     }
     printf("%s", phrase->text);
-    if (phrase->valeur != NULL && phrase->valeur->type != -1) {
+    if (phrase->expr && phrase->valeur->type != -1){
         switch (phrase->valeur->type) {
             case INT:
-                printf("  ->  %d\n", get_int(phrase->valeur));
+                printf("  ->  %d", get_int(phrase->valeur));
                 break;
             case FLOAT:
-                printf("  ->  %f\n", get_float(phrase->valeur));
+                printf("  ->  %f", get_float(phrase->valeur));
                 break;
             case BOOL:
-                if (get_bool(phrase->valeur)) {
-                    printf("  ->  true\n");
-                } else {
-                    printf("  ->  false\n");
+                if (get_bool(phrase->valeur)){
+                    printf("  ->  true");
+                }else{
+                    printf("  ->  false");
                 }
 
                 break;
             default:
-                printf("\n");
                 break;
         }
-    } else if (phrase->error) {
+    }
+    if (phrase->error){
         printf("\t\t\t <= ERROR HERE\n");
     } else {
         printf("\n");

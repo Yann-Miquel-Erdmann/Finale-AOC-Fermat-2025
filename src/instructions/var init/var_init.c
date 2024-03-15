@@ -6,9 +6,9 @@ bool test_inst_var_init(phrase_t* phrase, function_t* function) {
 
     char** result_str = cut_a_b(phrase->text, 5, 31);
     strcat(result_str[0], result_str[2]);
-
-    if (!strcmp(result_str[0], DEFINITION_VARIABLE_AVEC_INIT_S)) {
-        printf("variable init: %s\n", result_str[1]);
+    
+    if (!strcmp(result_str[0], DEFINITION_VARIABLE_AVEC_INIT_S)){
+        //printf("variable init: %s\n", result_str[1]);
         phrase->phraseId = DEFINITION_VARIABLE_AVEC_INIT;
         variable_t* var = new_variable(result_str[1]);
         addToVariableList(function->env, var);

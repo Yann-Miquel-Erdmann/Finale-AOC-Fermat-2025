@@ -1,4 +1,5 @@
 #include "../expressions.h"
+#include "../expressions.h"
 
 bool test_expr_entier(phrase_t* phrase) {
     if (phrase->phraseId != -1) {
@@ -10,11 +11,10 @@ bool test_expr_entier(phrase_t* phrase) {
 
     if (!strcmp(result_str[0], EXPR_ENTIER_S)) {
         int* result_num = eval_number(result_str[1], (int)strlen(result_str[1]));
-
-        if (result_num[0]) {
-            printf("integer: %d\n", result_num[1]);
-
-            phrase->valeur = new_val();
+        
+        if (result_num[0]){
+            //printf("integer: %d\n", result_num[1]);
+            
             phrase->phraseId = EXPR_ENTIER;
             set_int(phrase->valeur, result_num[1]);
         } else {
@@ -30,6 +30,7 @@ bool test_expr_entier(phrase_t* phrase) {
         }
         free(result_num);
     }
+    free(result_str[1]);
     free_pointers(result_str);
 
     // renvoie true si l'expression est un entier

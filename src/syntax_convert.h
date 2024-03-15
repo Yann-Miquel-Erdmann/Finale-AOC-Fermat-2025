@@ -14,7 +14,8 @@
 void tokenise(phrase_t* phrase, function_t* function, function_list_t* function_list);
 char** cut_a_b (char*s, int a, int b);
 char** split_word(char* str, char* separator);
-float log_10_entier(int a);
+int log_10_entier(int a);
+int puiss10(int a);
 void free_pointers(char** ptr);
 
 #endif

@@ -2,6 +2,7 @@
 #define expressions_h
 
 #include "../syntax_convert.h"
+#include "../syntax_convert.h"
 #include "assert.h"
 #include "../eval_numbers.h"
 #include "../custom_error.h"

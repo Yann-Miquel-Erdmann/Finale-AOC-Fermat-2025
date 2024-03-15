@@ -17,6 +17,7 @@ bool get_bool(val_t* v);
 void set_int(val_t* v, int valeur);
 void set_float(val_t* v, float valeur);
 void set_bool(val_t* v, bool valeur);
+void set_undefined(val_t* v);
 
 void print_val(val_t* v);
 

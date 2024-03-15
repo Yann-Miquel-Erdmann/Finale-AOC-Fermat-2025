@@ -1,6 +1,6 @@
 #  Problèmes à régler
 
-## si imbriqué
+## ~~si imbriqué~~ => résolution: aucune, on laisse comme ça
 avec la syntaxe actuelle, on a:
 ```
 Si on a La valeur de la variable x? qui plus petit que L'entier trois? alors:
