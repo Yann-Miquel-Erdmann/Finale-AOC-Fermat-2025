@@ -1,4 +1,4 @@
-#include "../instruction.h"
+#include "../instructions.h"
 bool test_inst_add_list(phrase_t* phrase, function_t* function) {
     if (phrase->phraseId != -1) {
         return false;

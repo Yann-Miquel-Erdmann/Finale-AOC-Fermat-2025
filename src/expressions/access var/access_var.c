@@ -1,6 +1,6 @@
 #include "../expressions.h"
 
-void test_expr_access_var(phrase_t* phrase) {
+bool test_expr_access_var(phrase_t* phrase, function_t* func) {
     if (phrase->phraseId != -1) {
         return false;
     }
@@ -11,7 +11,8 @@ void test_expr_access_var(phrase_t* phrase) {
     if (!strcmp(result_str[0], ACCESSION_VARIABLE_S)) {
         printf("valeur de la variable %s\n", result_str[1]);
         phrase->phraseId = ACCESSION_VARIABLE;
-        phrase->variable = result_str[1];
+        phrase->variable = getVariable(func->env, result_str[1]);
+                
     } else {
         free(result_str[1]);
     }

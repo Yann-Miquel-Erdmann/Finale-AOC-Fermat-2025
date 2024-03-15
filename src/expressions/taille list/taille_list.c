@@ -1,6 +1,6 @@
 #include "../expressions.h"
 
-void test_expr_taille_list(phrase_t* phrase, function_t* function) {
+bool test_expr_taille_list(phrase_t* phrase, function_t* function) {
     if (phrase->phraseId != -1) {
         return;
     }

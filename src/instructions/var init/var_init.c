@@ -1,4 +1,4 @@
-#include "../instruction.h"
+#include "../instructions.h"
 bool test_inst_var_init(phrase_t* phrase, function_t* function) {
     if (phrase->phraseId != -1) {
         return false;
@@ -12,7 +12,7 @@ bool test_inst_var_init(phrase_t* phrase, function_t* function) {
         phrase->phraseId = DEFINITION_VARIABLE_AVEC_INIT;
         variable_t* var = new_variable(result_str[1]);
         addToVariableList(function->env, var);
-        phrase->variable_call = var;
+        phrase->variable = var;
 
     } else {
         free(result_str[1]);

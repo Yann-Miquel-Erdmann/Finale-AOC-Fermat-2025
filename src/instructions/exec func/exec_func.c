@@ -1,5 +1,4 @@
-#include "../instruction.h"
-#include "function.h"
+#include "../instructions.h"
 bool test_inst_exec_func(phrase_t* phrase, function_list_t* function_list) {
     if (phrase->phraseId != -1) {
         return false;

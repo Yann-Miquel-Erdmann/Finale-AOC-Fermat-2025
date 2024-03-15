@@ -1,6 +1,6 @@
 #include "../expressions.h"
 
-bool test_expr_func_call(phrase_t* phrase) {
+bool test_expr_func_call(phrase_t* phrase, function_list_t* func_list) {
     if (phrase->phraseId != -1) {
         return false;
     }
@@ -11,7 +11,8 @@ bool test_expr_func_call(phrase_t* phrase) {
     if (!strcmp(result_str[0], APPEL_VALEUR_FONCTION_S)) {
         printf("appel de la fonction %s\n", result_str[1]);
         phrase->phraseId = APPEL_VALEUR_FONCTION;
-        phrase->function = result_str[1];
+
+        phrase->function = getFunction(func_list, result_str[1]);
 
     } else {
         free(result_str[1]);
