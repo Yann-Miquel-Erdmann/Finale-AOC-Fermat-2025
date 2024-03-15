@@ -1,22 +1,24 @@
-#include "expressions.h"
+#include "../expressions.h"
 
-void test_expr_access_var(phrase_t* phrase){
-    if (phrase->phraseId != -1){
-        return;
+void test_expr_access_var(phrase_t* phrase) {
+    if (phrase->phraseId != -1) {
+        return false;
     }
-    
+
     char** result_str = cut_a_b(phrase->text, 12, 1);
     strcat(result_str[0], result_str[2]);
-    
-    if (!strcmp(result_str[0], ACCESSION_VARIABLE_S)){
+
+    if (!strcmp(result_str[0], ACCESSION_VARIABLE_S)) {
         printf("valeur de la variable %s\n", result_str[1]);
         phrase->phraseId = ACCESSION_VARIABLE;
-        phrase->variable_call = result_str[1];
-    }else{
+        phrase->variable = result_str[1];
+    } else {
         free(result_str[1]);
     }
-    
+
     free(result_str[0]);
     free(result_str[2]);
     free(result_str);
+    // renvoie true si l'expression est une access var
+    return phrase->phraseId != -1;
 }

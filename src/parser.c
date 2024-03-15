@@ -103,7 +103,7 @@ phrase_t* parse_file(FILE* f) {
         strcat(err_mess, "Syntax error on instruction: \"");
         strcat(err_mess, phraseActuelle->text);
         strcat(err_mess, "\"\n\t* \tMissing point here :  ");
-        for (int i = 0; i<strlen(phraseActuelle->text); i++){
+        for (int i = 0; i< (int) strlen(phraseActuelle->text); i++){
             strcat(err_mess, "~");
         }
         strcat(err_mess, "^");

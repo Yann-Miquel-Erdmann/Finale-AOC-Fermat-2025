@@ -4,8 +4,11 @@
 
 #include "stdbool.h"
 #include "val.h"
+#include "function.h"
+#include "variable.h"
 
-
+// def de la structure function pour le cross referencing
+typedef struct function function_t;
 
 // structure de l'instruction
 typedef struct phrase {
@@ -33,10 +36,11 @@ typedef struct phrase {
     val_t* valeur; // valeur de retour de l'expression
 
     // variables et fonction appelées dans la phrase actuelle (ne peut y en avoir qu'un par expression)
-    char* function_call;
-    char* variable_call;
+    function_t* function;
+    variable_t* variable;
     char* liste_call;
     
+    bool constant; 
     bool error;
 } phrase_t;
 

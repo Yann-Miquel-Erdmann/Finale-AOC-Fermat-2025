@@ -8,9 +8,10 @@
 
 
 // constantes structures environnement_t
-#define DEFAULT_VARIABLES_LIST_LEN 128
-#define DEFAULT_VARIABLES_LIST 10
-#define DEFAULT_VARIABLES_LIST 20
+#define DEFAULT_VARIABLES_LIST_LEN 64
+
+// constantes structures function_t
+#define DEFAULT_FUNCTION_LIST_LEN 64
 
 // val_t type
 #define INT 1
