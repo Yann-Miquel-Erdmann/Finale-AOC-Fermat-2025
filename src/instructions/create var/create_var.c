@@ -10,7 +10,7 @@ bool test_inst_create_var(phrase_t* phrase, function_t* function) {
     if (!strcmp(result_str[0], CREATION_VARIABLE_SANS_INIT_S)){
         //printf("variable sans init: %s\n", result_str[1]);
         phrase->phraseId = CREATION_VARIABLE_SANS_INIT;
-        phrase->variable = getVariable(function->env->variable_list, result_str[1]);
+        phrase->variable = getVariable(function->env, result_str[1]);
     } else {
         free(result_str[1]);
     }

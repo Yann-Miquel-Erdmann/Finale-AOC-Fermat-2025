@@ -3,7 +3,7 @@
 
 bool test_expr_taille_list(phrase_t* phrase, function_t* function) {
     if (phrase->phraseId != -1) {
-        return;
+        return false;
     }
 
     char** result_str = cut_a_b(phrase->text, 22, 1);
@@ -19,4 +19,7 @@ bool test_expr_taille_list(phrase_t* phrase, function_t* function) {
     }
 
     free_pointers(result_str);
+
+    // renvoie true si l'expression est une taille list
+    return phrase->phraseId != -1;
 }

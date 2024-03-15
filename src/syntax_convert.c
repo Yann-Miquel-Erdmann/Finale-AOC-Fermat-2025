@@ -230,7 +230,7 @@ void tokenise(phrase_t* phrase, function_t* function, function_list_t* func_list
                 custom_error("Invalid Syntax, la somme prend 2 arguments", phrase);
             }
             for (int i = 0; i < 2; i++){
-                tokenise(phrase->args[i]);
+                tokenise(phrase->args[i], function, func_list);
                 if (phrase->args[i]->phraseId > 3 || phrase->args[i]->phraseId < 1){
                     valid = false;
                 }
@@ -250,7 +250,7 @@ void tokenise(phrase_t* phrase, function_t* function, function_list_t* func_list
                 custom_error("Invalid Syntax, la différence prend 2 arguments", phrase);
             }
             for (int i = 0; i< 2; i++){
-                tokenise(phrase->args[i]);
+                tokenise(phrase->args[i], function, func_list);
                 if (phrase->args[i]->phraseId > 3 || phrase->args[i]->phraseId < 1){
                     valid = false;
                 }
@@ -443,7 +443,7 @@ void tokenise(phrase_t* phrase, function_t* function, function_list_t* func_list
                 custom_error("Invalid Syntax, affiche expression prend un arguments", phrase);
             }
             phrase->phraseId = AFFICHE_EXPR;
-            tokenise(phrase->args[0]);
+            tokenise(phrase->args[0], function, func_list);
             break;
         case AFFICHE_STR:
             if (phrase->argsLen != 1 || phrase->innerPhraseLen > 0){
@@ -455,7 +455,7 @@ void tokenise(phrase_t* phrase, function_t* function, function_list_t* func_list
                 custom_error("Invalid Syntax, affiche message prend un message", phrase);
             }
             phrase->phraseId = AFFICHE_STR;
-            tokenise(phrase->args[0]);
+            tokenise(phrase->args[0], function, func_list);
             break;
         case RENVOI_FONCTION:
             if (phrase->argsLen != 1 || phrase->innerPhraseLen > 0){
@@ -463,13 +463,12 @@ void tokenise(phrase_t* phrase, function_t* function, function_list_t* func_list
                 custom_error("Invalid Syntax, renvoi prend un arguments", phrase);
             }
             phrase->phraseId = RENVOI_FONCTION;
-            tokenise(phrase->args[0]);
+            tokenise(phrase->args[0], function, func_list);
             break;
         default:
             if (test_expr_entier(phrase)){}
             else if (test_expr_flottant(phrase)){}
             else if (test_expr_booleen(phrase)){}
-            else if (test_expr_chaine(phrase)){}
             else if (test_inst_var_init(phrase, function)){}
             else if (test_inst_create_var(phrase, function)){}
             else if (test_expr_access_var(phrase, function)){}
@@ -504,7 +503,8 @@ void tokenise(phrase_t* phrase, function_t* function, function_list_t* func_list
 
 phrase_t* calculate_args(phrase_t* phrase) {
     return phrase;
+}
 // checks the essential syntax (number of arguments, if can have inners, if the else ius well placed ...)
 void check_syntax(phrase_t* phrase){
-    
+    return;
 }

@@ -5,6 +5,7 @@
 #include "stdio.h"
 #include "../src/syntax_convert.h"
 #include "../src/function.h"
+#include "../src/eval_numbers.h"
 
 int test_number(void) {
     char* s = "moins trois-cent-vingt-sept millions deux-cent-quatre-vingt-douze mille six-cent-trente-huit";

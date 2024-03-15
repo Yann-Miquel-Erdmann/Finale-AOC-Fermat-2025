@@ -1,7 +1,7 @@
 #include "../instructions.h"
 bool test_inst_def_func_args(phrase_t* phrase, function_list_t* function_list) {
     if (phrase->phraseId != -1) {
-        return;
+        return false;
     }
 
     char** result_str = cut_a_b(phrase->text, 5, 11);
@@ -15,7 +15,8 @@ bool test_inst_def_func_args(phrase_t* phrase, function_list_t* function_list) {
     if (!strcmp(result_str[0], DEFINITION_FONCTION_ARGUMENT_S)) {
         printf("definition de la fonction %s avec arguments\n", result_str[1]);
         phrase->phraseId = DEFINITION_FONCTION_ARGUMENT;
-        phrase->variable = result_str_2[1];
+
+        // phrase->variable = result_str_2[1];
         addToFunctionList(function_list, new_function(result_str_2[0], phrase));
 
     } else {
