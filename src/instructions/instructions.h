@@ -1,17 +1,18 @@
 #ifndef instructions_h
 #define instructions_h
 
-#include "../syntax_convert.h"
 #include <assert.h>
-#include "../eval_numbers.h"
-#include "../custom_error.h"
 #include <stdio.h>
 #include <stdlib.h>
-#include "../phrase.h"
-#include "../constants.h"
 #include <string.h>
+
+#include "../constants.h"
+#include "../custom_error.h"
+#include "../eval_numbers.h"
+#include "../structures/function.h"
+#include "../structures/phrase.h"
+#include "../structures/environnement.h"
 #include "../syntax_convert.h"
-#include "../function.h"
 
 bool test_inst_var_init(phrase_t* phrase, function_t* function);
 bool test_inst_create_var(phrase_t* phrase, function_t* function);

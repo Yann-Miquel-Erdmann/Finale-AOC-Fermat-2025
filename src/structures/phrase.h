@@ -1,11 +1,12 @@
 #ifndef phrase_h
 #define phrase_h
 
+#include <stdbool.h>
+
 #include "function.h"
-#include "stdbool.h"
+#include "liste.h"
 #include "val.h"
 #include "variable.h"
-#include "liste.h"
 
 // def de la structure function pour le cross referencing
 typedef struct function function_t;

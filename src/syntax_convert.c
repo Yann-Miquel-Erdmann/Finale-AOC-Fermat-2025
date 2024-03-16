@@ -1,9 +1,10 @@
 #include "syntax_convert.h"
 
-#include "assert.h"
+#include <assert.h>
+
 #include "custom_error.h"
 #include "eval_numbers.h"
-#include "function.h"
+#include "structures/function.h"
 
 void free_pointers(char** ptr) {
     free(ptr[0]);
@@ -489,7 +490,6 @@ void tokenise(phrase_t* phrase, function_t* function, function_list_t* func_list
             }
 
             if (phrase->phraseId == DEFINITION_FONCTION || phrase->phraseId == DEFINITION_FONCTION_ARGUMENT) {
-                
                 for (int i = 0; i < phrase->innerPhraseLen; i++) {
                     tokenise(phrase->innerPhrase[i], phrase->function, func_list);
                 }

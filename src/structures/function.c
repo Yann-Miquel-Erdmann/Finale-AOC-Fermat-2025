@@ -3,8 +3,8 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "constants.h"
-#include "custom_error.h"
+#include "../constants.h"
+#include "../custom_error.h"
 
 void free_function_t(function_t* func) {
     free_phrase(func->ast);

@@ -1,21 +1,22 @@
 #include "parser.h"
 
+#include <stdlib.h>
+#include <string.h>
+
 #include "constants.h"
-#include "stdlib.h"
-#include "val.h"
 #include "custom_error.h"
-#include "string.h"
+#include "structures/val.h"
 #include "syntax_convert.h"
 
-char* add_number_str(char* str, int n){
-    char* final = malloc((strlen(str)+log_10_entier(n)+1)*sizeof(char));
+char* add_number_str(char* str, int n) {
+    char* final = malloc((strlen(str) + log_10_entier(n) + 1) * sizeof(char));
     strcpy(final, str);
-    char* num = malloc((log_10_entier(n)+1)*sizeof(char));
-    int index = log_10_entier(n)-1;
-    while (n > 0){
-        num[index] = (n%10)+48;
+    char* num = malloc((log_10_entier(n) + 1) * sizeof(char));
+    int index = log_10_entier(n) - 1;
+    while (n > 0) {
+        num[index] = (n % 10) + 48;
         n /= 10;
-        index --;
+        index--;
     }
     strcat(final, num);
     free(num);
@@ -39,11 +40,11 @@ phrase_t* parse_file(FILE* f) {
     char buffer = '\0';
     int missing_point = -1;
     int line = 0;
-    
+
     char c = '\0';
     while (fscanf(f, "%c", &c) != EOF) {
         if (is_uppercase(c)) {
-            if (phraseActuelle->textLen > 0 && phraseActuelle->text[phraseActuelle->textLen-1] != '*'){
+            if (phraseActuelle->textLen > 0 && phraseActuelle->text[phraseActuelle->textLen - 1] != '*') {
                 addToText(phraseActuelle, '*');
             }
             addToArg(phraseActuelle, new_phrase(phraseActuelle));
@@ -61,9 +62,9 @@ phrase_t* parse_file(FILE* f) {
                     phraseActuelle->expr = false;
 
                     phraseActuelle = phraseActuelle->parentPhrase;
-                    
-                    if (phraseActuelle == NULL){
-                        custom_error(add_number_str("Il y a un point de trop à la ligne ", line+1), NULL);
+
+                    if (phraseActuelle == NULL) {
+                        custom_error(add_number_str("Il y a un point de trop à la ligne ", line + 1), NULL);
                     }
 
                     // la phrase est une instruction et on l'ajoute
@@ -81,35 +82,31 @@ phrase_t* parse_file(FILE* f) {
                     addToText(phraseActuelle, '\0');
                     phraseActuelle->expr = true;
                     phraseActuelle->inst = false;
-                    
-                    
+
                     phraseActuelle->valeur = new_val();
                     set_undefined(phraseActuelle->valeur);
-                    
-                    
+
                     phraseActuelle = phraseActuelle->parentPhrase;
                     break;
 
                 default:
-                    if (c == '\n'){
+                    if (c == '\n') {
                         line++;
                     }
                     // n'ajoute pas la virgule et l'espace entre les différents arguments
-                    if ((c == ',' && phraseActuelle->text[phraseActuelle->textLen-1] == '*') || (c == ' ' && buffer == ',')){
+                    if ((c == ',' && phraseActuelle->text[phraseActuelle->textLen - 1] == '*') || (c == ' ' && buffer == ',')) {
                         break;
                     }
                     // ignore les sauts de lignes et les tabulations
                     if ((c == '\n' && (buffer == '.' || buffer == ':')) || c == '\t') {
                         break;
-                    }else if (c == '\n'){
+                    } else if (c == '\n') {
                         // erreur manque de point en fin de ligne
-                        
+
                         custom_error(add_number_str("Il manque un point à la fin de la ligne ", line), NULL);
                         missing_point = 1;
                         break;
                     }
-                    
-                    
 
                     // n'ajoute pas les espaces en debut de ligne ou après un espace
                     if (c == ' ' && (phraseActuelle->textLen == 0 || phraseActuelle->text[phraseActuelle->textLen - 1] == ' ')) {
@@ -120,21 +117,21 @@ phrase_t* parse_file(FILE* f) {
                     addToText(phraseActuelle, c);
                     break;
             }
-            if (missing_point != -1){
+            if (missing_point != -1) {
                 break;
             }
         }
-        if (c != '\n' || buffer == ':'){
+        if (c != '\n' || buffer == ':') {
             buffer = c;
         }
     }
-    if (mainPhrase != phraseActuelle){
+    if (mainPhrase != phraseActuelle) {
         // probablement à changer + essayer de trouver où est-ce qu'il manque un point
-        char* err_mess = malloc((strlen(phraseActuelle->text)*2+31)*sizeof(char));
+        char* err_mess = malloc((strlen(phraseActuelle->text) * 2 + 31) * sizeof(char));
         strcat(err_mess, "Syntax error on instruction: \"");
         strcat(err_mess, phraseActuelle->text);
         strcat(err_mess, "\"\n\t* \tMissing point here :  ");
-        for (int i = 0; i< (int) strlen(phraseActuelle->text); i++){
+        for (int i = 0; i < (int)strlen(phraseActuelle->text); i++) {
             strcat(err_mess, "~");
         }
         strcat(err_mess, "^");

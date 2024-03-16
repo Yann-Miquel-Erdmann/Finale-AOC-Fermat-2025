@@ -3,8 +3,8 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "constants.h"
-#include "custom_error.h"
+#include "../constants.h"
+#include "../custom_error.h"
 
 void free_environnement(environnement_t* env) {
     for (int i = 0; i < env->variable_list_len; i++) {

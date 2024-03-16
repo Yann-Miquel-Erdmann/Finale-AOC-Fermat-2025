@@ -1,11 +1,12 @@
 #include "phrase.h"
 
-#include "constants.h"
-#include "custom_error.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+#include "../constants.h"
+#include "../custom_error.h"
 #include "function.h"
-#include "stdio.h"
-#include "stdlib.h"
-#include "string.h"
 #include "variable.h"
 
 phrase_t* new_phrase(phrase_t* parent) {

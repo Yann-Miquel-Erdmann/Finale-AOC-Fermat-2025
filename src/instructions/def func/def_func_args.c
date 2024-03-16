@@ -6,7 +6,11 @@ bool test_inst_def_func_args(phrase_t* phrase, function_list_t* function_list) {
 
     char** result_str = cut_a_b(phrase->text, 5, 11);
     char** result_str_2 = split_word(result_str[1], "une fonction qui lorsqu'elle est appelée avec");
+    printf("result_str_2[0] = '%s'\n", result_str_2[0]);
+
     if (!strcmp(result_str_2[0], "")) {
+        free_pointers(result_str);
+        free(result_str_2);
         return false;
     }
     strcat(result_str[0], " une fonction qui lorsqu'elle est appelée avec *");

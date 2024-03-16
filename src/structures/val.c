@@ -3,8 +3,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "constants.h"
-#include "custom_error.h"
+#include "../constants.h"
+#include "../custom_error.h"
 
 val_t* new_val(void) {
     val_t* val = malloc(sizeof(val_t));

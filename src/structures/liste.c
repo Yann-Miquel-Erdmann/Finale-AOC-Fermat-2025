@@ -2,8 +2,8 @@
 
 #include <stdlib.h>
 
-#include "constants.h"
-#include "custom_error.h"
+#include "../constants.h"
+#include "../custom_error.h"
 
 void free_liste_t(liste_t* liste) {
     for (int i = 0; i < liste->valeursSize; i++) {
@@ -31,7 +31,6 @@ void doubleValeursSize(liste_t* liste) {
         custom_error("manque de mémoire pour liste valeurs size", NULL);
     }
 }
-
 
 int taille(liste_t* liste) {
     return liste->valeursLen;
@@ -83,4 +82,3 @@ void suppression(liste_t* liste, int indice) {
     }
     liste->valeursLen--;
 }
-
