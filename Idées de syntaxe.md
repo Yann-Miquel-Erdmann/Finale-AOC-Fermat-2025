@@ -284,7 +284,7 @@ Pour i la variable initialisée à L'entier zero? allant jusqu'à L'entier dix? 
 {instruction n}.
 .
 ```
-Note: équvalent à une boucle pour avec un pas de 1
+Note: équivalent à une boucle pour avec un pas de 1
 
 ### Pour avec un pas
 ```
@@ -306,9 +306,9 @@ Ajouter à la liste liste La valeur de la variable i?.
 ```
 Affiche {expression}.
 ```
-Exception chaine de carractères:
+Exception chaîne de caractères:
 ```
-Affiche le message {cchaine de carractères}.
+Affiche le message {chaîne de caractères}.
 ```
 
 ## Fonctions

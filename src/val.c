@@ -9,14 +9,14 @@
 val_t* new_val(void) {
     val_t* val = malloc(sizeof(val_t));
     if (val == NULL) {
-        custom_error("erreur d'allocation", false);
+        custom_error("erreur d'allocation", NULL);
         return val;
     }
     val->type = -1;
     return val;
 }
 
-void free_val(val_t* v) {
+void free_val_t(val_t* v) {
     free(v);
 }
 
@@ -75,7 +75,7 @@ void print_val(val_t* v) {
             break;
 
         default:
-            custom_error("le type de vat_t n'est pas reconnu", false);
+            custom_error("le type de vat_t n'est pas reconnu", NULL);
             break;
     }
 };

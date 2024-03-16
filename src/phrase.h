@@ -1,46 +1,45 @@
 #ifndef phrase_h
 #define phrase_h
 
-
+#include "function.h"
 #include "stdbool.h"
 #include "val.h"
-#include "function.h"
 #include "variable.h"
+#include "liste.h"
 
 // def de la structure function pour le cross referencing
 typedef struct function function_t;
 
 // structure de l'instruction
 typedef struct phrase {
-    char* text; // le texte de l'instruction ou de l'expression
+    char* text;  // le texte de l'instruction ou de l'expression
     int textSize;
     int textLen;
 
-    struct phrase ** args;  // arguments de l'instruction: les expressions données en "paramètres"
+    struct phrase** args;  // arguments de l'instruction: les expressions données en "paramètres"
     int argsSize;
     int argsLen;
-    
-    struct phrase * parentPhrase;
-    
-    int phraseId; // identificateur de l'instruction ou de l'expression
+
+    struct phrase* parentPhrase;
+
+    int phraseId;  // identificateur de l'instruction ou de l'expression
 
     // informations relatives à une instruction
     bool inst;
-    struct phrase ** innerPhrase;  // les instructions dans les if, for, while
-    int innerPhraseLen;    // nombre taille de la liste
-    int innerPhraseSize;   // nombre inst_t alloués en mémoire
-
+    struct phrase** innerPhrase;  // les instructions dans les if, for, while
+    int innerPhraseLen;           // nombre taille de la liste
+    int innerPhraseSize;          // nombre inst_t alloués en mémoire
 
     // informations relatives à une expression
     bool expr;
-    val_t* valeur; // valeur de retour de l'expression
+    val_t* valeur;  // valeur de retour de l'expression
 
     // variables et fonction appelées dans la phrase actuelle (ne peut y en avoir qu'un par expression)
     function_t* function;
     variable_t* variable;
-    char* liste_call;
-    
-    bool constant; 
+    liste_t* liste;
+
+    bool constant;
     bool error;
 } phrase_t;
 

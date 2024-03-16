@@ -4,6 +4,7 @@
 #include <string.h>
 
 #include "constants.h"
+#include "custom_error.h"
 
 void free_function_t(function_t* func) {
     free_phrase(func->ast);
@@ -20,14 +21,17 @@ function_t* new_function(char* nom, phrase_t* ast) {
 
 function_list_t* new_function_list(void) {
     function_list_t* func_list = malloc(sizeof(function_list_t));
-    func_list->function_list = malloc(sizeof(function_t*) * DEFAULT_FUNCTION_LIST_LEN);
+    func_list->function_list = malloc(sizeof(function_t*) * DEFAULT_FUNCTION_LIST_SIZE);
     func_list->function_list_len = 0;
-    func_list->function_list_size = DEFAULT_FUNCTION_LIST_LEN;
+    func_list->function_list_size = DEFAULT_FUNCTION_LIST_SIZE;
     return func_list;
 }
 void doubleFunctionListSize(function_list_t* func_list) {
     func_list->function_list_size *= 2;
     func_list->function_list = realloc(func_list->function_list, sizeof(function_t*) * func_list->function_list_size);
+    if (func_list->function_list == NULL) {
+        custom_error("manque de mémoire pour function list size", NULL);
+    }
 }
 
 void addToFunctionList(function_list_t* func_list, function_t* func) {

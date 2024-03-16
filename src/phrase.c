@@ -11,9 +11,9 @@
 phrase_t* new_phrase(phrase_t* parent) {
     phrase_t* phrase = malloc(sizeof(phrase_t));
 
-    phrase->text = malloc(DEFAULT_PHRASE_TEXT_LEN * sizeof(char));
+    phrase->text = malloc(DEFAULT_PHRASE_TEXT_SIZE * sizeof(char));
     phrase->textLen = 0;
-    phrase->textSize = DEFAULT_PHRASE_TEXT_LEN;
+    phrase->textSize = DEFAULT_PHRASE_TEXT_SIZE;
     phrase->text[0] = '\0';
 
     phrase->args = malloc(DEFAULT_PHRASE_ARGS * sizeof(phrase_t*));
@@ -33,7 +33,7 @@ phrase_t* new_phrase(phrase_t* parent) {
 
     phrase->function = NULL;
     phrase->variable = NULL;
-    phrase->liste_call = NULL;
+    phrase->liste = NULL;
 
     phrase->error = false;
 
@@ -59,14 +59,14 @@ void free_phrase(phrase_t* phrase) {
     if (phrase->variable != NULL) {
         free_variable_t(phrase->variable);
     }
-    if (phrase->liste_call != NULL) {
-        free(phrase->liste_call);
+    if (phrase->liste != NULL) {
+        free(phrase->liste);
     }
 
-    if (phrase->expr){
+    if (phrase->expr) {
         free(phrase->valeur);
     }
-    
+
     free(phrase);
 }
 
@@ -74,7 +74,7 @@ void free_phrase(phrase_t* phrase) {
 void doubleInnerSize(phrase_t* phrase) {
     phrase->innerPhrase = realloc(phrase->innerPhrase, phrase->innerPhraseSize * 2 * sizeof(phrase_t*));
     if (phrase->innerPhrase == NULL) {
-        custom_error("manque de mémoire pour innerPhrase", false);
+        custom_error("manque de mémoire pour phrase innerPhrase", NULL);
     }
     phrase->innerPhraseSize *= 2;
 }
@@ -82,7 +82,7 @@ void doubleInnerSize(phrase_t* phrase) {
 void doubleTextSize(phrase_t* phrase) {
     phrase->text = realloc(phrase->text, phrase->textSize * 2 * sizeof(char));
     if (phrase->text == NULL) {
-        custom_error("manque de mémoire pour text", false);
+        custom_error("manque de mémoire pour phrase text", NULL);
     }
     phrase->textSize *= 2;
 }
@@ -90,7 +90,7 @@ void doubleTextSize(phrase_t* phrase) {
 void doubleArgsSize(phrase_t* phrase) {
     phrase->args = realloc(phrase->args, phrase->argsSize * 2 * sizeof(phrase_t*));
     if (phrase->args == NULL) {
-        custom_error("manque de mémoire pour args", false);
+        custom_error("manque de mémoire pour phrase args", NULL);
     }
     phrase->argsSize *= 2;
 }
@@ -120,10 +120,10 @@ void addToText(phrase_t* phrase, char c) {
 }
 
 void _printPhrase(phrase_t* phrase, int decalage, int last_elem) {
-    if (phrase == NULL){
+    if (phrase == NULL) {
         return;
     }
-    if (phrase->inst){
+    if (phrase->inst) {
         for (int i = 0; i < decalage; i++) {
             printf("|\t");
         }
@@ -140,7 +140,7 @@ void _printPhrase(phrase_t* phrase, int decalage, int last_elem) {
         }
     }
     printf("%s", phrase->text);
-    if (phrase->expr && phrase->valeur->type != -1){
+    if (phrase->expr && phrase->valeur->type != -1) {
         switch (phrase->valeur->type) {
             case INT:
                 printf("  ->  %d", get_int(phrase->valeur));
@@ -149,9 +149,9 @@ void _printPhrase(phrase_t* phrase, int decalage, int last_elem) {
                 printf("  ->  %f", get_float(phrase->valeur));
                 break;
             case BOOL:
-                if (get_bool(phrase->valeur)){
+                if (get_bool(phrase->valeur)) {
                     printf("  ->  true");
-                }else{
+                } else {
                     printf("  ->  false");
                 }
 
@@ -160,7 +160,7 @@ void _printPhrase(phrase_t* phrase, int decalage, int last_elem) {
                 break;
         }
     }
-    if (phrase->error){
+    if (phrase->error) {
         printf("\t\t\t <= ERROR HERE\n");
     } else {
         printf("\n");

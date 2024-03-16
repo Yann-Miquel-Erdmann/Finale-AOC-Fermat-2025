@@ -8,7 +8,7 @@ typedef struct val {
 } val_t;
 
 val_t* new_val(void);
-void free_val(val_t *v);
+void free_val_t(val_t *v);
 
 int get_int(val_t* v);
 float get_float(val_t* v);

@@ -1,11 +1,11 @@
+#include "../src/eval_numbers.h"
+#include "../src/function.h"
 #include "../src/parser.h"
 #include "../src/phrase.h"
+#include "../src/syntax_convert.h"
 #include "../src/val.h"
 #include "assert.h"
 #include "stdio.h"
-#include "../src/syntax_convert.h"
-#include "../src/function.h"
-#include "../src/eval_numbers.h"
 
 int test_number(void) {
     char* s = "moins trois-cent-vingt-sept millions deux-cent-quatre-vingt-douze mille six-cent-trente-huit";
@@ -56,24 +56,24 @@ void test_val(void) {
     set_bool(v3, false);
     printf("%d\n", get_bool(v3));
 
-    free_val(v1);
-    free_val(v2);
-    free_val(v3);
+    free_val_t(v1);
+    free_val_t(v2);
+    free_val_t(v3);
 }
 
 int main(int argc, char const* argv[]) {
-    //test_val();
-    
+    // test_val();
+
     FILE* f = fopen("testing/test.FC", "r");
     assert(f != NULL);
 
     phrase_t* p = parse_file(f);
-    
+
     function_list_t* function_list = new_function_list();
-    function_t* function = new_function("main",p);
+    function_t* function = new_function("main", p);
     addToFunctionList(function_list, function);
     tokenise(p, function, function_list);
-    
+
     printPhrase(p);
     free_function_list(function_list);
     free_phrase(p);
