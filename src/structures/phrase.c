@@ -20,12 +20,14 @@ phrase_t* new_phrase(phrase_t* parent) {
     phrase->args = malloc(DEFAULT_PHRASE_ARGS * sizeof(phrase_t*));
     phrase->argsLen = 0;
     phrase->argsSize = DEFAULT_PHRASE_ARGS;
+    phrase->interpreterArgsIndex = 0;
 
     phrase->parentPhrase = parent;
 
     phrase->innerPhrase = malloc(DEFAULT_PHRASE_INNER * sizeof(phrase_t*));
     phrase->innerPhraseLen = 0;
     phrase->innerPhraseSize = DEFAULT_PHRASE_INNER;
+    phrase->interpreterInnerIndex = 0;
 
     phrase->phraseId = -1;
 
@@ -75,6 +77,47 @@ void free_phrase(phrase_t* phrase) {
     }
 
     free(phrase);
+}
+
+phrase_t* copy_phrase(phrase_t* phrase) {
+    phrase_t* new = new_phrase(phrase->parentPhrase);
+    new->text = malloc(phrase->textSize * sizeof(char));
+    strcpy(new->text, phrase->text);
+    new->textLen = phrase->textLen;
+    new->textSize = phrase->textSize;
+
+    new->args = malloc(phrase->argsSize * sizeof(phrase_t*));
+    new->argsLen = phrase->argsLen;
+    new->argsSize = phrase->argsSize;
+    for (int i = 0; i < phrase->argsLen; i++) {
+        new->args[i] = copy_phrase(phrase->args[i]);
+    }
+
+    new->innerPhrase = malloc(phrase->innerPhraseSize * sizeof(phrase_t*));
+    new->innerPhraseLen = phrase->innerPhraseLen;
+    new->innerPhraseSize = phrase->innerPhraseSize;
+    for (int i = 0; i < phrase->innerPhraseLen; i++) {
+        new->innerPhrase[i] = copy_phrase(phrase->innerPhrase[i]);
+    }
+
+    new->phraseId = phrase->phraseId;
+
+    new->inst = phrase->inst;
+    new->expr = phrase->expr;
+
+    if (phrase->function != NULL) {
+        new->function = copy_function(phrase->function);
+    }
+    if (phrase->variable != NULL) {
+        new->variable = copy_variable(phrase->variable);
+    }
+    if (phrase->liste != NULL) {
+        new->liste = copy_liste(phrase->liste);
+    }
+
+    new->error = phrase->error;
+
+    return new;
 }
 
 // double la taille du tableau de pointeurs vers les innerPhrase
@@ -202,36 +245,4 @@ void printPhrase(phrase_t* phrase) {
     for (int i = 0; i < phrase->innerPhraseLen; i++) {
         _printPhrase(phrase->innerPhrase[i], 0, false);
     }
-}
-
-void phraseCopy(phrase_t* p1, phrase_t* p2) {
-    p2->text = realloc(p2->text, p1->textSize * sizeof(char));
-    strcpy(p2->text, p1->text);
-    p2->textSize = p1->textSize;
-    p2->textLen = p1->textLen;
-
-    for (int i = 0; i < p1->argsLen; i++) {
-        phrase_t* tmp = new_phrase(p2);
-        phraseCopy(p1->args[i], tmp);
-        addToArg(p2, tmp);
-    }
-
-    p2->argsSize = p1->argsSize;
-    p2->argsLen = p1->argsLen;
-
-    p2->phraseId = p1->phraseId;
-
-    p2->inst = p1->inst;
-
-    for (int i = 0; i < p1->innerPhraseLen; i++) {
-        phrase_t* tmp = new_phrase(p2);
-        phraseCopy(p1->innerPhrase[i], tmp);
-        addToInner(p2, tmp);
-    }
-
-    p2->innerPhraseLen = p1->innerPhraseLen;
-    p2->innerPhraseSize = p2->innerPhraseSize;
-
-    p2->expr = p1->expr;
-    p2->valeur = p1->valeur;
 }

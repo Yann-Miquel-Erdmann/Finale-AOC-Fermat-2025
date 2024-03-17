@@ -20,6 +20,7 @@ typedef struct phrase {
     struct phrase** args;  // arguments de l'instruction: les expressions données en "paramètres"
     int argsSize;
     int argsLen;
+    int interpreterArgsIndex;
 
     struct phrase* parentPhrase;
 
@@ -30,6 +31,7 @@ typedef struct phrase {
     struct phrase** innerPhrase;  // les instructions dans les if, for, while
     int innerPhraseLen;           // nombre taille de la liste
     int innerPhraseSize;          // nombre inst_t alloués en mémoire
+    int interpreterInnerIndex;
 
     // informations relatives à une expression
     bool expr;
@@ -58,5 +60,5 @@ void addToText(phrase_t* phrase, char c);
 void _printPhrase(phrase_t* phrase, int decalage, int last_elem);
 void printPhrase(phrase_t* phrase);
 
-void phraseCopy(phrase_t* p1, phrase_t* p2);
+phrase_t* copy_phrase(phrase_t* p2);
 #endif

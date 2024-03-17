@@ -22,7 +22,7 @@ void free_environnement(environnement_t* env) {
     free(env);
 }
 
-environnement_t* new_envrionnement(void) {
+environnement_t* new_environnement(void) {
     environnement_t* env = malloc(sizeof(environnement_t));
 
     env->variable_list = malloc(sizeof(variable_t*) * DEFAULT_VARIABLES_LIST_SIZE);
@@ -33,6 +33,23 @@ environnement_t* new_envrionnement(void) {
     env->liste_list_len = 0;
     env->liste_list_size = DEFAULT_LISTES_LIST_SIZE;
     return env;
+}
+
+environnement_t* copy_environnement(environnement_t* env) {
+    environnement_t* new_env = malloc(sizeof(environnement_t));
+    new_env->variable_list = malloc(sizeof(variable_t*) * env->variable_list_size);
+    new_env->variable_list_len = env->variable_list_len;
+    new_env->variable_list_size = env->variable_list_size;
+    for (int i = 0; i < env->variable_list_len; i++) {
+        new_env->variable_list[i] = copy_variable(env->variable_list[i]);
+    }
+    new_env->liste_list = malloc(sizeof(liste_t*) * env->liste_list_size);
+    new_env->liste_list_len = env->liste_list_len;
+    new_env->liste_list_size = env->liste_list_size;
+    for (int i = 0; i < env->liste_list_len; i++) {
+        new_env->liste_list[i] = copy_liste(env->liste_list[i]);
+    }
+    return new_env;
 }
 
 void doubleVariableListSize(environnement_t* env) {

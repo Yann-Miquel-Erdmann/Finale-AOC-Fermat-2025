@@ -9,4 +9,6 @@ typedef struct variable{
 void free_variable_t(variable_t* var);
 variable_t*  new_variable(char* nom);
 
+variable_t* copy_variable(variable_t* var);
+
 #endif // VARIABLE_H

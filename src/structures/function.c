@@ -5,6 +5,8 @@
 
 #include "../constants.h"
 #include "../custom_error.h"
+#include "phrase.h"
+#include "environnement.h"
 
 void free_function_t(function_t* func) {
     if (func->ast == NULL){
@@ -15,6 +17,9 @@ void free_function_t(function_t* func) {
     if (func->nom != NULL){
         free(func->nom);
     }
+
+    free_environnement(func->env);
+
     free(func);
 }
 
@@ -22,8 +27,20 @@ function_t* new_function(char* nom, phrase_t* ast) {
     function_t* func = malloc(sizeof(function_t));
     func->nom = nom;
     func->ast = ast;
+    func->env = new_environnement();
     return func;
 }
+
+function_t* copy_function(function_t* func) {
+    function_t* new_func = malloc(sizeof(function_t));
+    new_func->nom = malloc(strlen(func->nom) + 1);
+    strcpy(new_func->nom, func->nom);
+    new_func->ast = copy_phrase(func->ast);
+    new_func->env = copy_environnement(func->env);
+    return new_func;
+
+}
+
 
 function_list_t* new_function_list(void) {
     function_list_t* func_list = malloc(sizeof(function_list_t));

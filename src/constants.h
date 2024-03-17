@@ -20,6 +20,10 @@
 
 #define MAIN_PHRASE 0
 
+// constantes pour l'interpréteur
+#define MAX_RECUSION_DEPTH 10000
+
+
 // expressions
 #define EXPR_ENTIER 1
 #define EXPR_FLOTTANT 2

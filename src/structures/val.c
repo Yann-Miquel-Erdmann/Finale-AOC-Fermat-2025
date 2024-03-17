@@ -58,6 +58,11 @@ void set_undefined(val_t* v) {
     v->type = -1;
 }
 
+void copy_val(val_t* dest, val_t* src) {
+    dest->type = src->type;
+    dest->value = src->value;
+}
+
 void print_val(val_t* v) {
     switch (v->type) {
         case INT:

@@ -1,6 +1,7 @@
 #include "liste.h"
 
 #include <stdlib.h>
+#include <string.h>
 
 #include "../constants.h"
 #include "../custom_error.h"
@@ -22,6 +23,19 @@ liste_t* new_liste_t(char* nom) {
     liste->valeursLen = 0;
     liste->valeursSize = DEFAULT_VALEURS_LIST_SIZE;
     return liste;
+}
+
+liste_t* copy_liste(liste_t* liste) {
+    liste_t* new_liste = malloc(sizeof(liste_t));
+    new_liste->nom = malloc(strlen(liste->nom) + 1);
+    strcpy(new_liste->nom, liste->nom);
+    new_liste->valeurs = malloc(sizeof(val_t*) * liste->valeursSize);
+    new_liste->valeursLen = liste->valeursLen;
+    new_liste->valeursSize = liste->valeursSize;
+    for (int i = 0; i < liste->valeursLen; i++) {
+        copy_val(new_liste->valeurs[i], liste->valeurs[i]);
+    }
+    return new_liste;
 }
 
 void doubleValeursSize(liste_t* liste) {

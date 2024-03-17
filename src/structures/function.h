@@ -16,7 +16,7 @@ typedef struct function{
 void free_function_t(function_t* f);
 function_t* new_function(char* nom, phrase_t* ast);
 
-
+function_t* copy_function(function_t* f);
 
 typedef struct function_list{
     function_t** function_list;

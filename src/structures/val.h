@@ -19,6 +19,8 @@ void set_float(val_t* v, float valeur);
 void set_bool(val_t* v, bool valeur);
 void set_undefined(val_t* v);
 
+void copy_val(val_t* dest, val_t* src);
+
 void print_val(val_t* v);
 
 #endif
