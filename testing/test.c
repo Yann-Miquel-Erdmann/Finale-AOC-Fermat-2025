@@ -70,14 +70,16 @@ int main(int argc, char const* argv[]) {
 
     phrase_t* p = parse_file(f);
 
+    char* nom = malloc(sizeof(char));
+    nom[0] = '\0';
+    function_t* function = new_function(nom, p);
+    
     function_list_t* function_list = new_function_list();
-    function_t* function = new_function("main", p);
     addToFunctionList(function_list, function);
     tokenise(p, function, function_list);
 
     printPhrase(p);
     free_function_list(function_list);
-    free_phrase(p);
     fclose(f);
     return 0;
 }

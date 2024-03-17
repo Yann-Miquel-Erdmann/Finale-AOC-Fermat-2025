@@ -42,7 +42,13 @@ phrase_t* new_phrase(phrase_t* parent) {
 }
 
 void free_phrase(phrase_t* phrase) {
+    if (phrase == NULL) {
+        return;
+    }
+
+
     free(phrase->text);
+    
 
     for (int i = 0; i < phrase->argsLen; i++) {
         free_phrase(phrase->args[i]);

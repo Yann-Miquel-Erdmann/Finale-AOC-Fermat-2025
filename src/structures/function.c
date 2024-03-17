@@ -7,8 +7,14 @@
 #include "../custom_error.h"
 
 void free_function_t(function_t* func) {
+    if (func->ast == NULL){
+        return;
+    }
+
     free_phrase(func->ast);
-    free(func->nom);
+    if (func->nom != NULL){
+        free(func->nom);
+    }
     free(func);
 }
 
