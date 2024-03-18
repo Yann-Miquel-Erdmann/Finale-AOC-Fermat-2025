@@ -219,6 +219,7 @@ void tokenise(phrase_t* phrase, function_t* function, function_list_t* func_list
 
     switch (elem_liste(phrase->text)) {
         case MAIN_PHRASE:
+            phrase->phraseId = MAIN_PHRASE;
             for (int i = 0; i < phrase->innerPhraseLen; i++) {
                 tokenise(phrase->innerPhrase[i], function, func_list);
             }

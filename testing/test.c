@@ -1,12 +1,13 @@
+#include <assert.h>
 #include <stdio.h>
 
 #include "../src/eval_numbers.h"
+#include "../src/interpreter.h"
 #include "../src/parser.h"
 #include "../src/structures/function.h"
 #include "../src/structures/phrase.h"
 #include "../src/structures/val.h"
 #include "../src/syntax_convert.h"
-#include <assert.h>
 
 int test_number(void) {
     char* s = "moins trois-cent-vingt-sept millions deux-cent-quatre-vingt-douze mille six-cent-trente-huit";
@@ -73,12 +74,14 @@ int main(int argc, char const* argv[]) {
     char* nom = malloc(sizeof(char));
     nom[0] = '\0';
     function_t* function = new_function(nom, p);
-    
+
     function_list_t* function_list = new_function_list();
     addToFunctionList(function_list, function);
     tokenise(p, function, function_list);
 
-    printPhrase(p);
+    printf("%d\n", function_list->function_list[0]->ast->innerPhrase[0]->phraseId);
+    interpreter(function, function_list, NULL, 0);
+
     free_function_list(function_list);
     fclose(f);
     return 0;

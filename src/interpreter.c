@@ -11,6 +11,7 @@ void interpreter(function_t* function, function_list_t* functions, val_t* result
     phrase_t* phraseActuelle = function->ast;
 
     while (phraseActuelle != NULL) {
+        printf("'%s' %d %d %d\n",phraseActuelle->text, phraseActuelle->phraseId, phraseActuelle->argsLen, phraseActuelle->interpreterArgsIndex);
         if (phraseActuelle->interpreterArgsIndex < phraseActuelle->argsLen) {
             phraseActuelle->interpreterArgsIndex++;
             phraseActuelle = phraseActuelle->args[phraseActuelle->interpreterArgsIndex - 1];
@@ -45,6 +46,22 @@ void interpreter(function_t* function, function_list_t* functions, val_t* result
                         copy_val(result, phraseActuelle->args[0]->valeur);
                     }
                     return;
+                    break;
+                }
+                
+                case AFFICHE_STR: {
+                    printf("%s", phraseActuelle->text);
+                    return;
+                    break;
+                }
+                
+                case MAIN_PHRASE: {
+                    if (phraseActuelle->interpreterInnerIndex < phraseActuelle->innerPhraseLen) {
+                        phraseActuelle->interpreterInnerIndex++;
+                        phraseActuelle = phraseActuelle->innerPhrase[phraseActuelle->interpreterInnerIndex - 1];
+                    } else {
+                        return;
+                    }
                     break;
                 }
                 default:
