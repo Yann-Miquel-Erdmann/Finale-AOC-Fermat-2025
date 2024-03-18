@@ -35,8 +35,8 @@ function_t* copy_function(function_t* func) {
     function_t* new_func = malloc(sizeof(function_t));
     new_func->nom = malloc(strlen(func->nom) + 1);
     strcpy(new_func->nom, func->nom);
-    new_func->ast = copy_phrase(func->ast);
     new_func->env = copy_environnement(func->env);
+    new_func->ast = copy_phrase(func->ast, new_func->env);
     return new_func;
 
 }
