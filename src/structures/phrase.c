@@ -62,9 +62,6 @@ void free_phrase(phrase_t* phrase) {
     }
     free(phrase->innerPhrase);
 
-    if (phrase->function != NULL) {
-        free_function_t(phrase->function);
-    }
     if (phrase->variable != NULL) {
         free_variable_t(phrase->variable);
     }
@@ -106,7 +103,7 @@ phrase_t* copy_phrase(phrase_t* phrase) {
     new->expr = phrase->expr;
 
     if (phrase->function != NULL) {
-        new->function = copy_function(phrase->function);
+        new->function = phrase->function;
     }
     if (phrase->variable != NULL) {
         new->variable = copy_variable(phrase->variable);
