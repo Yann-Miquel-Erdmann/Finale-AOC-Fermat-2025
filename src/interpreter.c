@@ -11,7 +11,7 @@ void interpreter(function_t* function, function_list_t* functions, val_t* result
     phrase_t* phraseActuelle = function->ast;
 
     while (phraseActuelle != NULL) {
-        printf("'%s' %d %d %d\n",phraseActuelle->text, phraseActuelle->phraseId, phraseActuelle->argsLen, phraseActuelle->interpreterArgsIndex);
+        // printf("'%s' %d %d %d\n",phraseActuelle->text, phraseActuelle->phraseId, phraseActuelle->argsLen, phraseActuelle->interpreterArgsIndex);
         if (phraseActuelle->interpreterArgsIndex < phraseActuelle->argsLen) {
             phraseActuelle->interpreterArgsIndex++;
             phraseActuelle = phraseActuelle->args[phraseActuelle->interpreterArgsIndex - 1];
@@ -50,8 +50,8 @@ void interpreter(function_t* function, function_list_t* functions, val_t* result
                 }
                 
                 case AFFICHE_STR: {
-                    printf("%s", phraseActuelle->text);
-                    return;
+                    printf("%s\n", phraseActuelle->args[0]->text);
+                    phraseActuelle = phraseActuelle->parentPhrase;
                     break;
                 }
                 
@@ -60,11 +60,18 @@ void interpreter(function_t* function, function_list_t* functions, val_t* result
                         phraseActuelle->interpreterInnerIndex++;
                         phraseActuelle = phraseActuelle->innerPhrase[phraseActuelle->interpreterInnerIndex - 1];
                     } else {
-                        return;
+                        phraseActuelle = phraseActuelle->parentPhrase;
                     }
                     break;
                 }
+                case EXPR_CHAINE: {
+                    phraseActuelle = phraseActuelle->parentPhrase;
+                    break;
+                }
+
                 default:
+                    printf("erreur: %d\n", phraseActuelle->phraseId);
+                    return;
                     break;
             }
         }

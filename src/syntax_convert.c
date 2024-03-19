@@ -216,6 +216,10 @@ float return_value(phrase_t* p) {
 
 void tokenise(phrase_t* phrase, function_t* function, function_list_t* func_list) {
     bool valid = true;
+    // printf("tokenise %s\n", phrase->text);
+    if (phrase->phraseId != -1) {
+        return;
+    }
 
     switch (elem_liste(phrase->text)) {
         case MAIN_PHRASE:
@@ -466,6 +470,7 @@ void tokenise(phrase_t* phrase, function_t* function, function_list_t* func_list
             phrase->phraseId = RENVOI_FONCTION;
             tokenise(phrase->args[0], function, func_list);
             break;
+
         default:
             if (test_expr_entier(phrase)) {
             } else if (test_expr_flottant(phrase)) {
@@ -486,6 +491,8 @@ void tokenise(phrase_t* phrase, function_t* function, function_list_t* func_list
             // } else if (test_inst_def_func_args(phrase, func_list)) {  temporairement désactivé
             } else if (test_inst_exec_func_args(phrase, func_list)) {
             } else if (test_expr_func_call_args(phrase, func_list)) {
+            } else if (test_inst_affiche_message(phrase)) {
+            } else {
                 phrase->error = true;
                 custom_error("Syntaxe Invalide", phrase);
             }

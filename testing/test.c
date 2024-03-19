@@ -79,7 +79,6 @@ int main(int argc, char const* argv[]) {
     addToFunctionList(function_list, function);
     tokenise(p, function, function_list);
 
-    printf("%d\n", function_list->function_list[0]->ast->innerPhrase[0]->phraseId);
     interpreter(function, function_list, NULL, 0);
 
     free_function_list(function_list);

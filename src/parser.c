@@ -41,9 +41,18 @@ phrase_t* parse_file(FILE* f) {
     int missing_point = -1;
     int line = 0;
 
+    bool in_comment = false;
+
     char c = '\0';
     while (fscanf(f, "%c", &c) != EOF) {
-        if (is_uppercase(c)) {
+        if (in_comment) {
+            if (c == '"') {
+                in_comment = !in_comment;
+            }
+            // ajoute le caractère au texte
+            addToText(phraseActuelle, c);
+
+        } else if (is_uppercase(c)) {
             if (phraseActuelle->textLen > 0 && phraseActuelle->text[phraseActuelle->textLen - 1] != '*') {
                 addToText(phraseActuelle, '*');
             }
@@ -90,6 +99,10 @@ phrase_t* parse_file(FILE* f) {
                     break;
 
                 default:
+                    if (c == '"') {
+                        in_comment = !in_comment;
+                    }
+
                     if (c == '\n') {
                         line++;
                     }
