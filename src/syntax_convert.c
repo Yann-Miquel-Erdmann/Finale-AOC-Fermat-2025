@@ -5,6 +5,8 @@
 #include "custom_error.h"
 #include "eval_numbers.h"
 #include "structures/function.h"
+#include "expressions/comparateurs.h"
+#include "expressions/operateurs.h"
 
 void free_pointers(char** ptr) {
     free(ptr[0]);
@@ -198,22 +200,6 @@ int value_type(phrase_t* p1, phrase_t* p2) {
     return INT;
 }
 
-float return_value(phrase_t* p) {
-    switch (p->valeur->type) {
-        case INT:
-            return (float)get_int(p->valeur);
-
-        case FLOAT:
-            return get_float(p->valeur);
-
-        case BOOL:
-            return (float)get_bool(p->valeur);
-
-        default:
-            return -1;
-    }
-}
-
 void tokenise(phrase_t* phrase, function_t* function, function_list_t* func_list) {
     bool valid = true;
     // printf("tokenise %s\n", phrase->text);
@@ -231,7 +217,6 @@ void tokenise(phrase_t* phrase, function_t* function, function_list_t* func_list
         case SOMME:
             phrase->phraseId = SOMME;
             if (phrase->innerPhraseLen > 0 || phrase->argsLen != 2) {
-                phrase->error = true;
                 custom_error("Invalid Syntax, la somme prend 2 arguments", phrase);
             }
             for (int i = 0; i < 2; i++) {
@@ -241,17 +226,13 @@ void tokenise(phrase_t* phrase, function_t* function, function_list_t* func_list
                 }
             }
             if (valid) {
-                set_float(phrase->valeur, return_value(phrase->args[0]) + return_value(phrase->args[1]));
-                if (!(phrase->args[0]->valeur->type == FLOAT && phrase->args[1]->valeur->type == FLOAT)) {
-                    set_int(phrase->valeur, get_float(phrase->valeur));
-                }
+                somme(phrase,true);
             }
             break;
 
         case DIFFERENCE:
             phrase->phraseId = DIFFERENCE;
             if (phrase->innerPhraseLen > 0 || phrase->argsLen != 2) {
-                phrase->error = true;
                 custom_error("Invalid Syntax, la différence prend 2 arguments", phrase);
             }
             for (int i = 0; i < 2; i++) {
@@ -261,15 +242,11 @@ void tokenise(phrase_t* phrase, function_t* function, function_list_t* func_list
                 }
             }
             if (valid) {
-                set_float(phrase->valeur, return_value(phrase->args[0]) - return_value(phrase->args[1]));
-                if (!(phrase->args[0]->valeur->type == FLOAT && phrase->args[1]->valeur->type == FLOAT)) {
-                    set_int(phrase->valeur, get_float(phrase->valeur));
-                }
+                difference(phrase,true);
             }
             break;
         case PRODUIT:
             if (phrase->innerPhraseLen > 0 || phrase->argsLen != 2) {
-                phrase->error = true;
                 custom_error("Invalid Syntax, le produit prend 2 arguments", phrase);
             }
             phrase->phraseId = PRODUIT;
@@ -280,15 +257,12 @@ void tokenise(phrase_t* phrase, function_t* function, function_list_t* func_list
                 }
             }
             if (valid) {
-                set_float(phrase->valeur, return_value(phrase->args[0]) * return_value(phrase->args[1]));
-                if (!(phrase->args[0]->valeur->type == FLOAT && phrase->args[1]->valeur->type == FLOAT)) {
-                    set_int(phrase->valeur, get_float(phrase->valeur));
-                }
+                produit(phrase,true);
             }
             break;
+
         case QUOTIENT:
             if (phrase->innerPhraseLen > 0 || phrase->argsLen != 2) {
-                phrase->error = true;
                 custom_error("Invalid Syntax, quotient prend 2 arguments", phrase);
             }
             phrase->phraseId = QUOTIENT;
@@ -299,16 +273,12 @@ void tokenise(phrase_t* phrase, function_t* function, function_list_t* func_list
                 }
             }
             if (valid) {
-                if (return_value(phrase->args[1]) == 0) {
-                    phrase->error = true;
-                    custom_error("Division par 0", phrase);
-                }
-                set_float(phrase->valeur, return_value(phrase->args[0]) / return_value(phrase->args[1]));
+                quotient(phrase,true);
             }
             break;
+
         case QUOTIENT_ENTIER:
             if (phrase->innerPhraseLen > 0 || phrase->argsLen != 2) {
-                phrase->error = true;
                 custom_error("Invalid Syntax, le quotient entier prend 2 arguments", phrase);
             }
             phrase->phraseId = QUOTIENT_ENTIER;
@@ -319,16 +289,12 @@ void tokenise(phrase_t* phrase, function_t* function, function_list_t* func_list
                 }
             }
             if (valid) {
-                if (return_value(phrase->args[1]) == 0) {
-                    phrase->error = true;
-                    custom_error("Division par 0", phrase);
-                }
-                set_int(phrase->valeur, (int)(return_value(phrase->args[0]) / return_value(phrase->args[1])));
+                quotient_entier(phrase,true);
             }
             break;
+
         case RESTE:
             if (phrase->innerPhraseLen > 0 || phrase->argsLen != 2) {
-                phrase->error = true;
                 custom_error("Invalid Syntax, le reste prend 2 arguments", phrase);
             }
             phrase->phraseId = RESTE;
@@ -339,30 +305,22 @@ void tokenise(phrase_t* phrase, function_t* function, function_list_t* func_list
                 }
             }
             if (valid) {
-                if (return_value(phrase->args[1]) == 0) {
-                    phrase->error = true;
-                    custom_error("Division par 0", phrase);
-                }
-                if (phrase->args[0]->valeur->type != INT || phrase->args[1]->valeur->type != INT) {
-                    phrase->error = true;
-                    custom_error("Les deux nombres doivent être entiers", phrase);
-                }
-                set_int(phrase->valeur, get_int(phrase->args[0]->valeur) % get_int(phrase->args[1]->valeur));
+                reste(phrase,true);
             }
+
             break;
         case NEGATION_BOOLEENNE:
             if (phrase->innerPhraseLen > 0 || phrase->argsLen != 1) {
-                phrase->error = true;
                 custom_error("Invalid Syntax, la négation booléenne prend 1 argument", phrase);
             }
             phrase->phraseId = NEGATION_BOOLEENNE;
             if (phrase->args[0]->phraseId <= 3 && phrase->args[0]->phraseId >= 1) {
-                set_bool(phrase->valeur, !(bool)return_value(phrase->args[0]));
+                negation_booleenne(phrase,true);   
             }
+
             break;
         case EGALITE:
             if (phrase->innerPhraseLen > 0 || phrase->argsLen != 2) {
-                phrase->error = true;
                 custom_error("Invalid Syntax, l'égalité prend 2 arguments", phrase);
             }
             phrase->phraseId = EGALITE;
@@ -373,12 +331,11 @@ void tokenise(phrase_t* phrase, function_t* function, function_list_t* func_list
                 }
             }
             if (valid) {
-                set_bool(phrase->valeur, return_value(phrase->args[0]) == return_value(phrase->args[1]));
+                egalite(phrase, true);
             }
             break;
         case PLUS_GRAND:
             if (phrase->innerPhraseLen > 0 || phrase->argsLen != 2) {
-                phrase->error = true;
                 custom_error("Invalid Syntax, la comparaison prend 2 arguments", phrase);
             }
             phrase->phraseId = PLUS_GRAND;
@@ -389,12 +346,11 @@ void tokenise(phrase_t* phrase, function_t* function, function_list_t* func_list
                 }
             }
             if (valid) {
-                set_bool(phrase->valeur, return_value(phrase->args[0]) >= return_value(phrase->args[1]));
+                plus_grand(phrase,true);
             }
             break;
         case PLUS_PETIT:
             if (phrase->innerPhraseLen > 0 || phrase->argsLen != 2) {
-                phrase->error = true;
                 custom_error("Invalid Syntax, la comparaison prend 2 arguments", phrase);
             }
             phrase->phraseId = PLUS_PETIT;
@@ -405,12 +361,11 @@ void tokenise(phrase_t* phrase, function_t* function, function_list_t* func_list
                 }
             }
             if (valid) {
-                set_bool(phrase->valeur, return_value(phrase->args[0]) <= return_value(phrase->args[1]));
+                plus_petit(phrase, true);
             }
             break;
         case STRICT_PLUS_GRAND:
             if (phrase->innerPhraseLen > 0 || phrase->argsLen != 2) {
-                phrase->error = true;
                 custom_error("Invalid Syntax, la comparaison prend 2 arguments", phrase);
             }
             phrase->phraseId = STRICT_PLUS_GRAND;
@@ -421,12 +376,11 @@ void tokenise(phrase_t* phrase, function_t* function, function_list_t* func_list
                 }
             }
             if (valid) {
-                set_bool(phrase->valeur, return_value(phrase->args[0]) > return_value(phrase->args[1]));
+                strict_plus_grand(phrase,true);
             }
             break;
         case STRICT_PLUS_PETIT:
             if (phrase->innerPhraseLen > 0 || phrase->argsLen != 2) {
-                phrase->error = true;
                 custom_error("Invalid Syntax, la comparaison prend 2 arguments", phrase);
             }
             phrase->phraseId = STRICT_PLUS_PETIT;
@@ -437,14 +391,13 @@ void tokenise(phrase_t* phrase, function_t* function, function_list_t* func_list
                 }
             }
             if (valid) {
-                set_bool(phrase->valeur, return_value(phrase->args[0]) < return_value(phrase->args[1]));
+                strict_plus_petit(phrase,true);
             }
             break;
 
             break;
         case AFFICHE_EXPR:
             if (phrase->argsLen != 1 || phrase->innerPhraseLen > 0) {
-                phrase->error = true;
                 custom_error("Invalid Syntax, affiche expression prend un arguments", phrase);
             }
             phrase->phraseId = AFFICHE_EXPR;
@@ -452,11 +405,9 @@ void tokenise(phrase_t* phrase, function_t* function, function_list_t* func_list
             break;
         case AFFICHE_STR:
             if (phrase->argsLen != 1 || phrase->innerPhraseLen > 0) {
-                phrase->error = true;
                 custom_error("Invalid Syntax, affiche message prend un arguments", phrase);
             }
             if (phrase->args[0]->phraseId != EXPR_CHAINE) {
-                phrase->error = true;
                 custom_error("Invalid Syntax, affiche message prend un message", phrase);
             }
             phrase->phraseId = AFFICHE_STR;
@@ -464,7 +415,6 @@ void tokenise(phrase_t* phrase, function_t* function, function_list_t* func_list
             break;
         case RENVOI_FONCTION:
             if (phrase->argsLen != 1 || phrase->innerPhraseLen > 0) {
-                phrase->error = true;
                 custom_error("Invalid Syntax, renvoi prend un arguments", phrase);
             }
             phrase->phraseId = RENVOI_FONCTION;
@@ -488,12 +438,11 @@ void tokenise(phrase_t* phrase, function_t* function, function_list_t* func_list
             } else if (test_inst_def_func(phrase, func_list)) {
             } else if (test_inst_exec_func(phrase, func_list)) {
             } else if (test_expr_func_call(phrase, func_list)) {
-            // } else if (test_inst_def_func_args(phrase, func_list)) {  temporairement désactivé
+                // } else if (test_inst_def_func_args(phrase, func_list)) {  temporairement désactivé
             } else if (test_inst_exec_func_args(phrase, func_list)) {
             } else if (test_expr_func_call_args(phrase, func_list)) {
             } else if (test_inst_affiche_message(phrase)) {
             } else {
-                phrase->error = true;
                 custom_error("Syntaxe Invalide", phrase);
             }
 
@@ -520,5 +469,8 @@ phrase_t* calculate_args(phrase_t* phrase) {
 }
 // checks the essential syntax (number of arguments, if can have inners, if the else ius well placed ...)
 void check_syntax(phrase_t* phrase) {
+    if (phrase->phraseId == -1) {
+        custom_error("Syntaxe Invalide", phrase);
+    }
     return;
 }

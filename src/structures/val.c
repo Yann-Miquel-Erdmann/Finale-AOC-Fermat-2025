@@ -41,6 +41,68 @@ bool get_bool(val_t* v) {
     return *((bool*)&(v->value));
 }
 
+int get_as_int(val_t* v) {
+    switch (v->type) {
+        case INT:
+            return get_int(v);
+            break;
+        case FLOAT:
+            return (int)get_float(v);
+            break;
+        case BOOL:
+            if (get_bool(v)) {
+                return 1;
+            } else {
+                return 0;
+            }
+            break;
+        default:
+            custom_error("le type de val_t n'est pas reconnu", NULL);
+            return 0;
+            break;
+    }
+}
+
+float get_as_float(val_t* v) {
+    switch (v->type) {
+        case INT:
+            return (float)get_int(v);
+            break;
+        case FLOAT:
+            return get_float(v);
+            break;
+        case BOOL:
+            if (get_bool(v)) {
+                return 1.0;
+            } else {
+                return 0.0;
+            }
+            break;
+        default:
+            custom_error("le type de val_t n'est pas reconnu", NULL);
+            return 0.0;
+            break;
+    }
+}
+
+bool get_as_bool(val_t* v) {
+    switch (v->type) {
+        case INT:
+            return get_int(v) != 0;
+            break;
+        case FLOAT:
+            return get_float(v) != 0.0;
+            break;
+        case BOOL:
+            return get_bool(v);
+            break;
+        default:
+            custom_error("le type de val_t n'est pas reconnu", NULL);
+            return false;
+            break;
+    }
+}
+
 void set_int(val_t* v, int valeur) {
     v->type = INT;
     v->value = *((int*)&valeur);

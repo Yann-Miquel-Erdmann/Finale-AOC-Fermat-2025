@@ -14,6 +14,10 @@ int get_int(val_t* v);
 float get_float(val_t* v);
 bool get_bool(val_t* v);
 
+int get_as_int(val_t* v);
+float get_as_float(val_t* v);
+bool get_as_bool(val_t* v);
+
 void set_int(val_t* v, int valeur);
 void set_float(val_t* v, float valeur);
 void set_bool(val_t* v, bool valeur);

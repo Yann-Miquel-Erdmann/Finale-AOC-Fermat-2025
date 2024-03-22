@@ -10,10 +10,13 @@
 ## ajouter fonctionnalités tokenizer:
 * ~~ajouter le sinon~~
 * ~~ajouter les boucles:~~ (merci copilot)
-    ** ~~tant que~~
-    ** ~~pour~~
-    ** ~~pour avec pas~~ 
+    *  ~~tant que~~
+    * ~~pour~~
+    * ~~pour avec pas~~ 
 * ~~affichage console~~
-    ** ~~nombres~~
-    ** ~~chaine de carractères~~
+    * ~~nombres~~
+    * ~~chaîne de caractères~~
 * ~~renvois fonction~~
+
+
+
