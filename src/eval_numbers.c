@@ -448,8 +448,20 @@ char* str_from_int(int n){
 }
 
 char* str_from_float(float n){
-    if ((float)(int)(n) == n){
-        return str_from_int(n);
+    printf("%f\n", n);
+    char* text = str_from_int((int)n);
+    
+    if ((float)(int)n == n){
+        return text;
     }
-    return 0;
+    n = n - (int)n;
+    while (n != (int)n){
+        n *= 10;
+    }
+    int text_len = (int)strlen(text);
+    char* text_dec = str_from_int((int)n);
+    text = add_str(text, &text_len, " virgule ");
+    text = add_str(text, &text_len, text_dec);
+    free(text_dec);
+    return text;
 }
