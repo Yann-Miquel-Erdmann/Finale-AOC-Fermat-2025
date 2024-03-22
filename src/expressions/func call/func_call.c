@@ -1,7 +1,7 @@
 #include "../expressions.h"
 
 bool test_expr_func_call(phrase_t* phrase, function_list_t* func_list) {
-    if (phrase->phraseId != -1) {
+    if (phrase->phraseId != -1 || strlen(phrase->text) <= 37) {
         return false;
     }
 

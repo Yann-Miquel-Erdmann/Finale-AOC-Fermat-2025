@@ -64,6 +64,10 @@ void test_val(void) {
 }
 
 int main(int argc, char const* argv[]) {
+    str_from_int(-2000289635);
+    printf("%s\n", str_from_float(12.7));
+    
+    
     // test_val();
 
     FILE* f = fopen("testing/test.FC", "r");
@@ -78,7 +82,9 @@ int main(int argc, char const* argv[]) {
     function_list_t* function_list = new_function_list();
     addToFunctionList(function_list, function);
     tokenise(p, function, function_list);
-
+    
+    printPhrase(p);
+    
     interpreter(function, function_list, NULL, 0);
 
     free_function_list(function_list);

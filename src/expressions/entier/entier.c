@@ -1,7 +1,7 @@
 #include "../expressions.h"
 
 bool test_expr_entier(phrase_t* phrase) {
-    if (phrase->phraseId != -1) {
+    if (phrase->phraseId != -1 || strlen(phrase->text) <= 10) {
         return false;
     }
 
@@ -22,7 +22,6 @@ bool test_expr_entier(phrase_t* phrase) {
             strcpy(err, result_str[1]);
             strcat(err, " isn't recognized as an integer.");
 
-            free(result_num);
             free_pointers(result_str);
 
             custom_error(err, phrase);

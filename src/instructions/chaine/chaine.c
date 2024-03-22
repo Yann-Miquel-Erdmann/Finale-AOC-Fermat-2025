@@ -1,7 +1,7 @@
 #include "../instructions.h"
 
 bool test_inst_affiche_message(phrase_t* phrase){
-    if (phrase->phraseId != -1){
+    if (phrase->phraseId != -1 || strlen(phrase->text) <= 20){
         return false;
     }
     

@@ -1,6 +1,6 @@
 #include "../instructions.h"
 bool test_inst_exec_func(phrase_t* phrase, function_list_t* function_list) {
-    if (phrase->phraseId != -1) {
+    if (phrase->phraseId != -1 || strlen(phrase->text) <= 21) {
         return false;
     }
 
