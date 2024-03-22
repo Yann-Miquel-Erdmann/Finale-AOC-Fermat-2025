@@ -1,2 +1,6 @@
-Affiche le message "Hello World!!!....????".
-Soit x la variable initialisée à Le flottant douze virgule zéro?.
+Affiche le message "Hell0 WOrld!!!....????".
+Soit f une fonction qui lorsqu'elle est appelée avec a, b, c execute:
+Affiche La variable a?.
+Affiche La variable b?.
+Affiche La variable c?.
+.

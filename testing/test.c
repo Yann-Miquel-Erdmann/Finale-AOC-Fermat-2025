@@ -64,8 +64,8 @@ void test_val(void) {
 }
 
 int main(int argc, char const* argv[]) {
-    str_from_int(-2000289635);
-    printf("%s\n", str_from_float(12.7));
+    printf("%s\n", str_from_int(-2000000000));
+    printf("%s\n", str_from_float(900));
     
     
     // test_val();
@@ -87,7 +87,7 @@ int main(int argc, char const* argv[]) {
     
     interpreter(function, function_list, NULL, 0);
 
-    free_function_list(function_list);
+    //free_function_list(function_list);
     fclose(f);
     return 0;
 }
