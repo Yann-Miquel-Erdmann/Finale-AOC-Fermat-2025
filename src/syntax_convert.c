@@ -52,7 +52,6 @@ char** cut_a_b(char* s, int a, int b) {
         strcpy(start, "");
         strcpy(middle, "");
         strcpy(end, "");
-
     } else {
         start = malloc((len + 1) * sizeof(char));
         middle = malloc((len - (a + b) + 1) * sizeof(char));
@@ -488,7 +487,7 @@ void tokenise(phrase_t* phrase, function_t* function, function_list_t* func_list
             } else if (test_inst_def_func(phrase, func_list)) {
             } else if (test_inst_exec_func(phrase, func_list)) {
             } else if (test_expr_func_call(phrase, func_list)) {
-            // } else if (test_inst_def_func_args(phrase, func_list)) {  temporairement désactivé
+            //} else if (test_inst_def_func_args(phrase, func_list)) {
             } else if (test_inst_exec_func_args(phrase, func_list)) {
             } else if (test_expr_func_call_args(phrase, func_list)) {
             } else if (test_inst_affiche_message(phrase)) {

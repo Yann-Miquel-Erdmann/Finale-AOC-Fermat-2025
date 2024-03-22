@@ -1,7 +1,7 @@
 #include "../expressions.h"
 
 bool test_expr_booleen(phrase_t* phrase) {
-    if (phrase->phraseId != -1) {
+    if (phrase->phraseId != -1 || strlen(phrase->text) <= 13) {
         return false;
     }
 
@@ -17,8 +17,6 @@ bool test_expr_booleen(phrase_t* phrase) {
             // printf("booléen: faux\n");
             phrase->phraseId = EXPR_CHAINE;
             set_bool(phrase->valeur, false);
-        } else {
-            free(result_str[1]);
         }
     }
     free(result_str[1]);

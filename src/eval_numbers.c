@@ -1,5 +1,15 @@
 #include "eval_numbers.h"
 
+char* add_str(char* str, int* taille, char* added){
+    int len = (int)strlen(added);
+    while (*(taille) <= (int)strlen(str) + len){
+        *(taille) *= 2;
+        str = realloc(str, *(taille)*sizeof(char));
+    }
+    strcat(str, added);
+    return str;
+}
+
 int match_num(char* num, bool with_s){
     if (!strcmp(num, "un")){
         return 1;
@@ -201,4 +211,245 @@ int* eval_number(char* str_num, int len){
     l[1] = n*sign;
     free(str);
     return l;
+}
+
+char* str_from_chuck(int n){
+    int text_len = 1;
+    char* text = malloc(text_len*sizeof(char));
+    
+    int units = n%10;
+    n/=10;
+    int tens = n%10;
+    n/=10;
+    int hundreds = n%10;
+    
+    switch (hundreds) {
+        case 0:
+            break;
+        case 1:
+            break;
+        case 2:
+            text = add_str(text, &text_len, "deux");
+            break;
+        case 3:
+            text = add_str(text, &text_len, "trois");
+            break;
+        case 4:
+            text = add_str(text, &text_len, "quatre");
+            break;
+        case 5:
+            text = add_str(text, &text_len, "cinq");
+            break;
+        case 6:
+            text = add_str(text, &text_len, "six");
+            break;
+        case 7:
+            text = add_str(text, &text_len, "sept");
+            break;
+        case 8:
+            text = add_str(text, &text_len, "huit");
+            break;
+        case 9:
+            text = add_str(text, &text_len, "neuf");
+            break;
+        default:
+            break;
+    }
+    if (hundreds != 0){
+        if (tens == 0 && units == 0 && hundreds != 1){
+            text = add_str(text, &text_len, "-cents");
+        }else{
+            if (strcmp(text, "")){
+                text = add_str(text, &text_len, "-");
+            }
+            text = add_str(text, &text_len, "cent");
+        }
+    }
+    if (hundreds != 0 && tens != 0){
+        text = add_str(text, &text_len, "-");
+    }
+    switch (tens) {
+        case 0:
+            break;
+        case 1:
+            if (!(0 < units && units < 7)){
+                text = add_str(text, &text_len, "dix");
+            }
+            break;
+        case 2:
+            text = add_str(text, &text_len, "vingt");
+            break;
+        case 3:
+            text = add_str(text, &text_len, "trente");
+            break;
+        case 4:
+            text = add_str(text, &text_len, "quarante");
+            break;
+        case 5:
+            text = add_str(text, &text_len, "cinquante");
+            break;
+        case 6:
+            text = add_str(text, &text_len, "soixante");
+            break;
+        case 7:
+            if (0 < units && units < 7){
+                text = add_str(text, &text_len, "soixante");
+            }else{
+                text = add_str(text, &text_len, "soixante-dix");}
+            break;
+        case 8:
+            text = add_str(text, &text_len, "quatre-vingt");
+            if (units == 0){
+                text = add_str(text, &text_len, "s");
+            }
+            break;
+        case 9:
+            if (0 < units && units < 7){
+                text = add_str(text, &text_len, "quatre-vingt");
+            }else{
+                text = add_str(text, &text_len, "quatre-vingt-dix");
+            }
+            break;
+        default:
+            break;
+    }
+    if (units != 0 && text[strlen(text)-1] != '-'){
+        if (strcmp(text, "")){
+            text = add_str(text, &text_len, "-");
+        }
+    }
+    switch (units) {
+        case 0:
+            break;
+        case 1:
+            if (tens == 1 || tens == 7 || tens == 9){
+                if (tens != 1){
+                    text = add_str(text, &text_len, "et-");
+                }
+                text = add_str(text, &text_len, "onze");
+            }else{
+                if (tens == 2 || tens == 3 || tens == 4 || tens == 5 || tens == 6){
+                    text = add_str(text, &text_len, "et-");
+                }
+                text = add_str(text, &text_len, "un");
+            }
+            break;
+        case 2:
+            if (tens == 1 || tens == 7 || tens == 9){
+                text = add_str(text, &text_len, "douze");
+            }else{
+                text = add_str(text, &text_len, "deux");
+            }
+            break;
+        case 3:
+            if (tens == 1 || tens == 7 || tens == 9){
+                text = add_str(text, &text_len, "treize");
+            }else{
+                text = add_str(text, &text_len, "trois");
+            }
+            break;
+        case 4:
+            if (tens == 1 || tens == 7 || tens == 9){
+                text = add_str(text, &text_len, "quatorze");
+            }else{
+                text = add_str(text, &text_len, "quatre");
+            }
+            break;
+        case 5:
+            if (tens == 1 || tens == 7 || tens == 9){
+                text = add_str(text, &text_len, "quinze");
+            }else{
+                text = add_str(text, &text_len, "cinq");
+            }
+            break;
+        case 6:
+            if (tens == 1 || tens == 7 || tens == 9){
+                text = add_str(text, &text_len, "seize");
+            }else{
+                text = add_str(text, &text_len, "six");
+            }            break;
+        case 7:
+            text = add_str(text, &text_len, "sept");
+            break;
+        case 8:
+            text = add_str(text, &text_len, "huit");
+            break;
+        case 9:
+            text = add_str(text, &text_len, "neuf");
+            break;
+        default:
+            break;
+    }
+    return text;
+}
+
+char* str_from_int(int n){
+    int text_len = 1;
+    char* text = malloc(text_len*sizeof(char));
+    if (n<0){
+        text = add_str(text, &text_len, "moins ");
+        n = -n;
+    }
+
+    if (n == 0){
+        strcpy(text, "zéro");
+        return text;
+    }
+    int e_0 = n % 1000;
+    n /= 1000;
+    int e_3 = n % 1000;
+    n /= 1000;
+    int e_6 = n % 1000;
+    n /= 1000;
+    int e_9 = n % 1000;
+    
+    if (e_9 != 0){
+        char* billions = str_from_chuck(e_9);
+        text = add_str(text, &text_len, billions);
+        free(billions);
+        text = add_str(text, &text_len, " milliard");
+        if (e_9 > 1){
+            text = add_str(text, &text_len, "s");
+        }
+    }
+    if (e_6 != 0){
+        if (e_9 != 0){
+            text = add_str(text, &text_len, " ");
+        }
+        char* millions = str_from_chuck(e_6);
+        text = add_str(text, &text_len, millions);
+        free(millions);
+        text = add_str(text, &text_len, " million");
+        if (e_6 > 1){
+            text = add_str(text, &text_len, "s");
+        }
+    }
+    if (e_3 != 0){
+        if (e_9 != 0 || e_6 != 0){
+            text = add_str(text, &text_len, " ");
+        }
+        if (e_3 == 1){
+            text = add_str(text, &text_len, "mille");
+        }else{
+            char* thousands = str_from_chuck(e_3);
+            text = add_str(text, &text_len, thousands);
+            free(thousands);
+            text = add_str(text, &text_len, " mille");
+        }
+    }
+    if (e_9 != 0 || e_6 != 0 || e_3 != 0){
+            text = add_str(text, &text_len, " ");
+    }
+    char* hundreds = str_from_chuck(e_0);
+    text = add_str(text, &text_len, hundreds);
+    free(hundreds);
+    
+    return text;
+}
+
+char* str_from_float(float n){
+    if ((float)(int)(n) == n){
+        return str_from_int(n);
+    }
+    return 0;
 }

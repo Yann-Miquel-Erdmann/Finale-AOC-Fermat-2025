@@ -21,4 +21,6 @@ int* eval_number(char* str_num, int len);
 */
 int match_num(char* num, bool with_s);
 
+char* str_from_int(int n);
+
 #endif

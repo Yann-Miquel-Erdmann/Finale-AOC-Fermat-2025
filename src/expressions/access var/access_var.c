@@ -1,7 +1,7 @@
 #include "../expressions.h"
 
 bool test_expr_access_var(phrase_t* phrase, function_t* func) {
-    if (phrase->phraseId != -1) {
+    if (phrase->phraseId != -1 || strlen(phrase->text) <= 13) {
         return false;
     }
 
