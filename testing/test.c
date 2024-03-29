@@ -64,9 +64,7 @@ void test_val(void) {
 }
 
 int main(int argc, char const* argv[]) {
-    str_from_int(-2000289635);
-    printf("%s\n", str_from_float(12.7));
-    
+   
     
     // test_val();
 

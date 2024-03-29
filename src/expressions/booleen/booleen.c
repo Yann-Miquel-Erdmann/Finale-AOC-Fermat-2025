@@ -12,10 +12,13 @@ bool test_expr_booleen(phrase_t* phrase) {
         if (!strcmp(result_str[1], "vrai")) {
             // printf("booléen: vrai\n");
             phrase->phraseId = EXPR_BOOLEEN;
+            phrase->constant = true;
             set_bool(phrase->valeur, true);
         } else if (!strcmp(result_str[1], "faux")) {
             // printf("booléen: faux\n");
             phrase->phraseId = EXPR_BOOLEEN;
+            phrase->constant = true;
+
             set_bool(phrase->valeur, false);
         } else {
             custom_error("Le booléen doit être vrai ou faux.", phrase);

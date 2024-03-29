@@ -24,6 +24,7 @@ bool test_expr_flottant(phrase_t* phrase) {
             float num = (float)result_num[1] + ((float)result_num_2[1]) / (puiss10(result_num_2[1]));
             // printf("float: %f\n", num);
             phrase->phraseId = EXPR_FLOTTANT;
+            phrase->constant = true;
             set_float(phrase->valeur, num);
         }else{
             printf("invalid flottant\n");

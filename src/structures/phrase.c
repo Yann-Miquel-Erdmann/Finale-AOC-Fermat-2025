@@ -38,6 +38,7 @@ phrase_t* new_phrase(phrase_t* parent) {
     phrase->liste = NULL;
 
     phrase->error = false;
+    phrase->constant = false;
 
     return phrase;
 }

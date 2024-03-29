@@ -15,6 +15,7 @@ bool test_expr_entier(phrase_t* phrase) {
             // printf("integer: %d\n", result_num[1]);
 
             phrase->phraseId = EXPR_ENTIER;
+            phrase->constant = true;
             set_int(phrase->valeur, result_num[1]);
         } else {
             char* err = malloc((strlen(result_str[1]) + 32) * sizeof(char));

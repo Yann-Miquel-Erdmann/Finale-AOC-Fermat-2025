@@ -5,7 +5,7 @@
 
 void free_variable_t(variable_t* var) {
     free(var->nom);
-    free(var->valeur);
+
     free(var);
 }
 
