@@ -49,6 +49,7 @@ function_list_t* new_function_list(void) {
     func_list->function_list_size = DEFAULT_FUNCTION_LIST_SIZE;
     return func_list;
 }
+
 void doubleFunctionListSize(function_list_t* func_list) {
     func_list->function_list_size *= 2;
     func_list->function_list = realloc(func_list->function_list, sizeof(function_t*) * func_list->function_list_size);

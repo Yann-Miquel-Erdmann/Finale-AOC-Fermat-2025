@@ -87,7 +87,7 @@ int main(int argc, char const* argv[]) {
     
     interpreter(function, function_list, NULL, 0);
 
-    //free_function_list(function_list);
+    free_function_list(function_list);
     fclose(f);
     return 0;
 }

@@ -10,11 +10,8 @@ bool test_inst_add_list(phrase_t* phrase, function_t* function) {
         // printf("ajout à la liste %s\n", result_str[1]);
         phrase->phraseId = AJOUT_LISTE;
         phrase->liste = getListe(function->env, result_str[1]);
-
-    } else {
-        free(result_str[1]);
     }
-
+    free(result_str[1]);
     free_pointers(result_str);
 
     // renvoie true si l'expression est une add list

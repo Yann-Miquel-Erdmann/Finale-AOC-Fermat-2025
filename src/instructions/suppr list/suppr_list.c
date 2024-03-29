@@ -12,11 +12,8 @@ bool test_inst_suppr_list(phrase_t* phrase, function_t* function) {
         // printf("suppression élément de la liste %s\n", result_str[1]);
         phrase->phraseId = SUPPRESSION_LISTE;
         phrase->liste = getListe(function->env, result_str[1]);
-
-    } else {
-        free(result_str[1]);
     }
-
+    free(result_str[1]);
     free_pointers(result_str);
 
     // renvoie true si l'expression est une suppr list

@@ -48,7 +48,7 @@ void quotient_entier(phrase_t* phrase, bool constant){
     }
 
     if (phrase->args[0]->valeur->type == FLOAT || phrase->args[0]->valeur->type == FLOAT) {
-        set_float(phrase->valeur, get_as_float(phrase->args[0]->valeur) / get_as_float(phrase->args[1]->valeur));
+        set_float(phrase->valeur, (int)(get_as_float(phrase->args[0]->valeur) / get_as_float(phrase->args[1]->valeur)));
     } else {
         if (get_as_int(phrase->args[0]->valeur) % get_as_int(phrase->args[1]->valeur) == 0) {
             set_int(phrase->valeur, (int)(get_as_int(phrase->args[0]->valeur) / get_as_int(phrase->args[1]->valeur)));

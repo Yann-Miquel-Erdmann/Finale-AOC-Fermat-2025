@@ -13,9 +13,8 @@ bool test_expr_func_call_args(phrase_t* phrase, function_list_t* func_list) {
         phrase->phraseId = APPEL_VALEUR_FONCTION_ARGUMENT;
         phrase->function = getFunction(func_list, result_str[1]);
 
-    } else {
+    } else
         free(result_str[1]);
-    }
 
     free_pointers(result_str);
 

@@ -5,8 +5,8 @@
 #include "constants.h"
 #include "custom_error.h"
 #include "eval_numbers.h"
-#include <string.h>
-
+#include "expressions/operateurs.h"
+#include "expressions/comparateurs.h"
 
 void interpreter(function_t* function, function_list_t* functions, val_t* result, int layer) {
     if (layer > MAX_RECUSION_DEPTH) {
@@ -73,31 +73,137 @@ void interpreter(function_t* function, function_list_t* functions, val_t* result
                 }
 
                 case AFFICHE_EXPR: {
-                    if (phraseActuelle->args[0]->valeur != NULL) {
-                        if (phraseActuelle->args[0]->valeur->type == BOOL) {
-                            if (get_bool(phraseActuelle->args[0]->valeur)) {
-                                printf("Vrai\n");
-                            } else {
-                                printf("Faux\n");
-                            }
-
-                        } else if (phraseActuelle->args[0]->valeur->type == INT) {
-                            char* str = str_from_int(phraseActuelle->args[0]->valeur->value);
-                            printf("%s\n", str);
-                            free(str);
-
-                        } else if (phraseActuelle->args[0]->valeur->type == FLOAT) {
-                            char* str = str_from_float(phraseActuelle->args[0]->valeur->value);
-                            printf("%s\n", str);
-                            free(str);
-
+                    if (phraseActuelle->args[0]->valeur->type == BOOL) {
+                        if (get_bool(phraseActuelle->args[0]->valeur)) {
+                            printf("vrai\n");
                         } else {
-                            custom_error("Type non supporté pour l'affichage", phraseActuelle);
+                            printf("faux\n");
                         }
+
+                    } else if (phraseActuelle->args[0]->valeur->type == INT) {
+                        char* str = str_from_int(get_int(phraseActuelle->args[0]->valeur));
+                        printf("%s\n", str);
+                        free(str);
+
+                    } else if (phraseActuelle->args[0]->valeur->type == FLOAT) {
+                        char* str = str_from_float(get_float(phraseActuelle->args[0]->valeur));
+                        printf("%s\n", str);
+                        free(str);
+
+                    } else {
+                        custom_error("Type non supporté pour l'affichage", phraseActuelle);
                     }
+
                     phraseActuelle = phraseActuelle->parentPhrase;
                     break;
                 }
+
+// variable ------------------------------------------------------
+                case MODIFICATION_VARIABLE:
+                case DEFINITION_VARIABLE_AVEC_INIT: {
+                    copy_val(phraseActuelle->variable->valeur, phraseActuelle->args[0]->valeur);
+                    phraseActuelle = phraseActuelle->parentPhrase;
+                    break;
+                }
+
+                case ACCESSION_VARIABLE: {
+                    copy_val(phraseActuelle->valeur, phraseActuelle->variable->valeur);
+                    phraseActuelle = phraseActuelle->parentPhrase;
+                    break;
+                }
+
+// opérateurs ---------------------------------------------------
+                case SOMME: {
+
+                    somme(phraseActuelle, false);
+                    phraseActuelle = phraseActuelle->parentPhrase;
+                    break;
+                }
+                case DIFFERENCE: {
+                    difference(phraseActuelle, false);
+                    phraseActuelle = phraseActuelle->parentPhrase;
+                    break;
+                }
+                case PRODUIT: {
+                    produit(phraseActuelle, false);
+                    phraseActuelle = phraseActuelle->parentPhrase;
+                    break;
+                }
+                case QUOTIENT: {
+                    quotient(phraseActuelle, false);
+                    phraseActuelle = phraseActuelle->parentPhrase;
+                    break;
+                }
+                case QUOTIENT_ENTIER: {
+                    quotient_entier(phraseActuelle, false);
+                    phraseActuelle = phraseActuelle->parentPhrase;
+                    break;
+                }
+                case RESTE: {
+                    reste(phraseActuelle, false);
+                    phraseActuelle = phraseActuelle->parentPhrase;
+                    break;
+                }
+                case NEGATION_BOOLEENNE: {
+                    negation_booleenne(phraseActuelle, false);
+                    phraseActuelle = phraseActuelle->parentPhrase;
+                    break;
+                }
+// comparateurs ----------------------------------------------------------
+                case EGALITE:{
+                    egalite(phraseActuelle, false);
+                    phraseActuelle = phraseActuelle->parentPhrase;
+                    break;
+                }
+                case PLUS_GRAND:{
+                    plus_grand(phraseActuelle, false);
+                    phraseActuelle = phraseActuelle->parentPhrase;
+                    break;
+                }
+                case STRICT_PLUS_GRAND:{
+                    strict_plus_grand(phraseActuelle, false);
+                    phraseActuelle = phraseActuelle->parentPhrase;
+                    break;
+                }
+                case PLUS_PETIT:{
+                    plus_petit(phraseActuelle, false);
+                    phraseActuelle = phraseActuelle->parentPhrase;
+                    break;
+                }
+                case STRICT_PLUS_PETIT:{
+                    strict_plus_petit(phraseActuelle, false);
+                    phraseActuelle = phraseActuelle->parentPhrase;
+                    break;
+                }
+
+
+// liste -----------------------------------------------------------------
+                case ACCESSION_LISTE:{
+                    copy_val(phraseActuelle->valeur, accession(phraseActuelle->liste, get_int(phraseActuelle->args[0]->valeur)));
+                    phraseActuelle = phraseActuelle->parentPhrase;
+                    break;
+                }
+                case MODIFICATION_LISTE:{
+                    modification(phraseActuelle->liste, get_int(phraseActuelle->args[0]->valeur), phraseActuelle->args[1]->valeur);
+                    phraseActuelle = phraseActuelle->parentPhrase;
+                    break;
+                }
+                case AJOUT_LISTE:{
+                    ajout(phraseActuelle->liste, phraseActuelle->args[0]->valeur);
+                    phraseActuelle = phraseActuelle->parentPhrase;
+                    break;
+                }
+                case SUPPRESSION_LISTE: {
+                    suppression(phraseActuelle->liste, get_int(phraseActuelle->args[0]->valeur));
+                    phraseActuelle = phraseActuelle->parentPhrase;
+                    break;
+                }
+                case TAILLE_LISTE: {
+                    set_int(phraseActuelle->valeur, taille(phraseActuelle->liste));
+                    phraseActuelle = phraseActuelle->parentPhrase;
+                    break;
+                }
+
 
                 default:
                     printf("erreur: %d\n", phraseActuelle->phraseId);
