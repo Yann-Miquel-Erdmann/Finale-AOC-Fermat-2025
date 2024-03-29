@@ -71,6 +71,47 @@ void free_phrase(phrase_t* phrase) {
     phrase = NULL;
 }
 
+phrase_t* special_copy_phrase(phrase_t* phrase){
+    phrase_t* new = new_phrase(phrase->parentPhrase);
+    new->text = malloc(phrase->textSize * sizeof(char));
+    strcpy(new->text, phrase->text);
+    new->textLen = phrase->textLen;
+    new->textSize = phrase->textSize;
+
+    new->args = malloc(phrase->argsSize * sizeof(phrase_t*));
+    new->argsLen = phrase->argsLen;
+    new->argsSize = phrase->argsSize;
+    for (int i = 0; i < phrase->argsLen; i++) {
+        new->args[i] = phrase->args[i];
+    }
+
+    new->innerPhrase = malloc(phrase->innerPhraseSize * sizeof(phrase_t*));
+    new->innerPhraseLen = phrase->innerPhraseLen;
+    new->innerPhraseSize = phrase->innerPhraseSize;
+    for (int i = 0; i < phrase->innerPhraseLen; i++) {
+        new->innerPhrase[i] = phrase->innerPhrase[i];
+    }
+
+    new->phraseId = phrase->phraseId;
+
+    new->inst = phrase->inst;
+    new->expr = phrase->expr;
+
+    if (phrase->function != NULL) {
+        new->function = phrase->function;
+    }
+    if (phrase->variable != NULL) {
+        new->variable = phrase->variable;
+    }
+    if (phrase->liste != NULL) {
+        new->liste = phrase->liste;
+    }
+
+    new->error = phrase->error;
+
+    return new;
+}
+
 phrase_t* copy_phrase(phrase_t* phrase, environnement_t* new_env) {
     phrase_t* new = new_phrase(phrase->parentPhrase);
     new->text = malloc(phrase->textSize * sizeof(char));

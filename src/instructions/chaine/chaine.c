@@ -11,7 +11,7 @@ bool test_inst_affiche_message(phrase_t* phrase){
         if (result_str[1][0] == '"' && result_str[1][(int)strlen(result_str[1])-1] == '"'){
             //printf("chaîne: %s\n", result_str[1]);
             phrase->phraseId = AFFICHE_STR;
-            phrase->constant = true;
+            phrase->constant = false;
 
             addToArg(phrase, new_phrase(phrase));
             phrase->args[0]->phraseId = EXPR_CHAINE;
@@ -30,5 +30,5 @@ bool test_inst_affiche_message(phrase_t* phrase){
     free_pointers(result_str);
 
     // 
-    return true;
+    return phrase->phraseId != -1;
 }

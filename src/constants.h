@@ -115,7 +115,7 @@
 #define QUOTIENT_S "Le quotient de * par *?"                // fait
 #define QUOTIENT_ENTIER_S "Le quotient entier de * par *?"  // fait
 #define RESTE_S "Le reste de * par *?"                      // fait
-#define NEGATION_BOOLEENNE_S "La négation bouléenne de *?"  // fait
+#define NEGATION_BOOLEENNE_S "La négation booléenne de *?"  // fait
 
 // comparateurs
 

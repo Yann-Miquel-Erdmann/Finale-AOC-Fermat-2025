@@ -1,6 +1,9 @@
-Affiche le message "Hell0 WOrld!!!....????".
-Soit f une fonction qui lorsqu'elle est appelée avec a, b, c execute:
-Affiche La variable a?.
-Affiche La variable b?.
-Affiche La variable c?.
+Soit f une fonction qui lorsqu'elle est appelée execute:
+Si La valeur de L'entier un? est égale à la valeur de L'entier deux?? alors faire:
+Affiche le message "Oui".
 .
+Sinon faire:
+Affiche le message "Non".
+.
+.
+Execute la fonction f.

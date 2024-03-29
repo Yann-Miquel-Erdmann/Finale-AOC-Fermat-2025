@@ -189,6 +189,21 @@ int elem_liste(char* text) {
     if (!strcmp(text, MAIN_PHRASE_S)) {
         return MAIN_PHRASE;
     }
+    if (!strcmp(text, EGALITE_S)){
+        return EGALITE;
+    }
+    if (!strcmp(text, PLUS_GRAND_S)){
+        return PLUS_GRAND;
+    }
+    if (!strcmp(text, STRICT_PLUS_GRAND_S)){
+        return STRICT_PLUS_GRAND;
+    }
+    if (!strcmp(text, PLUS_PETIT_S)){
+        return PLUS_PETIT;
+    }
+    if (!strcmp(text, STRICT_PLUS_PETIT_S)){
+        return STRICT_PLUS_PETIT;
+    }
     return -1;
 }
 
@@ -319,6 +334,7 @@ void tokenise(phrase_t* phrase, function_t* function, function_list_t* func_list
 
             break;
         case EGALITE:
+            printf("egalite\n");
             if (phrase->innerPhraseLen > 0 || phrase->argsLen != 2) {
                 custom_error("Invalid Syntax, l'égalité prend 2 arguments", phrase);
             }
@@ -418,6 +434,28 @@ void tokenise(phrase_t* phrase, function_t* function, function_list_t* func_list
             }
             phrase->phraseId = RENVOI_FONCTION;
             tokenise(phrase->args[0], function, func_list);
+            break;
+        case SI_ALORS:
+            if (phrase->argsLen != 1) {
+                custom_error("Invalid Syntax, si alors prend 1 arguments", phrase);
+            }
+            if (phrase->innerPhraseLen == 0){
+                custom_error("Invalid Syntax, si alors prend au moins 1 instruction", phrase);
+            }
+            phrase->phraseId = SI_ALORS;
+            tokenise(phrase->args[0], function, func_list);
+            for (int i = 0; i < phrase->innerPhraseLen; i++) {
+                tokenise(phrase->innerPhrase[i], function, func_list);
+            }
+            break;
+        case SINON:
+            if (phrase->innerPhraseLen == 0){
+                custom_error("Invalid Syntax, sinon prend au moins 1 instruction", phrase);
+            }
+            phrase->phraseId = SINON;
+            for (int i = 0; i < phrase->innerPhraseLen; i++) {
+                tokenise(phrase->innerPhrase[i], function, func_list);
+            }
             break;
 
         default:

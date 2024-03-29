@@ -13,9 +13,8 @@ bool test_expr_access_var(phrase_t* phrase, function_t* func) {
         phrase->phraseId = ACCESSION_VARIABLE;
         phrase->variable = getVariable(func->env, result_str[1]);
 
-    } else {
-        free(result_str[1]);
     }
+    free(result_str[1]);
 
     free(result_str[0]);
     free(result_str[2]);

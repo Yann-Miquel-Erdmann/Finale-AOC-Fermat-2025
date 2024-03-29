@@ -84,7 +84,7 @@ int main(int argc, char const* argv[]) {
     tokenise(p, function, function_list);
     
     printPhrase(p);
-    
+    printf("\n====== Début execution ======\n\n");
     interpreter(function, function_list, NULL, 0);
 
     //free_function_list(function_list);

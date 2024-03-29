@@ -40,7 +40,7 @@ bool test_inst_def_func_args(phrase_t* phrase, function_list_t* function_list) {
     char** result_str_2 = split_word(result_str[1], "une fonction qui lorsqu'elle est appelée avec");
 
 
-    if (!strcmp(result_str_2[0], "")) {
+    if (!strcmp(result_str_2[1], "")) {
         free_pointers(result_str);
         free(result_str_2);
         return false;
@@ -60,6 +60,10 @@ bool test_inst_def_func_args(phrase_t* phrase, function_list_t* function_list) {
         phrase->phraseId = DEFINITION_FONCTION_ARGUMENT;
 
         phrase->function = new_function(result_str_2[0], phrase);
+        
+        phrase_t* p2 = special_copy_phrase(phrase);
+        p2->phraseId = MAIN_PHRASE;
+        strcpy(p2->text, "*.");
         addToFunctionList(function_list, phrase->function);
 
     } else {

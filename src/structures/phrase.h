@@ -62,4 +62,5 @@ void _printPhrase(phrase_t* phrase, int decalage, int last_elem);
 void printPhrase(phrase_t* phrase);
 
 phrase_t* copy_phrase(phrase_t* p2, environnement_t* env);
+phrase_t* special_copy_phrase(phrase_t* phrase);
 #endif

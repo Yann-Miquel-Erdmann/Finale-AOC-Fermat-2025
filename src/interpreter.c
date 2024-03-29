@@ -16,7 +16,7 @@ void interpreter(function_t* function, function_list_t* functions, val_t* result
     phrase_t* phraseActuelle = function->ast;
 
     while (phraseActuelle != NULL) {
-        // printf("'%s' %d %d %d %d\n", phraseActuelle->text, phraseActuelle->phraseId, phraseActuelle->argsLen, phraseActuelle->interpreterArgsIndex, (int)phraseActuelle->constant);
+        //printf("'%s' %d %d %d %d\n", phraseActuelle->text, phraseActuelle->phraseId, phraseActuelle->argsLen, phraseActuelle->interpreterArgsIndex, (int)phraseActuelle->constant);
         if (phraseActuelle->constant) {
             phraseActuelle = phraseActuelle->parentPhrase;
         } else if (phraseActuelle->interpreterArgsIndex < phraseActuelle->argsLen) {
@@ -25,6 +25,7 @@ void interpreter(function_t* function, function_list_t* functions, val_t* result
         } else {
             switch (phraseActuelle->phraseId) {
                 case MAIN_PHRASE: {
+                    printf("main phrase: %s\n", function->nom);
                     if (phraseActuelle->interpreterInnerIndex < phraseActuelle->innerPhraseLen) {
                         phraseActuelle->interpreterInnerIndex++;
                         phraseActuelle = phraseActuelle->innerPhrase[phraseActuelle->interpreterInnerIndex - 1];
@@ -35,6 +36,7 @@ void interpreter(function_t* function, function_list_t* functions, val_t* result
                 }
 
                 case EXECUTION_FONCTION: {
+                    //printf("execution de la fonction %s\n", phraseActuelle->function->nom);
                     function_t* new_func = copy_function(phraseActuelle->function);
                     interpreter(new_func, functions, phraseActuelle->valeur, layer + 1);
                     free_function_t(new_func);
@@ -44,6 +46,7 @@ void interpreter(function_t* function, function_list_t* functions, val_t* result
                 }
 
                 case EXECUTION_FONCTION_ARGUMENT: {
+                    //printf("execution de la fonction %s\n", phraseActuelle->function->nom);
                     function_t* new_func = copy_function(phraseActuelle->function);
 
                     // initialise les arguments
@@ -73,6 +76,7 @@ void interpreter(function_t* function, function_list_t* functions, val_t* result
                 }
 
                 case AFFICHE_EXPR: {
+                    //printf("affiche expr\n");
                     if (phraseActuelle->args[0]->valeur != NULL) {
                         if (phraseActuelle->args[0]->valeur->type == BOOL) {
                             if (get_bool(phraseActuelle->args[0]->valeur)) {
@@ -98,10 +102,62 @@ void interpreter(function_t* function, function_list_t* functions, val_t* result
                     phraseActuelle = phraseActuelle->parentPhrase;
                     break;
                 }
+                    
+                case SI_ALORS: {
+                    printf("if statement\n");
+                    if (phraseActuelle->args[0]->constant) { // TODO enlever ça -> interpreter normalement
+                        if (phraseActuelle->interpreterInnerIndex == -1){
+                            phraseActuelle->interpreterInnerIndex = 0;
+                        }
+                        if (get_bool(phraseActuelle->args[0]->valeur)){
+                            //printf("true\n");
+                            if (phraseActuelle->interpreterInnerIndex < phraseActuelle->innerPhraseLen) {
+                                phraseActuelle->interpreterInnerIndex++;
+                                phraseActuelle = phraseActuelle->innerPhrase[phraseActuelle->interpreterInnerIndex - 1];
+                            } else {
+                                phraseActuelle->interpreterInnerIndex = 0;
+                                phraseActuelle = phraseActuelle->parentPhrase;
+                            }
+                        }else{
+                            //printf("false\n");
+                            phraseActuelle->interpreterInnerIndex = -1;
+                            phraseActuelle = phraseActuelle->parentPhrase;
+                        }
+                    }
+                    break;
+                }
+                
+                case SINON: {
+                    printf("got here\n");
+                    if (phraseActuelle->parentPhrase->interpreterInnerIndex != 0){
+                        phrase_t* previous_phrase = phraseActuelle->parentPhrase->innerPhrase[phraseActuelle->parentPhrase->interpreterInnerIndex-1];
+                        if (previous_phrase->phraseId == SI_ALORS){
+                            if (!get_bool(previous_phrase->args[0]->valeur)){
+                                if (phraseActuelle->interpreterInnerIndex < phraseActuelle->innerPhraseLen) {
+                                    phraseActuelle->interpreterInnerIndex++;
+                                    phraseActuelle = phraseActuelle->innerPhrase[phraseActuelle->interpreterInnerIndex - 1];
+                                } else {
+                                    phraseActuelle = phraseActuelle->parentPhrase;
+                                }
+                            }else{
+                                phraseActuelle = phraseActuelle->parentPhrase;
+                            }
+                        }else{
+                            custom_error("Syntax Error: Sinon déclaré sans Si", phraseActuelle);
+                        }
+                    }else{
+                        custom_error("Syntax Error: Sinon déclaré sans Si", phraseActuelle);
+                    }
+                        
+                    
+                }
+                
 
                 default:
-                    printf("erreur: %d\n", phraseActuelle->phraseId);
-                    return;
+                    //printf("erreur: %d\n", phraseActuelle->phraseId);
+                    //printf("%s\n", phraseActuelle->text);
+                    phraseActuelle = phraseActuelle->parentPhrase;
+                    //return;
                     break;
             }
         }
