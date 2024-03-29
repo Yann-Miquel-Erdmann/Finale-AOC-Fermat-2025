@@ -5,6 +5,8 @@
 #include "constants.h"
 #include "custom_error.h"
 #include "eval_numbers.h"
+#include <string.h>
+
 
 void interpreter(function_t* function, function_list_t* functions, val_t* result, int layer) {
     if (layer > MAX_RECUSION_DEPTH) {

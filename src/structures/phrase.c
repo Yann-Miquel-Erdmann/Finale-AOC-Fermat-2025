@@ -68,6 +68,7 @@ void free_phrase(phrase_t* phrase) {
     }
 
     free(phrase);
+    phrase = NULL;
 }
 
 phrase_t* copy_phrase(phrase_t* phrase, environnement_t* new_env) {

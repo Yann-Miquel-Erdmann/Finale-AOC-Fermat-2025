@@ -431,13 +431,12 @@ void tokenise(phrase_t* phrase, function_t* function, function_list_t* func_list
             } else if (test_inst_create_list(phrase, function)) {
             } else if (test_expr_access_list(phrase, function)) {
             } else if (test_inst_modif_list(phrase, function)) {
-            } else if (test_inst_modif_list(phrase, function)) {
             } else if (test_inst_suppr_list(phrase, function)) {
             } else if (test_expr_taille_list(phrase, function)) {
-            } else if (test_inst_def_func(phrase, func_list)) {
             } else if (test_inst_exec_func(phrase, func_list)) {
             } else if (test_expr_func_call(phrase, func_list)) {
-            // } else if (test_inst_def_func_args(phrase, func_list)) {  temporairement désactivé
+            } else if (test_inst_def_func_args(phrase, func_list)) {
+            } else if (test_inst_def_func(phrase, func_list)) {
             } else if (test_inst_exec_func_args(phrase, func_list)) {
             } else if (test_expr_func_call_args(phrase, func_list)) {
             } else if (test_inst_affiche_message(phrase)) {
