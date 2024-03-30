@@ -12,11 +12,8 @@ bool test_inst_modif_list(phrase_t* phrase, function_t* function) {
         // printf("modification de la liste %s\n", result_str[1]);
         phrase->phraseId = MODIFICATION_LISTE;
         phrase->liste = getListe(function->env, result_str[1]);
-
-    } else {
-        free(result_str[1]);
     }
-
+    free(result_str[1]);
     free_pointers(result_str);
 
     // renvoie true si l'expression est une modif list

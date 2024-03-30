@@ -5,7 +5,7 @@
 
 void free_variable_t(variable_t* var) {
     free(var->nom);
-
+    free_val_t(var->valeur);
     free(var);
 }
 
@@ -15,6 +15,7 @@ val_t* get_value(variable_t* var) {
 
 variable_t* new_variable(char* nom) {
     variable_t* var = malloc(sizeof(variable_t));
+    var->valeur = new_val();
     var->nom = nom;
     return var;
 }

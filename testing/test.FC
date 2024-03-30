@@ -1,6 +1,9 @@
-Si La valeur de L'entier trois? est égale à la valeur de L'entier deux?? alors faire:
-Affiche le message "oui".
+Soit f une fonction qui lorsqu'elle est appelée execute:
+Affiche le message "2".
+Affiche le message "3".
+Affiche le message "4".
 .
-Sinon faire:
-Affiche le message "Non".
-.
+
+Affiche le message "1".
+Execute la fonction f.
+Affiche le message "5".

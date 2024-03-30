@@ -12,6 +12,7 @@ void free_liste_t(liste_t* liste) {
             free_val_t(liste->valeurs[i]);
         }
     }
+    free(liste->nom);
     free(liste->valeurs);
     free(liste);
 }
@@ -61,14 +62,15 @@ void modification(liste_t* liste, int indice, val_t* valeur) {
     if (indice < 0 || indice >= liste->valeursLen) {
         custom_error("indice hors de la liste", NULL);
     }
-    liste->valeurs[indice] = valeur;
+    
+    copy_val(liste->valeurs[indice], valeur);
 }
 
 void ajout(liste_t* liste, val_t* valeur) {
     if (liste->valeursLen == liste->valeursSize) {
         doubleValeursSize(liste);
     }
-    liste->valeurs[liste->valeursLen] = valeur;
+    copy_val(liste->valeurs[liste->valeursLen], valeur);
     liste->valeursLen++;
 }
 
@@ -82,7 +84,7 @@ void inserer(liste_t* liste, int indice, val_t* valeur) {
     for (int i = liste->valeursLen; i > indice; i--) {
         liste->valeurs[i] = liste->valeurs[i - 1];
     }
-    liste->valeurs[indice] = valeur;
+    copy_val(liste->valeurs[indice], valeur);
     liste->valeursLen++;
 }
 

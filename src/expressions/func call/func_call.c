@@ -13,11 +13,8 @@ bool test_expr_func_call(phrase_t* phrase, function_list_t* func_list) {
         phrase->phraseId = APPEL_VALEUR_FONCTION;
 
         phrase->function = getFunction(func_list, result_str[1]);
-
-    } else {
-        free(result_str[1]);
     }
-
+    free(result_str[1]);
     free_pointers(result_str);
 
     // renvoie true si l'expression est une func call

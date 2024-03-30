@@ -9,7 +9,6 @@ bool test_expr_access_var(phrase_t* phrase, function_t* func) {
     strcat(result_str[0], result_str[2]);
 
     if (!strcmp(result_str[0], ACCESSION_VARIABLE_S)) {
-        // printf("valeur de la variable %s\n", result_str[1]);
         phrase->phraseId = ACCESSION_VARIABLE;
         phrase->variable = getVariable(func->env, result_str[1]);
 
@@ -17,6 +16,7 @@ bool test_expr_access_var(phrase_t* phrase, function_t* func) {
     free(result_str[1]);
 
     free(result_str[0]);
+    free(result_str[1]);
     free(result_str[2]);
     free(result_str);
     // renvoie true si l'expression est une access var

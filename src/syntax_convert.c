@@ -4,9 +4,9 @@
 
 #include "custom_error.h"
 #include "eval_numbers.h"
-#include "structures/function.h"
 #include "expressions/comparateurs.h"
 #include "expressions/operateurs.h"
+#include "structures/function.h"
 
 void free_pointers(char** ptr) {
     free(ptr[0]);
@@ -141,6 +141,7 @@ char** split_word(char* str, char* separator) {
 }
 
 int elem_liste(char* text) {
+    printf("%s\n", text);
     if (!strcmp(text, SOMME_S)) {
         return SOMME;
     }
@@ -216,7 +217,6 @@ int value_type(phrase_t* p1, phrase_t* p2) {
 
 void tokenise(phrase_t* phrase, function_t* function, function_list_t* func_list) {
     bool valid = true;
-    // printf("tokenise %s\n", phrase->text);
     if (phrase->phraseId != -1) {
         return;
     }
@@ -244,7 +244,7 @@ void tokenise(phrase_t* phrase, function_t* function, function_list_t* func_list
                 }
             }
             if (valid) {
-                somme(phrase,true);
+                somme(phrase, true);
             }
             break;
 
@@ -260,7 +260,7 @@ void tokenise(phrase_t* phrase, function_t* function, function_list_t* func_list
                 }
             }
             if (valid) {
-                difference(phrase,true);
+                difference(phrase, true);
             }
             break;
         case PRODUIT:
@@ -275,7 +275,7 @@ void tokenise(phrase_t* phrase, function_t* function, function_list_t* func_list
                 }
             }
             if (valid) {
-                produit(phrase,true);
+                produit(phrase, true);
             }
             break;
 
@@ -291,7 +291,7 @@ void tokenise(phrase_t* phrase, function_t* function, function_list_t* func_list
                 }
             }
             if (valid) {
-                quotient(phrase,true);
+                quotient(phrase, true);
             }
             break;
 
@@ -307,7 +307,7 @@ void tokenise(phrase_t* phrase, function_t* function, function_list_t* func_list
                 }
             }
             if (valid) {
-                quotient_entier(phrase,true);
+                quotient_entier(phrase, true);
             }
             break;
 
@@ -323,20 +323,22 @@ void tokenise(phrase_t* phrase, function_t* function, function_list_t* func_list
                 }
             }
             if (valid) {
-                reste(phrase,true);
+                reste(phrase, true);
             }
 
             break;
         case NEGATION_BOOLEENNE:
+
             if (phrase->innerPhraseLen > 0 || phrase->argsLen != 1) {
                 custom_error("Invalid Syntax, la négation booléenne prend 1 argument", phrase);
             }
             phrase->phraseId = NEGATION_BOOLEENNE;
+            tokenise(phrase->args[0], function, func_list);
             if (phrase->args[0]->phraseId <= 3 && phrase->args[0]->phraseId >= 1) {
-                negation_booleenne(phrase,true);   
+                negation_booleenne(phrase, true);
             }
-
             break;
+
         case EGALITE:
             if (phrase->innerPhraseLen > 0 || phrase->argsLen != 2) {
                 custom_error("Invalid Syntax, l'égalité prend 2 arguments", phrase);
@@ -364,7 +366,7 @@ void tokenise(phrase_t* phrase, function_t* function, function_list_t* func_list
                 }
             }
             if (valid) {
-                plus_grand(phrase,true);
+                plus_grand(phrase, true);
             }
             break;
         case PLUS_PETIT:
@@ -394,7 +396,7 @@ void tokenise(phrase_t* phrase, function_t* function, function_list_t* func_list
                 }
             }
             if (valid) {
-                strict_plus_grand(phrase,true);
+                strict_plus_grand(phrase, true);
             }
             break;
         case STRICT_PLUS_PETIT:
@@ -409,7 +411,7 @@ void tokenise(phrase_t* phrase, function_t* function, function_list_t* func_list
                 }
             }
             if (valid) {
-                strict_plus_petit(phrase,true);
+                strict_plus_petit(phrase, true);
             }
             break;
 
@@ -476,7 +478,7 @@ void tokenise(phrase_t* phrase, function_t* function, function_list_t* func_list
             } else if (test_expr_taille_list(phrase, function)) {
             } else if (test_inst_exec_func(phrase, func_list)) {
             } else if (test_expr_func_call(phrase, func_list)) {
-            } else if (test_inst_def_func_args(phrase, func_list)) {
+                // } else if (test_inst_def_func_args(phrase, func_list)) {
             } else if (test_inst_def_func(phrase, func_list)) {
             } else if (test_inst_exec_func_args(phrase, func_list)) {
             } else if (test_expr_func_call_args(phrase, func_list)) {
@@ -489,6 +491,7 @@ void tokenise(phrase_t* phrase, function_t* function, function_list_t* func_list
                 for (int i = 0; i < phrase->innerPhraseLen; i++) {
                     tokenise(phrase->innerPhrase[i], phrase->function, func_list);
                 }
+                phrase->function->ast = copy_phrase(phrase->function->ast, NULL, phrase->function->env);
 
             } else {
                 for (int i = 0; i < phrase->argsLen; i++) {
@@ -503,9 +506,6 @@ void tokenise(phrase_t* phrase, function_t* function, function_list_t* func_list
     }
 }
 
-phrase_t* calculate_args(phrase_t* phrase) {
-    return phrase;
-}
 // checks the essential syntax (number of arguments, if can have inners, if the else ius well placed ...)
 void check_syntax(phrase_t* phrase) {
     if (phrase->phraseId == -1) {

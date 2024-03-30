@@ -23,7 +23,6 @@
 // constantes pour l'interpréteur
 #define MAX_RECUSION_DEPTH 10000
 
-
 // expressions
 #define EXPR_ENTIER 1
 #define EXPR_FLOTTANT 2
@@ -33,7 +32,7 @@
 // structures de données
 //  * variable
 #define DEFINITION_VARIABLE_AVEC_INIT 5
-#define CREATION_VARIABLE_SANS_INIT 6
+#define DEFINITION_VARIABLE_SANS_INIT 6
 #define ACCESSION_VARIABLE 7
 #define MODIFICATION_VARIABLE 8
 
@@ -96,7 +95,7 @@
 // structures de données
 //  * variable (fait)
 #define DEFINITION_VARIABLE_AVEC_INIT_S "Soit * la variable initialisée à *."  // fait
-#define CREATION_VARIABLE_SANS_INIT_S "Soit * une variable."                   // fait
+#define DEFINITION_VARIABLE_SANS_INIT_S "Soit * une variable."                 // fait
 #define ACCESSION_VARIABLE_S "La variable *?"                                  // fait
 #define MODIFICATION_VARIABLE_S "Que la variable * devienne *."                // fait
 
@@ -108,7 +107,7 @@
 #define SUPPRESSION_LISTE_S "Retirer de la liste * l'élément d'indice *."             // fait
 #define TAILLE_LISTE_S "La taille de la liste *?"                                     // dait
 
-// opérateurs
+// opérateurs 
 #define SOMME_S "La somme de * et de *?"                    // fait
 #define DIFFERENCE_S "La différence de * et de *?"          // fait
 #define PRODUIT_S "Le produit de * et de *?"                // fait
@@ -118,7 +117,6 @@
 #define NEGATION_BOOLEENNE_S "La négation booléenne de *?"  // fait
 
 // comparateurs
-
 #define EGALITE_S "La valeur de * est égale à la valeur de *?"                                // fait
 #define PLUS_GRAND_S "La valeur de * est plus grande que la valeur de *?"                     // fait
 #define PLUS_PETIT_S "La valeur de * est plus petite que la valeur de *?"                     // fait

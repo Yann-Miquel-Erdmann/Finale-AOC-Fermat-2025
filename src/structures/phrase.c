@@ -7,7 +7,6 @@
 #include "../constants.h"
 #include "../custom_error.h"
 
-
 phrase_t* new_phrase(phrase_t* parent) {
     phrase_t* phrase = malloc(sizeof(phrase_t));
 
@@ -49,11 +48,11 @@ void free_phrase(phrase_t* phrase) {
     if (phrase == NULL) {
         return;
     }
-    
-    
-    free(phrase->text);
-    
-    
+
+    if (phrase->text != NULL) {
+        free(phrase->text);
+    }
+
     for (int i = 0; i < phrase->argsLen; i++) {
         free_phrase(phrase->args[i]);
     }
@@ -63,41 +62,38 @@ void free_phrase(phrase_t* phrase) {
         free_phrase(phrase->innerPhrase[i]);
     }
     free(phrase->innerPhrase);
-    
-    
+
     if (phrase->expr) {
         free(phrase->valeur);
     }
     
     free(phrase);
-    phrase = NULL;
 }
 
-phrase_t* copy_phrase(phrase_t* phrase, environnement_t* new_env) {
-    phrase_t* new = new_phrase(phrase->parentPhrase);
-    new->text = malloc(phrase->textSize * sizeof(char));
+phrase_t* copy_phrase(phrase_t* phrase, phrase_t* parent, environnement_t* new_env) {
+    phrase_t* new = new_phrase(parent);
     strcpy(new->text, phrase->text);
     new->textLen = phrase->textLen;
     new->textSize = phrase->textSize;
-
-    new->args = malloc(phrase->argsSize * sizeof(phrase_t*));
     new->argsLen = phrase->argsLen;
     new->argsSize = phrase->argsSize;
-    for (int i = 0; i < phrase->argsLen; i++) {
-        new->args[i] = copy_phrase(phrase->args[i], new_env);
-    }
-
-    new->innerPhrase = malloc(phrase->innerPhraseSize * sizeof(phrase_t*));
-    new->innerPhraseLen = phrase->innerPhraseLen;
-    new->innerPhraseSize = phrase->innerPhraseSize;
-    for (int i = 0; i < phrase->innerPhraseLen; i++) {
-        new->innerPhrase[i] = copy_phrase(phrase->innerPhrase[i], new_env);
-    }
 
     new->phraseId = phrase->phraseId;
 
+    for (int i = 0; i < phrase->argsLen; i++) {
+        new->args[i] = copy_phrase(phrase->args[i],new, new_env);
+    }
+
+    new->innerPhraseLen = phrase->innerPhraseLen;
+    new->innerPhraseSize = phrase->innerPhraseSize;
+    for (int i = 0; i < phrase->innerPhraseLen; i++) {
+        new->innerPhrase[i] = copy_phrase(phrase->innerPhrase[i],new, new_env);
+    }
+
+
     new->inst = phrase->inst;
     new->expr = phrase->expr;
+    new->constant = phrase->constant;
 
     if (phrase->function != NULL) {
         new->function = phrase->function;
