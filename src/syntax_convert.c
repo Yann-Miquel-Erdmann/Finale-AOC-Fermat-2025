@@ -450,6 +450,7 @@ void tokenise(phrase_t* phrase, function_t* function, function_list_t* func_list
                 for (int i = 0; i < phrase->innerPhraseLen; i++) {
                     tokenise(phrase->innerPhrase[i], phrase->function, func_list);
                 }
+                phrase->function->ast = copy_phrase(phrase->function->ast, NULL, phrase->function->env);
 
             } else {
                 for (int i = 0; i < phrase->argsLen; i++) {

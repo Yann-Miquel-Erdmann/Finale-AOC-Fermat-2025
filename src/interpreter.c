@@ -5,18 +5,20 @@
 #include "constants.h"
 #include "custom_error.h"
 #include "eval_numbers.h"
-#include "expressions/operateurs.h"
 #include "expressions/comparateurs.h"
+#include "expressions/operateurs.h"
 
 void interpreter(function_t* function, function_list_t* functions, val_t* result, int layer) {
     if (layer > MAX_RECUSION_DEPTH) {
         custom_error("limite de récursion atteinte", NULL);
     }
+    printf("new interpreter %s\n", function->nom);
 
     phrase_t* phraseActuelle = function->ast;
 
     while (phraseActuelle != NULL) {
-        // printf("'%s' %d %d %d %d\n", phraseActuelle->text, phraseActuelle->phraseId, phraseActuelle->argsLen, phraseActuelle->interpreterArgsIndex, (int)phraseActuelle->constant);
+        printf("'%s' %d %d %d %d %p\n", phraseActuelle->text, phraseActuelle->phraseId, phraseActuelle->argsLen, phraseActuelle->interpreterArgsIndex, (int)phraseActuelle->constant, phraseActuelle);
+
         if (phraseActuelle->constant) {
             phraseActuelle = phraseActuelle->parentPhrase;
         } else if (phraseActuelle->interpreterArgsIndex < phraseActuelle->argsLen) {
@@ -24,6 +26,10 @@ void interpreter(function_t* function, function_list_t* functions, val_t* result
             phraseActuelle = phraseActuelle->args[phraseActuelle->interpreterArgsIndex - 1];
         } else {
             switch (phraseActuelle->phraseId) {
+                case DEFINITION_FONCTION: {
+                    phraseActuelle = phraseActuelle->parentPhrase;
+                    break;
+                }
                 case MAIN_PHRASE: {
                     if (phraseActuelle->interpreterInnerIndex < phraseActuelle->innerPhraseLen) {
                         phraseActuelle->interpreterInnerIndex++;
@@ -36,6 +42,7 @@ void interpreter(function_t* function, function_list_t* functions, val_t* result
 
                 case EXECUTION_FONCTION: {
                     function_t* new_func = copy_function(phraseActuelle->function);
+                    new_func->ast->phraseId = 0;
                     interpreter(new_func, functions, phraseActuelle->valeur, layer + 1);
                     free_function_t(new_func);
 
@@ -98,7 +105,7 @@ void interpreter(function_t* function, function_list_t* functions, val_t* result
                     break;
                 }
 
-// variable ------------------------------------------------------
+                    // variable ------------------------------------------------------
                 case MODIFICATION_VARIABLE:
                 case DEFINITION_VARIABLE_AVEC_INIT: {
                     copy_val(phraseActuelle->variable->valeur, phraseActuelle->args[0]->valeur);
@@ -112,9 +119,8 @@ void interpreter(function_t* function, function_list_t* functions, val_t* result
                     break;
                 }
 
-// opérateurs ---------------------------------------------------
+                    // opérateurs ---------------------------------------------------
                 case SOMME: {
-
                     somme(phraseActuelle, false);
                     phraseActuelle = phraseActuelle->parentPhrase;
                     break;
@@ -149,46 +155,45 @@ void interpreter(function_t* function, function_list_t* functions, val_t* result
                     phraseActuelle = phraseActuelle->parentPhrase;
                     break;
                 }
-// comparateurs ----------------------------------------------------------
-                case EGALITE:{
+                    // comparateurs ----------------------------------------------------------
+                case EGALITE: {
                     egalite(phraseActuelle, false);
                     phraseActuelle = phraseActuelle->parentPhrase;
                     break;
                 }
-                case PLUS_GRAND:{
+                case PLUS_GRAND: {
                     plus_grand(phraseActuelle, false);
                     phraseActuelle = phraseActuelle->parentPhrase;
                     break;
                 }
-                case STRICT_PLUS_GRAND:{
+                case STRICT_PLUS_GRAND: {
                     strict_plus_grand(phraseActuelle, false);
                     phraseActuelle = phraseActuelle->parentPhrase;
                     break;
                 }
-                case PLUS_PETIT:{
+                case PLUS_PETIT: {
                     plus_petit(phraseActuelle, false);
                     phraseActuelle = phraseActuelle->parentPhrase;
                     break;
                 }
-                case STRICT_PLUS_PETIT:{
+                case STRICT_PLUS_PETIT: {
                     strict_plus_petit(phraseActuelle, false);
                     phraseActuelle = phraseActuelle->parentPhrase;
                     break;
                 }
 
-
-// liste -----------------------------------------------------------------
-                case ACCESSION_LISTE:{
+                    // liste -----------------------------------------------------------------
+                case ACCESSION_LISTE: {
                     copy_val(phraseActuelle->valeur, accession(phraseActuelle->liste, get_int(phraseActuelle->args[0]->valeur)));
                     phraseActuelle = phraseActuelle->parentPhrase;
                     break;
                 }
-                case MODIFICATION_LISTE:{
+                case MODIFICATION_LISTE: {
                     modification(phraseActuelle->liste, get_int(phraseActuelle->args[0]->valeur), phraseActuelle->args[1]->valeur);
                     phraseActuelle = phraseActuelle->parentPhrase;
                     break;
                 }
-                case AJOUT_LISTE:{
+                case AJOUT_LISTE: {
                     ajout(phraseActuelle->liste, phraseActuelle->args[0]->valeur);
                     phraseActuelle = phraseActuelle->parentPhrase;
                     break;
@@ -203,7 +208,6 @@ void interpreter(function_t* function, function_list_t* functions, val_t* result
                     phraseActuelle = phraseActuelle->parentPhrase;
                     break;
                 }
-
 
                 default:
                     printf("erreur: %d\n", phraseActuelle->phraseId);

@@ -61,5 +61,5 @@ void addToText(phrase_t* phrase, char c);
 void _printPhrase(phrase_t* phrase, int decalage, int last_elem);
 void printPhrase(phrase_t* phrase);
 
-phrase_t* copy_phrase(phrase_t* p2, environnement_t* env);
+phrase_t* copy_phrase(phrase_t* p2,phrase_t* parent,  environnement_t* env);
 #endif

@@ -30,5 +30,5 @@ bool test_inst_affiche_message(phrase_t* phrase){
     free_pointers(result_str);
 
     // 
-    return true;
+    return phrase->phraseId != -1;
 }
