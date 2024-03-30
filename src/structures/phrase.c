@@ -39,6 +39,8 @@ phrase_t* new_phrase(phrase_t* parent) {
 
     phrase->error = false;
     phrase->constant = false;
+    
+    phrase->deleted = false;
 
     return phrase;
 }
@@ -47,69 +49,28 @@ void free_phrase(phrase_t* phrase) {
     if (phrase == NULL) {
         return;
     }
-
-
+    
+    
     free(phrase->text);
     
-
+    
     for (int i = 0; i < phrase->argsLen; i++) {
         free_phrase(phrase->args[i]);
     }
     free(phrase->args);
-
+    
     for (int i = 0; i < phrase->innerPhraseLen; i++) {
         free_phrase(phrase->innerPhrase[i]);
     }
     free(phrase->innerPhrase);
-
-
+    
+    
     if (phrase->expr) {
         free(phrase->valeur);
     }
-
+    
     free(phrase);
     phrase = NULL;
-}
-
-phrase_t* special_copy_phrase(phrase_t* phrase){
-    phrase_t* new = new_phrase(phrase->parentPhrase);
-    new->text = malloc(phrase->textSize * sizeof(char));
-    strcpy(new->text, phrase->text);
-    new->textLen = phrase->textLen;
-    new->textSize = phrase->textSize;
-
-    new->args = malloc(phrase->argsSize * sizeof(phrase_t*));
-    new->argsLen = phrase->argsLen;
-    new->argsSize = phrase->argsSize;
-    for (int i = 0; i < phrase->argsLen; i++) {
-        new->args[i] = phrase->args[i];
-    }
-
-    new->innerPhrase = malloc(phrase->innerPhraseSize * sizeof(phrase_t*));
-    new->innerPhraseLen = phrase->innerPhraseLen;
-    new->innerPhraseSize = phrase->innerPhraseSize;
-    for (int i = 0; i < phrase->innerPhraseLen; i++) {
-        new->innerPhrase[i] = phrase->innerPhrase[i];
-    }
-
-    new->phraseId = phrase->phraseId;
-
-    new->inst = phrase->inst;
-    new->expr = phrase->expr;
-
-    if (phrase->function != NULL) {
-        new->function = phrase->function;
-    }
-    if (phrase->variable != NULL) {
-        new->variable = phrase->variable;
-    }
-    if (phrase->liste != NULL) {
-        new->liste = phrase->liste;
-    }
-
-    new->error = phrase->error;
-
-    return new;
 }
 
 phrase_t* copy_phrase(phrase_t* phrase, environnement_t* new_env) {
@@ -149,6 +110,7 @@ phrase_t* copy_phrase(phrase_t* phrase, environnement_t* new_env) {
     }
 
     new->error = phrase->error;
+    new->constant = phrase->constant;
 
     return new;
 }
@@ -203,7 +165,7 @@ void addToText(phrase_t* phrase, char c) {
 }
 
 void _printPhrase(phrase_t* phrase, int decalage, int last_elem) {
-    if (phrase == NULL) {
+    if (phrase == NULL || phrase->deleted) {
         return;
     }
     if (phrase->inst) {

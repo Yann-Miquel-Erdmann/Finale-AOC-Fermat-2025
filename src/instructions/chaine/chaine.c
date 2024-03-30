@@ -18,6 +18,7 @@ bool test_inst_affiche_message(phrase_t* phrase){
             phrase->args[0]->textLen = (int)strlen(result_str[1]);
             strcpy(phrase->args[0]->text, result_str[1]);
             phrase->args[0]->textSize = phrase->args[0]->textLen*sizeof(char);
+            phrase->args[0]->constant = true;
             
 
             phrase->textLen = (int)strlen(result_str[0]);

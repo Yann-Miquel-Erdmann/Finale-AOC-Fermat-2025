@@ -12,7 +12,7 @@ bool test_expr_entier(phrase_t* phrase) {
         int* result_num = eval_number(result_str[1], (int)strlen(result_str[1]));
 
         if (result_num[0]) {
-            // printf("integer: %d\n", result_num[1]);
+            //printf("integer: %d\n", result_num[1]);
 
             phrase->phraseId = EXPR_ENTIER;
             phrase->constant = true;

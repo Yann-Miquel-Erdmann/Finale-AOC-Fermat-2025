@@ -45,6 +45,8 @@ typedef struct phrase {
 
     bool constant;
     bool error;
+    
+    bool deleted;
 } phrase_t;
 
 phrase_t* new_phrase(phrase_t* parent);

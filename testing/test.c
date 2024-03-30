@@ -83,7 +83,13 @@ int main(int argc, char const* argv[]) {
     addToFunctionList(function_list, function);
     tokenise(p, function, function_list);
     
-    printPhrase(p);
+    //printPhrase(p);
+    for (int i = 0; i< function_list->function_list_len; i++){
+        printf("function: '%s'\n", function_list->function_list[i]->nom);
+        printPhrase(function_list->function_list[i]->ast);
+        printf("======\n\n");
+    }
+    
     printf("\n====== Début execution ======\n\n");
     interpreter(function, function_list, NULL, 0);
 

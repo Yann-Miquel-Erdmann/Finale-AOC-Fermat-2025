@@ -1,9 +1,6 @@
-Soit f une fonction qui lorsqu'elle est appelée execute:
-Si La valeur de L'entier un? est égale à la valeur de L'entier deux?? alors faire:
-Affiche le message "Oui".
+Si La valeur de L'entier trois? est égale à la valeur de L'entier deux?? alors faire:
+Affiche le message "oui".
 .
 Sinon faire:
 Affiche le message "Non".
 .
-.
-Execute la fonction f.

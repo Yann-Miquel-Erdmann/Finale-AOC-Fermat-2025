@@ -227,6 +227,10 @@ void tokenise(phrase_t* phrase, function_t* function, function_list_t* func_list
             for (int i = 0; i < phrase->innerPhraseLen; i++) {
                 tokenise(phrase->innerPhrase[i], function, func_list);
             }
+            for (int i = 0; i<func_list->function_list_len; i++){
+                func_list->function_list[i]->ast->phraseId = MAIN_PHRASE;
+                addToText(func_list->function_list[i]->ast, '#');
+            }
             break;
         case SOMME:
             phrase->phraseId = SOMME;
@@ -334,7 +338,6 @@ void tokenise(phrase_t* phrase, function_t* function, function_list_t* func_list
 
             break;
         case EGALITE:
-            printf("egalite\n");
             if (phrase->innerPhraseLen > 0 || phrase->argsLen != 2) {
                 custom_error("Invalid Syntax, l'égalité prend 2 arguments", phrase);
             }
