@@ -13,6 +13,8 @@ bool test_inst_def_func(phrase_t* phrase, function_list_t* function_list) {
         function_t* new_func = new_function(result_str[1], phrase);
         phrase->function = new_func;
         addToFunctionList(function_list, new_func);
+    }else{
+        free(result_str[1]);
     }
 
     free_pointers(result_str);

@@ -13,6 +13,8 @@ bool test_inst_var_init(phrase_t* phrase, function_t* function) {
         variable_t* var = new_variable(result_str[1]);
         addToVariableList(function->env, var);
         phrase->variable = var;
+    }else{
+        free(result_str[1]);
     }
     free_pointers(result_str);
 

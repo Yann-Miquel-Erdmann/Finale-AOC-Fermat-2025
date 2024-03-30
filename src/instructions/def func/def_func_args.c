@@ -61,7 +61,6 @@ bool test_inst_def_func_args(phrase_t* phrase, function_list_t* function_list) {
 
         phrase->function = new_function(result_str_2[0], phrase);
         addToFunctionList(function_list, phrase->function);
-        phrase->deleted = true;
 
     } else {
         free(result_str[1]);

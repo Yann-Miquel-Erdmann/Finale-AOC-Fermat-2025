@@ -12,12 +12,12 @@ void interpreter(function_t* function, function_list_t* functions, val_t* result
     if (layer > MAX_RECUSION_DEPTH) {
         custom_error("limite de récursion atteinte", NULL);
     }
-    printf("new interpreter %s\n", function->nom);
+    //printf("new interpreter %s\n", function->nom);
 
     phrase_t* phraseActuelle = function->ast;
 
     while (phraseActuelle != NULL) {
-        printf("'%s' %d %d %d %d %p\n", phraseActuelle->text, phraseActuelle->phraseId, phraseActuelle->argsLen, phraseActuelle->interpreterArgsIndex, (int)phraseActuelle->constant, phraseActuelle);
+        //printf("'%s' %d %d %d %d %p\n", phraseActuelle->text, phraseActuelle->phraseId, phraseActuelle->argsLen, phraseActuelle->interpreterArgsIndex, (int)phraseActuelle->constant, phraseActuelle);
 
         if (phraseActuelle->constant) {
             phraseActuelle = phraseActuelle->parentPhrase;
@@ -35,7 +35,7 @@ void interpreter(function_t* function, function_list_t* functions, val_t* result
                     //printf("mainphrase: '%s', %d\n", function->nom, phraseActuelle->interpreterInnerIndex);
                     if (phraseActuelle->interpreterInnerIndex < phraseActuelle->innerPhraseLen) {
                         phraseActuelle->interpreterInnerIndex++;
-                        printf("'%s' %d %d %d, %d\n", phraseActuelle->text, phraseActuelle->phraseId, phraseActuelle->interpreterInnerIndex, phraseActuelle->innerPhraseLen, (int)phraseActuelle->constant);
+                        //printf("'%s' %d %d %d, %d\n", phraseActuelle->text, phraseActuelle->phraseId, phraseActuelle->interpreterInnerIndex, phraseActuelle->innerPhraseLen, (int)phraseActuelle->constant);
                         phraseActuelle = phraseActuelle->innerPhrase[phraseActuelle->interpreterInnerIndex - 1];
                     } else {
                         /*printf("'%s', %d, %d\n", function->nom, phraseActuelle->interpreterInnerIndex, phraseActuelle->innerPhraseLen);
@@ -225,7 +225,7 @@ void interpreter(function_t* function, function_list_t* functions, val_t* result
                         phraseActuelle->interpreterInnerIndex = 0;
                     }
                     if (get_bool(phraseActuelle->args[0]->valeur)){
-                        printf("true\n");
+                        //printf("true\n");
                         if (phraseActuelle->interpreterInnerIndex < phraseActuelle->innerPhraseLen) {
                             phraseActuelle->interpreterInnerIndex++;
                             phraseActuelle = phraseActuelle->innerPhrase[phraseActuelle->interpreterInnerIndex - 1];
@@ -234,25 +234,25 @@ void interpreter(function_t* function, function_list_t* functions, val_t* result
                             phraseActuelle = phraseActuelle->parentPhrase;
                         }
                     }else{
-                        printf("false\n");
+                        //printf("false\n");
                         phraseActuelle->interpreterInnerIndex = -1;
                         phraseActuelle = phraseActuelle->parentPhrase;
-                        printf("_%s, %d, %s, %d\n", phraseActuelle->text, phraseActuelle->interpreterInnerIndex, function->nom, phraseActuelle->phraseId);
+                        //printf("_%s, %d, %s, %d\n", phraseActuelle->text, phraseActuelle->interpreterInnerIndex, function->nom, phraseActuelle->phraseId);
                     }
                     break;
                 }
                 
                 case SINON: {
-                    printf("got here\n");
+                    //printf("got here\n");
                     if (phraseActuelle->parentPhrase->interpreterInnerIndex != 0){
-                        printf("got here\n");
+                        //printf("got here\n");
                         phrase_t* previous_phrase = phraseActuelle->parentPhrase->innerPhrase[phraseActuelle->parentPhrase->interpreterInnerIndex-2];
                         if (previous_phrase->phraseId == SI_ALORS){
-                            printf("got here -1\n");
+                            //printf("got here -1\n");
                             if (previous_phrase->interpreterInnerIndex == -1){
-                                printf("got here 0\n");
+                                //printf("got here 0\n");
                                 if (phraseActuelle->interpreterInnerIndex < phraseActuelle->innerPhraseLen) {
-                                    printf("got here\n");
+                                    //printf("got here\n");
                                     //printf("'%s' %d %d %d, %d\n", phraseActuelle->text, phraseActuelle->phraseId, phraseActuelle->interpreterInnerIndex, phraseActuelle->innerPhraseLen, (int)phraseActuelle->constant);
 
                                     phraseActuelle->interpreterInnerIndex++;

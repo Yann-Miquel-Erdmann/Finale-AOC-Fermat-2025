@@ -15,6 +15,8 @@ bool test_inst_create_list(phrase_t* phrase, function_t* function) {
         liste_t* liste = new_liste_t(result_str[1]);
         addToListeList(function->env, liste);
         phrase->liste = liste;
+    }else{
+        free(result_str[1]);
     }
     free_pointers(result_str);
 

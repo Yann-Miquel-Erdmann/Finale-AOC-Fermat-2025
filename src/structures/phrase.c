@@ -39,8 +39,6 @@ phrase_t* new_phrase(phrase_t* parent) {
     phrase->error = false;
     phrase->constant = false;
     
-    phrase->deleted = false;
-
     return phrase;
 }
 
@@ -161,9 +159,6 @@ void addToText(phrase_t* phrase, char c) {
 }
 
 void _printPhrase(phrase_t* phrase, int decalage, int last_elem) {
-    if (phrase == NULL || phrase->deleted) {
-        return;
-    }
     if (phrase->inst) {
         for (int i = 0; i < decalage; i++) {
             printf("|\t");
