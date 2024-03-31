@@ -88,8 +88,8 @@ int main(int argc, char const* argv[]) {
         printPhrase(function_list->function_list[i]->ast);
         printf("======\n\n");
     }
-
-    printf("\n====== Début execution ======\n\n");
+    
+    printf("====== Début execution ======\n\n");
     interpreter(function, function_list, NULL, 0);
 
     free_function_list(function_list);

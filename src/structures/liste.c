@@ -7,7 +7,7 @@
 #include "../custom_error.h"
 
 void free_liste_t(liste_t* liste) {
-    for (int i = 0; i < liste->valeursSize; i++) {
+    for (int i = 0; i < liste->valeursLen; i++) {
         if (liste->valeurs[i] != NULL) {
             free_val_t(liste->valeurs[i]);
         }
@@ -66,6 +66,7 @@ void ajout(liste_t* liste, val_t* valeur) {
     if (liste->valeursLen == liste->valeursSize) {
         doubleValeursSize(liste);
     }
+    liste->valeurs[liste->valeursLen] = new_val();
     copy_val(liste->valeurs[liste->valeursLen], valeur);
     liste->valeursLen++;
 }
@@ -80,6 +81,7 @@ void inserer(liste_t* liste, int indice, val_t* valeur) {
     for (int i = liste->valeursLen; i > indice; i--) {
         liste->valeurs[i] = liste->valeurs[i - 1];
     }
+    liste->valeurs[indice] = new_val();
     copy_val(liste->valeurs[indice], valeur);
     liste->valeursLen++;
 }

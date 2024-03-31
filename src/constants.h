@@ -50,6 +50,7 @@
 #define AJOUT_LISTE 12
 #define SUPPRESSION_LISTE 13
 #define TAILLE_LISTE 14
+#define INSERTION_LISTE 41
 
 // opérateurs
 #define SOMME 15
@@ -108,11 +109,13 @@
 
 //  * liste (fait)
 #define CREATION_LISTE_S "Soit * une liste vide."                                     // fait
-#define ACCESSION_LISTE_S "La valeur de l'élément de la liste * à l'indice *?"        // fait
+#define ACCESSION_LISTE_S "L'élément de la liste * à l'indice *?"                     // fait
 #define MODIFICATION_LISTE_S "Remplacer l'élément de la liste * à l'indice * par *."  // fait
 #define AJOUT_LISTE_S "Ajouter à la liste * *."                                       // fait
 #define SUPPRESSION_LISTE_S "Retirer de la liste * l'élément d'indice *."             // fait
 #define TAILLE_LISTE_S "La taille de la liste *?"                                     // fait
+#define INSERTION_LISTE_S "Insérer l'élément * dans la liste * à l'indice *."
+
 
 // opérateurs 
 #define SOMME_S "La somme de * et de *?"                    // fait
@@ -141,8 +144,8 @@
 #define POUR_AVEC_PAS_S "Pour * allant de * jusqu'à * en utilisant un pas de * faire:*."
 
 // affichage console
-#define AFFICHE_EXPR_S "Affiche *."
-#define AFFICHE_STR_S "Affiche le message *."
+#define AFFICHE_EXPR_S "Afficher *."
+#define AFFICHE_STR_S "Afficher le message *."
 
 // fonctions
 #define DEFINITION_FONCTION_S "Soit * une fonction qui lorsqu'elle est appelée execute:*."  // fait

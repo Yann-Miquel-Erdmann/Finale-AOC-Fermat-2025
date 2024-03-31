@@ -26,4 +26,5 @@ bool test_inst_exec_func(phrase_t* phrase, function_list_t* function_list);
 bool test_inst_def_func_args(phrase_t* phrase, function_list_t* function_list);
 bool test_inst_exec_func_args(phrase_t* phrase, function_list_t* function_list);
 bool test_inst_affiche_message(phrase_t* phrase);
+bool test_inst_insert_list(phrase_t* phrase, function_t* function);
 #endif

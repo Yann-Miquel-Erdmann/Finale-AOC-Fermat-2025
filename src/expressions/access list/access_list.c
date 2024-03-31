@@ -1,12 +1,15 @@
 #include "../expressions.h"
 
 bool test_expr_access_list(phrase_t* phrase, function_t* function) {
-    if (phrase->phraseId != -1 || strlen(phrase->text) <= 52) {
+    if (phrase->phraseId != -1 || strlen(phrase->text) <= 39) {
         return false;
     }
 
-    char** result_str = cut_a_b(phrase->text, 37, 15);
+    char** result_str = cut_a_b(phrase->text, 24, 15);
     strcat(result_str[0], result_str[2]);
+    
+    printf("'%s'\n", result_str[0]);
+    
     if (!strcmp(result_str[0], ACCESSION_LISTE_S)) {
         // printf("accession de la liste %s\n", result_str[1]);
         phrase->phraseId = ACCESSION_LISTE;

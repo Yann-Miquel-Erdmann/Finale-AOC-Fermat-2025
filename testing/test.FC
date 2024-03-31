@@ -1,9 +1,12 @@
-Soit f une fonction qui lorsqu'elle est appelée avec a, b, c execute:
-Affiche La variable a?.
-Affiche La variable b?.
-Affiche La variable c?.
-.
+Soit l une liste vide.
+Ajouter à la liste l L'entier deux?.
+Afficher L'élément de la liste l à l'indice L'entier zéro??.
+Ajouter à la liste l L'entier trois?.
+Afficher La taille de la liste l?.
+Retirer de la liste l l'élément d'indice L'entier zéro?.
+Afficher L'élément de la liste l à l'indice L'entier zéro??.
+Remplacer l'élément de la liste l à l'indice L'entier zéro? par L'entier zéro?.
+Afficher L'élément de la liste l à l'indice L'entier zéro??.
+Insérer l'élément L'entier douze? dans la liste l à l'indice L'entier zéro?.
 
-Affiche le message "1".
-Execute la fonction f avec les arguments L'entier deux?,L'entier trois?,L'entier quatre?.
-Affiche le message "5".
+Afficher L'élément de la liste l à l'indice L'entier zéro??.
