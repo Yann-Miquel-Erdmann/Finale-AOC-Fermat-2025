@@ -35,10 +35,11 @@ phrase_t* new_phrase(phrase_t* parent) {
     phrase->function = NULL;
     phrase->variable = NULL;
     phrase->liste = NULL;
+    phrase->valeur = NULL;
 
     phrase->error = false;
     phrase->constant = false;
-    
+
     return phrase;
 }
 
@@ -55,7 +56,7 @@ void free_phrase(phrase_t* phrase) {
         free_phrase(phrase->args[i]);
     }
     free(phrase->args);
-    
+
     for (int i = 0; i < phrase->innerPhraseLen; i++) {
         free_phrase(phrase->innerPhrase[i]);
     }
@@ -64,7 +65,7 @@ void free_phrase(phrase_t* phrase) {
     if (phrase->expr) {
         free(phrase->valeur);
     }
-    
+
     free(phrase);
 }
 
@@ -79,15 +80,14 @@ phrase_t* copy_phrase(phrase_t* phrase, phrase_t* parent, environnement_t* new_e
     new->phraseId = phrase->phraseId;
 
     for (int i = 0; i < phrase->argsLen; i++) {
-        new->args[i] = copy_phrase(phrase->args[i],new, new_env);
+        new->args[i] = copy_phrase(phrase->args[i], new, new_env);
     }
 
     new->innerPhraseLen = phrase->innerPhraseLen;
     new->innerPhraseSize = phrase->innerPhraseSize;
     for (int i = 0; i < phrase->innerPhraseLen; i++) {
-        new->innerPhrase[i] = copy_phrase(phrase->innerPhrase[i],new, new_env);
+        new->innerPhrase[i] = copy_phrase(phrase->innerPhrase[i], new, new_env);
     }
-
 
     new->inst = phrase->inst;
     new->expr = phrase->expr;
@@ -101,6 +101,11 @@ phrase_t* copy_phrase(phrase_t* phrase, phrase_t* parent, environnement_t* new_e
     }
     if (phrase->liste != NULL) {
         new->liste = getListe(new_env, phrase->liste->nom);
+    }
+
+    if (phrase->valeur != NULL) {
+        new->valeur = malloc(sizeof(val_t));
+        copy_val(new->valeur, phrase->valeur);
     }
 
     new->error = phrase->error;
@@ -229,6 +234,7 @@ void _printPhrase(phrase_t* phrase, int decalage, int last_elem) {
 
 void printPhrase(phrase_t* phrase) {
     for (int i = 0; i < phrase->innerPhraseLen; i++) {
+        // printf("print inner %s %d\n", phrase->text, i);
         _printPhrase(phrase->innerPhrase[i], 0, false);
     }
 }

@@ -17,7 +17,7 @@ void interpreter(function_t* function, function_list_t* functions, val_t* result
     phrase_t* phraseActuelle = function->ast;
 
     while (phraseActuelle != NULL) {
-        //printf("'%s' %d %d %d %d %p\n", phraseActuelle->text, phraseActuelle->phraseId, phraseActuelle->argsLen, phraseActuelle->interpreterArgsIndex, (int)phraseActuelle->constant, phraseActuelle);
+        printf("'%s' %d %d %d %d %p\n", phraseActuelle->text, phraseActuelle->phraseId, phraseActuelle->argsLen, phraseActuelle->interpreterArgsIndex, (int)phraseActuelle->constant, phraseActuelle);
 
         if (phraseActuelle->constant) {
             phraseActuelle = phraseActuelle->parentPhrase;
@@ -27,6 +27,7 @@ void interpreter(function_t* function, function_list_t* functions, val_t* result
         } else {
             //printf("'%s' %d %d %d\n", phraseActuelle->text, phraseActuelle->phraseId, phraseActuelle->interpreterInnerIndex, (int)phraseActuelle->constant);
             switch (phraseActuelle->phraseId) {
+                case DEFINITION_FONCTION_ARGUMENT: 
                 case DEFINITION_FONCTION: {
                     phraseActuelle = phraseActuelle->parentPhrase;
                     break;
@@ -61,12 +62,15 @@ void interpreter(function_t* function, function_list_t* functions, val_t* result
                 }
 
                 case EXECUTION_FONCTION_ARGUMENT: {
-                    //printf("execution de la fonction %s\n", phraseActuelle->function->nom);
+                    printf("execution de la fonction avec arg %s\n", phraseActuelle->function->nom);
                     function_t* new_func = copy_function(phraseActuelle->function);
-
+                    new_func->ast->phraseId = 0;
+                    
+                    printf("%d\n",new_func->env->variable_list_len);
                     // initialise les arguments
                     for (int i = 0; i < phraseActuelle->argsLen; i++) {
-                        copy_val(new_func->env->variable_list[i]->valeur, phraseActuelle->args[i]->valeur);
+                        copy_val(new_func->env->variable_list[i]->valeur, 
+                        phraseActuelle->args[i]->valeur);
                     }
 
                     interpreter(new_func, functions, phraseActuelle->valeur, layer + 1);
@@ -277,7 +281,7 @@ void interpreter(function_t* function, function_list_t* functions, val_t* result
                     printf("erreur: %d, %d\n", phraseActuelle->phraseId, phraseActuelle->constant);
                     //printf("%s\n", phraseActuelle->text);
                     phraseActuelle = phraseActuelle->parentPhrase;
-                    //return;
+                    return;
                     break;
             }
         }

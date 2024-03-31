@@ -190,19 +190,19 @@ int elem_liste(char* text) {
     if (!strcmp(text, MAIN_PHRASE_S)) {
         return MAIN_PHRASE;
     }
-    if (!strcmp(text, EGALITE_S)){
+    if (!strcmp(text, EGALITE_S)) {
         return EGALITE;
     }
-    if (!strcmp(text, PLUS_GRAND_S)){
+    if (!strcmp(text, PLUS_GRAND_S)) {
         return PLUS_GRAND;
     }
-    if (!strcmp(text, STRICT_PLUS_GRAND_S)){
+    if (!strcmp(text, STRICT_PLUS_GRAND_S)) {
         return STRICT_PLUS_GRAND;
     }
-    if (!strcmp(text, PLUS_PETIT_S)){
+    if (!strcmp(text, PLUS_PETIT_S)) {
         return PLUS_PETIT;
     }
-    if (!strcmp(text, STRICT_PLUS_PETIT_S)){
+    if (!strcmp(text, STRICT_PLUS_PETIT_S)) {
         return STRICT_PLUS_PETIT;
     }
     return -1;
@@ -227,7 +227,7 @@ void tokenise(phrase_t* phrase, function_t* function, function_list_t* func_list
             for (int i = 0; i < phrase->innerPhraseLen; i++) {
                 tokenise(phrase->innerPhrase[i], function, func_list);
             }
-            for (int i = 0; i<func_list->function_list_len; i++){
+            for (int i = 0; i < func_list->function_list_len; i++) {
                 func_list->function_list[i]->ast->phraseId = MAIN_PHRASE;
                 addToText(func_list->function_list[i]->ast, '#');
             }
@@ -444,7 +444,7 @@ void tokenise(phrase_t* phrase, function_t* function, function_list_t* func_list
             if (phrase->argsLen != 1) {
                 custom_error("Invalid Syntax, si alors prend 1 arguments", phrase);
             }
-            if (phrase->innerPhraseLen == 0){
+            if (phrase->innerPhraseLen == 0) {
                 custom_error("Invalid Syntax, si alors prend au moins 1 instruction", phrase);
             }
             phrase->phraseId = SI_ALORS;
@@ -454,7 +454,7 @@ void tokenise(phrase_t* phrase, function_t* function, function_list_t* func_list
             }
             break;
         case SINON:
-            if (phrase->innerPhraseLen == 0){
+            if (phrase->innerPhraseLen == 0) {
                 custom_error("Invalid Syntax, sinon prend au moins 1 instruction", phrase);
             }
             phrase->phraseId = SINON;
@@ -467,22 +467,28 @@ void tokenise(phrase_t* phrase, function_t* function, function_list_t* func_list
             if (test_expr_entier(phrase)) {
             } else if (test_expr_flottant(phrase)) {
             } else if (test_expr_booleen(phrase)) {
+            
             } else if (test_inst_var_init(phrase, function)) {
             } else if (test_inst_create_var(phrase, function)) {
             } else if (test_expr_access_var(phrase, function)) {
             } else if (test_inst_modif_var(phrase, function)) {
+            
             } else if (test_inst_create_list(phrase, function)) {
             } else if (test_expr_access_list(phrase, function)) {
             } else if (test_inst_modif_list(phrase, function)) {
             } else if (test_inst_suppr_list(phrase, function)) {
             } else if (test_expr_taille_list(phrase, function)) {
-            } else if (test_inst_exec_func(phrase, func_list)) {
-            } else if (test_expr_func_call(phrase, func_list)) {
-                // } else if (test_inst_def_func_args(phrase, func_list)) {
-            } else if (test_inst_def_func(phrase, func_list)) {
+            
+            } else if (test_inst_def_func_args(phrase, func_list)) {
             } else if (test_inst_exec_func_args(phrase, func_list)) {
             } else if (test_expr_func_call_args(phrase, func_list)) {
-            } else if (test_inst_affiche_message(phrase)) {
+            
+            } else if (test_inst_def_func(phrase, func_list)) {
+            } else if (test_inst_exec_func(phrase, func_list)) {
+            } else if (test_expr_func_call(phrase, func_list)) {
+            
+            } else if (test_inst_affiche_message(phrase)){
+            
             } else {
                 custom_error("Syntaxe Invalide", phrase);
             }

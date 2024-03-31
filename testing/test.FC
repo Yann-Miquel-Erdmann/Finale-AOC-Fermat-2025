@@ -1,9 +1,9 @@
-Soit f une fonction qui lorsqu'elle est appelée execute:
-Affiche le message "2".
-Affiche le message "3".
-Affiche le message "4".
+Soit f une fonction qui lorsqu'elle est appelée avec a, b, c execute:
+Affiche La variable a?.
+Affiche La variable b?.
+Affiche La variable c?.
 .
 
 Affiche le message "1".
-Execute la fonction f.
+Execute la fonction f avec les arguments L'entier deux?,L'entier trois?,L'entier quatre?.
 Affiche le message "5".

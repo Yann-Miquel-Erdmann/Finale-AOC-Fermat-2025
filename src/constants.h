@@ -18,10 +18,15 @@
 #define FLOAT 2
 #define BOOL 3
 
-#define MAIN_PHRASE 0
-
 // constantes pour l'interpréteur
 #define MAX_RECUSION_DEPTH 10000
+
+// constantes pour split args
+#define DEFAULT_RES_SIZE 10
+#define DEFAULT_CURR_SIZE 20
+
+#define MAIN_PHRASE 0
+
 
 // expressions
 #define EXPR_ENTIER 1
