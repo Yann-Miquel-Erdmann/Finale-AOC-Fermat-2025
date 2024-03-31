@@ -204,6 +204,9 @@ int elem_liste(char* text) {
     }
     if (!strcmp(text, STRICT_PLUS_PETIT_S)) {
         return STRICT_PLUS_PETIT;
+    } 
+    if (!strcmp(text, INSERTION_LISTE_S)) {
+        return INSERTION_LISTE;
     }
     return -1;
 }
@@ -475,9 +478,11 @@ void tokenise(phrase_t* phrase, function_t* function, function_list_t* func_list
             
             } else if (test_inst_create_list(phrase, function)) {
             } else if (test_expr_access_list(phrase, function)) {
+            } else if (test_inst_add_list(phrase, function)) {
             } else if (test_inst_modif_list(phrase, function)) {
             } else if (test_inst_suppr_list(phrase, function)) {
             } else if (test_expr_taille_list(phrase, function)) {
+            } else if (test_inst_insert_list(phrase, function)) {
             
             } else if (test_inst_def_func_args(phrase, func_list)) {
             } else if (test_inst_exec_func_args(phrase, func_list)) {

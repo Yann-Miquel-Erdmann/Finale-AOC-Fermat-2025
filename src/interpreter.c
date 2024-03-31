@@ -17,7 +17,7 @@ void interpreter(function_t* function, function_list_t* functions, val_t* result
     phrase_t* phraseActuelle = function->ast;
 
     while (phraseActuelle != NULL) {
-        printf("'%s' %d %d %d %d %p\n", phraseActuelle->text, phraseActuelle->phraseId, phraseActuelle->argsLen, phraseActuelle->interpreterArgsIndex, (int)phraseActuelle->constant, phraseActuelle);
+        //printf("'%s' %d %d %d %d %p\n", phraseActuelle->text, phraseActuelle->phraseId, phraseActuelle->argsLen, phraseActuelle->interpreterArgsIndex, (int)phraseActuelle->constant, phraseActuelle);
 
         if (phraseActuelle->constant) {
             phraseActuelle = phraseActuelle->parentPhrase;
@@ -220,6 +220,12 @@ void interpreter(function_t* function, function_list_t* functions, val_t* result
                 }
                 case TAILLE_LISTE: {
                     set_int(phraseActuelle->valeur, taille(phraseActuelle->liste));
+                    phraseActuelle = phraseActuelle->parentPhrase;
+                    break;
+                }
+                case INSERTION_LISTE:{
+                    printf("%d\n", phraseActuelle->args[1]->valeur->type);
+                    inserer(phraseActuelle->liste, get_int(phraseActuelle->args[1]->valeur), phraseActuelle->args[0]->valeur);
                     phraseActuelle = phraseActuelle->parentPhrase;
                     break;
                 }
