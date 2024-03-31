@@ -66,7 +66,7 @@ void ajout(liste_t* liste, val_t* valeur) {
     if (liste->valeursLen == liste->valeursSize) {
         doubleValeursSize(liste);
     }
-    liste->valeurs[liste->valeursLen] = new_val();
+    liste->valeurs[liste->valeursLen] = new_val_t(UNDEFINED);
     copy_val(liste->valeurs[liste->valeursLen], valeur);
     liste->valeursLen++;
 }
@@ -81,7 +81,7 @@ void inserer(liste_t* liste, int indice, val_t* valeur) {
     for (int i = liste->valeursLen; i > indice; i--) {
         liste->valeurs[i] = liste->valeurs[i - 1];
     }
-    liste->valeurs[indice] = new_val();
+    liste->valeurs[indice] = new_val_t(UNDEFINED);
     copy_val(liste->valeurs[indice], valeur);
     liste->valeursLen++;
 }

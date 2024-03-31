@@ -23,7 +23,7 @@ val_t* new_val_t(char type) {
 }
 
 void free_val_t(val_t* v) {
-    if (v->type == LISTE) {
+    if (v->liste != NULL) {
         free_liste_t(v->liste);
     }
     free(v);

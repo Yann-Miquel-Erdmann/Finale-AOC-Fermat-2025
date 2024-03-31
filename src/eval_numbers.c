@@ -10,7 +10,7 @@ char* add_str(char* str, int* taille, char* added){
     int len_str = (int)strlen(str);
     while (*(taille) <= len_str + len) {
         *(taille) *= 2;
-        str = realloc(str, *(taille)*sizeof(char));
+        str = realloc(str, (*(taille))*sizeof(char));
         if (str == NULL){
             custom_error("", NULL);
         }
@@ -405,7 +405,7 @@ char* str_from_int(int n){
     }
 
     if (n == 0){
-        strcpy(text, "zéro");
+        text = add_str(text, &text_size, "zéro");
         return text;
     }
     int e_0 = n % 1000;

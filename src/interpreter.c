@@ -225,7 +225,7 @@ void interpreter(function_t* function, function_list_t* functions, val_t* result
                 }
                 case INSERTION_LISTE:{
                     printf("%d\n", phraseActuelle->args[1]->valeur->type);
-                    inserer(phraseActuelle->liste, get_int(phraseActuelle->args[1]->valeur), phraseActuelle->args[0]->valeur);
+                    inserer(phraseActuelle->valeur->liste, get_int(phraseActuelle->args[1]->valeur), phraseActuelle->args[0]->valeur);
                     phraseActuelle = phraseActuelle->parentPhrase;
                     break;
                 }

@@ -11,7 +11,7 @@ bool test_expr_taille_list(phrase_t* phrase, function_t* function) {
     if (!strcmp(result_str[0], TAILLE_LISTE_S)) {
         // printf("la taille de la liste %s\n", result_str[1]);
         phrase->phraseId = TAILLE_LISTE;
-        phrase->valeur->liste = getVariable(function->env, result_str[1])->valeur->liste;
+        set_liste(phrase->valeur, getVariable(function->env, result_str[1])->valeur->liste);
     }
     free(result_str[1]);
     free_pointers(result_str);

@@ -61,9 +61,10 @@ void free_phrase(phrase_t* phrase) {
     }
     free(phrase->innerPhrase);
 
-    if (phrase->expr) {
+    if (phrase->valeur!=NULL) {
         free(phrase->valeur);
     }
+
 
     free(phrase);
 }
