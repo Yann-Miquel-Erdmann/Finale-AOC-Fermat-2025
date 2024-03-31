@@ -33,7 +33,7 @@ void interpreter(function_t* function, function_list_t* functions, val_t* result
                     break;
                 }
                 case MAIN_PHRASE: {
-                    //printf("mainphrase: '%s', %d\n", function->nom, phraseActuelle->interpreterInnerIndex);
+                    //printf("main phrase: '%s', %d\n", function->nom, phraseActuelle->interpreterInnerIndex);
                     if (phraseActuelle->interpreterInnerIndex < phraseActuelle->innerPhraseLen) {
                         phraseActuelle->interpreterInnerIndex++;
                         //printf("'%s' %d %d %d, %d\n", phraseActuelle->text, phraseActuelle->phraseId, phraseActuelle->interpreterInnerIndex, phraseActuelle->innerPhraseLen, (int)phraseActuelle->constant);
@@ -199,27 +199,27 @@ void interpreter(function_t* function, function_list_t* functions, val_t* result
 
                     // liste -----------------------------------------------------------------
                 case ACCESSION_LISTE: {
-                    copy_val(phraseActuelle->valeur, accession(phraseActuelle->liste, get_int(phraseActuelle->args[0]->valeur)));
+                    copy_val(phraseActuelle->valeur, accession(phraseActuelle->valeur->liste, get_int(phraseActuelle->args[0]->valeur)));
                     phraseActuelle = phraseActuelle->parentPhrase;
                     break;
                 }
                 case MODIFICATION_LISTE: {
-                    modification(phraseActuelle->liste, get_int(phraseActuelle->args[0]->valeur), phraseActuelle->args[1]->valeur);
+                    modification(phraseActuelle->valeur->liste, get_int(phraseActuelle->args[0]->valeur), phraseActuelle->args[1]->valeur);
                     phraseActuelle = phraseActuelle->parentPhrase;
                     break;
                 }
                 case AJOUT_LISTE: {
-                    ajout(phraseActuelle->liste, phraseActuelle->args[0]->valeur);
+                    ajout(phraseActuelle->valeur->liste, phraseActuelle->args[0]->valeur);
                     phraseActuelle = phraseActuelle->parentPhrase;
                     break;
                 }
                 case SUPPRESSION_LISTE: {
-                    suppression(phraseActuelle->liste, get_int(phraseActuelle->args[0]->valeur));
+                    suppression(phraseActuelle->valeur->liste, get_int(phraseActuelle->args[0]->valeur));
                     phraseActuelle = phraseActuelle->parentPhrase;
                     break;
                 }
                 case TAILLE_LISTE: {
-                    set_int(phraseActuelle->valeur, taille(phraseActuelle->liste));
+                    set_int(phraseActuelle->valeur, taille(phraseActuelle->valeur->liste));
                     phraseActuelle = phraseActuelle->parentPhrase;
                     break;
                 }

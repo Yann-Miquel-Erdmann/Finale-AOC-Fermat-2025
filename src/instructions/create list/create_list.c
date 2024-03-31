@@ -1,6 +1,5 @@
 #include "../instructions.h"
 bool test_inst_create_list(phrase_t* phrase, function_t* function) {
-    
     if (phrase->phraseId != -1 || strlen(phrase->text) <= 21) {
         return false;
     }
@@ -12,10 +11,9 @@ bool test_inst_create_list(phrase_t* phrase, function_t* function) {
         // printf("création de la liste %s\n", result_str[1]);
         phrase->phraseId = CREATION_LISTE;
         phrase->constant = true;
-        liste_t* liste = new_liste_t(result_str[1]);
-        addToListeList(function->env, liste);
-        phrase->liste = liste;
-    }else{
+
+        addToVariableList(function->env,new_variable(result_str[1], new_val_t(LISTE)));
+    } else {
         free(result_str[1]);
     }
     free_pointers(result_str);

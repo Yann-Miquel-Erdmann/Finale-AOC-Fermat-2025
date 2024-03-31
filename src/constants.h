@@ -14,9 +14,11 @@
 #define DEFAULT_FUNCTION_LIST_SIZE 64
 
 // val_t type
+#define UNDEFINED -1
 #define INT 1
 #define FLOAT 2
 #define BOOL 3
+#define LISTE 4
 
 // constantes pour l'interpréteur
 #define MAX_RECUSION_DEPTH 10000
@@ -110,7 +112,7 @@
 #define MODIFICATION_LISTE_S "Remplacer l'élément de la liste * à l'indice * par *."  // fait
 #define AJOUT_LISTE_S "Ajouter à la liste * *."                                       // fait
 #define SUPPRESSION_LISTE_S "Retirer de la liste * l'élément d'indice *."             // fait
-#define TAILLE_LISTE_S "La taille de la liste *?"                                     // dait
+#define TAILLE_LISTE_S "La taille de la liste *?"                                     // fait
 
 // opérateurs 
 #define SOMME_S "La somme de * et de *?"                    // fait

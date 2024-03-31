@@ -21,3 +21,5 @@
 - ~~renvois fonction~~
 
 - :warning: insérer dans une liste à l'indice
+
+- affichage d'une liste dans print val

@@ -5,18 +5,27 @@
 
 #include "../constants.h"
 #include "../custom_error.h"
+#include "liste.h"
 
-val_t* new_val(void) {
+val_t* new_val_t(char type) {
     val_t* val = malloc(sizeof(val_t));
     if (val == NULL) {
         custom_error("erreur d'allocation", NULL);
         return val;
     }
-    val->type = -1;
+
+    val->liste = NULL;
+    val->type = type;
+    if (type == LISTE) {
+        val->liste = new_liste_t();
+    }
     return val;
 }
 
 void free_val_t(val_t* v) {
+    if (v->type == LISTE) {
+        free_liste_t(v->liste);
+    }
     free(v);
 }
 
@@ -120,9 +129,24 @@ void set_undefined(val_t* v) {
     v->type = -1;
 }
 
+void set_liste(val_t* v, liste_t* l) {
+    v->type = LISTE;
+    v->liste = l;
+}
+
+liste_t* get_liste(val_t* v) {
+    if (v->type != LISTE) {
+        custom_error("le type de val_t ne correspond pas", NULL);
+    }
+    return v->liste;
+}
+
 void copy_val(val_t* dest, val_t* src) {
     dest->type = src->type;
     dest->value = src->value;
+    if (src->type == LISTE) {
+        dest->liste = copy_liste(src->liste);
+    }
 }
 
 void print_val(val_t* v) {
@@ -140,7 +164,8 @@ void print_val(val_t* v) {
                 printf("bool: false\n");
             }
             break;
-
+        case LISTE:
+            // TODO
         default:
             custom_error("le type de vat_t n'est pas reconnu", NULL);
             break;

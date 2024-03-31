@@ -22,9 +22,6 @@ void addToVariableList(environnement_t* env, variable_t* var);
 
 variable_t* getVariable(environnement_t* env, char* nom);
 
-void doubleListeListSize(environnement_t* env);
-void addToListeList(environnement_t* env, liste_t* liste);
 
-liste_t* getListe(environnement_t* env, char* nom);
 
 #endif

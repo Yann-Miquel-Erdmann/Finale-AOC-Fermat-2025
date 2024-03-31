@@ -17,7 +17,6 @@ point de vue de l'utilisateur. */
 
 /* Structure de données abstraite: Liste chaînée */
 typedef struct liste {
-    char* nom;
     val_t** valeurs;
     int valeursLen;
     int valeursSize;
@@ -25,7 +24,7 @@ typedef struct liste {
 
 void free_liste_t(liste_t* l);
 
-liste_t* new_liste_t(char* nom);
+liste_t* new_liste_t();
 
 liste_t* copy_liste(liste_t* l);
 

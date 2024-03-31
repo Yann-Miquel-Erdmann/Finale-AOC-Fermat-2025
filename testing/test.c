@@ -41,9 +41,9 @@ void test_parse(void) {
 }
 
 void test_val(void) {
-    val_t* v1 = new_val();
-    val_t* v2 = new_val();
-    val_t* v3 = new_val();
+    val_t* v1 = new_val_t(UNDEFINED);
+    val_t* v2 = new_val_t(UNDEFINED);
+    val_t* v3 = new_val_t(UNDEFINED);
     set_int(v1, 45);
     set_float(v2, 50.320);
     set_bool(v3, true);
@@ -64,10 +64,9 @@ void test_val(void) {
 }
 
 int main(int argc, char const* argv[]) {
-    //str_from_int(-2000289635);
-    //printf("%s\n", str_from_float(12.7));
-    
-    
+    // str_from_int(-2000289635);
+    // printf("%s\n", str_from_float(12.7));
+
     // test_val();
 
     FILE* f = fopen("testing/test.FC", "r");
@@ -82,14 +81,14 @@ int main(int argc, char const* argv[]) {
     function_list_t* function_list = new_function_list();
     addToFunctionList(function_list, function);
     tokenise(p, function, function_list);
-    
-    //printPhrase(p);
-    for (int i = 0; i< function_list->function_list_len; i++){
+
+    // printPhrase(p);
+    for (int i = 0; i < function_list->function_list_len; i++) {
         printf("function: '%s'\n", function_list->function_list[i]->nom);
         printPhrase(function_list->function_list[i]->ast);
         printf("======\n\n");
     }
-    
+
     printf("\n====== Début execution ======\n\n");
     interpreter(function, function_list, NULL, 0);
 
