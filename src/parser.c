@@ -64,8 +64,11 @@ phrase_t* parse_file(FILE* f) {
         } else {
             switch (c) {
                 case '.':
-
-                    addToText(phraseActuelle, c);
+                    if (buffer == ' '){ // pour enlever les espaces avant les points (éviter quelques erreurs difficiles à trouver)
+                        phraseActuelle->text[phraseActuelle->textLen-1] = c;
+                    }else{
+                        addToText(phraseActuelle, c);
+                    }
                     addToText(phraseActuelle, '\0');
                     phraseActuelle->inst = true;
                     phraseActuelle->expr = false;
@@ -87,7 +90,11 @@ phrase_t* parse_file(FILE* f) {
                 case '?':
 
                     // ajoute le caractère au texte
-                    addToText(phraseActuelle, c);
+                    if (buffer == ' '){ // pour enlever les espaces avant les points d'interrogaion (éviter quelques erreurs difficiles à trouver)
+                        phraseActuelle->text[phraseActuelle->textLen-1] = c;
+                    }else{
+                        addToText(phraseActuelle, c);
+                    }
                     addToText(phraseActuelle, '\0');
                     phraseActuelle->expr = true;
                     phraseActuelle->inst = false;

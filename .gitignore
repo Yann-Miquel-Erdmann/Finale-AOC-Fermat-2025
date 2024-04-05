@@ -2,3 +2,4 @@ build/*
 # Ignore all hidden files
 .*          
 test
+a.out

@@ -100,19 +100,19 @@
 
 // structures de données
 //  * variable (fait)
-#define DEFINITION_VARIABLE_AVEC_INIT_S "Soit * la variable initialisée à *."  // fait
-#define DEFINITION_VARIABLE_SANS_INIT_S "Soit * une variable."                 // fait
+#define DEFINITION_VARIABLE_AVEC_INIT_S "Soit $ *."                            // fait
+#define DEFINITION_VARIABLE_SANS_INIT_S "Soit $."                              // fait
 #define ACCESSION_VARIABLE_S "La variable *?"                                  // fait
 #define MODIFICATION_VARIABLE_S "Que la variable * devienne *."                // fait
 
 //  * liste (fait)
-#define CREATION_LISTE_S "Soit * une liste vide."                                     // fait
-#define ACCESSION_LISTE_S "L'élément de la liste * à l'indice *?"                     // fait
-#define MODIFICATION_LISTE_S "Remplacer l'élément de la liste * à l'indice * par *."  // fait
+#define CREATION_LISTE_S "Soit $ une liste vide."                                     // fait
+#define ACCESSION_LISTE_S "L'élément de la liste $ à l'indice *?"                     // fait
+#define MODIFICATION_LISTE_S "Remplacer l'élément de la liste $ à l'indice * par *."  // fait
 #define AJOUT_LISTE_S "Ajouter à la liste * *."                                       // fait
-#define SUPPRESSION_LISTE_S "Retirer de la liste * l'élément d'indice *."             // fait
-#define TAILLE_LISTE_S "La taille de la liste *?"                                     // fait
-#define INSERTION_LISTE_S "Insérer l'élément * dans la liste * à l'indice *."
+#define SUPPRESSION_LISTE_S "Retirer de la liste $ l'élément d'indice *."             // fait
+#define TAILLE_LISTE_S "La taille de la liste $?"                                     // fait
+#define INSERTION_LISTE_S "Insérer l'élément * dans la liste $ à l'indice *."
 
 
 // opérateurs 
@@ -146,11 +146,11 @@
 #define AFFICHE_STR_S "Afficher le message *."
 
 // fonctions
-#define DEFINITION_FONCTION_S "Soit * une fonction qui lorsqu'elle est appelée execute:*."  // fait
-#define EXECUTION_FONCTION_S "Execute la fonction *."                                       // fait
+#define DEFINITION_FONCTION_S "Soit $ une fonction qui lorsqu'elle est appelée execute:*."  // fait
+#define EXECUTION_FONCTION_S "Execute la fonction $."                                       // fait
 #define RENVOI_FONCTION_S "Renvoie *?"
-#define APPEL_VALEUR_FONCTION_S "La valeur renvoyée par la fonction *?"  // fait
+#define APPEL_VALEUR_FONCTION_S "La valeur renvoyée par la fonction $?"  // fait
 
-#define DEFINITION_FONCTION_ARGUMENT_S "Soit * une fonction qui lorsqu'elle est appelée avec * execute:*."  // fait
-#define EXECUTION_FONCTION_ARGUMENT_S "Execute la fonction * avec les arguments *."                         // fait
-#define APPEL_VALEUR_FONCTION_ARGUMENT_S "La valeur renvoyée par la fonction * avec les arguments *?"       // fait
+#define DEFINITION_FONCTION_ARGUMENT_S "Soit $ une fonction qui lorsqu'elle est appelée avec * execute:*."  // fait
+#define EXECUTION_FONCTION_ARGUMENT_S "Execute la fonction $ avec les arguments *."                         // fait
+#define APPEL_VALEUR_FONCTION_ARGUMENT_S "La valeur renvoyée par la fonction $ avec les arguments *?"       // fait
