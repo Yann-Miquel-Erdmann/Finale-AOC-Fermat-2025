@@ -7,6 +7,9 @@ typedef struct val {
     char type;
     int value;
     liste_t* liste;
+    char* chaine;
+    int chaine_len;
+    int chaine_size;
 } val_t;
 
 val_t* new_val_t(char type);
@@ -29,6 +32,6 @@ void set_liste(val_t*, liste_t* l);
 
 void copy_val(val_t* dest, val_t* src);
 
-void print_val(val_t* v);
+void print_val(val_t* v, bool new_line);
 
 #endif
