@@ -5,6 +5,6 @@
 #include <stdlib.h>
 #include "structures/phrase.h"
 
-bool analyse(phrase_t* phrase, char* syntax, char** arg_list, int* list_len);
+bool analyse(phrase_t* phrase, char* syntax, char** arg_list, int* list_len, bool ignore_spaces);
 
 #endif

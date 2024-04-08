@@ -99,9 +99,9 @@
 #define MAIN_PHRASE_S "*"  // fait
 
 // expressions
-#define EXPR_ENTIER_S "L'entier *?"                 // non fait
+#define EXPR_ENTIER_S "L'entier $?"                 // non fait
 #define EXPR_FLOTTANT_S "Le flottant $ virgule $?"  // non fait => cas particuler deux $ à récupérer
-#define EXPR_BOOLEEN_S "Le booléen $?"              // non fait
+#define EXPR_BOOLEEN_S "Le booléen $?"              // fait
 #define EXPR_CHAINE_S "La chaîne de caractères $?"  // non fait
 
 // structures de données
@@ -112,13 +112,13 @@
 #define MODIFICATION_VARIABLE_S "Que $ devienne *." // fait
 
 //  * liste (fait)
-#define CREATION_LISTE_S "Soit $ une liste vide."                                     // non fait
-#define ACCESSION_LISTE_S "L'élément de la liste $ à l'indice *?"                     // non fait
-#define MODIFICATION_LISTE_S "Remplacer l'élément de la liste $ à l'indice * par *."  // non fait
-#define AJOUT_LISTE_S "Ajouter à la liste $ *."                                       // non fait
-#define SUPPRESSION_LISTE_S "Retirer de la liste $ l'élément d'indice *."             // non fait
+#define CREATION_LISTE_S "Soit $ une liste vide."                                     // fait
+#define ACCESSION_LISTE_S "L'élément de la liste $ à l'indice *?"                     // fait
+#define MODIFICATION_LISTE_S "Remplacer l'élément de la liste $ à l'indice * par *."  // fait
+#define AJOUT_LISTE_S "Ajouter à la liste $ *."                                       // fait
+#define SUPPRESSION_LISTE_S "Retirer de la liste $ l'élément d'indice *."             // fait (syntaxe à modifier)
 #define TAILLE_LISTE_S "La taille de la liste $?"                                     // non fait
-#define INSERTION_LISTE_S "Insérer l'élément * dans la liste $ à l'indice *."
+#define INSERTION_LISTE_S "Insérer l'élément * dans la liste $ à l'indice *."         // non fait
 
 
 // opérateurs 

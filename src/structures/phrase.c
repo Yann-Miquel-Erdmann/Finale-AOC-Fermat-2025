@@ -1,12 +1,5 @@
 #include "phrase.h"
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-
-#include "../constants.h"
-#include "../custom_error.h"
-
 phrase_t* new_phrase(phrase_t* parent) {
     phrase_t* phrase = malloc(sizeof(phrase_t));
 

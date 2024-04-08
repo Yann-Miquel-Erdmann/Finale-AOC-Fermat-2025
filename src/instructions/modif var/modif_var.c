@@ -8,7 +8,7 @@ bool test_inst_modif_var(phrase_t* phrase, function_t* function) {
     char** l = malloc(sizeof(char*));
     int len = 0;
     
-    bool result = analyse(phrase, MODIFICATION_VARIABLE_S, l, &len);
+    bool result = analyse(phrase, MODIFICATION_VARIABLE_S, l, &len, false);
     if (!result){
         return false;
     }

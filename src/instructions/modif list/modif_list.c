@@ -4,19 +4,22 @@ bool test_inst_modif_list(phrase_t* phrase, function_t* function) {
     if (phrase->phraseId != -1) {
         return false;
     }
+    
+    char** l = malloc(sizeof(char*));
+    int len = 0;
+    
+    bool result = analyse(phrase, MODIFICATION_LISTE_S, l, &len, false);
 
-    char** result_str = cut_a_b(phrase->text, 34, 21);
-    strcat(result_str[0], result_str[2]);
-
-    if (!strcmp(result_str[0], MODIFICATION_LISTE_S)) {
-        // printf("modification de la liste %s\n", result_str[1]);
-        phrase->phraseId = MODIFICATION_LISTE;
-        phrase->valeur = new_val_t(UNDEFINED);
-        set_liste(phrase->valeur, getVariable(function->env, result_str[1])->valeur->liste);
+    if (!result){
+        return false;
     }
-    free(result_str[1]);
-    free_pointers(result_str);
-
-    // renvoie true si l'expression est une modif list
-    return phrase->phraseId != -1;
+    if (len > 1){
+        custom_error("too much arguments given", phrase);
+    }
+    
+    phrase->phraseId = MODIFICATION_LISTE;
+    phrase->valeur = new_val_t(UNDEFINED);
+    set_liste(phrase->valeur, getVariable(function->env, l[0])->valeur->liste);
+    
+    return true;
 }

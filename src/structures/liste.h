@@ -1,11 +1,5 @@
 #ifndef liste_h
 #define liste_h
-#include <assert.h>
-#include <stdbool.h>
-#include <stdio.h>
-#include <stdlib.h>
-
-#include "val.h"
 
 /* Implémentation par liste à sentinelle
 La liste contient toujours deux maillons, un
@@ -13,7 +7,10 @@ La liste contient toujours deux maillons, un
 sentinelles. Ces maillons sont invisibles du
 point de vue de l'utilisateur. */
 
-#define T val_t*
+#include <assert.h>
+#include "val.h"
+
+typedef struct phrase phrase_t;
 
 /* Structure de données abstraite: Liste chaînée */
 typedef struct liste {
@@ -24,7 +21,7 @@ typedef struct liste {
 
 void free_liste_t(liste_t* l);
 
-liste_t* new_liste_t();
+liste_t* new_liste_t(void);
 
 liste_t* copy_liste(liste_t* l);
 
@@ -32,10 +29,10 @@ void doubleValeursSize(liste_t* l);
 
 int taille(liste_t* l);
 
-val_t* accession(liste_t* l, int indice);
-void modification(liste_t* l, int indice, val_t* v);
+val_t* accession(liste_t* l, int indice, phrase_t* p);
+void modification(liste_t* l, int indice, val_t* v, phrase_t* p);
 void ajout(liste_t* l, val_t* v);
-void inserer(liste_t* l, int indice, val_t* v);
-void suppression(liste_t* l, int indice);
+void inserer(liste_t* l, int indice, val_t* v, phrase_t* p);
+void suppression(liste_t* l, int indice, phrase_t* p);
 
 #endif

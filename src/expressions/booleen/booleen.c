@@ -1,33 +1,36 @@
 #include "../expressions.h"
 
 bool test_expr_booleen(phrase_t* phrase) {
-    if (phrase->phraseId != -1 || strlen(phrase->text) <= 13) {
+    if (phrase->phraseId != -1) {
         return false;
     }
+    
+    char** l = malloc(sizeof(char*));
+    int len = 0;
+    
+    bool result = analyse(phrase, EXPR_BOOLEEN_S, l, &len, false);
 
-    char** result_str = cut_a_b(phrase->text, 12, 1);
-    strcat(result_str[0], result_str[2]);
-
-    if (!strcmp(result_str[0], EXPR_BOOLEEN_S)) {
-        if (!strcmp(result_str[1], "vrai")) {
-            // printf("booléen: vrai\n");
-            phrase->phraseId = EXPR_BOOLEEN;
-            phrase->constant = true;
-            set_bool(phrase->valeur, true);
-        } else if (!strcmp(result_str[1], "faux")) {
-            // printf("booléen: faux\n");
-            phrase->phraseId = EXPR_BOOLEEN;
-            phrase->constant = true;
-
-            set_bool(phrase->valeur, false);
-        } else {
-            custom_error("Le booléen doit être vrai ou faux.", phrase);
-            free(result_str[1]);
-        }
+    if (!result){
+        return false;
     }
-    free(result_str[1]);
-    free_pointers(result_str);
+    if (len > 1){
+        custom_error("too much arguments given", phrase);
+    }
+    
+    if (!strcmp(l[0], "vrai")) {
+        // printf("booléen: vrai\n");
+        phrase->phraseId = EXPR_BOOLEEN;
+        phrase->constant = true;
+        set_bool(phrase->valeur, true);
+    } else if (!strcmp(l[0], "faux")) {
+        // printf("booléen: faux\n");
+        phrase->phraseId = EXPR_BOOLEEN;
+        phrase->constant = true;
 
-    // renvoie true si l'expression est un booléen
-    return phrase->phraseId != -1;
+        set_bool(phrase->valeur, false);
+    } else {
+        custom_error("Le booléen doit être vrai ou faux.", phrase);
+    }
+
+    return true;
 }

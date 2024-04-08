@@ -3,11 +3,18 @@
 
 #include <stdbool.h>
 
+#include "val.h"
 #include "environnement.h"
 #include "function.h"
-#include "liste.h"
-#include "val.h"
+
 #include "variable.h"
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+#include "../constants.h"
+#include "../custom_error.h"
 
 // def de la structure function pour le cross referencing
 typedef struct function function_t;

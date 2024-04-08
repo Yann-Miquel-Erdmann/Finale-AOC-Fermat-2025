@@ -9,7 +9,7 @@ bool test_inst_var_init(phrase_t* phrase, function_t* function) {
     char** l = malloc(sizeof(char*));
     int len = 0;
     
-    bool result = analyse(phrase, DEFINITION_VARIABLE_AVEC_INIT_S, l, &len);
+    bool result = analyse(phrase, DEFINITION_VARIABLE_AVEC_INIT_S, l, &len, false);
 
     if (!result){
         return false;
@@ -22,7 +22,7 @@ bool test_inst_var_init(phrase_t* phrase, function_t* function) {
     phrase->constant = false;
     phrase->variable = getVariable(function->env, l[0]);
     if (phrase->variable == NULL){
-        phrase->variable = new_variable(l[0]);
+        phrase->variable = new_variable(l[0], new_val_t(UNDEFINED));
         addToVariableList(function->env, phrase->variable);
     }
     

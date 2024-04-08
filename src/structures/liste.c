@@ -5,6 +5,7 @@
 
 #include "../constants.h"
 #include "../custom_error.h"
+#include "phrase.h"
 
 void free_liste_t(liste_t* liste) {
     for (int i = 0; i < liste->valeursLen; i++) {
@@ -16,7 +17,7 @@ void free_liste_t(liste_t* liste) {
     free(liste);
 }
 
-liste_t* new_liste_t() {
+liste_t* new_liste_t(void) {
     liste_t* liste = malloc(sizeof(liste_t));
     liste->valeurs = malloc(sizeof(val_t*) * DEFAULT_VALEURS_LIST_SIZE);
     liste->valeursLen = 0;
@@ -47,16 +48,16 @@ int taille(liste_t* liste) {
     return liste->valeursLen;
 }
 
-val_t* accession(liste_t* liste, int indice) {
+val_t* accession(liste_t* liste, int indice, phrase_t* p) {
     if (indice < 0 || indice >= liste->valeursLen) {
-        custom_error("indice hors de la liste", NULL);
+        custom_error("indice hors de la liste", p);
     }
     return liste->valeurs[indice];
 }
 
-void modification(liste_t* liste, int indice, val_t* valeur) {
+void modification(liste_t* liste, int indice, val_t* valeur, phrase_t* p) {
     if (indice < 0 || indice >= liste->valeursLen) {
-        custom_error("indice hors de la liste", NULL);
+        custom_error("indice hors de la liste", p);
     }
 
     copy_val(liste->valeurs[indice], valeur);
@@ -71,9 +72,9 @@ void ajout(liste_t* liste, val_t* valeur) {
     liste->valeursLen++;
 }
 
-void inserer(liste_t* liste, int indice, val_t* valeur) {
+void inserer(liste_t* liste, int indice, val_t* valeur, phrase_t* p) {
     if (indice < 0 || indice > liste->valeursLen) {
-        custom_error("indice hors de la liste", NULL);
+        custom_error("indice hors de la liste", p);
     }
     if (liste->valeursLen == liste->valeursSize) {
         doubleValeursSize(liste);
@@ -86,9 +87,9 @@ void inserer(liste_t* liste, int indice, val_t* valeur) {
     liste->valeursLen++;
 }
 
-void suppression(liste_t* liste, int indice) {
+void suppression(liste_t* liste, int indice, phrase_t* p) {
     if (indice < 0 || indice >= liste->valeursLen) {
-        custom_error("indice hors de la liste", NULL);
+        custom_error("indice hors de la liste", p);
     }
     free_val_t(liste->valeurs[indice]);
     for (int i = indice; i < liste->valeursLen - 1; i++) {

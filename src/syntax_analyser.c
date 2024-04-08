@@ -1,6 +1,6 @@
 #include "syntax_analyser.h"
 
-bool analyse(phrase_t* phrase, char* syntax, char** arg_list, int* list_len){
+bool analyse(phrase_t* phrase, char* syntax, char** arg_list, int* list_len, bool ignore_spaces){
     int list_size = 1;
     *list_len = 0;
     
@@ -16,7 +16,7 @@ bool analyse(phrase_t* phrase, char* syntax, char** arg_list, int* list_len){
             mode = 1;
         }
         if (mode){
-            if (phrase->text[index] == ' ' || phrase->text[index] == '.' || phrase->text[index] == '?' || phrase->text[index] == ','){
+            if ((!ignore_spaces && phrase->text[index] == ' ') || phrase->text[index] == '.' || phrase->text[index] == '?' || phrase->text[index] == ','){
                 if (phrase->text[index] != ','){
                     mode = 0;
                 }
