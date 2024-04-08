@@ -1,7 +1,6 @@
 #include "../expressions.h"
 
 bool test_expr_access_list(phrase_t* phrase, function_t* function) {
-
     if (phrase->phraseId != -1) {
         return false;
     }
@@ -15,7 +14,7 @@ bool test_expr_access_list(phrase_t* phrase, function_t* function) {
         return false;
     }
     if (len > 1) {
-        custom_error("too much arguments given", phrase);
+        custom_error("too many arguments given", phrase);
     } else if (len < 1) {
         custom_error("not enough arguments given", phrase);
     }

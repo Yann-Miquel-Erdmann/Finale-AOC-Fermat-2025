@@ -100,7 +100,8 @@
 
 // expressions
 #define EXPR_ENTIER_S "L'entier $?"                 // non fait
-#define EXPR_FLOTTANT_S "Le flottant $ virgule $?"  // non fait => cas particuler deux $ à récupérer
+// #define EXPR_FLOTTANT_S "Le flottant $ virgule $?"  // non fait => cas particuler deux $ à récupérer
+#define EXPR_FLOTTANT_S "Le flottant $?"            // workaround pour le moment
 #define EXPR_BOOLEEN_S "Le booléen $?"              // fait
 #define EXPR_CHAINE_S "La chaîne de caractères $?"  // non fait
 

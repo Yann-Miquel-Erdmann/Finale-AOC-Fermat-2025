@@ -4,40 +4,39 @@ bool test_expr_flottant(phrase_t* phrase) {
     if ((int)strlen(phrase->text) < 13 || phrase->phraseId != -1) {
         return false;
     }
-    char** result_str = cut_a_b(phrase->text, 12, 1);
-    char** result_virgule = split_word(result_str[1], "virgule");
-    if (!strcmp(result_str[0], "") || !strcmp(result_virgule[1], "")) {
-        free(result_str[1]);
-        free_pointers(result_str);
-        free(result_virgule[0]);
-        free(result_virgule[1]);
-        free(result_virgule);
+
+    char** l = malloc(sizeof(char*));
+    int len = 0;
+    bool result = analyse(phrase, EXPR_FLOTTANT_S, l, &len, true);
+    if (!result) {
         return false;
     }
-    strcat(result_str[0], " virgule *");
-    strcat(result_str[0], result_str[2]);
 
-    if (!strcmp(result_str[0], EXPR_FLOTTANT_S)) {
-        int* result_num = eval_number(result_virgule[0], (int)strlen(result_virgule[0]));
-        int* result_num_2 = eval_number(result_virgule[1], (int)strlen(result_virgule[1]));
-        if (result_num[0] && result_num_2[0]) {
-            float num = (float)result_num[1] + ((float)result_num_2[1]) / (puiss10(result_num_2[1]));
-            // printf("float: %f\n", num);
-            phrase->phraseId = EXPR_FLOTTANT;
-            phrase->constant = true;
-            set_float(phrase->valeur, num);
-        } else {
-            // printf("invalid flottant\n");
-        }
-        free(result_num);
-        free(result_num_2);
+    if (len > 1) {
+        custom_error("too many arguments given", phrase);
+    } else if (len < 0) {
+        custom_error("not enough arguments", phrase);
     }
-    free(result_str[1]);
-    free_pointers(result_str);
-    free(result_virgule[0]);
-    free(result_virgule[1]);
-    free(result_virgule);
 
-    // renvoie true si l'expression est un flottant
-    return phrase->phraseId != -1;
+    char** res = split_word(l[0], "virgule");
+    int* partie_entiere = eval_number(res[0], (int)strlen(res[0]));
+    int* partie_decimale = eval_number(res[1], (int)strlen(res[1]));
+    if (partie_entiere[0] && partie_decimale[0]) {
+        float num = (float)partie_entiere[1] + ((float)partie_decimale[1]) / (puiss10(partie_decimale[1]));
+        phrase->phraseId = EXPR_FLOTTANT;
+        phrase->constant = true;
+        set_float(phrase->valeur, num);
+    } else {
+        custom_error("invalid flottant", phrase);
+    }
+
+    free(res[0]);
+    free(res[1]);
+    free(res);
+
+    free(partie_entiere);
+    free(partie_decimale);
+    free_l(l, len);
+
+    return true;
 }

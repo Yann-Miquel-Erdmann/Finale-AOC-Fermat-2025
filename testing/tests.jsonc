@@ -1,0 +1,7 @@
+[
+{"name":"Affichage entier", "code": "Afficher L'entier trois?.", "output":"trois\n"},
+{"name":"Affichage flottant", "code": "Afficher Le flottant trois virgule sept?.", "output":"trois virgule soixante-dix millions huit\n"},
+{"name":"Affichage booléen", "code": "Afficher Le booléen vrai?.", "output":"vrai\n"},
+{"name":"Affichage booléen", "code": "Afficher Le booléen faux?.", "output":"faux\n"},
+{"name":"Affichage chaine", "code": "Afficher La chaîne de caractères \"Hello\"?.", "output":"\"Hello\"\n"}
+]

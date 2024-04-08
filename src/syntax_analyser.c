@@ -24,8 +24,7 @@ bool analyse(phrase_t* phrase, char* syntax, char** arg_list, int* list_len, boo
                 if (var_size == var_len + 1) {
                     var_size *= 2;
                     variable = realloc(variable, var_size * sizeof(char));
-                }
-                variable[var_len] = '\0';
+                }                variable[var_len] = '\0';
 
                 if (*list_len == list_size) {
                     list_size *= 2;
@@ -55,8 +54,13 @@ bool analyse(phrase_t* phrase, char* syntax, char** arg_list, int* list_len, boo
             index_const++;
         }
     }
+    
     free(variable);
     if (phrase->text[index] != '\0' || syntax[index_const] != '\0') {
+        for (int i = 0; i < *list_len; i++) {
+            free(arg_list[i]);
+        }
+        free(arg_list);
         return false;
     }
 
