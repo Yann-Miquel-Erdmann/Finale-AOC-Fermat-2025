@@ -1,13 +1,10 @@
-//
-//  syntax_analyser.h
-//  Project
-//
-//  Created by Erwan on 05/04/2024.
-//
-
 #ifndef syntax_analyser_h
 #define syntax_analyser_h
 
-#include <stdio.h>
+#include <stdbool.h>
+#include <stdlib.h>
+#include "structures/phrase.h"
 
-#endif /* syntax_analyser_h */
+bool analyse(phrase_t* phrase, char* syntax, char** arg_list, int* list_len);
+
+#endif

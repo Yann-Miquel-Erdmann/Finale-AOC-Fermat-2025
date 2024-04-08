@@ -1,6 +1,7 @@
 #include "../expressions.h"
 
 bool test_expr_access_list(phrase_t* phrase, function_t* function) {
+    
     if (phrase->phraseId != -1 || strlen(phrase->text) <= 39) {
         return false;
     }

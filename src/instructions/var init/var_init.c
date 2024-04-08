@@ -1,23 +1,28 @@
 #include "../instructions.h"
 bool test_inst_var_init(phrase_t* phrase, function_t* function) {
-    if (phrase->phraseId != -1 || strlen(phrase->text) <= 36) {
+    if (phrase->phraseId != -1) {
         return false;
     }
+    
+    char** l = malloc(sizeof(char*));
+    int len = 0;
+    
+    bool result = analyse(phrase, DEFINITION_VARIABLE_AVEC_INIT_S, l, &len);
 
-    char** result_str = cut_a_b(phrase->text, 5, 31);
-    strcat(result_str[0], result_str[2]);
-
-    if (!strcmp(result_str[0], DEFINITION_VARIABLE_AVEC_INIT_S)) {
-        // printf("variable init: %s\n", result_str[1]);
-        phrase->phraseId = DEFINITION_VARIABLE_AVEC_INIT;
-        variable_t* var = new_variable(result_str[1]);
-        addToVariableList(function->env, var);
-        phrase->variable = var;
-    }else{
-        free(result_str[1]);
+    if (!result){
+        return false;
     }
-    free_pointers(result_str);
-
-    // renvoie true si l'expression est une var init
-    return phrase->phraseId != -1;
+    if (len > 1){
+        custom_error("too much arguments given", phrase);
+    }
+    
+    phrase->phraseId = DEFINITION_VARIABLE_AVEC_INIT;
+    phrase->constant = false;
+    phrase->variable = getVariable(function->env, l[0]);
+    if (phrase->variable == NULL){
+        phrase->variable = new_variable(l[0]);
+        addToVariableList(function->env, phrase->variable);
+    }
+    
+    return true;
 }

@@ -13,6 +13,7 @@
 #include "../structures/phrase.h"
 #include "../structures/environnement.h"
 #include "../syntax_convert.h"
+#include "../syntax_analyser.h"
 
 bool test_inst_var_init(phrase_t* phrase, function_t* function);
 bool test_inst_create_var(phrase_t* phrase, function_t* function);

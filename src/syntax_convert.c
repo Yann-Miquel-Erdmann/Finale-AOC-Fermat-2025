@@ -178,11 +178,11 @@ int elem_liste(char* text) {
     if (!strcmp(text, POUR_AVEC_PAS_S)) {
         return POUR_AVEC_PAS;
     }
-    if (!strcmp(text, AFFICHE_EXPR_S)) {
-        return AFFICHE_EXPR;
+    if (!strcmp(text, AFFICHER_EXPR_S)) {
+        return AFFICHER_EXPR;
     }
-    if (!strcmp(text, AFFICHE_STR_S)) {
-        return AFFICHE_STR;
+    if (!strcmp(text, AFFICHER_STR_S)) {
+        return AFFICHER_STR;
     }
     if (!strcmp(text, RENVOI_FONCTION_S)) {
         return RENVOI_FONCTION;
@@ -419,21 +419,21 @@ void tokenise(phrase_t* phrase, function_t* function, function_list_t* func_list
             break;
 
             break;
-        case AFFICHE_EXPR:
+        case AFFICHER_EXPR:
             if (phrase->argsLen != 1 || phrase->innerPhraseLen > 0) {
                 custom_error("Invalid Syntax, affiche expression prend un arguments", phrase);
             }
-            phrase->phraseId = AFFICHE_EXPR;
+            phrase->phraseId = AFFICHER_EXPR;
             tokenise(phrase->args[0], function, func_list);
             break;
-        case AFFICHE_STR:
+        case AFFICHER_STR:
             if (phrase->argsLen != 1 || phrase->innerPhraseLen > 0) {
                 custom_error("Invalid Syntax, affiche message prend un arguments", phrase);
             }
             if (phrase->args[0]->phraseId != EXPR_CHAINE) {
                 custom_error("Invalid Syntax, affiche message prend un message", phrase);
             }
-            phrase->phraseId = AFFICHE_STR;
+            phrase->phraseId = AFFICHER_STR;
             tokenise(phrase->args[0], function, func_list);
             break;
         case RENVOI_FONCTION:

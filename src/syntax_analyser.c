@@ -1,8 +1,56 @@
-//
-//  syntax_analyser.c
-//  Project
-//
-//  Created by Erwan on 05/04/2024.
-//
-
 #include "syntax_analyser.h"
+
+bool analyse(phrase_t* phrase, char* syntax, char** arg_list, int* list_len){
+    int list_size = 1;
+    *list_len = 0;
+    
+    int index = 0;
+    int index_const = 0;
+    int mode = 0;
+    char* variable = malloc(sizeof(char));
+    int var_len = 0;
+    int var_size = 1;
+    
+    while (phrase->text[index] != '\0' && syntax[index_const] != '\0'){
+        if (syntax[index_const] == '$'){
+            mode = 1;
+        }
+        if (mode){
+            if (phrase->text[index] == ' ' || phrase->text[index] == '.' || phrase->text[index] == '?' || phrase->text[index] == ','){
+                if (phrase->text[index] != ','){
+                    mode = 0;
+                }
+                if (*list_len == list_size){
+                    list_size *= 2;
+                    arg_list = realloc(arg_list, list_size*sizeof(char*));
+                }
+                arg_list[*list_len] = variable;
+                variable = malloc(sizeof(char));
+                var_len = 0;
+                var_size = 1;
+                *list_len += 1;
+                index_const++;
+                continue;
+            }
+            if (var_size == var_len+1){
+                var_size *= 2;
+                variable = realloc(variable, var_size*sizeof(char));
+            }
+            variable[var_len] = phrase->text[index];
+            index++;
+            var_len++;
+            continue;
+        }
+        if (phrase->text[index] != syntax[index_const]){
+            break;
+        }
+        index ++;
+        index_const++;
+    }
+    
+    if (phrase->text[index] != '\0' || syntax[index_const] != '\0'){
+        return false;
+    }
+    
+    return true;
+}

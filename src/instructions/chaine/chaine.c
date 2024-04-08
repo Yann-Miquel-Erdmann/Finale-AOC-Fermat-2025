@@ -7,10 +7,10 @@ bool test_inst_affiche_message(phrase_t* phrase){
     
     char** result_str = cut_a_b(phrase->text, 19, 1);
     strcat(result_str[0], result_str[2]);
-    if (!strcmp(result_str[0], AFFICHE_STR_S)){
+    if (!strcmp(result_str[0], AFFICHER_STR_S)){
         if (result_str[1][0] == '"' && result_str[1][(int)strlen(result_str[1])-1] == '"'){
             //printf("chaîne: %s\n", result_str[1]);
-            phrase->phraseId = AFFICHE_STR;
+            phrase->phraseId = AFFICHER_STR;
 
             addToArg(phrase, new_phrase(phrase));
             phrase->args[0]->phraseId = EXPR_CHAINE;

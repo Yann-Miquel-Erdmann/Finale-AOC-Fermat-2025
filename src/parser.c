@@ -117,6 +117,15 @@ phrase_t* parse_file(FILE* f) {
                     if ((c == ',' && phraseActuelle->text[phraseActuelle->textLen - 1] == '*') || (c == ' ' && buffer == ',')) {
                         break;
                     }
+                    // enlève les espaces avants les virgules
+                    if (c == ',' && buffer == ' '){
+                        phraseActuelle->text[phraseActuelle->textLen-1] = c;
+                        break;
+                    }
+                    // elève les espaces après les points
+                    if (c == ' ' && buffer == '.'){
+                        break;
+                    }
                     // ignore les sauts de lignes et les tabulations
                     if ((c == '\n' && (buffer == '.' || buffer == ':')) || c == '\t') {
                         break;

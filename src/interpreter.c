@@ -88,13 +88,13 @@ void interpreter(function_t* function, function_list_t* functions, val_t* result
                     break;
                 }
 
-                case AFFICHE_STR: {
+                case AFFICHER_STR: {
                     printf("%s\n", phraseActuelle->args[0]->text);
                     phraseActuelle = phraseActuelle->parentPhrase;
                     break;
                 }
 
-                case AFFICHE_EXPR: {
+                case AFFICHER_EXPR: {
                     if (phraseActuelle->args[0]->valeur->type == BOOL) {
                         if (get_bool(phraseActuelle->args[0]->valeur)) {
                             printf("vrai\n");
@@ -130,6 +130,7 @@ void interpreter(function_t* function, function_list_t* functions, val_t* result
 
                 case ACCESSION_VARIABLE: {
                     copy_val(phraseActuelle->valeur, phraseActuelle->variable->valeur);
+                    //printf("'%d'\n", get_int(phraseActuelle->valeur));
                     phraseActuelle = phraseActuelle->parentPhrase;
                     break;
                 }
