@@ -19,6 +19,7 @@ bool test_inst_create_var(phrase_t* phrase, function_t* function) {
     phrase->phraseId = DEFINITION_VARIABLE_SANS_INIT;
     phrase->constant = true;
     phrase->variable = getVariable(function->env, l[0]);
+    
     if (phrase->variable == NULL){
         phrase->variable = new_variable(l[0], new_val_t(UNDEFINED));
         set_undefined(phrase->variable->valeur);
