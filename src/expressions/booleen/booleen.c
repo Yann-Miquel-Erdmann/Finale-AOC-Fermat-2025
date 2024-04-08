@@ -11,6 +11,8 @@ bool test_expr_booleen(phrase_t* phrase) {
     bool result = analyse(phrase, EXPR_BOOLEEN_S, l, &len, false);
 
     if (!result){
+        free_l(l, len);
+
         return false;
     }
     if (len > 1){
@@ -31,6 +33,7 @@ bool test_expr_booleen(phrase_t* phrase) {
     } else {
         custom_error("Le booléen doit être vrai ou faux.", phrase);
     }
+    free_l(l, len);
 
     return true;
 }

@@ -11,7 +11,7 @@ char** split_args(char* args, int* len) {  // TODO à optimiser (remplacer reall
 
     int arg_len = 0;
     arg_len = (int)strlen(args);
-    printf("%d\n", arg_len);
+    // printf("%d\n", arg_len);
     for (int i = 0; i < arg_len; i++) {
         if (args[i] == ',') {
             if (curr_arg_len == curr_arg_size) {
@@ -90,11 +90,10 @@ bool test_inst_def_func_args(phrase_t* phrase, function_list_t* function_list) {
 
         for (int i = 0; i < len; i++) {
             addToVariableList(new_func->env, new_variable(result_str_3[i], new_val_t(UNDEFINED)));
-
         }
 
         phrase->function = new_func;
-        printf("new_func nom %s\n", new_func->nom);
+        // printf("new_func nom %s\n", new_func->nom);
         addToFunctionList(function_list, new_func);
         free(result_str_3);
     }

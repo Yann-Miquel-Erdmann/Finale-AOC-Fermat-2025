@@ -22,14 +22,15 @@ val_t* new_val_t(char type) {
     }
 
     val->chaine = NULL;
-    val->chaine_len = 0;
-    val->chaine_size = 0;
     return val;
 }
 
 void free_val_t(val_t* v) {
     if (v->liste != NULL) {
         free_liste_t(v->liste);
+    }
+    if (v->chaine != NULL) {
+        free_chaine_t(v->chaine);
     }
     free(v);
 }
@@ -60,6 +61,13 @@ liste_t* get_liste(val_t* v) {
         custom_error("le type de val_t ne correspond pas, une liste est attendue", NULL);
     }
     return v->liste;
+}
+
+chaine_t* get_char(val_t* v) {
+    if (v->type != CHAINE_DE_CHAR) {
+        custom_error("le type de val_t ne correspond pas, une chaîne de caractère est attendue", NULL);
+    }
+    return v->chaine;
 }
 
 int get_as_int(val_t* v) {
@@ -137,13 +145,18 @@ void set_bool(val_t* v, bool valeur) {
     v->value = *((int*)&valeur);
 }
 
-void set_undefined(val_t* v) {
-    v->type = -1;
-}
-
 void set_liste(val_t* v, liste_t* l) {
     v->type = LISTE;
     v->liste = l;
+}
+
+void set_char(val_t* v, chaine_t* chaine) {
+    v->type = CHAINE_DE_CHAR;
+    v->chaine = chaine;
+}
+
+void set_undefined(val_t* v) {
+    v->type = -1;
 }
 
 void copy_val(val_t* dest, val_t* src) {
@@ -155,7 +168,6 @@ void copy_val(val_t* dest, val_t* src) {
 }
 
 void print_val(val_t* v, bool new_line) {
-    printf("%d\n", v->type);
     switch (v->type) {
         case BOOL: {
             if (get_bool(v)) {
@@ -192,7 +204,7 @@ void print_val(val_t* v, bool new_line) {
             break;
         }
         case CHAINE_DE_CHAR:
-            printf("%s", v->chaine);
+            printf("%s", v->chaine->chars);
             break;
 
         default:

@@ -11,6 +11,8 @@ bool test_expr_entier(phrase_t* phrase) {
     bool result = analyse(phrase, EXPR_ENTIER_S, l, &len, true);
 
     if (!result){
+        free_l(l, len);
+
         return false;
     }
     if (len > 1){
@@ -33,6 +35,7 @@ bool test_expr_entier(phrase_t* phrase) {
         custom_error(err, phrase);
     }
     free(result_num);
+    free(l);
 
     return true;
 };

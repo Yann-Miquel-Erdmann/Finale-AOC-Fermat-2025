@@ -7,10 +7,10 @@ typedef struct chaine {
     int chars_size;
 } chaine_t;
 
-void free_chaine_t(chaine_t*c);
-chaine_t* new_chaine_t(void);
+void free_chaine_t(chaine_t* c);
+chaine_t* new_chaine_t(char* c);
 
-void ajouter_char(chaine_t*c,char e);
-void concat_char(chaine_t*c1,chaine_t*c2);
+void ajouter_char(chaine_t* c, char e);
+void concat_char(chaine_t* c1, chaine_t* c2);
 
-#endif // CHAINE_DE_CHAR_H
+#endif  // CHAINE_DE_CHAR_H

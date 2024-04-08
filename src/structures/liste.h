@@ -1,18 +1,12 @@
 #ifndef liste_h
 #define liste_h
 
-/* Implémentation par liste à sentinelle
-La liste contient toujours deux maillons, un
-à la tête et un à la queue, appelés les
-sentinelles. Ces maillons sont invisibles du
-point de vue de l'utilisateur. */
-
 #include <assert.h>
 #include "val.h"
 
 typedef struct phrase phrase_t;
 
-/* Structure de données abstraite: Liste chaînée */
+// Structure de liste
 typedef struct liste {
     val_t** valeurs;
     int valeursLen;

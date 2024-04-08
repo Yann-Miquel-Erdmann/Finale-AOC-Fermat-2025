@@ -141,7 +141,7 @@ char** split_word(char* str, char* separator) {
 }
 
 int elem_liste(char* text) {
-    printf("%s\n", text);
+    // printf("%s\n", text);
     if (!strcmp(text, SOMME_S)) {
         return SOMME;
     }
@@ -204,7 +204,7 @@ int elem_liste(char* text) {
     }
     if (!strcmp(text, STRICT_PLUS_PETIT_S)) {
         return STRICT_PLUS_PETIT;
-    } 
+    }
     if (!strcmp(text, INSERTION_LISTE_S)) {
         return INSERTION_LISTE;
     }
@@ -470,12 +470,13 @@ void tokenise(phrase_t* phrase, function_t* function, function_list_t* func_list
             if (test_expr_entier(phrase)) {
             } else if (test_expr_flottant(phrase)) {
             } else if (test_expr_booleen(phrase)) {
-            
+            } else if (test_expr_chaine(phrase)) {
+                // variable
             } else if (test_inst_var_init(phrase, function)) {
             } else if (test_inst_create_var(phrase, function)) {
             } else if (test_expr_access_var(phrase, function)) {
             } else if (test_inst_modif_var(phrase, function)) {
-            
+                // liste
             } else if (test_inst_create_list(phrase, function)) {
             } else if (test_expr_access_list(phrase, function)) {
             } else if (test_inst_add_list(phrase, function)) {
@@ -483,17 +484,13 @@ void tokenise(phrase_t* phrase, function_t* function, function_list_t* func_list
             } else if (test_inst_suppr_list(phrase, function)) {
             } else if (test_expr_taille_list(phrase, function)) {
             } else if (test_inst_insert_list(phrase, function)) {
-            
+                // fonction
             } else if (test_inst_def_func_args(phrase, func_list)) {
             } else if (test_inst_exec_func_args(phrase, func_list)) {
             } else if (test_expr_func_call_args(phrase, func_list)) {
-            
             } else if (test_inst_def_func(phrase, func_list)) {
             } else if (test_inst_exec_func(phrase, func_list)) {
             } else if (test_expr_func_call(phrase, func_list)) {
-            
-            } else if (test_inst_affiche_message(phrase)){
-            
             } else {
                 custom_error("Syntaxe Invalide", phrase);
             }

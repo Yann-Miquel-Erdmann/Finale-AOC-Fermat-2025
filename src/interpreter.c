@@ -17,7 +17,7 @@ void interpreter(function_t* function, function_list_t* functions, val_t* result
     phrase_t* phraseActuelle = function->ast;
 
     while (phraseActuelle != NULL) {
-        //printf("'%s' %d %d %d %d %p\n", phraseActuelle->text, phraseActuelle->phraseId, phraseActuelle->argsLen, phraseActuelle->interpreterArgsIndex, (int)phraseActuelle->constant, phraseActuelle);
+        // printf("'%s' %d %d %d %d %p\n", phraseActuelle->text, phraseActuelle->phraseId, phraseActuelle->argsLen, phraseActuelle->interpreterArgsIndex, (int)phraseActuelle->constant, phraseActuelle);
 
         if (phraseActuelle->constant) {
             phraseActuelle = phraseActuelle->parentPhrase;
@@ -40,9 +40,9 @@ void interpreter(function_t* function, function_list_t* functions, val_t* result
                         phraseActuelle = phraseActuelle->innerPhrase[phraseActuelle->interpreterInnerIndex - 1];
                     } else {
                         /*printf("'%s', %d, %d\n", function->nom, phraseActuelle->interpreterInnerIndex, phraseActuelle->innerPhraseLen);
-                        printf("%s\n", phraseActuelle->text);
+                         //printf("%s\n", phraseActuelle->text);
                         for (int i = 0; i<phraseActuelle->innerPhraseLen; i++){
-                            printf("%s\n", phraseActuelle->innerPhrase[i]->text);
+                             //printf("%s\n", phraseActuelle->innerPhrase[i]->text);
                         }*/
                         phraseActuelle = phraseActuelle->parentPhrase;
                     }
@@ -62,12 +62,12 @@ void interpreter(function_t* function, function_list_t* functions, val_t* result
                 }
 
                 case EXECUTION_FONCTION_ARGUMENT: {
-                    printf("execution de la fonction avec arg %s\n", phraseActuelle->function->nom);
+                    // printf("execution de la fonction avec arg %s\n", phraseActuelle->function->nom);
                     function_t* new_func = copy_function(phraseActuelle->function);
                     new_func->ast->phraseId = 0;
 
-                    //printf("%d\n", new_func->env->variable_list_len);
-                    // initialise les arguments
+                    // printf("%d\n", new_func->env->variable_list_len);
+                    //  initialise les arguments
                     for (int i = 0; i < phraseActuelle->argsLen; i++) {
                         copy_val(new_func->env->variable_list[i]->valeur,
                                  phraseActuelle->args[i]->valeur);
@@ -89,7 +89,7 @@ void interpreter(function_t* function, function_list_t* functions, val_t* result
                 }
 
                 case AFFICHER_STR: {
-                    printf("%s\n", phraseActuelle->args[0]->text);
+                    // printf("%s\n", phraseActuelle->args[0]->text);
                     phraseActuelle = phraseActuelle->parentPhrase;
                     break;
                 }
@@ -97,7 +97,7 @@ void interpreter(function_t* function, function_list_t* functions, val_t* result
                 case AFFICHER_EXPR: {
                     print_val(phraseActuelle->args[0]->valeur, true);
                     phraseActuelle = phraseActuelle->parentPhrase;
-                    break;   
+                    break;
                 }
 
                 // variable ------------------------------------------------------
@@ -110,7 +110,7 @@ void interpreter(function_t* function, function_list_t* functions, val_t* result
 
                 case ACCESSION_VARIABLE: {
                     copy_val(phraseActuelle->valeur, phraseActuelle->variable->valeur);
-                    //printf("'%d'\n", get_int(phraseActuelle->valeur));
+                    // printf("'%d'\n", get_int(phraseActuelle->valeur));
                     phraseActuelle = phraseActuelle->parentPhrase;
                     break;
                 }
@@ -205,7 +205,7 @@ void interpreter(function_t* function, function_list_t* functions, val_t* result
                     break;
                 }
                 case INSERTION_LISTE: {
-                    //printf("%d\n", phraseActuelle->args[1]->valeur->type);
+                    // printf("%d\n", phraseActuelle->args[1]->valeur->type);
                     inserer(phraseActuelle->valeur->liste, get_int(phraseActuelle->args[1]->valeur), phraseActuelle->args[0]->valeur, phraseActuelle);
                     phraseActuelle = phraseActuelle->parentPhrase;
                     break;
@@ -234,16 +234,11 @@ void interpreter(function_t* function, function_list_t* functions, val_t* result
                 }
 
                 case SINON: {
-                    // printf("got here\n");
                     if (phraseActuelle->parentPhrase->interpreterInnerIndex != 0) {
-                        // printf("got here\n");
                         phrase_t* previous_phrase = phraseActuelle->parentPhrase->innerPhrase[phraseActuelle->parentPhrase->interpreterInnerIndex - 2];
                         if (previous_phrase->phraseId == SI_ALORS) {
-                            // printf("got here -1\n");
                             if (previous_phrase->interpreterInnerIndex == -1) {
-                                // printf("got here 0\n");
                                 if (phraseActuelle->interpreterInnerIndex < phraseActuelle->innerPhraseLen) {
-                                    // printf("got here\n");
                                     // printf("'%s' %d %d %d, %d\n", phraseActuelle->text, phraseActuelle->phraseId, phraseActuelle->interpreterInnerIndex, phraseActuelle->innerPhraseLen, (int)phraseActuelle->constant);
 
                                     phraseActuelle->interpreterInnerIndex++;
@@ -265,7 +260,7 @@ void interpreter(function_t* function, function_list_t* functions, val_t* result
                 }
 
                 default:
-                    printf("erreur: %d, %d\n", phraseActuelle->phraseId, phraseActuelle->constant);
+                    // printf("erreur: %d, %d\n", phraseActuelle->phraseId, phraseActuelle->constant);
                     // printf("%s\n", phraseActuelle->text);
                     phraseActuelle = phraseActuelle->parentPhrase;
                     return;

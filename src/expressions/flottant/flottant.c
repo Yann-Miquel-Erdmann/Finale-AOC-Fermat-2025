@@ -26,8 +26,8 @@ bool test_expr_flottant(phrase_t* phrase) {
             phrase->phraseId = EXPR_FLOTTANT;
             phrase->constant = true;
             set_float(phrase->valeur, num);
-        }else{
-            printf("invalid flottant\n");
+        } else {
+            // printf("invalid flottant\n");
         }
         free(result_num);
         free(result_num_2);
@@ -37,7 +37,7 @@ bool test_expr_flottant(phrase_t* phrase) {
     free(result_virgule[0]);
     free(result_virgule[1]);
     free(result_virgule);
-    
+
     // renvoie true si l'expression est un flottant
     return phrase->phraseId != -1;
 }

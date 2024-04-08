@@ -8,10 +8,10 @@ bool test_inst_insert_list(phrase_t* phrase, function_t* function) {
     char** result_str = cut_a_b(phrase->text, 37, 15);
     strcat(result_str[0], result_str[2]);
 
-    printf("'_%s'\n", result_str[0]);
+    // printf("'_%s'\n", result_str[0]);
 
     if (!strcmp(result_str[0], INSERTION_LISTE_S)) {
-        printf("ajout à la liste %s\n", result_str[1]);
+        // printf("ajout à la liste %s\n", result_str[1]);
         phrase->phraseId = INSERTION_LISTE;
         phrase->valeur = new_val_t(UNDEFINED);
         set_liste(phrase->valeur, getVariable(function->env, result_str[1])->valeur->liste);

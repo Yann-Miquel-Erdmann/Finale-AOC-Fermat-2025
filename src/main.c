@@ -11,11 +11,10 @@
 #include "syntax_convert.h"
 
 int main(int argc, char const* argv[]) {
-
     if (argc == 2) {
         // help
         if (strcmp(argv[1], "-h") == 0) {
-            printf("Usage: %s <file>\n", argv[0]);
+            // printf("Usage: %s <file>\n", argv[0]);
             return 0;
         }
 
@@ -25,7 +24,7 @@ int main(int argc, char const* argv[]) {
         }
 
         FILE* f = fopen(argv[1], "r");
-        if (f == NULL){
+        if (f == NULL) {
             custom_error("Impossible d'ouvrir le fichier", NULL);
         }
 
@@ -43,9 +42,8 @@ int main(int argc, char const* argv[]) {
         free_function_list(function_list);
         fclose(f);
         return 0;
-    }else{
+    } else {
         custom_error("Usage: ./interpreter <file>", NULL);
         return 1;
     }
-
 }
