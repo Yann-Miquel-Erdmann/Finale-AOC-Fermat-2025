@@ -41,7 +41,6 @@ typedef struct phrase {
     // variables et fonction appelées dans la phrase actuelle (ne peut y en avoir qu'un par expression)
     function_t* function;
     variable_t* variable;
-    liste_t* liste;
 
     bool constant;
     bool error;

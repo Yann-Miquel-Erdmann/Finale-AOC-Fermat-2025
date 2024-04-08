@@ -1,4 +1,6 @@
 #include "../instructions.h"
+#include "../../structures/val.h"
+
 bool test_inst_var_init(phrase_t* phrase, function_t* function) {
     if (phrase->phraseId != -1) {
         return false;

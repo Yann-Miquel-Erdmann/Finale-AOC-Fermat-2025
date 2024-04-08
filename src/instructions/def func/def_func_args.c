@@ -92,7 +92,7 @@ bool test_inst_def_func_args(phrase_t* phrase, function_list_t* function_list) {
             // sera modifié plus tard
             // TODO créer un type structure de donnée
 
-            addToVariableList(new_func->env, new_variable(result_str_3[i]));
+            addToVariableList(new_func->env, new_variable(result_str_3[i], new_val_t(UNDEFINED)));
             // addToListeList(new_func->env, result_str_3[i]);
             // printf("arg %d: %s\n", i, result_str_3[i]);
         }

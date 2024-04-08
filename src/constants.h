@@ -6,6 +6,9 @@
 // constantes structures liste_t
 #define DEFAULT_VALEURS_LIST_SIZE 128
 
+// constantes structures chaine_t
+#define DEFAULT_CHAINE_CHARS_SIZE 128
+
 // constantes structures environnement_t
 #define DEFAULT_VARIABLES_LIST_SIZE 64
 #define DEFAULT_LISTES_LIST_SIZE 64
@@ -14,9 +17,12 @@
 #define DEFAULT_FUNCTION_LIST_SIZE 64
 
 // val_t type
+#define UNDEFINED -1
 #define INT 1
 #define FLOAT 2
 #define BOOL 3
+#define LISTE 4
+#define CHAINE_DE_CHAR 5
 
 // constantes pour l'interpréteur
 #define MAX_RECUSION_DEPTH 10000

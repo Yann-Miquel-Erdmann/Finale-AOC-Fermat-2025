@@ -13,9 +13,9 @@ val_t* get_value(variable_t* var) {
     return var->valeur;
 }
 
-variable_t* new_variable(char* nom) {
+variable_t* new_variable(char* nom, val_t* val) {
     variable_t* var = malloc(sizeof(variable_t));
-    var->valeur = new_val();
+    var->valeur = val;
     var->nom = nom;
     return var;
 }

@@ -77,27 +77,5 @@ variable_t* getVariable(environnement_t* env, char* nom) {
     return NULL;
 }
 
-void doubleListeListSize(environnement_t* env) {
-    env->liste_list_size *= 2;
-    env->liste_list = realloc(env->liste_list, sizeof(liste_t*) * env->liste_list_size);
-    if (env->liste_list == NULL) {
-        custom_error("manque de mémoire pour environemnt liste_list size", NULL);
-    }
-}
 
-void addToListeList(environnement_t* env, liste_t* liste) {
-    if (env->liste_list_len == env->liste_list_size) {
-        doubleListeListSize(env);
-    }
-    env->liste_list[env->liste_list_len] = liste;
-    env->liste_list_len++;
-}
 
-liste_t* getListe(environnement_t* env, char* nom) {
-    for (int i = 0; i < env->liste_list_len; i++) {
-        if (strcmp(env->liste_list[i]->nom, nom) == 0) {
-            return env->liste_list[i];
-        }
-    }
-    return NULL;
-}

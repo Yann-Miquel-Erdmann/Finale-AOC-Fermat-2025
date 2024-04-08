@@ -99,7 +99,7 @@ phrase_t* parse_file(FILE* f) {
                     phraseActuelle->expr = true;
                     phraseActuelle->inst = false;
 
-                    phraseActuelle->valeur = new_val();
+                    phraseActuelle->valeur = new_val_t(UNDEFINED);
                     set_undefined(phraseActuelle->valeur);
 
                     phraseActuelle = phraseActuelle->parentPhrase;

@@ -11,7 +11,8 @@ bool test_inst_modif_list(phrase_t* phrase, function_t* function) {
     if (!strcmp(result_str[0], MODIFICATION_LISTE_S)) {
         // printf("modification de la liste %s\n", result_str[1]);
         phrase->phraseId = MODIFICATION_LISTE;
-        phrase->liste = getListe(function->env, result_str[1]);
+        phrase->valeur = new_val_t(UNDEFINED);
+        set_liste(phrase->valeur, getVariable(function->env, result_str[1])->valeur->liste);
     }
     free(result_str[1]);
     free_pointers(result_str);

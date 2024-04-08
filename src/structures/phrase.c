@@ -34,7 +34,6 @@ phrase_t* new_phrase(phrase_t* parent) {
 
     phrase->function = NULL;
     phrase->variable = NULL;
-    phrase->liste = NULL;
     phrase->valeur = NULL;
 
     phrase->error = false;
@@ -62,9 +61,10 @@ void free_phrase(phrase_t* phrase) {
     }
     free(phrase->innerPhrase);
 
-    if (phrase->expr) {
+    if (phrase->valeur!=NULL) {
         free(phrase->valeur);
     }
+
 
     free(phrase);
 }
@@ -98,9 +98,6 @@ phrase_t* copy_phrase(phrase_t* phrase, phrase_t* parent, environnement_t* new_e
     }
     if (phrase->variable != NULL) {
         new->variable = getVariable(new_env, phrase->variable->nom);
-    }
-    if (phrase->liste != NULL) {
-        new->liste = getListe(new_env, phrase->liste->nom);
     }
 
     if (phrase->valeur != NULL) {
