@@ -121,7 +121,7 @@
 #define AJOUT_LISTE_S "Ajouter à la liste $ *."                                       // fait
 #define SUPPRESSION_LISTE_S "Retirer de la liste $ l'élément d'indice *."             // fait (syntaxe à modifier)
 #define TAILLE_LISTE_S "La taille de la liste $?"                                     // non fait
-#define INSERTION_LISTE_S "Insérer l'élément * dans la liste $ à l'indice *."         // non fait
+#define INSERTION_LISTE_S "Insérer * dans la liste $ à l'indice *."         // non fait
 #define EXPR_LISTE_S "La liste $?"                                                    // fait
 
 // opérateurs 

@@ -16,6 +16,7 @@ bool test_expr_taille_list(phrase_t* phrase, function_t* function) {
     if (len > 1) {
         custom_error("too many arguments given", phrase);
     }
+    
     phrase->phraseId = TAILLE_LISTE;
     set_liste(phrase->valeur, getVariable(function->env, l[0])->valeur->liste);
     free_l(l, len);

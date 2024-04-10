@@ -1,23 +1,25 @@
 #include "../instructions.h"
 
 bool test_inst_insert_list(phrase_t* phrase, function_t* function) {
-    if (phrase->phraseId != -1 || strlen(phrase->text) <= 48) {
+    if (phrase->phraseId != -1) {
         return false;
     }
 
-    char** result_str = cut_a_b(phrase->text, 37, 15);
-    strcat(result_str[0], result_str[2]);
+    char** l = malloc(sizeof(char*));
+    int len = 0;
 
-    // printf("'_%s'\n", result_str[0]);
+    bool result = analyse(phrase, INSERTION_LISTE_S, l, &len, false);
 
-    if (!strcmp(result_str[0], INSERTION_LISTE_S)) {
-        // printf("ajout à la liste %s\n", result_str[1]);
-        phrase->phraseId = INSERTION_LISTE;
-        phrase->valeur = new_val_t(UNDEFINED);
-        set_liste(phrase->valeur, getVariable(function->env, result_str[1])->valeur->liste);
+    if (!result) {
+        return false;
     }
-    free(result_str[1]);
-    free_pointers(result_str);
+    if (len > 1) {
+        custom_error("too many arguments given", phrase);
+    }
+    
+    phrase->phraseId = INSERTION_LISTE;
+    phrase->valeur = new_val_t(UNDEFINED);
+    set_liste(phrase->valeur, getVariable(function->env, l[0])->valeur->liste);
 
     // renvoie true si l'expression est une add list
     return phrase->phraseId != -1;
