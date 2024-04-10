@@ -14,7 +14,7 @@ bool test_expr_flottant(phrase_t* phrase) {
 
     if (len > 1) {
         custom_error("too many arguments given", phrase);
-    } else if (len < 0) {
+    } else if (len < 1) {
         custom_error("not enough arguments", phrase);
     }
 

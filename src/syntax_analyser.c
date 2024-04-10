@@ -73,5 +73,4 @@ void free_l(char** l, int len) {
     for (int i = 0; i < len; i++) {
         free(l[i]);
     }
-    free(l);
 }
