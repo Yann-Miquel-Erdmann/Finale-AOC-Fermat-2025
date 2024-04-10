@@ -18,7 +18,7 @@ bool test_expr_taille_list(phrase_t* phrase, function_t* function) {
     }
     phrase->phraseId = TAILLE_LISTE;
     set_liste(phrase->valeur, getVariable(function->env, l[0])->valeur->liste);
-
+    free_l(l, len);
     // renvoie true si l'expression est une taille list
-    return phrase->phraseId != -1;
+    return true;
 }

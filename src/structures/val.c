@@ -6,7 +6,7 @@
 #include "../constants.h"
 #include "../custom_error.h"
 #include "../eval_numbers.h"
-#include "liste.h"
+#include "struct_liste.h"
 
 val_t* new_val_t(char type) {
     val_t* val = malloc(sizeof(val_t));
@@ -26,9 +26,6 @@ val_t* new_val_t(char type) {
 }
 
 void free_val_t(val_t* v) {
-    if (v->liste != NULL) {
-        free_liste_t(v->liste);
-    }
     /*if (v->chaine != NULL) {
         free_chaine_t(v->chaine);
     }*/

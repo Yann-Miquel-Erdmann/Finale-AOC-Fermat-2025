@@ -1,6 +1,6 @@
 #ifndef ENVIRONNEMENT_H
 #define ENVIRONNEMENT_H
-#include "liste.h"
+#include "struct_liste.h"
 #include "variable.h"
 
 typedef struct environnement {
@@ -21,7 +21,5 @@ void doubleVariableListSize(environnement_t* env);
 void addToVariableList(environnement_t* env, variable_t* var);
 
 variable_t* getVariable(environnement_t* env, char* nom);
-
-
 
 #endif

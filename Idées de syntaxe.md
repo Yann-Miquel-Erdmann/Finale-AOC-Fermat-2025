@@ -106,7 +106,7 @@ Soit {nom de la liste} une liste vide.
 type: expression
 
 ```
-La valeur de l'élément de la liste {nom de la liste} à l'indice {indice}?
+L'élément de la liste {nom de la liste} à l'indice {indice}?
 ```
 
 #### modification

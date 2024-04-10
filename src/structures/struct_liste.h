@@ -1,7 +1,8 @@
-#ifndef liste_h
-#define liste_h
+#ifndef struct_liste_h
+#define struct_liste_h
 
 #include <assert.h>
+
 #include "val.h"
 
 typedef struct phrase phrase_t;

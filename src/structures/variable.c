@@ -3,8 +3,16 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "../constants.h"
+#include "struct_liste.h"
+
 void free_variable_t(variable_t* var) {
     free(var->nom);
+
+    if (var->valeur->type == LISTE) {
+        free_liste_t(var->valeur->liste);
+    }
+
     free_val_t(var->valeur);
     free(var);
 }

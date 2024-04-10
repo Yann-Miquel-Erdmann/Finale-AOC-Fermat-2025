@@ -19,6 +19,6 @@ bool test_inst_create_list(phrase_t* phrase, function_t* function) {
     phrase->phraseId = CREATION_LISTE;
     phrase->constant = true;
     addToVariableList(function->env, new_variable(l[0], new_val_t(LISTE)));
-
+    free(l);
     return true;
 }

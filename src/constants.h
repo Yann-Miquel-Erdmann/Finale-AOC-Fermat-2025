@@ -55,6 +55,7 @@
 #define SUPPRESSION_LISTE 13
 #define TAILLE_LISTE 14
 #define INSERTION_LISTE 41
+#define EXPR_LISTE 42
 
 // opérateurs
 #define SOMME 15
@@ -121,7 +122,7 @@
 #define SUPPRESSION_LISTE_S "Retirer de la liste $ l'élément d'indice *."             // fait (syntaxe à modifier)
 #define TAILLE_LISTE_S "La taille de la liste $?"                                     // non fait
 #define INSERTION_LISTE_S "Insérer l'élément * dans la liste $ à l'indice *."         // non fait
-
+#define EXPR_LISTE_S "La liste $?"                                                    // fait
 
 // opérateurs 
 #define SOMME_S "La somme de * et de *?"                    // fait

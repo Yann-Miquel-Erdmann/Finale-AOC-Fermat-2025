@@ -17,7 +17,7 @@ void interpreter(function_t* function, function_list_t* functions, val_t* result
     phrase_t* phraseActuelle = function->ast;
 
     while (phraseActuelle != NULL) {
-        // printf("'%s' %d %d %d %d %p\n", phraseActuelle->text, phraseActuelle->phraseId, phraseActuelle->argsLen, phraseActuelle->interpreterArgsIndex, (int)phraseActuelle->constant, phraseActuelle);
+        printf("'%s' %d %d %d %d %p\n", phraseActuelle->text, phraseActuelle->phraseId, phraseActuelle->argsLen, phraseActuelle->interpreterArgsIndex, (int)phraseActuelle->constant, phraseActuelle);
 
         if (phraseActuelle->constant) {
             phraseActuelle = phraseActuelle->parentPhrase;
@@ -39,11 +39,6 @@ void interpreter(function_t* function, function_list_t* functions, val_t* result
                         // printf("'%s' %d %d %d, %d\n", phraseActuelle->text, phraseActuelle->phraseId, phraseActuelle->interpreterInnerIndex, phraseActuelle->innerPhraseLen, (int)phraseActuelle->constant);
                         phraseActuelle = phraseActuelle->innerPhrase[phraseActuelle->interpreterInnerIndex - 1];
                     } else {
-                        /*printf("'%s', %d, %d\n", function->nom, phraseActuelle->interpreterInnerIndex, phraseActuelle->innerPhraseLen);
-                         //printf("%s\n", phraseActuelle->text);
-                        for (int i = 0; i<phraseActuelle->innerPhraseLen; i++){
-                             //printf("%s\n", phraseActuelle->innerPhrase[i]->text);
-                        }*/
                         phraseActuelle = phraseActuelle->parentPhrase;
                     }
                     break;
