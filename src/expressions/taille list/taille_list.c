@@ -1,20 +1,23 @@
 #include "../expressions.h"
 
 bool test_expr_taille_list(phrase_t* phrase, function_t* function) {
-    if (phrase->phraseId != -1 || strlen(phrase->text) <= 23) {
+    if (phrase->phraseId != -1) {
         return false;
     }
 
-    char** result_str = cut_a_b(phrase->text, 22, 1);
-    strcat(result_str[0], result_str[2]);
+    char** l = malloc(sizeof(char*));
+    int len = 0;
 
-    if (!strcmp(result_str[0], TAILLE_LISTE_S)) {
-        // printf("la taille de la liste %s\n", result_str[1]);
-        phrase->phraseId = TAILLE_LISTE;
-        set_liste(phrase->valeur, getVariable(function->env, result_str[1])->valeur->liste);
+    bool result = analyse(phrase, TAILLE_LISTE_S, l, &len, false);
+
+    if (!result) {
+        return false;
     }
-    free(result_str[1]);
-    free_pointers(result_str);
+    if (len > 1) {
+        custom_error("too many arguments given", phrase);
+    }
+    phrase->phraseId = TAILLE_LISTE;
+    set_liste(phrase->valeur, getVariable(function->env, l[0])->valeur->liste);
 
     // renvoie true si l'expression est une taille list
     return phrase->phraseId != -1;

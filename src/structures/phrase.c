@@ -155,34 +155,34 @@ void addToText(phrase_t* phrase, char c) {
 void _printPhrase(phrase_t* phrase, int decalage, int last_elem) {
     if (phrase->inst) {
         for (int i = 0; i < decalage; i++) {
-            // printf("|\t");
+            printf("|\t");
         }
-        // printf("\n");
+        printf("\n");
     }
     for (int i = 0; i < decalage - last_elem; i++) {
-        // printf("|\t");
+        printf("|\t");
     }
     for (int i = 0; i < last_elem && i < decalage; i++) {
         if (last_elem && phrase->innerPhraseLen == 0 && phrase->argsLen == 0) {
-            // printf("\\\t");
+            printf("\\\t");
         } else {
-            // printf("|\t");
+            printf("|\t");
         }
     }
-    // printf("%s", phrase->text);
+    printf("%s", phrase->text);
     if (phrase->expr && phrase->valeur->type != -1) {
         switch (phrase->valeur->type) {
             case INT:
-                // printf("  ->  %d", get_int(phrase->valeur));
+                printf("  ->  %d", get_int(phrase->valeur));
                 break;
             case FLOAT:
-                // printf("  ->  %f", get_float(phrase->valeur));
+                printf("  ->  %f", get_float(phrase->valeur));
                 break;
             case BOOL:
                 if (get_bool(phrase->valeur)) {
-                    // printf("  ->  true");
+                    printf("  ->  true");
                 } else {
-                    // printf("  ->  false");
+                    printf("  ->  false");
                 }
 
                 break;
@@ -191,17 +191,17 @@ void _printPhrase(phrase_t* phrase, int decalage, int last_elem) {
         }
     }
     if (phrase->error) {
-        // printf("\t\t\t <= ERROR HERE\n");
+        printf("\t\t\t <= ERROR HERE\n");
     } else {
-        // printf("\n");
+        printf("\n");
     }
 
     if (phrase->argsLen > 0) {
         for (int i = 0; i < decalage; i++) {
-            // printf("|\t");
+            printf("|\t");
         }
 
-        // printf("args:\n");
+        printf("args:\n");
         for (int i = 0; i < phrase->argsLen - 1; i++) {
             _printPhrase(phrase->args[i], decalage + 1, 0);
         }
@@ -210,10 +210,10 @@ void _printPhrase(phrase_t* phrase, int decalage, int last_elem) {
 
     if (phrase->innerPhraseLen > 0) {
         for (int i = 0; i < decalage; i++) {
-            // printf("|\t");
+            printf("|\t");
         }
 
-        // printf("inner :\n");
+        printf("inner :\n");
         for (int i = 0; i < phrase->innerPhraseLen - 1; i++) {
             _printPhrase(phrase->innerPhrase[i], decalage + 1, 0);
         }

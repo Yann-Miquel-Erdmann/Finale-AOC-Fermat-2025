@@ -29,9 +29,9 @@ void free_val_t(val_t* v) {
     if (v->liste != NULL) {
         free_liste_t(v->liste);
     }
-    if (v->chaine != NULL) {
+    /*if (v->chaine != NULL) {
         free_chaine_t(v->chaine);
-    }
+    }*/
     free(v);
 }
 

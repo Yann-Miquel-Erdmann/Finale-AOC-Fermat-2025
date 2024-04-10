@@ -263,7 +263,7 @@ void interpreter(function_t* function, function_list_t* functions, val_t* result
                     // printf("erreur: %d, %d\n", phraseActuelle->phraseId, phraseActuelle->constant);
                     // printf("%s\n", phraseActuelle->text);
                     phraseActuelle = phraseActuelle->parentPhrase;
-                    return;
+                    //return;
                     break;
             }
         }

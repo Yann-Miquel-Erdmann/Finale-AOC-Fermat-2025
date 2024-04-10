@@ -9,19 +9,20 @@
 void free_chaine_t(chaine_t* c) {
     free(c->chars);
     free(c);
-};
+}
 
 chaine_t* new_chaine_t(char* c) {
     chaine_t* chaine = malloc(sizeof(chaine_t));
     
-    int len = strlen(c);
+    int len = (int)strlen(c);
     int size = DEFAULT_CHAINE_CHARS_SIZE * ((int)log((DEFAULT_CHAINE_CHARS_SIZE + len) / DEFAULT_CHAINE_CHARS_SIZE) + 1);
     c = realloc(c, size * sizeof(char));
     chaine->chars = c;
     
     chaine->chars_len = len;
     chaine->chars_size = 0;
-};
+    return chaine;
+}
 
 void ajouter_char(chaine_t* c, char e) {
     if (c->chars_len == c->chars_size) {
@@ -30,7 +31,7 @@ void ajouter_char(chaine_t* c, char e) {
     }
     c->chars[c->chars_len] = e;
     c->chars_len++;
-};
+}
 
 void concat_char(chaine_t* c1, chaine_t* c2) {
     if (c1->chars_size > c1->chars_len + c2->chars_len) {
@@ -42,4 +43,4 @@ void concat_char(chaine_t* c1, chaine_t* c2) {
         c1->chars[c1->chars_len] = c2->chars[i];
         c1->chars_len++;
     }
-};
+}

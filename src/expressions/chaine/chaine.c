@@ -1,4 +1,5 @@
 #include "../expressions.h"
+#include "../../structures/val.h"
 
 bool test_expr_chaine(phrase_t* phrase) {
     if (phrase->phraseId != -1 || strlen(phrase->text) <= 25) {
@@ -27,4 +28,4 @@ bool test_expr_chaine(phrase_t* phrase) {
     free(l);
 
     return true;
-};
+}
