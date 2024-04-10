@@ -181,9 +181,6 @@ int elem_liste(char* text) {
     if (!strcmp(text, AFFICHER_EXPR_S)) {
         return AFFICHER_EXPR;
     }
-    if (!strcmp(text, AFFICHER_STR_S)) {
-        return AFFICHER_STR;
-    }
     if (!strcmp(text, RENVOI_FONCTION_S)) {
         return RENVOI_FONCTION;
     }
@@ -482,7 +479,7 @@ void tokenise(phrase_t* phrase, function_t* function, function_list_t* func_list
             } else if (test_inst_add_list(phrase, function)) {
             } else if (test_inst_modif_list(phrase, function)) {
             } else if (test_inst_suppr_list(phrase, function)) {
-            } else if (test_expr_taille_list(phrase, function)) {
+            } else if (test_expr_taille(phrase, function)) {
             } else if (test_inst_insert_list(phrase, function)) {
             } else if (test_expr_list(phrase, function)) {
                 // fonction

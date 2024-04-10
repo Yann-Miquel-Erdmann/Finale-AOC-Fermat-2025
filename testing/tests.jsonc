@@ -26,7 +26,7 @@
   },
   {
     "name": "Longueur liste",
-    "code": "Soit l une liste vide.\nAfficher La taille de la liste l?.",
+    "code": "Soit l une liste vide.\nAfficher La taille de La liste l??.",
     "output": "zéro\n"
   },
   {

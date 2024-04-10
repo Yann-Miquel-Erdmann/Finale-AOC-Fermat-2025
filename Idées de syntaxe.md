@@ -141,14 +141,6 @@ type: instruction
 Retirer de la liste {nom de la liste} l'élément d'indice {indice}?
 ```
 
-#### taille
-
-type: expression
-
-```
-La taille de la liste {nom de la liste}?
-```
-
 ## Opérateurs
 
 tous les opérateurs sont de type expression
@@ -367,13 +359,27 @@ Ajouter à la liste liste La valeur de la variable i?.
 ## affichages dans la console
 
 ```
-Affiche {expression}.
+Afficher {expression}.
 ```
 
 Exception chaîne de caractères:
 
 ```
-Affiche le message {chaîne de caractères}.
+Afficher le message {chaîne de caractères}.
+```
+
+# taille
+
+type: expression
+
+```
+La taille de {expression}?
+```
+exemple:
+```
+La taille de La liste l??
+La taille de La chaîne de caractères "hey"??
+
 ```
 
 ## Fonctions
