@@ -20,4 +20,4 @@
   - ~~chaîne de caractères~~
 - ~~renvois fonction~~
 
-- affichage d'une liste dans print val
+- ~~affichage d'une liste dans print val~~

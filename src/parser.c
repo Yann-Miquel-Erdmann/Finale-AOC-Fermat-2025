@@ -122,12 +122,13 @@ phrase_t* parse_file(FILE* f) {
                         phraseActuelle->text[phraseActuelle->textLen-1] = c;
                         break;
                     }
-                    // elève les espaces après les points
+                    // enlève les espaces après les points
                     if (c == ' ' && buffer == '.'){
                         break;
                     }
+
                     // ignore les sauts de lignes et les tabulations
-                    if ((c == '\n' && (buffer == '.' || buffer == ':')) || c == '\t') {
+                    if ((c == '\n' && (buffer == '.' || buffer == ':' )) || c == '\t') {
                         break;
                     } else if (c == '\n') {
                         // erreur manque de point en fin de ligne

@@ -7,7 +7,7 @@ bool test_expr_chaine(phrase_t* phrase) {
     char** l = malloc(sizeof(char*));
     int len = 0;
 
-    bool result = analyse(phrase, EXPR_CHAINE_S, l, &len, true);
+    bool result = analyse(phrase, EXPR_CHAINE_S, l, &len, false);
 
     if (!result) {
         return false;
