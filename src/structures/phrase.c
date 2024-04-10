@@ -19,6 +19,7 @@ phrase_t* new_phrase(phrase_t* parent) {
     phrase->innerPhraseLen = 0;
     phrase->innerPhraseSize = DEFAULT_PHRASE_INNER;
     phrase->interpreterInnerIndex = 0;
+    phrase->innerSeparator = 0;
 
     phrase->phraseId = -1;
 

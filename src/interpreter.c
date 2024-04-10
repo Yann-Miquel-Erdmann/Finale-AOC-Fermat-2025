@@ -214,8 +214,8 @@ void interpreter(function_t* function, function_list_t* functions, val_t* result
                     if (phraseActuelle->interpreterInnerIndex == -1) {
                         phraseActuelle->interpreterInnerIndex = 0;
                     }
+
                     if (get_bool(phraseActuelle->args[0]->valeur)) {
-                        // printf("true\n");
                         if (phraseActuelle->interpreterInnerIndex < phraseActuelle->innerPhraseLen) {
                             phraseActuelle->interpreterInnerIndex++;
                             phraseActuelle = phraseActuelle->innerPhrase[phraseActuelle->interpreterInnerIndex - 1];
@@ -224,35 +224,36 @@ void interpreter(function_t* function, function_list_t* functions, val_t* result
                             phraseActuelle = phraseActuelle->parentPhrase;
                         }
                     } else {
-                        // printf("false\n");
                         phraseActuelle->interpreterInnerIndex = -1;
                         phraseActuelle = phraseActuelle->parentPhrase;
-                        // printf("_%s, %d, %s, %d\n", phraseActuelle->text, phraseActuelle->interpreterInnerIndex, function->nom, phraseActuelle->phraseId);
                     }
                     break;
                 }
 
-                case SINON: {
-                    if (phraseActuelle->parentPhrase->interpreterInnerIndex != 0) {
-                        phrase_t* previous_phrase = phraseActuelle->parentPhrase->innerPhrase[phraseActuelle->parentPhrase->interpreterInnerIndex - 2];
-                        if (previous_phrase->phraseId == SI_ALORS) {
-                            if (previous_phrase->interpreterInnerIndex == -1) {
-                                if (phraseActuelle->interpreterInnerIndex < phraseActuelle->innerPhraseLen) {
-                                    // printf("'%s' %d %d %d, %d\n", phraseActuelle->text, phraseActuelle->phraseId, phraseActuelle->interpreterInnerIndex, phraseActuelle->innerPhraseLen, (int)phraseActuelle->constant);
-
-                                    phraseActuelle->interpreterInnerIndex++;
-                                    phraseActuelle = phraseActuelle->innerPhrase[phraseActuelle->interpreterInnerIndex - 1];
-                                } else {
-                                    phraseActuelle = phraseActuelle->parentPhrase;
-                                }
-                            } else {
-                                phraseActuelle = phraseActuelle->parentPhrase;
-                            }
+                case SI_ALORS_SINON: {
+                    if (phraseActuelle->interpreterInnerIndex == -1) {
+                        phraseActuelle->interpreterInnerIndex = 0;
+                    }
+                    if (get_bool(phraseActuelle->args[0]->valeur)) {
+                        if (phraseActuelle->interpreterInnerIndex <= phraseActuelle->innerSeparator) {
+                            phraseActuelle->interpreterInnerIndex++;
+                            phraseActuelle = phraseActuelle->innerPhrase[phraseActuelle->interpreterInnerIndex - 1];
                         } else {
-                            custom_error("Syntax Error: Sinon déclaré sans Si 1", phraseActuelle);
+                            phraseActuelle->interpreterInnerIndex = -1;
+                            phraseActuelle = phraseActuelle->parentPhrase;
                         }
+
                     } else {
-                        custom_error("Syntax Error: Sinon déclaré sans Si 2", phraseActuelle);
+                        if (phraseActuelle->interpreterInnerIndex == 0) {
+                            phraseActuelle->interpreterInnerIndex = phraseActuelle->innerSeparator + 1;
+                        }
+                        if (phraseActuelle->interpreterInnerIndex < phraseActuelle->innerPhraseLen) {
+                            phraseActuelle->interpreterInnerIndex++;
+                            phraseActuelle = phraseActuelle->innerPhrase[phraseActuelle->interpreterInnerIndex - 1];
+                        } else {
+                            phraseActuelle->interpreterInnerIndex = -1;
+                            phraseActuelle = phraseActuelle->parentPhrase;
+                        }
                     }
 
                     break;

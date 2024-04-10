@@ -75,7 +75,7 @@
 
 // conditions
 #define SI_ALORS 27
-#define SINON 28
+#define SI_ALORS_SINON 28
 
 // boucles
 #define TANT_QUE 29
@@ -140,9 +140,8 @@
 
 // conditions
 #define SI_ALORS_S "Si * alors faire:*."                      // fait
-#define SINON_S "Sinon faire:*."                              // fait
-#define SI_ALORS_SINON_S "Si * alors faire:* Sinon faire:*."  // à implémenter pour remplacer SINON_S
-
+#define SI_ALORS_SINON_S "Si * alors faire:*sinon faire:*."  // à implémenter pour remplacer SINON_S
+                         
 // boucles
 #define TANT_QUE_S "Tant que * faire:*."  // non fait
 #define POUR_SANS_PAS_S "Pour * allant de * jusqu'à * faire:*."                           // fait
