@@ -28,5 +28,10 @@
     "name": "Longueur liste",
     "code": "Soit l une liste vide.\nAfficher La taille de la liste l?.",
     "output": "zéro\n"
+  },
+  {
+    "name": "Insertion liste",
+    "code": "Soit l une liste vide.\nInsérer L'entier deux? dans la liste l à l'indice L'entier zéro?.\nAfficher La liste l?.",
+    "output": "[deux]\n"
   }
 ]

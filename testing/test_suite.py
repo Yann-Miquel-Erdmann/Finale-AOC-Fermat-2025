@@ -26,8 +26,8 @@ for line in data:
         print(f"Test {line['name']} passed")
     else:
         print(f"\033[91mTest {line['name']} failed\033[0m")
-        print(f"\033[91mExpected: {line['output']}\033[0m")
-        print(f"\033[91mGot: {res.stdout}\033[0m")
+        print(f"\033[91mExpected: '{line['output']}'\033[0m")
+        print(f"\033[91mGot: '{res.stdout}'\033[0m")
 
     
     total += 1

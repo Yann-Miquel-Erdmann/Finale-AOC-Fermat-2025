@@ -6,7 +6,6 @@
 #include "val.h"
 #include "environnement.h"
 #include "function.h"
-
 #include "variable.h"
 
 #include <stdio.h>

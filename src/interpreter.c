@@ -12,12 +12,10 @@ void interpreter(function_t* function, function_list_t* functions, val_t* result
     if (layer > MAX_RECUSION_DEPTH) {
         custom_error("limite de récursion atteinte", NULL);
     }
-    // printf("new interpreter %s\n", function->nom);
-
     phrase_t* phraseActuelle = function->ast;
 
     while (phraseActuelle != NULL) {
-        printf("'%s' %d %d %d %d %p\n", phraseActuelle->text, phraseActuelle->phraseId, phraseActuelle->argsLen, phraseActuelle->interpreterArgsIndex, (int)phraseActuelle->constant, phraseActuelle);
+        // printf("'%s' %d %d %d %d %p\n", phraseActuelle->text, phraseActuelle->phraseId, phraseActuelle->argsLen, phraseActuelle->interpreterArgsIndex, (int)phraseActuelle->constant, phraseActuelle);
 
         if (phraseActuelle->constant) {
             phraseActuelle = phraseActuelle->parentPhrase;

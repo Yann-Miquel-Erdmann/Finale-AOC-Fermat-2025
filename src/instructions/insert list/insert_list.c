@@ -20,7 +20,7 @@ bool test_inst_insert_list(phrase_t* phrase, function_t* function) {
     phrase->phraseId = INSERTION_LISTE;
     phrase->valeur = new_val_t(UNDEFINED);
     set_liste(phrase->valeur, getVariable(function->env, l[0])->valeur->liste);
+    free_l(l, len);
 
-    // renvoie true si l'expression est une add list
-    return phrase->phraseId != -1;
+    return true;
 }
