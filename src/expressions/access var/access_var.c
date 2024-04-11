@@ -5,12 +5,11 @@ bool test_expr_access_var(phrase_t* phrase, function_t* function) {
         return false;
     }
 
-    char** l = malloc(sizeof(char*));
     int len = 0;
 
-    bool result = analyse(phrase, ACCESSION_VARIABLE_S, l, &len, false);
+    char** result = analyse(phrase, ACCESSION_VARIABLE_S, &len, DEFAULT_SEPARATOR);
 
-    if (!result) {
+    if (result == NULL) {
         return false;
     }
     if (len > 1) {
@@ -19,12 +18,12 @@ bool test_expr_access_var(phrase_t* phrase, function_t* function) {
 
     phrase->phraseId = ACCESSION_VARIABLE;
     phrase->constant = false;
-    phrase->variable = getVariable(function->env, l[0]);
+    phrase->variable = getVariable(function->env, result[0]);
     if (phrase->variable == NULL) {
         custom_error("variable not found", phrase);
     }
 
-    free_l(l, len);
+    free_l(result, len);
 
     return true;
 }

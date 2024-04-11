@@ -1,20 +1,22 @@
 #include "../instructions.h"
 bool test_inst_exec_func(phrase_t* phrase, function_list_t* function_list) {
-    if (phrase->phraseId != -1 || strlen(phrase->text) <= 21) {
+    if (phrase->phraseId != -1) {
         return false;
     }
 
-    char** result_str = cut_a_b(phrase->text, 20, 1);
-    strcat(result_str[0], result_str[2]);
+    int len = 0;
 
-    if (!strcmp(result_str[0], EXECUTION_FONCTION_S)) {
-        // printf("execution de la fonction %s\n", result_str[1]);
-        phrase->phraseId = EXECUTION_FONCTION;
-        phrase->function = getFunction(function_list, result_str[1]);
+    char** result = analyse(phrase, EXECUTION_FONCTION_S, &len, DEFAULT_SEPARATOR);
+
+    if (result == NULL) {
+        return false;
     }
-    free(result_str[1]);
-    free_pointers(result_str);
+    if (len > 1) {
+        custom_error("too many arguments given", phrase);
+    }
+    
+    phrase->phraseId = EXECUTION_FONCTION;
+    phrase->function = getFunction(function_list, result[0]);
 
-    // renvoie true si l'expression est une exec func
-    return phrase->phraseId != -1;
+    return true;
 }

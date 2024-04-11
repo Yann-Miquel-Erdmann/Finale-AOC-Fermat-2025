@@ -1,14 +1,12 @@
 #include "../expressions.h"
-
 bool test_expr_taille(phrase_t* phrase, function_t* function) {
     if (phrase->phraseId != -1) {
         return false;
     }
 
-    char** l = malloc(sizeof(char*));
     int len = 0;
 
-    bool result = analyse(phrase, TAILLE_S, l, &len, false);
+    char** result = analyse(phrase, TAILLE_S, &len, DEFAULT_SEPARATOR);
 
     if (!result) {
         return false;
@@ -18,7 +16,7 @@ bool test_expr_taille(phrase_t* phrase, function_t* function) {
     }
 
     phrase->phraseId = TAILLE;
-    free_l(l, len);
+    free_l(result, len);
     // renvoie true si l'expression est une taille list
     return true;
 }

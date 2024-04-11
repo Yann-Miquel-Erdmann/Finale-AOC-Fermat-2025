@@ -5,11 +5,10 @@ bool test_inst_modif_var(phrase_t* phrase, function_t* function) {
         return false;
     }
 
-    char** l = malloc(sizeof(char*));
     int len = 0;
 
-    bool result = analyse(phrase, MODIFICATION_VARIABLE_S, l, &len, false);
-    if (!result) {
+    char** result = analyse(phrase, MODIFICATION_VARIABLE_S, &len, DEFAULT_SEPARATOR);
+    if (result == NULL) {
         return false;
     }
     if (len > 1) {
@@ -17,13 +16,13 @@ bool test_inst_modif_var(phrase_t* phrase, function_t* function) {
     }
 
     phrase->phraseId = MODIFICATION_VARIABLE;
-    phrase->variable = getVariable(function->env, l[0]);
+    phrase->variable = getVariable(function->env, result[0]);
     if (phrase->variable == NULL) {
         custom_error("variable not found", phrase);
     }
 
 
-    free_l(l, len);
+    free_l(result, len);
 
     return true;
 }

@@ -5,35 +5,34 @@ bool test_expr_entier(phrase_t* phrase) {
         return false;
     }
 
-    char** l = malloc(sizeof(char*));
     int len = 0;
 
-    bool result = analyse(phrase, EXPR_ENTIER_S, l, &len, false);
+    char** result = analyse(phrase, EXPR_ENTIER_S, &len, NUMBER_SEPARATOR);
 
-    if (!result) {
+    if (result == NULL) {
         return false;
     }
     if (len > 1) {
         custom_error("too many arguments given", phrase);
     }
 
-    int* result_num = eval_number(l[0], (int)strlen(l[0]));
+    int* result_num = eval_number(result[0], (int)strlen(result[0]));
 
     if (result_num[0]) {
         phrase->phraseId = EXPR_ENTIER;
         phrase->constant = true;
         set_int(phrase->valeur, result_num[1]);
     } else {
-        char* err = malloc((strlen(l[0]) + 32) * sizeof(char));
+        char* err = malloc((strlen(result[0]) + 32) * sizeof(char));
 
-        strcpy(err, l[0]);
+        strcpy(err, result[0]);
         strcat(err, " isn't recognized as an integer.");
 
         custom_error(err, phrase);
     }
     free(result_num);
 
-    free_l(l, len);
+    free_l(result, len);
 
     return true;
 };

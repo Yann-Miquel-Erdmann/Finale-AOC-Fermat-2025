@@ -5,10 +5,9 @@ bool test_expr_flottant(phrase_t* phrase) {
         return false;
     }
 
-    char** l = malloc(sizeof(char*));
     int len = 0;
-    bool result = analyse(phrase, EXPR_FLOTTANT_S, l, &len, true);
-    if (!result) {
+    char** result = analyse(phrase, EXPR_FLOTTANT_S, &len, NUMBER_SEPARATOR);
+    if (result == NULL) {
         return false;
     }
 
@@ -18,7 +17,7 @@ bool test_expr_flottant(phrase_t* phrase) {
         custom_error("not enough arguments", phrase);
     }
 
-    char** res = split_word(l[0], "virgule");
+    char** res = split_word(result[0], "virgule");
     int* partie_entiere = eval_number(res[0], (int)strlen(res[0]));
     int* partie_decimale = eval_number(res[1], (int)strlen(res[1]));
     if (partie_entiere[0] && partie_decimale[0]) {
@@ -36,7 +35,7 @@ bool test_expr_flottant(phrase_t* phrase) {
 
     free(partie_entiere);
     free(partie_decimale);
-    free_l(l, len);
+    free_l(result, len);
 
     return true;
 }

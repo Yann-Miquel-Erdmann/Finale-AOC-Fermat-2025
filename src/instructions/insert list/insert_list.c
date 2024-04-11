@@ -5,12 +5,11 @@ bool test_inst_insert_list(phrase_t* phrase, function_t* function) {
         return false;
     }
 
-    char** l = malloc(sizeof(char*));
     int len = 0;
 
-    bool result = analyse(phrase, INSERTION_LISTE_S, l, &len, false);
+    char** result = analyse(phrase, INSERTION_LISTE_S, &len, DEFAULT_SEPARATOR);
 
-    if (!result) {
+    if (result == NULL) {
         return false;
     }
     if (len > 1) {
@@ -19,7 +18,7 @@ bool test_inst_insert_list(phrase_t* phrase, function_t* function) {
 
     phrase->phraseId = INSERTION_LISTE;
     phrase->valeur = new_val_t(UNDEFINED);
-    variable_t* var = getVariable(function->env, l[0]);
+    variable_t* var = getVariable(function->env, result[0]);
     if (var == NULL) {
         custom_error("variable not found", phrase);
     }
@@ -27,7 +26,7 @@ bool test_inst_insert_list(phrase_t* phrase, function_t* function) {
         custom_error("variable is not a list", phrase);
     }
     set_liste(phrase->valeur, var->valeur->liste);
-    free_l(l, len);
+    free_l(result, len);
 
     return true;
 }
