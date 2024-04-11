@@ -422,16 +422,6 @@ void tokenise(phrase_t* phrase, function_t* function, function_list_t* func_list
             phrase->phraseId = AFFICHER_EXPR;
             tokenise(phrase->args[0], function, func_list);
             break;
-        case AFFICHER_STR:
-            if (phrase->argsLen != 1 || phrase->innerPhraseLen > 0) {
-                custom_error("Invalid Syntax, affiche message prend un arguments", phrase);
-            }
-            if (phrase->args[0]->phraseId != EXPR_CHAINE) {
-                custom_error("Invalid Syntax, affiche message prend un message", phrase);
-            }
-            phrase->phraseId = AFFICHER_STR;
-            tokenise(phrase->args[0], function, func_list);
-            break;
         case RENVOI_FONCTION:
             if (phrase->argsLen != 1 || phrase->innerPhraseLen > 0) {
                 custom_error("Invalid Syntax, renvoi prend un arguments", phrase);
@@ -464,6 +454,19 @@ void tokenise(phrase_t* phrase, function_t* function, function_list_t* func_list
             }
 
             phrase->phraseId = SI_ALORS_SINON;
+            tokenise(phrase->args[0], function, func_list);
+            for (int i = 0; i < phrase->innerPhraseLen; i++) {
+                tokenise(phrase->innerPhrase[i], function, func_list);
+            }
+            break;
+        case TANT_QUE:
+            if (phrase->argsLen != 1) {
+                custom_error("Invalid Syntax, tant que prend 1 arguments", phrase);
+            }
+            if (phrase->innerPhraseLen == 0) {
+                custom_error("Invalid Syntax, tant que prend au moins 1 instruction", phrase);
+            }
+            phrase->phraseId = TANT_QUE;
             tokenise(phrase->args[0], function, func_list);
             for (int i = 0; i < phrase->innerPhraseLen; i++) {
                 tokenise(phrase->innerPhrase[i], function, func_list);

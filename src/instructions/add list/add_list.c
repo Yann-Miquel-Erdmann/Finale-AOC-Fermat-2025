@@ -18,7 +18,14 @@ bool test_inst_add_list(phrase_t* phrase, function_t* function) {
 
     phrase->phraseId = AJOUT_LISTE;
     phrase->valeur = new_val_t(UNDEFINED);
-    set_liste(phrase->valeur, getVariable(function->env, l[0])->valeur->liste);
+    variable_t* var = getVariable(function->env, l[0]);
+    if (var == NULL) {
+        custom_error("variable not found", phrase);
+    }
+    if (var->valeur->type != LISTE) {
+        custom_error("variable is not a list", phrase);
+    }
+    set_liste(phrase->valeur, var->valeur->liste);
     free_l(l, len);
     return true;
 }

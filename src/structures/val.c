@@ -162,6 +162,10 @@ void copy_val(val_t* dest, val_t* src) {
     if (src->type == LISTE) {
         dest->liste = copy_liste(src->liste);
     }
+
+    // if (src->type == CHAINE_DE_CHAR) {
+    //     dest->chaine = copy_chaine(src->chaine);
+    // }
 }
 
 void print_val(val_t* v, bool new_line) {

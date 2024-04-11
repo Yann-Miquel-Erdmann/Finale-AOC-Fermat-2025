@@ -38,7 +38,6 @@ phrase_t* parse_file(FILE* f) {
 
     phrase_t* phraseActuelle = mainPhrase;
     char buffer = '\0';
-    int missing_point = -1;
     int line = 0;
 
     bool in_comment = false;

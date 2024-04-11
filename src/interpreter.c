@@ -18,6 +18,7 @@ void interpreter(function_t* function, function_list_t* functions, val_t* result
         // printf("'%s' %d %d %d %d %p\n", phraseActuelle->text, phraseActuelle->phraseId, phraseActuelle->argsLen, phraseActuelle->interpreterArgsIndex, (int)phraseActuelle->constant, phraseActuelle);
 
         if (phraseActuelle->constant) {
+            phraseActuelle->interpreterArgsIndex = 0;
             phraseActuelle = phraseActuelle->parentPhrase;
         } else if (phraseActuelle->interpreterArgsIndex < phraseActuelle->argsLen) {
             phraseActuelle->interpreterArgsIndex++;
@@ -27,6 +28,7 @@ void interpreter(function_t* function, function_list_t* functions, val_t* result
             switch (phraseActuelle->phraseId) {
                 case DEFINITION_FONCTION_ARGUMENT:
                 case DEFINITION_FONCTION: {
+                    phraseActuelle->interpreterArgsIndex = 0;
                     phraseActuelle = phraseActuelle->parentPhrase;
                     break;
                 }
@@ -37,6 +39,7 @@ void interpreter(function_t* function, function_list_t* functions, val_t* result
                         // printf("'%s' %d %d %d, %d\n", phraseActuelle->text, phraseActuelle->phraseId, phraseActuelle->interpreterInnerIndex, phraseActuelle->innerPhraseLen, (int)phraseActuelle->constant);
                         phraseActuelle = phraseActuelle->innerPhrase[phraseActuelle->interpreterInnerIndex - 1];
                     } else {
+                        phraseActuelle->interpreterArgsIndex = 0;
                         phraseActuelle = phraseActuelle->parentPhrase;
                     }
                     break;
@@ -50,6 +53,7 @@ void interpreter(function_t* function, function_list_t* functions, val_t* result
                     interpreter(new_func, functions, phraseActuelle->valeur, layer + 1);
                     free_function_t(new_func);
 
+                    phraseActuelle->interpreterArgsIndex = 0;
                     phraseActuelle = phraseActuelle->parentPhrase;
                     break;
                 }
@@ -69,6 +73,7 @@ void interpreter(function_t* function, function_list_t* functions, val_t* result
                     interpreter(new_func, functions, phraseActuelle->valeur, layer + 1);
                     free_function_t(new_func);
 
+                    phraseActuelle->interpreterArgsIndex = 0;
                     phraseActuelle = phraseActuelle->parentPhrase;
                     break;
                 }
@@ -81,114 +86,9 @@ void interpreter(function_t* function, function_list_t* functions, val_t* result
                     break;
                 }
 
-                case AFFICHER_STR: {
-                    // printf("%s\n", phraseActuelle->args[0]->text);
-                    phraseActuelle = phraseActuelle->parentPhrase;
-                    break;
-                }
-
                 case AFFICHER_EXPR: {
                     print_val(phraseActuelle->args[0]->valeur, true);
-                    phraseActuelle = phraseActuelle->parentPhrase;
-                    break;
-                }
-
-                // variable ------------------------------------------------------
-                case MODIFICATION_VARIABLE:
-                case DEFINITION_VARIABLE_AVEC_INIT: {
-                    copy_val(phraseActuelle->variable->valeur, phraseActuelle->args[0]->valeur);
-                    phraseActuelle = phraseActuelle->parentPhrase;
-                    break;
-                }
-
-                case ACCESSION_VARIABLE: {
-                    copy_val(phraseActuelle->valeur, phraseActuelle->variable->valeur);
-                    // printf("'%d'\n", get_int(phraseActuelle->valeur));
-                    phraseActuelle = phraseActuelle->parentPhrase;
-                    break;
-                }
-
-                    // opérateurs ---------------------------------------------------
-                case SOMME: {
-                    somme(phraseActuelle, false);
-                    phraseActuelle = phraseActuelle->parentPhrase;
-                    break;
-                }
-                case DIFFERENCE: {
-                    difference(phraseActuelle, false);
-                    phraseActuelle = phraseActuelle->parentPhrase;
-                    break;
-                }
-                case PRODUIT: {
-                    produit(phraseActuelle, false);
-                    phraseActuelle = phraseActuelle->parentPhrase;
-                    break;
-                }
-                case QUOTIENT: {
-                    quotient(phraseActuelle, false);
-                    phraseActuelle = phraseActuelle->parentPhrase;
-                    break;
-                }
-                case QUOTIENT_ENTIER: {
-                    quotient_entier(phraseActuelle, false);
-                    phraseActuelle = phraseActuelle->parentPhrase;
-                    break;
-                }
-                case RESTE: {
-                    reste(phraseActuelle, false);
-                    phraseActuelle = phraseActuelle->parentPhrase;
-                    break;
-                }
-                case NEGATION_BOOLEENNE: {
-                    negation_booleenne(phraseActuelle, false);
-                    phraseActuelle = phraseActuelle->parentPhrase;
-                    break;
-                }
-                    // comparateurs ----------------------------------------------------------
-                case EGALITE: {
-                    egalite(phraseActuelle, false);
-                    phraseActuelle = phraseActuelle->parentPhrase;
-                    break;
-                }
-                case PLUS_GRAND: {
-                    plus_grand(phraseActuelle, false);
-                    phraseActuelle = phraseActuelle->parentPhrase;
-                    break;
-                }
-                case STRICT_PLUS_GRAND: {
-                    strict_plus_grand(phraseActuelle, false);
-                    phraseActuelle = phraseActuelle->parentPhrase;
-                    break;
-                }
-                case PLUS_PETIT: {
-                    plus_petit(phraseActuelle, false);
-                    phraseActuelle = phraseActuelle->parentPhrase;
-                    break;
-                }
-                case STRICT_PLUS_PETIT: {
-                    strict_plus_petit(phraseActuelle, false);
-                    phraseActuelle = phraseActuelle->parentPhrase;
-                    break;
-                }
-
-                    // liste -----------------------------------------------------------------
-                case ACCESSION_LISTE: {
-                    copy_val(phraseActuelle->valeur, accession(phraseActuelle->valeur->liste, get_int(phraseActuelle->args[0]->valeur), phraseActuelle));
-                    phraseActuelle = phraseActuelle->parentPhrase;
-                    break;
-                }
-                case MODIFICATION_LISTE: {
-                    modification(phraseActuelle->valeur->liste, get_int(phraseActuelle->args[0]->valeur), phraseActuelle->args[1]->valeur, phraseActuelle);
-                    phraseActuelle = phraseActuelle->parentPhrase;
-                    break;
-                }
-                case AJOUT_LISTE: {
-                    ajout(phraseActuelle->valeur->liste, phraseActuelle->args[0]->valeur);
-                    phraseActuelle = phraseActuelle->parentPhrase;
-                    break;
-                }
-                case SUPPRESSION_LISTE: {
-                    suppression(phraseActuelle->valeur->liste, get_int(phraseActuelle->args[0]->valeur), phraseActuelle);
+                    phraseActuelle->interpreterArgsIndex = 0;
                     phraseActuelle = phraseActuelle->parentPhrase;
                     break;
                 }
@@ -200,12 +100,132 @@ void interpreter(function_t* function, function_list_t* functions, val_t* result
                     } else {
                         custom_error("taille ne peut être appliqué qu'à une liste ou une chaîne de caractères", phraseActuelle);
                     }
+                    phraseActuelle->interpreterArgsIndex = 0;
+                    phraseActuelle = phraseActuelle->parentPhrase;
+                    break;
+                }
+
+                // variable ------------------------------------------------------
+                case MODIFICATION_VARIABLE:
+                case DEFINITION_VARIABLE_AVEC_INIT: {
+                    copy_val(phraseActuelle->variable->valeur, phraseActuelle->args[0]->valeur);
+                    phraseActuelle->interpreterArgsIndex = 0;
+                    phraseActuelle = phraseActuelle->parentPhrase;
+                    break;
+                }
+
+                case ACCESSION_VARIABLE: {
+                    copy_val(phraseActuelle->valeur, phraseActuelle->variable->valeur);
+                    // printf("'%d'\n", get_int(phraseActuelle->valeur));
+                    phraseActuelle->interpreterArgsIndex = 0;
+                    phraseActuelle = phraseActuelle->parentPhrase;
+                    break;
+                }
+
+                    // opérateurs ---------------------------------------------------
+                case SOMME: {
+                    somme(phraseActuelle, false);
+                    phraseActuelle->interpreterArgsIndex = 0;
+                    phraseActuelle = phraseActuelle->parentPhrase;
+                    break;
+                }
+                case DIFFERENCE: {
+                    difference(phraseActuelle, false);
+                    phraseActuelle->interpreterArgsIndex = 0;
+                    phraseActuelle = phraseActuelle->parentPhrase;
+                    break;
+                }
+                case PRODUIT: {
+                    produit(phraseActuelle, false);
+                    phraseActuelle->interpreterArgsIndex = 0;
+                    phraseActuelle = phraseActuelle->parentPhrase;
+                    break;
+                }
+                case QUOTIENT: {
+                    quotient(phraseActuelle, false);
+                    phraseActuelle->interpreterArgsIndex = 0;
+                    phraseActuelle = phraseActuelle->parentPhrase;
+                    break;
+                }
+                case QUOTIENT_ENTIER: {
+                    quotient_entier(phraseActuelle, false);
+                    phraseActuelle->interpreterArgsIndex = 0;
+                    phraseActuelle = phraseActuelle->parentPhrase;
+                    break;
+                }
+                case RESTE: {
+                    reste(phraseActuelle, false);
+                    phraseActuelle->interpreterArgsIndex = 0;
+                    phraseActuelle = phraseActuelle->parentPhrase;
+                    break;
+                }
+                case NEGATION_BOOLEENNE: {
+                    negation_booleenne(phraseActuelle, false);
+                    phraseActuelle->interpreterArgsIndex = 0;
+                    phraseActuelle = phraseActuelle->parentPhrase;
+                    break;
+                }
+                    // comparateurs ----------------------------------------------------------
+                case EGALITE: {
+                    egalite(phraseActuelle, false);
+                    phraseActuelle->interpreterArgsIndex = 0;
+                    phraseActuelle = phraseActuelle->parentPhrase;
+                    break;
+                }
+                case PLUS_GRAND: {
+                    plus_grand(phraseActuelle, false);
+                    phraseActuelle->interpreterArgsIndex = 0;
+                    phraseActuelle = phraseActuelle->parentPhrase;
+                    break;
+                }
+                case STRICT_PLUS_GRAND: {
+                    strict_plus_grand(phraseActuelle, false);
+                    phraseActuelle->interpreterArgsIndex = 0;
+                    phraseActuelle = phraseActuelle->parentPhrase;
+                    break;
+                }
+                case PLUS_PETIT: {
+                    plus_petit(phraseActuelle, false);
+                    phraseActuelle->interpreterArgsIndex = 0;
+                    phraseActuelle = phraseActuelle->parentPhrase;
+                    break;
+                }
+                case STRICT_PLUS_PETIT: {
+                    strict_plus_petit(phraseActuelle, false);
+                    phraseActuelle->interpreterArgsIndex = 0;
+                    phraseActuelle = phraseActuelle->parentPhrase;
+                    break;
+                }
+
+                    // liste -----------------------------------------------------------------
+                case ACCESSION_LISTE: {
+                    copy_val(phraseActuelle->valeur, accession(phraseActuelle->valeur->liste, get_int(phraseActuelle->args[0]->valeur), phraseActuelle));
+                    phraseActuelle->interpreterArgsIndex = 0;
+                    phraseActuelle = phraseActuelle->parentPhrase;
+                    break;
+                }
+                case MODIFICATION_LISTE: {
+                    modification(phraseActuelle->valeur->liste, get_int(phraseActuelle->args[0]->valeur), phraseActuelle->args[1]->valeur, phraseActuelle);
+                    phraseActuelle->interpreterArgsIndex = 0;
+                    phraseActuelle = phraseActuelle->parentPhrase;
+                    break;
+                }
+                case AJOUT_LISTE: {
+                    ajout(phraseActuelle->valeur->liste, phraseActuelle->args[0]->valeur);
+                    phraseActuelle->interpreterArgsIndex = 0;
+                    phraseActuelle = phraseActuelle->parentPhrase;
+                    break;
+                }
+                case SUPPRESSION_LISTE: {
+                    suppression(phraseActuelle->valeur->liste, get_int(phraseActuelle->args[0]->valeur), phraseActuelle);
+                    phraseActuelle->interpreterArgsIndex = 0;
                     phraseActuelle = phraseActuelle->parentPhrase;
                     break;
                 }
                 case INSERTION_LISTE: {
                     // printf("%d\n", phraseActuelle->args[1]->valeur->type);
                     inserer(phraseActuelle->valeur->liste, get_int(phraseActuelle->args[1]->valeur), phraseActuelle->args[0]->valeur, phraseActuelle);
+                    phraseActuelle->interpreterArgsIndex = 0;
                     phraseActuelle = phraseActuelle->parentPhrase;
                     break;
                 }
@@ -221,10 +241,12 @@ void interpreter(function_t* function, function_list_t* functions, val_t* result
                             phraseActuelle = phraseActuelle->innerPhrase[phraseActuelle->interpreterInnerIndex - 1];
                         } else {
                             phraseActuelle->interpreterInnerIndex = 0;
+                            phraseActuelle->interpreterArgsIndex = 0;
                             phraseActuelle = phraseActuelle->parentPhrase;
                         }
                     } else {
                         phraseActuelle->interpreterInnerIndex = -1;
+                        phraseActuelle->interpreterArgsIndex = 0;
                         phraseActuelle = phraseActuelle->parentPhrase;
                     }
                     break;
@@ -240,6 +262,7 @@ void interpreter(function_t* function, function_list_t* functions, val_t* result
                             phraseActuelle = phraseActuelle->innerPhrase[phraseActuelle->interpreterInnerIndex - 1];
                         } else {
                             phraseActuelle->interpreterInnerIndex = -1;
+                            phraseActuelle->interpreterArgsIndex = 0;
                             phraseActuelle = phraseActuelle->parentPhrase;
                         }
 
@@ -252,6 +275,7 @@ void interpreter(function_t* function, function_list_t* functions, val_t* result
                             phraseActuelle = phraseActuelle->innerPhrase[phraseActuelle->interpreterInnerIndex - 1];
                         } else {
                             phraseActuelle->interpreterInnerIndex = -1;
+                            phraseActuelle->interpreterArgsIndex = 0;
                             phraseActuelle = phraseActuelle->parentPhrase;
                         }
                     }
@@ -259,13 +283,33 @@ void interpreter(function_t* function, function_list_t* functions, val_t* result
                     break;
                 }
 
+                case TANT_QUE:{
+                    if (phraseActuelle->interpreterInnerIndex == -1) {
+                        phraseActuelle->interpreterInnerIndex = 0;
+                    }
+
+                    if (get_bool(phraseActuelle->args[0]->valeur)) {
+                        if (phraseActuelle->interpreterInnerIndex < phraseActuelle->innerPhraseLen) {
+                            phraseActuelle->interpreterInnerIndex++;
+                            phraseActuelle = phraseActuelle->innerPhrase[phraseActuelle->interpreterInnerIndex - 1];
+                        } else {
+                            phraseActuelle->interpreterArgsIndex = 0;
+                            phraseActuelle->interpreterInnerIndex = -1;
+                        }
+                    } else {
+                        phraseActuelle->interpreterInnerIndex = -1;
+                        phraseActuelle->interpreterArgsIndex = 0;
+                        phraseActuelle = phraseActuelle->parentPhrase;
+                    }
+                    break;
+                }
+
                 default:
                     // printf("erreur: %d, %d\n", phraseActuelle->phraseId, phraseActuelle->constant);
-                    // printf("%s\n", phraseActuelle->text);
-                    phraseActuelle = phraseActuelle->parentPhrase;
-                    // return;
+                    custom_error("erreur d'interprétation", phraseActuelle);
                     break;
             }
+            
         }
     }
 }

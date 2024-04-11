@@ -56,6 +56,10 @@
   {"name":"Si alors sinon avec sinon",
   "code" :"Soit v L'entier un?.\nSi La valeur de La variable v? est égale à la valeur de L'entier deux?? alors faire: \nQue v devienne L'entier sept?.\nAfficher La variable v?.\nsinon faire:\nAfficher L'entier trois?.\n.",
   "output":"trois\n"
-  }
+  },
 
+  {"name":"Tant que",
+  "code" :"Soit v L'entier zéro?.\nTant que La valeur de La variable v? est strictement plus petite que la valeur de L'entier dix?? faire:\n    Afficher La variable v?.\nQue v devienne La somme de La variable v? et de L'entier un??.\n.",
+  "output":"zéro\nun\ndeux\ntrois\nquatre\ncinq\nsix\nsept\nhuit\nneuf\n"
+  }
 ]

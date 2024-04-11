@@ -1,7 +1,5 @@
-Soit v L'entier un?.
-Si La valeur de La variable v? est égale à la valeur de L'entier deux?? alors faire: 
-Que v devienne L'entier sept?.
-Afficher La variable v?.
-sinon faire:
-Afficher L'entier trois?.
+Soit v L'entier zéro?.
+Tant que La valeur de La variable v? est strictement plus petite que la valeur de L'entier dix?? faire:
+    Afficher La variable v?.
+Que v devienne La somme de La variable v? et de L'entier un??.
 .

@@ -20,6 +20,11 @@ bool test_expr_access_var(phrase_t* phrase, function_t* function) {
     phrase->phraseId = ACCESSION_VARIABLE;
     phrase->constant = false;
     phrase->variable = getVariable(function->env, l[0]);
+    if (phrase->variable == NULL) {
+        custom_error("variable not found", phrase);
+    }
+
+    free_l(l, len);
 
     return true;
 }
