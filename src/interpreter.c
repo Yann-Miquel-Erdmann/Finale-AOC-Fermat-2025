@@ -45,12 +45,15 @@ void interpreter(function_t* function, function_list_t* functions, val_t* result
                     break;
                 }
 
+                case APPEL_VALEUR_FONCTION: 
                 case EXECUTION_FONCTION: {
-                    // printf("execution de la fonction %s\n", phraseActuelle->function->nom);
-
                     function_t* new_func = copy_function(phraseActuelle->function);
                     new_func->ast->phraseId = 0;
-                    interpreter(new_func, functions, phraseActuelle->valeur, layer + 1);
+                    if (phraseActuelle->phraseId == EXECUTION_FONCTION_ARGUMENT) {
+                        interpreter(new_func, functions, NULL, layer + 1);
+                    } else {
+                        interpreter(new_func, functions, phraseActuelle->valeur, layer + 1);
+                    }
                     free_function_t(new_func);
 
                     phraseActuelle->interpreterArgsIndex = 0;
@@ -58,19 +61,21 @@ void interpreter(function_t* function, function_list_t* functions, val_t* result
                     break;
                 }
 
+                case APPEL_VALEUR_FONCTION_ARGUMENT:
                 case EXECUTION_FONCTION_ARGUMENT: {
-                    // printf("execution de la fonction avec arg %s\n", phraseActuelle->function->nom);
                     function_t* new_func = copy_function(phraseActuelle->function);
                     new_func->ast->phraseId = 0;
 
-                    // printf("%d\n", new_func->env->variable_list_len);
-                    //  initialise les arguments
                     for (int i = 0; i < phraseActuelle->argsLen; i++) {
                         copy_val(new_func->env->variable_list[i]->valeur,
                                  phraseActuelle->args[i]->valeur);
                     }
 
-                    interpreter(new_func, functions, phraseActuelle->valeur, layer + 1);
+                    if (phraseActuelle->phraseId == EXECUTION_FONCTION_ARGUMENT) {
+                        interpreter(new_func, functions, NULL, layer + 1);
+                    }else{
+                        interpreter(new_func, functions, phraseActuelle->valeur, layer + 1);
+                    }
                     free_function_t(new_func);
 
                     phraseActuelle->interpreterArgsIndex = 0;
@@ -79,7 +84,7 @@ void interpreter(function_t* function, function_list_t* functions, val_t* result
                 }
 
                 case RENVOI_FONCTION: {
-                    if (result != NULL && phraseActuelle->argsLen > 0) {
+                    if (result != NULL) {
                         copy_val(result, phraseActuelle->args[0]->valeur);
                     }
                     return;
@@ -283,7 +288,7 @@ void interpreter(function_t* function, function_list_t* functions, val_t* result
                     break;
                 }
 
-                case TANT_QUE:{
+                case TANT_QUE: {
                     if (phraseActuelle->interpreterInnerIndex == -1) {
                         phraseActuelle->interpreterInnerIndex = 0;
                     }
@@ -309,7 +314,6 @@ void interpreter(function_t* function, function_list_t* functions, val_t* result
                     custom_error("erreur d'interprétation", phraseActuelle);
                     break;
             }
-            
         }
     }
 }

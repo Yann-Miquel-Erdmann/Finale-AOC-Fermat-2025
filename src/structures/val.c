@@ -159,6 +159,8 @@ void set_undefined(val_t* v) {
 void copy_val(val_t* dest, val_t* src) {
     dest->type = src->type;
     dest->value = src->value;
+    dest->chaine = NULL;
+    dest->liste = NULL;
     if (src->type == LISTE) {
         dest->liste = copy_liste(src->liste);
     }

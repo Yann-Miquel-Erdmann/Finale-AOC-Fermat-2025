@@ -1,0 +1,67 @@
+[
+    {
+        "name": "Affichage entier",
+        "code": "Afficher L'entier trois?.",
+        "output": "trois\n"
+    },
+    {
+        "name": "Affichage flottant",
+        "code": "Afficher Le flottant trois virgule sept?.",
+        "output": "trois virgule soixante-dix millions huit\n"
+    },
+    {
+        "name": "Affichage booléen",
+        "code": "Afficher Le booléen vrai?.",
+        "output": "vrai\n"
+    },
+    {
+        "name": "Affichage booléen",
+        "code": "Afficher Le booléen faux?.",
+        "output": "faux\n"
+    },
+    {
+        "name": "Affichage chaine de caractères",
+        "code": "Afficher La chaîne de caractères \"Hello World!\"?.",
+        "output": "Hello World!\n"
+    },
+    {
+        "name": "Insertion liste",
+        "code": "Soit l une liste vide.\nInsérer L'entier deux? dans la liste l à l'indice L'entier zéro?.\nAfficher La liste l?.",
+        "output": "[deux]\n"
+    },
+    {
+        "name": "Longueur liste",
+        "code": "Soit l une liste vide.\nAfficher La taille de La liste l??.",
+        "output": "zéro\n"
+    },
+    {
+        "name": "Longueur chaine de caractères",
+        "code": "Afficher La taille de La chaîne de caractères \"Hello\"??.",
+        "output": "cinq\n"
+    },
+    {
+        "name": "Si avec modif de la condition",
+        "code": "Soit v L'entier trois?.\nSi La valeur de La variable v? est égale à la valeur de L'entier trois?? alors faire: \nQue v devienne L'entier sept?.\nAfficher La variable v?.\n.",
+        "output": "sept\n"
+    },
+    {
+        "name": "Si alors sinon avec si",
+        "code": "Soit v L'entier deux?.\nSi La valeur de La variable v? est égale à la valeur de L'entier deux?? alors faire: \nQue v devienne L'entier sept?.\nAfficher La variable v?.\nsinon faire:\nAfficher L'entier trois?.\n.",
+        "output": "sept\n"
+    },
+    {
+        "name": "Si alors sinon avec sinon",
+        "code": "Soit v L'entier un?.\nSi La valeur de La variable v? est égale à la valeur de L'entier deux?? alors faire: \nQue v devienne L'entier sept?.\nAfficher La variable v?.\nsinon faire:\nAfficher L'entier trois?.\n.",
+        "output": "trois\n"
+    },
+    {
+        "name": "Tant que",
+        "code": "Soit v L'entier zéro?.\nTant que La valeur de La variable v? est strictement plus petite que la valeur de L'entier dix?? faire:\n    Afficher La variable v?.\nQue v devienne La somme de La variable v? et de L'entier un??.\n.",
+        "output": "zéro\nun\ndeux\ntrois\nquatre\ncinq\nsix\nsept\nhuit\nneuf\n"
+    },
+    {
+        "name": "Valeur renvoyée fonction",
+        "code": "Soit f une fonction qui lorsqu'elle est appelée avec x,y execute:\nAfficher Le quotient de La variable x? par La variable y??.\nRenvoyer La somme de La variable x? et de La variable y??.\n.\n\nSoit x La valeur renvoyée par la fonction f avec les arguments L'entier deux?, L'entier un??.\nAfficher La variable x?.",
+        "output": "deux\ntrois\n"
+    }
+]

@@ -1,5 +1,7 @@
-Soit v L'entier zéro?.
-Tant que La valeur de La variable v? est strictement plus petite que la valeur de L'entier dix?? faire:
-    Afficher La variable v?.
-Que v devienne La somme de La variable v? et de L'entier un??.
+Soit f une fonction qui lorsqu'elle est appelée avec x,y execute:
+Afficher Le quotient de La variable x? par La variable y??.
+Renvoyer La somme de La variable x? et de La variable y??.
 .
+
+Soit x La valeur renvoyée par la fonction f avec les arguments L'entier deux?, L'entier un??.
+Afficher La variable x?.

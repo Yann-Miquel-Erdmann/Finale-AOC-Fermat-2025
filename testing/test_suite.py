@@ -1,15 +1,12 @@
 import json
 import subprocess
 
-# Path to the JSONC file
-jsonc_file = 'testing/tests.jsonc'
+# Path to the JSON file
+json_file = 'testing/tests.json'
 
-# Read the contents of the JSONC file
-with open(jsonc_file, 'r') as file:
-    jsonc_contents = file.read()
-
-# Remove comments from the JSONC contents
-json_contents = jsonc_contents.replace('//', '')
+# Read the contents of the JSON file
+with open(json_file, 'r') as file:
+    json_contents = file.read()
 
 # Parse the JSON contents
 data = json.loads(json_contents)
