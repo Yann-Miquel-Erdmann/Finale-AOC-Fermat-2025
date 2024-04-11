@@ -20,9 +20,9 @@
     "output": "faux\n"
   },
   {
-    "name": "Affichage chaine",
-    "code": "Afficher La chaîne de caractères \"Hello\"?.",
-    "output": "\"Hello\"\n"
+    "name": "Affichage chaine de caractères",
+    "code": "Afficher La chaîne de caractères \"Hello World!\"?.",
+    "output": "Hello World!\n"
   },
   {
     "name": "Insertion liste",
@@ -35,14 +35,9 @@
     "output": "zéro\n"
   },
   {
-    "name": "Affichage chaine de caractères",
-    "code": "Afficher La chaîne de caractères \"Hello World!\"?.",
-    "output": "\"Hello World!\"\n"
-  },
-  {
     "name": "Longueur chaine de caractères",
     "code": "Afficher La taille de La chaîne de caractères \"Hello\"??.",
-    "output": "sept\n"
+    "output": "cinq\n"
   },
 
   {"name": "Si avec modif de la condition",

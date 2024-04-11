@@ -24,7 +24,7 @@ bool test_inst_var_init(phrase_t* phrase, function_t* function) {
         phrase->variable = new_variable(result[0], new_val_t(UNDEFINED));
         addToVariableList(function->env, phrase->variable);
     }
-    free(l);
+    free(result);
 
     return true;
 }
