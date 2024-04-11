@@ -146,8 +146,8 @@
                          
 // boucles
 #define TANT_QUE_S "Tant que * faire:*."                                                  // non implémenté
-#define POUR_SANS_PAS_S "Pour * allant de * jusqu'à * faire:*."                           // non implémenté
-#define POUR_AVEC_PAS_S "Pour * allant de * jusqu'à * en utilisant un pas de * faire:*."  // non implémenté
+#define POUR_SANS_PAS_S "Pour $ allant de * jusqu'à * faire:*."                           // non implémenté
+#define POUR_AVEC_PAS_S "Pour $ allant de * jusqu'à * en utilisant un pas de * faire:*."  // non implémenté
 
 // affichage console
 #define AFFICHER_EXPR_S "Afficher *."            // fait

@@ -63,5 +63,15 @@
         "name": "Valeur renvoyée fonction",
         "code": "Soit f une fonction qui lorsqu'elle est appelée avec x,y execute:\nAfficher Le quotient de La variable x? par La variable y??.\nRenvoyer La somme de La variable x? et de La variable y??.\n.\n\nSoit x La valeur renvoyée par la fonction f avec les arguments L'entier deux?, L'entier un??.\nAfficher La variable x?.",
         "output": "deux\ntrois\n"
+    },
+    {
+        "name": "for sans pas",
+        "code": "Pour i allant de L'entier zéro? jusqu'à L'entier trois? faire:\n    Afficher La variable i?.\n    .",
+        "output": "zéro\nun\ndeux\n"
+    },
+    {
+        "name": "for avec pas ",
+        "code": "Pour i allant de L'entier zéro? jusqu'à L'entier trois? en utilisant un pas de L'entier deux? faire:\n    Afficher La variable i?.\n    .",
+        "output": "zéro\ndeux\n"
     }
 ]

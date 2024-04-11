@@ -33,11 +33,15 @@ void interpreter(function_t* function, function_list_t* functions, val_t* result
                     break;
                 }
                 case MAIN_PHRASE: {
+                    if (phraseActuelle->interpreterInnerIndex == -1) {
+                        phraseActuelle->interpreterInnerIndex = 0;
+                    }
+
                     // printf("main phrase: '%s', %d\n", function->nom, phraseActuelle->interpreterInnerIndex);
                     if (phraseActuelle->interpreterInnerIndex < phraseActuelle->innerPhraseLen) {
                         phraseActuelle->interpreterInnerIndex++;
                         // printf("'%s' %d %d %d, %d\n", phraseActuelle->text, phraseActuelle->phraseId, phraseActuelle->interpreterInnerIndex, phraseActuelle->innerPhraseLen, (int)phraseActuelle->constant);
-                        phraseActuelle = phraseActuelle->innerPhrase[phraseActuelle->interpreterInnerIndex - 1];
+                        phraseActuelle = phraseActuelle->innerPhrase[phraseActuelle->interpreterInnerIndex-1];
                     } else {
                         phraseActuelle->interpreterArgsIndex = 0;
                         phraseActuelle = phraseActuelle->parentPhrase;
@@ -45,7 +49,7 @@ void interpreter(function_t* function, function_list_t* functions, val_t* result
                     break;
                 }
 
-                case APPEL_VALEUR_FONCTION: 
+                case APPEL_VALEUR_FONCTION:
                 case EXECUTION_FONCTION: {
                     function_t* new_func = copy_function(phraseActuelle->function);
                     new_func->ast->phraseId = 0;
@@ -73,7 +77,7 @@ void interpreter(function_t* function, function_list_t* functions, val_t* result
 
                     if (phraseActuelle->phraseId == EXECUTION_FONCTION_ARGUMENT) {
                         interpreter(new_func, functions, NULL, layer + 1);
-                    }else{
+                    } else {
                         interpreter(new_func, functions, phraseActuelle->valeur, layer + 1);
                     }
                     free_function_t(new_func);
@@ -306,6 +310,36 @@ void interpreter(function_t* function, function_list_t* functions, val_t* result
                         phraseActuelle->interpreterArgsIndex = 0;
                         phraseActuelle = phraseActuelle->parentPhrase;
                     }
+                    break;
+                }
+
+                case POUR_AVEC_PAS:
+                case POUR_SANS_PAS: {
+                    if (phraseActuelle->interpreterInnerIndex == -1) {
+                        phraseActuelle->interpreterInnerIndex = 0;
+                        copy_val(phraseActuelle->variable->valeur, phraseActuelle->args[0]->valeur);
+                    }
+
+                    if (get_as_float(phraseActuelle->variable->valeur) < get_as_float(phraseActuelle->args[1]->valeur)) {
+
+                        if (phraseActuelle->interpreterInnerIndex < phraseActuelle->innerPhraseLen) {
+                            phraseActuelle->interpreterInnerIndex++;
+                            phraseActuelle = phraseActuelle->innerPhrase[phraseActuelle->interpreterInnerIndex - 1];
+                        } else {
+                            phraseActuelle->interpreterInnerIndex = 0;
+
+                            if (phraseActuelle->phraseId == POUR_AVEC_PAS) {
+                                set_float(phraseActuelle->variable->valeur, get_as_float(phraseActuelle->variable->valeur) + get_as_float(phraseActuelle->args[2]->valeur));
+                            } else {
+                                set_float(phraseActuelle->variable->valeur, get_as_float(phraseActuelle->variable->valeur) + 1);
+                            }
+                        }
+                    } else {
+                        phraseActuelle->interpreterInnerIndex = -1;
+                        phraseActuelle->interpreterArgsIndex = 0;
+                        phraseActuelle = phraseActuelle->parentPhrase;
+                    }
+
                     break;
                 }
 

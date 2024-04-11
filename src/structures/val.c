@@ -83,7 +83,7 @@ int get_as_int(val_t* v) {
             }
             break;
         default:
-            custom_error("le type de val_t n'est pas reconnu", NULL);
+            custom_error("le type de val_t n'est pas reconnu dans get_as_int", NULL);
             return 0;
             break;
     }
@@ -105,7 +105,7 @@ float get_as_float(val_t* v) {
             }
             break;
         default:
-            custom_error("le type de val_t n'est pas reconnu", NULL);
+            custom_error("le type de val_t n'est pas reconnu dans get_as_float", NULL);
             return 0.0;
             break;
     }
@@ -123,7 +123,7 @@ bool get_as_bool(val_t* v) {
             return get_bool(v);
             break;
         default:
-            custom_error("le type de val_t n'est pas reconnu", NULL);
+            custom_error("le type de val_t n'est pas reconnu dans get_as_bool", NULL);
             return false;
             break;
     }
@@ -211,7 +211,7 @@ void print_val(val_t* v, bool new_line) {
             break;
 
         default:
-            custom_error("le type de val_t n'est pas reconnu", NULL);
+            custom_error("le type de val_t n'est pas reconnu dans print_val", NULL);
             break;
     }
 

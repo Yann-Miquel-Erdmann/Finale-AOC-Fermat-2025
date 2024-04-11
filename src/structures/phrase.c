@@ -18,7 +18,7 @@ phrase_t* new_phrase(phrase_t* parent) {
     phrase->innerPhrase = malloc(DEFAULT_PHRASE_INNER * sizeof(phrase_t*));
     phrase->innerPhraseLen = 0;
     phrase->innerPhraseSize = DEFAULT_PHRASE_INNER;
-    phrase->interpreterInnerIndex = 0;
+    phrase->interpreterInnerIndex = -1;
     phrase->innerSeparator = 0;
 
     phrase->phraseId = -1;
@@ -100,6 +100,8 @@ phrase_t* copy_phrase(phrase_t* phrase, phrase_t* parent, environnement_t* new_e
 
     new->error = phrase->error;
     new->constant = phrase->constant;
+
+    
 
     return new;
 }

@@ -24,8 +24,10 @@ bool test_inst_create_var(phrase_t* phrase, function_t* function) {
         set_undefined(phrase->variable->valeur);
         addToVariableList(function->env, phrase->variable);
     } else {
+        free(result[0]);
         set_undefined(phrase->variable->valeur);
     }
 
+    free(result);
     return true;
 }

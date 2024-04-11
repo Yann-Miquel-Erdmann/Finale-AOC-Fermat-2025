@@ -172,12 +172,6 @@ int elem_liste(char* text) {
     if (!strcmp(text, TANT_QUE_S)) {
         return TANT_QUE;
     }
-    if (!strcmp(text, POUR_SANS_PAS_S)) {
-        return POUR_SANS_PAS;
-    }
-    if (!strcmp(text, POUR_AVEC_PAS_S)) {
-        return POUR_AVEC_PAS;
-    }
     if (!strcmp(text, AFFICHER_EXPR_S)) {
         return AFFICHER_EXPR;
     }
@@ -499,6 +493,9 @@ void tokenise(phrase_t* phrase, function_t* function, function_list_t* func_list
             } else if (test_inst_def_func(phrase, func_list)) {
             } else if (test_inst_exec_func(phrase, func_list)) {
             } else if (test_expr_func_call(phrase, func_list)) {
+            // boucle
+            } else if (test_inst_for_loop(phrase, function)) {
+            } else if (test_inst_for_loop_step(phrase, function)) {
             } else {
                 custom_error("Syntaxe Invalide", phrase);
             }
