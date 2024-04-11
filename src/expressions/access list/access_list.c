@@ -8,7 +8,7 @@ bool test_expr_access_list(phrase_t* phrase, function_t* function) {
     char** l = malloc(sizeof(char*));
     int len = 0;
 
-    bool result = analyse(phrase, ACCESSION_LISTE_S, l, &len, false);
+    bool result = analyse(phrase, ACCESSION_LISTE_S, l, &len, DEFAULT_SEPARATOR);
 
     if (!result) {
         return false;

@@ -7,7 +7,7 @@ bool test_expr_flottant(phrase_t* phrase) {
 
     char** l = malloc(sizeof(char*));
     int len = 0;
-    bool result = analyse(phrase, EXPR_FLOTTANT_S, l, &len, true);
+    bool result = analyse(phrase, EXPR_FLOTTANT_S, l, &len, DEFAULT_SEPARATOR);
     if (!result) {
         return false;
     }

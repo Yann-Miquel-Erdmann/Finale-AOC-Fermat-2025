@@ -1,8 +1,8 @@
 #include "syntax_analyser.h"
 
 
-bool analyse(phrase_t* phrase, char* syntax, char** arg_list, int* list_len, bool ignore_spaces) {
-    
+bool analyse(phrase_t* phrase, char* syntax, char** arg_list, int* list_len, char* separator) {
+    int sep_len = (int)strlen(separator);
     int list_size = 1;
     *list_len = 0;
 
@@ -10,7 +10,7 @@ bool analyse(phrase_t* phrase, char* syntax, char** arg_list, int* list_len, boo
     int index_const = 0;
     
     int mode = 0;
-    bool in_string = false;
+    //bool in_string = false;
     
     char* variable = malloc(sizeof(char));
     int var_len = 0;
@@ -22,9 +22,12 @@ bool analyse(phrase_t* phrase, char* syntax, char** arg_list, int* list_len, boo
         }
 
         if (mode>0) {
-            if ((!ignore_spaces && phrase->text[index] == ' ') || phrase->text[index] == '.' || phrase->text[index] == '?' || phrase->text[index] == ',') {
-                mode = 0;
-
+            for (int i = 0; i<sep_len; i++){
+                if (phrase->text[index] == separator[i]){
+                    mode = 0;
+                }
+            }
+            if (mode == 0) {
 
                 if (var_size == var_len + 1) {
                     var_size *= 2;

@@ -96,6 +96,9 @@
 #define EXECUTION_FONCTION_ARGUMENT 39
 #define APPEL_VALEUR_FONCTION_ARGUMENT 40
 
+#define DEFAULT_SEPARATOR "?,. "
+#define STRING_SEPARATOR  "\""
+
 // définitions de syntaxe
 #define MAIN_PHRASE_S "*"  // fait
 
@@ -105,7 +108,7 @@
 // => pb avec en même temps enlever les espaces pour les chiffres et check pour l'espace avant virgule
 #define EXPR_FLOTTANT_S "Le flottant $?"            // workaround pour le moment
 #define EXPR_BOOLEEN_S "Le booléen $?"              // fait
-#define EXPR_CHAINE_S "La chaîne de caractères $?"  // fait
+#define EXPR_CHAINE_S "La chaîne de caractères $?"  // fait => pb
 
 // structures de données
 //  * variable (fait)
@@ -120,15 +123,15 @@
 #define MODIFICATION_LISTE_S "Remplacer l'élément de la liste $ à l'indice * par *."  // fait
 #define AJOUT_LISTE_S "Ajouter à la liste $ *."                                       // fait
 #define SUPPRESSION_LISTE_S "Retirer de la liste $ l'élément d'indice *."             // fait (syntaxe à modifier)
-#define TAILLE_LISTE_S "La taille de la liste $?"                                     // non fait
-#define INSERTION_LISTE_S "Insérer * dans la liste $ à l'indice *."         // non fait
+#define TAILLE_LISTE_S "La taille de la liste $?"                                     // fait
+#define INSERTION_LISTE_S "Insérer * dans la liste $ à l'indice *."                   // fait
 #define EXPR_LISTE_S "La liste $?"                                                    // fait
 
 // opérateurs 
 #define SOMME_S "La somme de * et de *?"                    // fait
 #define DIFFERENCE_S "La différence de * et de *?"          // fait
 #define PRODUIT_S "Le produit de * et de *?"                // fait
-#define QUOTIENT_S "Le quotient de * par *?"                // fait
+#define QUOTIENT_S "Le quotient de * par *?"                // fait => pb avec quotient de deux entiers renvoie un entier
 #define QUOTIENT_ENTIER_S "Le quotient entier de * par *?"  // fait
 #define RESTE_S "Le reste de * par *?"                      // fait
 #define NEGATION_BOOLEENNE_S "La négation booléenne de *?"  // fait

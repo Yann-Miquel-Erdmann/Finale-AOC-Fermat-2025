@@ -8,7 +8,7 @@ bool test_expr_booleen(phrase_t* phrase) {
     char** l = malloc(sizeof(char*));
     int len = 0;
 
-    bool result = analyse(phrase, EXPR_BOOLEEN_S, l, &len, false);
+    bool result = analyse(phrase, EXPR_BOOLEEN_S, l, &len, DEFAULT_SEPARATOR);
 
     if (!result) {
         return false;
