@@ -4,12 +4,11 @@ bool test_inst_create_var(phrase_t* phrase, function_t* function) {
         return false;
     }
 
-    char** l = malloc(sizeof(char*));
     int len = 0;
 
-    bool result = analyse(phrase, DEFINITION_VARIABLE_SANS_INIT_S, l, &len, false);
+    char** result = analyse(phrase, DEFINITION_VARIABLE_SANS_INIT_S, &len, DEFAULT_SEPARATOR);
 
-    if (!result) {
+    if (result == NULL) {
         return false;
     }
     if (len > 1) {
@@ -18,10 +17,10 @@ bool test_inst_create_var(phrase_t* phrase, function_t* function) {
 
     phrase->phraseId = DEFINITION_VARIABLE_SANS_INIT;
     phrase->constant = true;
-    phrase->variable = getVariable(function->env, l[0]);
+    phrase->variable = getVariable(function->env, result[0]);
 
     if (phrase->variable == NULL) {
-        phrase->variable = new_variable(l[0], new_val_t(UNDEFINED));
+        phrase->variable = new_variable(result[0], new_val_t(UNDEFINED));
         set_undefined(phrase->variable->valeur);
         addToVariableList(function->env, phrase->variable);
     } else {

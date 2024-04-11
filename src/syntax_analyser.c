@@ -1,7 +1,8 @@
 #include "syntax_analyser.h"
 
 
-bool analyse(phrase_t* phrase, char* syntax, char** arg_list, int* list_len, char* separator) {
+char** analyse(phrase_t* phrase, char* syntax, int* list_len, char* separator) {
+    char** arg_list = malloc(sizeof(char*));
     int sep_len = (int)strlen(separator);
     int list_size = 1;
     *list_len = 0;
@@ -10,7 +11,6 @@ bool analyse(phrase_t* phrase, char* syntax, char** arg_list, int* list_len, cha
     int index_const = 0;
     
     int mode = 0;
-    //bool in_string = false;
     
     char* variable = malloc(sizeof(char));
     int var_len = 0;
@@ -21,14 +21,27 @@ bool analyse(phrase_t* phrase, char* syntax, char** arg_list, int* list_len, cha
             mode = 1;
         }
 
-        if (mode>0) {
+        if (mode > 0) {
             for (int i = 0; i<sep_len; i++){
                 if (phrase->text[index] == separator[i]){
                     mode = 0;
                 }
             }
             if (mode == 0) {
-
+                if (var_len == 0){
+                    mode = 1;
+                    index++;
+                    continue;
+                }
+                if (phrase->text[index] == ','){
+                    mode = 1;
+                    index++;
+                }else{
+                    index_const++;
+                }
+                if (phrase->text[index] == '"'){
+                    index++;
+                }
                 if (var_size == var_len + 1) {
                     var_size *= 2;
                     variable = realloc(variable, var_size * sizeof(char));
@@ -44,8 +57,8 @@ bool analyse(phrase_t* phrase, char* syntax, char** arg_list, int* list_len, cha
                 var_len = 0;
                 var_size = 1;
                 (*list_len)++;
-                index_const++;
-            } else {
+                
+            }else {
                 if (var_size == var_len + 1) {
                     var_size *= 2;
                     variable = realloc(variable, var_size * sizeof(char));
@@ -68,8 +81,7 @@ bool analyse(phrase_t* phrase, char* syntax, char** arg_list, int* list_len, cha
         free_l(arg_list, *list_len);
         return false;
     }
-
-    return true;
+    return arg_list;
 }
 
 void free_l(char** l, int len) {

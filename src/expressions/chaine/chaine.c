@@ -2,15 +2,14 @@
 #include "../../structures/val.h"
 
 bool test_expr_chaine(phrase_t* phrase) {
-    if (phrase->phraseId != -1 || strlen(phrase->text) <= 25) {
+    if (phrase->phraseId != -1) {
         return false;
     }
-    char** l = malloc(sizeof(char*));
     int len = 0;
 
-    bool result = analyse(phrase, EXPR_CHAINE_S, l, &len, true);
+    char** result = analyse(phrase, EXPR_CHAINE_S, &len, STRING_SEPARATOR);
 
-    if (!result) {
+    if (result == NULL) {
         return false;
     }
     if (len > 1) {
@@ -23,10 +22,10 @@ bool test_expr_chaine(phrase_t* phrase) {
     phrase->constant = true;
     phrase->expr = true;
     
-    chaine_t* c = new_chaine_t(l[0]);
+    chaine_t* c = new_chaine_t(result[0]);
     set_char(phrase->valeur, c);
 
-    free(l);
+    free(result);
 
     return true;
 }

@@ -5,10 +5,9 @@ bool test_expr_booleen(phrase_t* phrase) {
         return false;
     }
 
-    char** l = malloc(sizeof(char*));
     int len = 0;
 
-    bool result = analyse(phrase, EXPR_BOOLEEN_S, l, &len, DEFAULT_SEPARATOR);
+    char** result = analyse(phrase, EXPR_BOOLEEN_S, &len, DEFAULT_SEPARATOR);
 
     if (!result) {
         return false;
@@ -17,12 +16,12 @@ bool test_expr_booleen(phrase_t* phrase) {
         custom_error("too many arguments given", phrase);
     }
 
-    if (!strcmp(l[0], "vrai")) {
+    if (!strcmp(result[0], "vrai")) {
         // printf("booléen: vrai\n");
         phrase->phraseId = EXPR_BOOLEEN;
         phrase->constant = true;
         set_bool(phrase->valeur, true);
-    } else if (!strcmp(l[0], "faux")) {
+    } else if (!strcmp(result[0], "faux")) {
         // printf("booléen: faux\n");
         phrase->phraseId = EXPR_BOOLEEN;
         phrase->constant = true;
@@ -31,7 +30,7 @@ bool test_expr_booleen(phrase_t* phrase) {
     } else {
         custom_error("Le booléen doit être vrai ou faux.", phrase);
     }
-    free_l(l, len);
+    free_l(result, len);
 
     return true;
 }

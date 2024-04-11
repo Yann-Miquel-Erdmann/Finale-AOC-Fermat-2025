@@ -5,12 +5,11 @@ bool test_expr_access_list(phrase_t* phrase, function_t* function) {
         return false;
     }
 
-    char** l = malloc(sizeof(char*));
     int len = 0;
 
-    bool result = analyse(phrase, ACCESSION_LISTE_S, l, &len, DEFAULT_SEPARATOR);
+    char** result = analyse(phrase, ACCESSION_LISTE_S, &len, DEFAULT_SEPARATOR);
 
-    if (!result) {
+    if (result == NULL) {
         return false;
     }
     if (len > 1) {
@@ -20,8 +19,8 @@ bool test_expr_access_list(phrase_t* phrase, function_t* function) {
     }
 
     phrase->phraseId = ACCESSION_LISTE;
-    set_liste(phrase->valeur, getVariable(function->env, l[0])->valeur->liste);
-    free_l(l, len);
+    set_liste(phrase->valeur, getVariable(function->env, result[0])->valeur->liste);
+    free_l(result, len);
     // renvoie true si l'expression est une access list
     return true;
 }

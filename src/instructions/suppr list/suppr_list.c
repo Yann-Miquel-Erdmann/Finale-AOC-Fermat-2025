@@ -5,10 +5,9 @@ bool test_inst_suppr_list(phrase_t* phrase, function_t* function) {
         return false;
     }
 
-    char** l = malloc(sizeof(char*));
     int len = 0;
 
-    bool result = analyse(phrase, SUPPRESSION_LISTE_S, l, &len, false);
+    char** result = analyse(phrase, SUPPRESSION_LISTE_S, &len, DEFAULT_SEPARATOR);
 
     if (!result) {
         return false;
@@ -19,7 +18,7 @@ bool test_inst_suppr_list(phrase_t* phrase, function_t* function) {
 
     phrase->phraseId = SUPPRESSION_LISTE;
     phrase->valeur = new_val_t(UNDEFINED);
-    set_liste(phrase->valeur, getVariable(function->env, l[0])->valeur->liste);
+    set_liste(phrase->valeur, getVariable(function->env, result[0])->valeur->liste);
 
     return true;
 }

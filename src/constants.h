@@ -97,17 +97,16 @@
 
 #define DEFAULT_SEPARATOR "?,. "
 #define STRING_SEPARATOR  "\""
+#define NUMBER_SEPARATOR  "?,."
 
 // définitions de syntaxe
 #define MAIN_PHRASE_S "*"  // fait
 
 // expressions
-#define EXPR_ENTIER_S "L'entier $?"  // fait
-// #define EXPR_FLOTTANT_S "Le flottant $ virgule $?"  // non fait => cas particuler deux $ à récupérer
-//  => pb avec en même temps enlever les espaces pour les chiffres et check pour l'espace avant virgule
-#define EXPR_FLOTTANT_S "Le flottant $?"            // workaround pour le moment
+#define EXPR_ENTIER_S "L'entier $?"                 // fait
+#define EXPR_FLOTTANT_S "Le flottant $?"            // fait
 #define EXPR_BOOLEEN_S "Le booléen $?"              // fait
-#define EXPR_CHAINE_S "La chaîne de caractères $?"  // fait => pb
+#define EXPR_CHAINE_S "La chaîne de caractères $?"  // fait
 
 // structures de données
 //  * variable (fait)
@@ -121,8 +120,7 @@
 #define ACCESSION_LISTE_S "L'élément de la liste $ à l'indice *?"                     // fait
 #define MODIFICATION_LISTE_S "Remplacer l'élément de la liste $ à l'indice * par *."  // fait
 #define AJOUT_LISTE_S "Ajouter à la liste $ *."                                       // fait
-#define SUPPRESSION_LISTE_S "Retirer de la liste $ l'élément d'indice *."             // fait (syntaxe à modifier)
-#define TAILLE_LISTE_S "La taille de la liste $?"                                     // fait
+#define SUPPRESSION_LISTE_S "Retirer de la liste $ l'élément d'indice *."             // fait
 #define INSERTION_LISTE_S "Insérer * dans la liste $ à l'indice *."                   // fait
 #define EXPR_LISTE_S "La liste $?"                                                    // fait
 
@@ -130,7 +128,7 @@
 #define SOMME_S "La somme de * et de *?"                    // fait
 #define DIFFERENCE_S "La différence de * et de *?"          // fait
 #define PRODUIT_S "Le produit de * et de *?"                // fait
-#define QUOTIENT_S "Le quotient de * par *?"                // fait => pb avec quotient de deux entiers renvoie un entier
+#define QUOTIENT_S "Le quotient de * par *?"                // fait
 #define QUOTIENT_ENTIER_S "Le quotient entier de * par *?"  // fait
 #define RESTE_S "Le reste de * par *?"                      // fait
 #define NEGATION_BOOLEENNE_S "La négation booléenne de *?"  // fait
@@ -144,23 +142,23 @@
 
 // conditions
 #define SI_ALORS_S "Si * alors faire:*."                      // fait
-#define SI_ALORS_SINON_S "Si * alors faire:*sinon faire:*."  // à implémenter pour remplacer SINON_S
+#define SI_ALORS_SINON_S "Si * alors faire:*sinon faire:*."   // fait (en tout cas on dirait)
                          
 // boucles
-#define TANT_QUE_S "Tant que * faire:*."  // non fait
-#define POUR_SANS_PAS_S "Pour * allant de * jusqu'à * faire:*."                           // fait
-#define POUR_AVEC_PAS_S "Pour * allant de * jusqu'à * en utilisant un pas de * faire:*."  // fait
+#define TANT_QUE_S "Tant que * faire:*."                                                  // non implémenté
+#define POUR_SANS_PAS_S "Pour * allant de * jusqu'à * faire:*."                           // non implémenté
+#define POUR_AVEC_PAS_S "Pour * allant de * jusqu'à * en utilisant un pas de * faire:*."  // non implémenté
 
 // affichage console
 #define AFFICHER_EXPR_S "Afficher *."            // fait
 #define TAILLE_S "La taille de *?"               // fait
 
 // fonctions
-#define DEFINITION_FONCTION_S "Soit $ une fonction qui lorsqu'elle est appelée execute:*."  // non fait
-#define EXECUTION_FONCTION_S "Execute la fonction $."                                       // non fait
-#define RENVOI_FONCTION_S "Renvoie *?"                                                      // fait
-#define APPEL_VALEUR_FONCTION_S "La valeur renvoyée par la fonction $?"                     // non fait
+#define DEFINITION_FONCTION_S "Soit $ une fonction qui lorsqu'elle est appelée execute:*."   // fait
+#define EXECUTION_FONCTION_S "Executer la fonction $."                                       // fait
+#define RENVOI_FONCTION_S "Renvoie *?"                                                       // fait
+#define APPEL_VALEUR_FONCTION_S "La valeur renvoyée par la fonction $?"                      // fait
 
-#define DEFINITION_FONCTION_ARGUMENT_S "Soit $ une fonction qui lorsqu'elle est appelée avec * execute:*."  // non fait
-#define EXECUTION_FONCTION_ARGUMENT_S "Execute la fonction $ avec les arguments *."                         // non fait
-#define APPEL_VALEUR_FONCTION_ARGUMENT_S "La valeur renvoyée par la fonction $ avec les arguments *?"       // non fait
+#define DEFINITION_FONCTION_ARGUMENT_S "Soit $ une fonction qui lorsqu'elle est appelée avec $ execute:*."   // fait
+#define EXECUTION_FONCTION_ARGUMENT_S "Executer la fonction $ avec les arguments *."                         // fait
+#define APPEL_VALEUR_FONCTION_ARGUMENT_S "La valeur renvoyée par la fonction $ avec les arguments *?"        // fait
