@@ -205,7 +205,7 @@ void print_val(val_t* v, bool new_line) {
             break;
 
         default:
-            custom_error("le type de vat_t n'est pas reconnu", NULL);
+            custom_error("le type de val_t n'est pas reconnu", NULL);
             break;
     }
 

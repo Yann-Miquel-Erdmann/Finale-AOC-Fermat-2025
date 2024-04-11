@@ -1,5 +1,7 @@
 Soit f une fonction qui lorsqu'elle est appelée avec x,y execute:
 Afficher Le quotient de La variable x? par La variable y??.
+Renvoyer La somme de La variable x? et de La variable y??.
 .
 
-Executer la fonction f avec les arguments L'entier deux?, L'entier un?.
+Soit x La valeur renvoyée par la fonction f avec les arguments L'entier deux?, L'entier un??.
+Afficher La variable x?.
