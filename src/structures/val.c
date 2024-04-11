@@ -26,9 +26,9 @@ val_t* new_val_t(char type) {
 }
 
 void free_val_t(val_t* v) {
-    /*if (v->chaine != NULL) {
+    if (v->chaine != NULL) {
         free_chaine_t(v->chaine);
-    }*/
+    }
     free(v);
 }
 
@@ -190,7 +190,7 @@ void print_val(val_t* v, bool new_line) {
         }
 
         case LISTE: {
-            printf(" [");
+            printf("[");
             for (int i = 0; i < v->liste->valeursLen; i++) {
                 if (i != 0) {
                     printf(", ");

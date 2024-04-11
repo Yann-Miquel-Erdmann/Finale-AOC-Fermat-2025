@@ -6,7 +6,6 @@
 #include "val.h"
 #include "environnement.h"
 #include "function.h"
-
 #include "variable.h"
 
 #include <stdio.h>
@@ -40,6 +39,7 @@ typedef struct phrase {
     int innerPhraseLen;           // nombre taille de la liste
     int innerPhraseSize;          // nombre inst_t alloués en mémoire
     int interpreterInnerIndex;
+    int innerSeparator;  // séparateur entre les instructions du si et du sinon
 
     // informations relatives à une expression
     bool expr;

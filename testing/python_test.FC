@@ -1,1 +1,7 @@
-Afficher La chaîne de caractères "Hello"?.
+Soit v L'entier un?.
+Si La valeur de La variable v? est égale à la valeur de L'entier deux?? alors faire: 
+Que v devienne L'entier sept?.
+Afficher La variable v?.
+sinon faire:
+Afficher L'entier trois?.
+.

@@ -166,8 +166,8 @@ int elem_liste(char* text) {
     if (!strcmp(text, SI_ALORS_S)) {
         return SI_ALORS;
     }
-    if (!strcmp(text, SINON_S)) {
-        return SINON;
+    if (!strcmp(text, SI_ALORS_SINON_S)) {
+        return SI_ALORS_SINON;
     }
     if (!strcmp(text, TANT_QUE_S)) {
         return TANT_QUE;
@@ -180,9 +180,6 @@ int elem_liste(char* text) {
     }
     if (!strcmp(text, AFFICHER_EXPR_S)) {
         return AFFICHER_EXPR;
-    }
-    if (!strcmp(text, AFFICHER_STR_S)) {
-        return AFFICHER_STR;
     }
     if (!strcmp(text, RENVOI_FONCTION_S)) {
         return RENVOI_FONCTION;
@@ -223,7 +220,6 @@ void tokenise(phrase_t* phrase, function_t* function, function_list_t* func_list
     if (phrase->phraseId != -1) {
         return;
     }
-
     switch (elem_liste(phrase->text)) {
         case MAIN_PHRASE:
             phrase->phraseId = MAIN_PHRASE;
@@ -456,11 +452,19 @@ void tokenise(phrase_t* phrase, function_t* function, function_list_t* func_list
                 tokenise(phrase->innerPhrase[i], function, func_list);
             }
             break;
-        case SINON:
-            if (phrase->innerPhraseLen == 0) {
-                custom_error("Invalid Syntax, sinon prend au moins 1 instruction", phrase);
+        case SI_ALORS_SINON:
+            if (phrase->argsLen != 1) {
+                custom_error("Invalid Syntax, 'si alors sinon' prend 1 arguments", phrase);
             }
-            phrase->phraseId = SINON;
+            if (phrase->innerSeparator == -1) {
+                custom_error("Invalid Syntax, 'si alors sinon' prend au moins 1 instruction dans le si", phrase);
+            }
+            if (phrase->innerSeparator >= phrase->innerPhraseLen - 1) {
+                custom_error("Invalid Syntax, 'si alors sinon' prend au moins 1 instruction dans le sinon", phrase);
+            }
+
+            phrase->phraseId = SI_ALORS_SINON;
+            tokenise(phrase->args[0], function, func_list);
             for (int i = 0; i < phrase->innerPhraseLen; i++) {
                 tokenise(phrase->innerPhrase[i], function, func_list);
             }
@@ -482,7 +486,7 @@ void tokenise(phrase_t* phrase, function_t* function, function_list_t* func_list
             } else if (test_inst_add_list(phrase, function)) {
             } else if (test_inst_modif_list(phrase, function)) {
             } else if (test_inst_suppr_list(phrase, function)) {
-            } else if (test_expr_taille_list(phrase, function)) {
+            } else if (test_expr_taille(phrase, function)) {
             } else if (test_inst_insert_list(phrase, function)) {
             } else if (test_expr_list(phrase, function)) {
                 // fonction

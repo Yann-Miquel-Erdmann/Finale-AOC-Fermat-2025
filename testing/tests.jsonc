@@ -25,8 +25,37 @@
     "output": "\"Hello\"\n"
   },
   {
+    "name": "Insertion liste",
+    "code": "Soit l une liste vide.\nInsérer L'entier deux? dans la liste l à l'indice L'entier zéro?.\nAfficher La liste l?.",
+    "output": "[deux]\n"
+  },
+  {
     "name": "Longueur liste",
-    "code": "Soit l une liste vide.\nAfficher La taille de la liste l?.",
+    "code": "Soit l une liste vide.\nAfficher La taille de La liste l??.",
     "output": "zéro\n"
+  },
+  {
+    "name": "Affichage chaine de caractères",
+    "code": "Afficher La chaîne de caractères \"Hello World!\"?.",
+    "output": "\"Hello World!\"\n"
+  },
+  {
+    "name": "Longueur chaine de caractères",
+    "code": "Afficher La taille de La chaîne de caractères \"Hello\"??.",
+    "output": "sept\n"
+  },
+
+  {"name": "Si avec modif de la condition",
+  "code":"Soit v L'entier trois?.\nSi La valeur de La variable v? est égale à la valeur de L'entier trois?? alors faire: \nQue v devienne L'entier sept?.\nAfficher La variable v?.\n.",
+  "output":"sept\n"
+  },
+  {"name":"Si alors sinon avec si",
+  "code" :"Soit v L'entier deux?.\nSi La valeur de La variable v? est égale à la valeur de L'entier deux?? alors faire: \nQue v devienne L'entier sept?.\nAfficher La variable v?.\nsinon faire:\nAfficher L'entier trois?.\n.",
+  "output":"sept\n"
+  },
+  {"name":"Si alors sinon avec sinon",
+  "code" :"Soit v L'entier un?.\nSi La valeur de La variable v? est égale à la valeur de L'entier deux?? alors faire: \nQue v devienne L'entier sept?.\nAfficher La variable v?.\nsinon faire:\nAfficher L'entier trois?.\n.",
+  "output":"trois\n"
   }
+
 ]

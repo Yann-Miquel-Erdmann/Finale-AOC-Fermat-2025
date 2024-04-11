@@ -64,9 +64,9 @@ phrase_t* parse_file(FILE* f) {
         } else {
             switch (c) {
                 case '.':
-                    if (buffer == ' '){ // pour enlever les espaces avant les points (éviter quelques erreurs difficiles à trouver)
-                        phraseActuelle->text[phraseActuelle->textLen-1] = c;
-                    }else{
+                    if (buffer == ' ') {  // pour enlever les espaces avant les points (éviter quelques erreurs difficiles à trouver)
+                        phraseActuelle->text[phraseActuelle->textLen - 1] = c;
+                    } else {
                         addToText(phraseActuelle, c);
                     }
                     addToText(phraseActuelle, '\0');
@@ -85,14 +85,15 @@ phrase_t* parse_file(FILE* f) {
                     phraseActuelle->args[phraseActuelle->argsLen - 1] = NULL;
                     phraseActuelle->argsLen--;
 
+                    buffer = c;
                     break;
 
                 case '?':
 
                     // ajoute le caractère au texte
-                    if (buffer == ' '){ // pour enlever les espaces avant les points d'interrogaion (éviter quelques erreurs difficiles à trouver)
-                        phraseActuelle->text[phraseActuelle->textLen-1] = c;
-                    }else{
+                    if (buffer == ' ') {  // pour enlever les espaces avant les points d’interrogation (éviter quelques erreurs difficiles à trouver)
+                        phraseActuelle->text[phraseActuelle->textLen - 1] = c;
+                    } else {
                         addToText(phraseActuelle, c);
                     }
                     addToText(phraseActuelle, '\0');
@@ -103,6 +104,17 @@ phrase_t* parse_file(FILE* f) {
                     set_undefined(phraseActuelle->valeur);
 
                     phraseActuelle = phraseActuelle->parentPhrase;
+                    buffer = c;
+                    break;
+                case ':':
+                    // ajoute le caractère au texte
+                    if (buffer == ' ') {
+                        phraseActuelle->text[phraseActuelle->textLen - 1] = c;
+                    } else {
+                        addToText(phraseActuelle, c);
+                    }
+                    buffer = c;
+                    phraseActuelle->innerSeparator = phraseActuelle->innerPhraseLen - 1;
                     break;
 
                 default:
@@ -115,46 +127,48 @@ phrase_t* parse_file(FILE* f) {
                     }
                     // n'ajoute pas la virgule et l'espace entre les différents arguments
                     if ((c == ',' && phraseActuelle->text[phraseActuelle->textLen - 1] == '*') || (c == ' ' && buffer == ',')) {
+                        buffer = c;
                         break;
                     }
                     // enlève les espaces avants les virgules
-                    if (c == ',' && buffer == ' '){
-                        phraseActuelle->text[phraseActuelle->textLen-1] = c;
+                    if (c == ',' && buffer == ' ') {
+                        phraseActuelle->text[phraseActuelle->textLen - 1] = c;
+                        buffer = c;
                         break;
                     }
                     // enlève les espaces après les points
-                    if (c == ' ' && buffer == '.'){
+                    if (c == ' ' && (buffer == '.' || buffer == ':')) {
+                        break;
+                    }
+
+                    if (c == '\t') {
                         break;
                     }
 
                     // ignore les sauts de lignes et les tabulations
-                    if ((c == '\n' && (buffer == '.' || buffer == ':' )) || c == '\t') {
+                    if ((c == '\n' && (buffer == '.' || buffer == ':'))) {
                         break;
                     } else if (c == '\n') {
                         // erreur manque de point en fin de ligne
 
                         custom_error(add_number_str("Il manque un point à la fin de la ligne ", line), NULL);
-                        missing_point = 1;
                         break;
                     }
 
                     // n'ajoute pas les espaces en debut de ligne ou après un espace
                     if (c == ' ' && (phraseActuelle->textLen == 0 || phraseActuelle->text[phraseActuelle->textLen - 1] == ' ')) {
+                        
                         break;
                     }
 
                     // ajoute le caractère au texte
                     addToText(phraseActuelle, c);
+                    buffer = c;
                     break;
             }
-            if (missing_point != -1) {
-                break;
-            }
-        }
-        if (c != '\n' || buffer == ':') {
-            buffer = c;
         }
     }
+
     if (mainPhrase != phraseActuelle) {
         // probablement à changer + essayer de trouver où est-ce qu'il manque un point
         char* err_mess = malloc((strlen(phraseActuelle->text) * 2 + 31) * sizeof(char));
@@ -167,6 +181,7 @@ phrase_t* parse_file(FILE* f) {
         strcat(err_mess, "^");
         custom_error(err_mess, false);
     }
+
     addToText(mainPhrase, '\0');
     return mainPhrase;
 }

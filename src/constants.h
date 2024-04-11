@@ -33,7 +33,6 @@
 
 #define MAIN_PHRASE 0
 
-
 // expressions
 #define EXPR_ENTIER 1
 #define EXPR_FLOTTANT 2
@@ -53,7 +52,7 @@
 #define MODIFICATION_LISTE 11
 #define AJOUT_LISTE 12
 #define SUPPRESSION_LISTE 13
-#define TAILLE_LISTE 14
+#define TAILLE 14
 #define INSERTION_LISTE 41
 #define EXPR_LISTE 42
 
@@ -76,7 +75,7 @@
 
 // conditions
 #define SI_ALORS 27
-#define SINON 28
+#define SI_ALORS_SINON 28
 
 // boucles
 #define TANT_QUE 29
@@ -103,19 +102,19 @@
 #define MAIN_PHRASE_S "*"  // fait
 
 // expressions
-#define EXPR_ENTIER_S "L'entier $?"                 // fait
-//#define EXPR_FLOTTANT_S "Le flottant $ virgule $?"  // non fait => cas particuler deux $ à récupérer
-// => pb avec en même temps enlever les espaces pour les chiffres et check pour l'espace avant virgule
+#define EXPR_ENTIER_S "L'entier $?"  // fait
+// #define EXPR_FLOTTANT_S "Le flottant $ virgule $?"  // non fait => cas particuler deux $ à récupérer
+//  => pb avec en même temps enlever les espaces pour les chiffres et check pour l'espace avant virgule
 #define EXPR_FLOTTANT_S "Le flottant $?"            // workaround pour le moment
 #define EXPR_BOOLEEN_S "Le booléen $?"              // fait
 #define EXPR_CHAINE_S "La chaîne de caractères $?"  // fait => pb
 
 // structures de données
 //  * variable (fait)
-#define DEFINITION_VARIABLE_AVEC_INIT_S "Soit $ *." // fait
-#define DEFINITION_VARIABLE_SANS_INIT_S "Soit $."   // fait
-#define ACCESSION_VARIABLE_S "La variable $?"       // fait
-#define MODIFICATION_VARIABLE_S "Que $ devienne *." // fait
+#define DEFINITION_VARIABLE_AVEC_INIT_S "Soit $ *."  // fait
+#define DEFINITION_VARIABLE_SANS_INIT_S "Soit $."    // fait
+#define ACCESSION_VARIABLE_S "La variable $?"        // fait
+#define MODIFICATION_VARIABLE_S "Que $ devienne *."  // fait
 
 //  * liste (fait)
 #define CREATION_LISTE_S "Soit $ une liste vide."                                     // fait
@@ -127,7 +126,7 @@
 #define INSERTION_LISTE_S "Insérer * dans la liste $ à l'indice *."                   // fait
 #define EXPR_LISTE_S "La liste $?"                                                    // fait
 
-// opérateurs 
+// opérateurs
 #define SOMME_S "La somme de * et de *?"                    // fait
 #define DIFFERENCE_S "La différence de * et de *?"          // fait
 #define PRODUIT_S "Le produit de * et de *?"                // fait
@@ -144,19 +143,17 @@
 #define STRICT_PLUS_PETIT_S "La valeur de * est strictement plus petite que la valeur de *?"  // fait
 
 // conditions
-#define SI_ALORS_S "Si * alors faire:*."                        // fait
-#define SINON_S "Sinon faire:*."                                // fait
-#define SI_ALORS_SINON_S "Si * alors faire:* Sinon faire:*."    // à implémenter pour remplacer SINON_S
-
+#define SI_ALORS_S "Si * alors faire:*."                      // fait
+#define SI_ALORS_SINON_S "Si * alors faire:*sinon faire:*."  // à implémenter pour remplacer SINON_S
+                         
 // boucles
 #define TANT_QUE_S "Tant que * faire:*."  // non fait
-
-#define POUR_SANS_PAS_S "Pour * allant de * jusqu'à * faire:*."                             // fait
-#define POUR_AVEC_PAS_S "Pour * allant de * jusqu'à * en utilisant un pas de * faire:*."    // fait
+#define POUR_SANS_PAS_S "Pour * allant de * jusqu'à * faire:*."                           // fait
+#define POUR_AVEC_PAS_S "Pour * allant de * jusqu'à * en utilisant un pas de * faire:*."  // fait
 
 // affichage console
 #define AFFICHER_EXPR_S "Afficher *."            // fait
-#define AFFICHER_STR_S "Afficher le message *."  // fait => à remplacer par un type de chaine de carractère pour afficher et seulement avoir AFFICHER_EXPR
+#define TAILLE_S "La taille de *?"               // fait
 
 // fonctions
 #define DEFINITION_FONCTION_S "Soit $ une fonction qui lorsqu'elle est appelée execute:*."  // non fait
