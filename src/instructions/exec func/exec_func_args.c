@@ -18,5 +18,6 @@ bool test_inst_exec_func_args(phrase_t* phrase, function_list_t* function_list) 
     phrase->phraseId = EXECUTION_FONCTION_ARGUMENT;
     phrase->function = getFunction(function_list, result[0]);
 
+    free_l(result, len);
     return true;
 }

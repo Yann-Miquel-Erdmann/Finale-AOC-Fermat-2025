@@ -47,6 +47,13 @@ int taille(liste_t* liste) {
     return liste->valeursLen;
 }
 
+void vider_liste(liste_t* liste) {
+    for (int i = 0; i < liste->valeursLen; i++) {
+        free_val_t(liste->valeurs[i]);
+    }
+    liste->valeursLen = 0;
+}
+
 val_t* accession(liste_t* liste, int indice, phrase_t* p) {
     if (indice < 0 || indice >= liste->valeursLen) {
         custom_error("indice hors de la liste", p);
@@ -63,7 +70,8 @@ void modification(liste_t* liste, int indice, val_t* valeur, phrase_t* p) {
 }
 
 void ajout(liste_t* liste, val_t* valeur) {
-    if (liste->valeursLen == liste->valeursSize) {
+    if (liste->valeursLen == 
+        liste->valeursSize) {
         doubleValeursSize(liste);
     }
     liste->valeurs[liste->valeursLen] = new_val_t(UNDEFINED);

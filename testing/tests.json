@@ -1,77 +1,87 @@
 [
-    {
-        "name": "Affichage entier",
-        "code": "Afficher L'entier trois?.",
-        "output": "trois\n"
-    },
-    {
-        "name": "Affichage flottant",
-        "code": "Afficher Le flottant trois virgule sept?.",
-        "output": "trois virgule soixante-dix millions huit\n"
-    },
-    {
-        "name": "Affichage booléen",
-        "code": "Afficher Le booléen vrai?.",
-        "output": "vrai\n"
-    },
-    {
-        "name": "Affichage booléen",
-        "code": "Afficher Le booléen faux?.",
-        "output": "faux\n"
-    },
-    {
-        "name": "Affichage chaine de caractères",
-        "code": "Afficher La chaîne de caractères \"Hello World!\"?.",
-        "output": "Hello World!\n"
-    },
-    {
-        "name": "Insertion liste",
-        "code": "Soit l une liste vide.\nInsérer L'entier deux? dans la liste l à l'indice L'entier zéro?.\nAfficher La liste l?.",
-        "output": "[deux]\n"
-    },
-    {
-        "name": "Longueur liste",
-        "code": "Soit l une liste vide.\nAfficher La taille de La liste l??.",
-        "output": "zéro\n"
-    },
-    {
-        "name": "Longueur chaine de caractères",
-        "code": "Afficher La taille de La chaîne de caractères \"Hello\"??.",
-        "output": "cinq\n"
-    },
-    {
-        "name": "Si avec modif de la condition",
-        "code": "Soit v L'entier trois?.\nSi La valeur de La variable v? est égale à la valeur de L'entier trois?? alors faire: \nQue v devienne L'entier sept?.\nAfficher La variable v?.\n.",
-        "output": "sept\n"
-    },
-    {
-        "name": "Si alors sinon avec si",
-        "code": "Soit v L'entier deux?.\nSi La valeur de La variable v? est égale à la valeur de L'entier deux?? alors faire: \nQue v devienne L'entier sept?.\nAfficher La variable v?.\nsinon faire:\nAfficher L'entier trois?.\n.",
-        "output": "sept\n"
-    },
-    {
-        "name": "Si alors sinon avec sinon",
-        "code": "Soit v L'entier un?.\nSi La valeur de La variable v? est égale à la valeur de L'entier deux?? alors faire: \nQue v devienne L'entier sept?.\nAfficher La variable v?.\nsinon faire:\nAfficher L'entier trois?.\n.",
-        "output": "trois\n"
-    },
-    {
-        "name": "Tant que",
-        "code": "Soit v L'entier zéro?.\nTant que La valeur de La variable v? est strictement plus petite que la valeur de L'entier dix?? faire:\n    Afficher La variable v?.\nQue v devienne La somme de La variable v? et de L'entier un??.\n.",
-        "output": "zéro\nun\ndeux\ntrois\nquatre\ncinq\nsix\nsept\nhuit\nneuf\n"
-    },
-    {
-        "name": "Valeur renvoyée fonction",
-        "code": "Soit f une fonction qui lorsqu'elle est appelée avec x,y execute:\nAfficher Le quotient de La variable x? par La variable y??.\nRenvoyer La somme de La variable x? et de La variable y??.\n.\n\nSoit x La valeur renvoyée par la fonction f avec les arguments L'entier deux?, L'entier un??.\nAfficher La variable x?.",
-        "output": "deux\ntrois\n"
-    },
-    {
-        "name": "for sans pas",
-        "code": "Pour i allant de L'entier zéro? jusqu'à L'entier trois? faire:\n    Afficher La variable i?.\n    .",
-        "output": "zéro\nun\ndeux\n"
-    },
-    {
-        "name": "for avec pas ",
-        "code": "Pour i allant de L'entier zéro? jusqu'à L'entier trois? en utilisant un pas de L'entier deux? faire:\n    Afficher La variable i?.\n    .",
-        "output": "zéro\ndeux\n"
-    }
+  {
+    "name": "Affichage entier",
+    "code": "Afficher L'entier trois?.",
+    "output": "trois\n"
+  },
+  {
+    "name": "Affichage flottant",
+    "code": "Afficher Le flottant trois virgule sept?.",
+    "output": "trois virgule soixante-dix millions huit\n"
+  },
+  {
+    "name": "Affichage booléen",
+    "code": "Afficher Le booléen vrai?.",
+    "output": "vrai\n"
+  },
+  {
+    "name": "Affichage booléen",
+    "code": "Afficher Le booléen faux?.",
+    "output": "faux\n"
+  },
+  {
+    "name": "Affichage chaine de caractères",
+    "code": "Afficher La chaîne de caractères \"Hello World!\"?.",
+    "output": "Hello World!\n"
+  },
+  {
+    "name": "Insertion liste",
+    "code": "Soit l La liste vide?.\nInsérer L'entier deux? dans la liste l à l'indice L'entier zéro?.\nAfficher La liste l?.",
+    "output": "[deux]\n"
+  },
+  {
+    "name": "Longueur liste",
+    "code": "Soit l La liste vide?.\nAfficher La taille de La liste l??.",
+    "output": "zéro\n"
+  },
+  {
+    "name": "Longueur chaine de caractères",
+    "code": "Afficher La taille de La chaîne de caractères \"Hello\"??.",
+    "output": "cinq\n"
+  },
+  {
+    "name": "Si avec modif de la condition",
+    "code": "Soit v L'entier trois?.\nSi La valeur de La variable v? est égale à la valeur de L'entier trois?? alors faire: \nQue v devienne L'entier sept?.\nAfficher La variable v?.\n.",
+    "output": "sept\n"
+  },
+  {
+    "name": "Si alors sinon avec si",
+    "code": "Soit v L'entier deux?.\nSi La valeur de La variable v? est égale à la valeur de L'entier deux?? alors faire: \nQue v devienne L'entier sept?.\nAfficher La variable v?.\nsinon faire:\nAfficher L'entier trois?.\n.",
+    "output": "sept\n"
+  },
+  {
+    "name": "Si alors sinon avec sinon",
+    "code": "Soit v L'entier un?.\nSi La valeur de La variable v? est égale à la valeur de L'entier deux?? alors faire: \nQue v devienne L'entier sept?.\nAfficher La variable v?.\nsinon faire:\nAfficher L'entier trois?.\n.",
+    "output": "trois\n"
+  },
+  {
+    "name": "Tant que",
+    "code": "Soit v L'entier zéro?.\nTant que La valeur de La variable v? est strictement plus petite que la valeur de L'entier dix?? faire:\nAfficher La variable v?.\nQue v devienne La somme de La variable v? et de L'entier un??.\n.",
+    "output": "zéro\nun\ndeux\ntrois\nquatre\ncinq\nsix\nsept\nhuit\nneuf\n"
+  },
+  {
+    "name": "Valeur renvoyée fonction",
+    "code": "Soit f une fonction qui lorsqu'elle est appelée avec x,y execute:\nAfficher Le quotient de La variable x? par La variable y??.\nRenvoyer La somme de La variable x? et de La variable y??.\n.\n\nSoit x La valeur renvoyée par la fonction f avec les arguments L'entier deux?, L'entier un??.\nAfficher La variable x?.",
+    "output": "deux\ntrois\n"
+  },
+  {
+    "name": "for sans pas",
+    "code": "Pour i allant de L'entier zéro? jusqu'à L'entier trois? faire:\nAfficher La variable i?.\n.",
+    "output": "zéro\nun\ndeux\n"
+  },
+  {
+    "name": "for avec pas ",
+    "code": "Pour i allant de L'entier zéro? jusqu'à L'entier trois? en utilisant un pas de L'entier deux? faire:\nAfficher La variable i?.\n.",
+    "output": "zéro\ndeux\n"
+  },
+  {
+    "name": "remplissage liste par boucle",
+    "code": "Soit l La liste vide?.\nPour i allant de L'entier zéro? jusqu'à L'entier dix? faire:\nAjouter à la liste l La variable i?.\nAfficher La variable i?.\nAfficher La liste l?.\n.\n",
+    "output": "zéro\n[zéro]\nun\n[zéro, un]\ndeux\n[zéro, un, deux]\ntrois\n[zéro, un, deux, trois]\nquatre\n[zéro, un, deux, trois, quatre]\ncinq\n[zéro, un, deux, trois, quatre, cinq]\nsix\n[zéro, un, deux, trois, quatre, cinq, six]\nsept\n[zéro, un, deux, trois, quatre, cinq, six, sept]\nhuit\n[zéro, un, deux, trois, quatre, cinq, six, sept, huit]\nneuf\n[zéro, un, deux, trois, quatre, cinq, six, sept, huit, neuf]\n"
+  },
+  {
+    "name": "remplissage liste par boucle dans fct",
+    "code": "Soit f une fonction qui lorsqu'elle est appelée avec n execute:\nSoit l La liste vide?.\nPour i allant de L'entier zéro? jusqu'à La variable n? faire:\nAjouter à la liste l La variable i?.\nAfficher La variable i?.\nAfficher La liste l?.\n.\n.\nExecuter la fonction f avec les arguments L'entier dix?.",
+    "output": "zéro\n[zéro]\nun\n[zéro, un]\ndeux\n[zéro, un, deux]\ntrois\n[zéro, un, deux, trois]\nquatre\n[zéro, un, deux, trois, quatre]\ncinq\n[zéro, un, deux, trois, quatre, cinq]\nsix\n[zéro, un, deux, trois, quatre, cinq, six]\nsept\n[zéro, un, deux, trois, quatre, cinq, six, sept]\nhuit\n[zéro, un, deux, trois, quatre, cinq, six, sept, huit]\nneuf\n[zéro, un, deux, trois, quatre, cinq, six, sept, huit, neuf]\n"
+  }
 ]

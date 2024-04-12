@@ -24,6 +24,8 @@ void doubleValeursSize(liste_t* l);
 
 int taille(liste_t* l);
 
+void vider_liste(liste_t* l);
+
 val_t* accession(liste_t* l, int indice, phrase_t* p);
 void modification(liste_t* l, int indice, val_t* v, phrase_t* p);
 void ajout(liste_t* l, val_t* v);

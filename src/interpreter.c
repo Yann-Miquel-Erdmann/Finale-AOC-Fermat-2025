@@ -41,7 +41,7 @@ void interpreter(function_t* function, function_list_t* functions, val_t* result
                     if (phraseActuelle->interpreterInnerIndex < phraseActuelle->innerPhraseLen) {
                         phraseActuelle->interpreterInnerIndex++;
                         // printf("'%s' %d %d %d, %d\n", phraseActuelle->text, phraseActuelle->phraseId, phraseActuelle->interpreterInnerIndex, phraseActuelle->innerPhraseLen, (int)phraseActuelle->constant);
-                        phraseActuelle = phraseActuelle->innerPhrase[phraseActuelle->interpreterInnerIndex-1];
+                        phraseActuelle = phraseActuelle->innerPhrase[phraseActuelle->interpreterInnerIndex - 1];
                     } else {
                         phraseActuelle->interpreterArgsIndex = 0;
                         phraseActuelle = phraseActuelle->parentPhrase;
@@ -206,34 +206,49 @@ void interpreter(function_t* function, function_list_t* functions, val_t* result
                     break;
                 }
 
-                    // liste -----------------------------------------------------------------
+                // liste -----------------------------------------------------------------
+                case EXPR_LISTE: {
+                    phraseActuelle->valeur->type = phraseActuelle->variable->valeur->type;
+                    phraseActuelle->valeur->liste = phraseActuelle->variable->valeur->liste;
+                    phraseActuelle->interpreterArgsIndex = 0;
+                    phraseActuelle = phraseActuelle->parentPhrase;
+                    break;
+                }
+
+                case EXPR_LISTE_VIDE: {
+                    vider_liste(phraseActuelle->valeur->liste);
+                    phraseActuelle->interpreterArgsIndex = 0;
+                    phraseActuelle = phraseActuelle->parentPhrase;
+                    break;
+                }
+
                 case ACCESSION_LISTE: {
-                    copy_val(phraseActuelle->valeur, accession(phraseActuelle->valeur->liste, get_int(phraseActuelle->args[0]->valeur), phraseActuelle));
+                    copy_val(phraseActuelle->valeur, accession(phraseActuelle->variable->valeur->liste, get_int(phraseActuelle->args[0]->valeur), phraseActuelle));
                     phraseActuelle->interpreterArgsIndex = 0;
                     phraseActuelle = phraseActuelle->parentPhrase;
                     break;
                 }
                 case MODIFICATION_LISTE: {
-                    modification(phraseActuelle->valeur->liste, get_int(phraseActuelle->args[0]->valeur), phraseActuelle->args[1]->valeur, phraseActuelle);
+                    modification(phraseActuelle->variable->valeur->liste, get_int(phraseActuelle->args[0]->valeur), phraseActuelle->args[1]->valeur, phraseActuelle);
                     phraseActuelle->interpreterArgsIndex = 0;
                     phraseActuelle = phraseActuelle->parentPhrase;
                     break;
                 }
                 case AJOUT_LISTE: {
-                    ajout(phraseActuelle->valeur->liste, phraseActuelle->args[0]->valeur);
+                    ajout(phraseActuelle->variable->valeur->liste, phraseActuelle->args[0]->valeur);
                     phraseActuelle->interpreterArgsIndex = 0;
                     phraseActuelle = phraseActuelle->parentPhrase;
                     break;
                 }
                 case SUPPRESSION_LISTE: {
-                    suppression(phraseActuelle->valeur->liste, get_int(phraseActuelle->args[0]->valeur), phraseActuelle);
+                    suppression(phraseActuelle->variable->valeur->liste, get_int(phraseActuelle->args[0]->valeur), phraseActuelle);
                     phraseActuelle->interpreterArgsIndex = 0;
                     phraseActuelle = phraseActuelle->parentPhrase;
                     break;
                 }
                 case INSERTION_LISTE: {
                     // printf("%d\n", phraseActuelle->args[1]->valeur->type);
-                    inserer(phraseActuelle->valeur->liste, get_int(phraseActuelle->args[1]->valeur), phraseActuelle->args[0]->valeur, phraseActuelle);
+                    inserer(phraseActuelle->variable->valeur->liste, get_int(phraseActuelle->args[1]->valeur), phraseActuelle->args[0]->valeur, phraseActuelle);
                     phraseActuelle->interpreterArgsIndex = 0;
                     phraseActuelle = phraseActuelle->parentPhrase;
                     break;
@@ -321,7 +336,6 @@ void interpreter(function_t* function, function_list_t* functions, val_t* result
                     }
 
                     if (get_as_float(phraseActuelle->variable->valeur) < get_as_float(phraseActuelle->args[1]->valeur)) {
-
                         if (phraseActuelle->interpreterInnerIndex < phraseActuelle->innerPhraseLen) {
                             phraseActuelle->interpreterInnerIndex++;
                             phraseActuelle = phraseActuelle->innerPhrase[phraseActuelle->interpreterInnerIndex - 1];

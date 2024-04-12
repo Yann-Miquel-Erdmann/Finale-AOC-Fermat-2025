@@ -1,7 +1,9 @@
-Soit f une fonction qui lorsqu'elle est appelée avec x,y execute:
-Afficher Le quotient de La variable x? par La variable y??.
-Renvoyer La somme de La variable x? et de La variable y??.
+Soit f une fonction qui lorsqu'elle est appelée avec n execute:
+Soit l La liste vide?.
+Pour i allant de L'entier zéro? jusqu'à La variable n? faire:
+Ajouter à la liste l La variable i?.
+Afficher La variable i?.
+Afficher La liste l?.
 .
-
-Soit x La valeur renvoyée par la fonction f avec les arguments L'entier deux?, L'entier un??.
-Afficher La variable x?.
+.
+Executer la fonction f avec les arguments L'entier dix?.

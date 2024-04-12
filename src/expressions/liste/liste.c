@@ -17,15 +17,12 @@ bool test_expr_list(phrase_t* phrase, function_t* function) {
     }
 
     phrase->phraseId = EXPR_LISTE;
-    phrase->constant = true;
     variable_t* var = getVariable(function->env, result[0]);
     if (var == NULL) {
         custom_error("variable not found", phrase);
     }
-    if (var->valeur->type != LISTE) {
-        custom_error("variable is not a list", phrase);
-    }
-    set_liste(phrase->valeur, var->valeur->liste);
+
+    phrase->variable = var;
 
     free_l(result, len);
 

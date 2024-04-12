@@ -172,9 +172,6 @@ int elem_liste(char* text) {
     if (!strcmp(text, TANT_QUE_S)) {
         return TANT_QUE;
     }
-    if (!strcmp(text, AFFICHER_EXPR_S)) {
-        return AFFICHER_EXPR;
-    }
     if (!strcmp(text, RENVOI_FONCTION_S)) {
         return RENVOI_FONCTION;
     }
@@ -196,9 +193,13 @@ int elem_liste(char* text) {
     if (!strcmp(text, STRICT_PLUS_PETIT_S)) {
         return STRICT_PLUS_PETIT;
     }
-    if (!strcmp(text, INSERTION_LISTE_S)) {
-        return INSERTION_LISTE;
+    if (!strcmp(text, EXPR_LISTE_VIDE_S)) {
+        return EXPR_LISTE_VIDE;
     }
+    if (!strcmp(text, AFFICHER_EXPR_S)) {
+        return AFFICHER_EXPR;
+    }
+
     return -1;
 }
 
@@ -467,6 +468,13 @@ void tokenise(phrase_t* phrase, function_t* function, function_list_t* func_list
             }
             break;
 
+        case EXPR_LISTE_VIDE:
+            phrase->phraseId = EXPR_LISTE_VIDE;
+            phrase->valeur->type = LISTE;
+            phrase->valeur->liste = new_liste_t();
+            phrase->constant = true;
+            break;
+
         default:
             if (test_expr_entier(phrase)) {
             } else if (test_expr_flottant(phrase)) {
@@ -478,7 +486,6 @@ void tokenise(phrase_t* phrase, function_t* function, function_list_t* func_list
             } else if (test_expr_access_var(phrase, function)) {
             } else if (test_inst_modif_var(phrase, function)) {
                 // liste
-            } else if (test_inst_create_list(phrase, function)) {
             } else if (test_expr_access_list(phrase, function)) {
             } else if (test_inst_add_list(phrase, function)) {
             } else if (test_inst_modif_list(phrase, function)) {
@@ -493,7 +500,7 @@ void tokenise(phrase_t* phrase, function_t* function, function_list_t* func_list
             } else if (test_inst_def_func(phrase, func_list)) {
             } else if (test_inst_exec_func(phrase, func_list)) {
             } else if (test_expr_func_call(phrase, func_list)) {
-            // boucle
+                // boucle
             } else if (test_inst_for_loop(phrase, function)) {
             } else if (test_inst_for_loop_step(phrase, function)) {
             } else {
@@ -517,12 +524,4 @@ void tokenise(phrase_t* phrase, function_t* function, function_list_t* func_list
 
             break;
     }
-}
-
-// checks the essential syntax (number of arguments, if can have inners, if the else ius well placed ...)
-void check_syntax(phrase_t* phrase) {
-    if (phrase->phraseId == -1) {
-        custom_error("Syntaxe Invalide", phrase);
-    }
-    return;
 }

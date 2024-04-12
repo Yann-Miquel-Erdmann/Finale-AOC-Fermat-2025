@@ -21,3 +21,4 @@
 - ~~renvois fonction~~
 
 - ~~affichage d'une liste dans print val~~
+- liste vide

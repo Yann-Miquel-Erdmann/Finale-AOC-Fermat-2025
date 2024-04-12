@@ -47,7 +47,7 @@
 #define MODIFICATION_VARIABLE 8
 
 //  * liste
-#define CREATION_LISTE 9
+#define EXPR_LISTE_VIDE 9
 #define ACCESSION_LISTE 10
 #define MODIFICATION_LISTE 11
 #define AJOUT_LISTE 12
@@ -116,7 +116,7 @@
 #define MODIFICATION_VARIABLE_S "Que $ devienne *."  // fait
 
 //  * liste (fait)
-#define CREATION_LISTE_S "Soit $ une liste vide."                                     // fait
+#define EXPR_LISTE_VIDE_S "La liste vide?"                             // fait
 #define ACCESSION_LISTE_S "L'élément de la liste $ à l'indice *?"                     // fait
 #define MODIFICATION_LISTE_S "Remplacer l'élément de la liste $ à l'indice * par *."  // fait
 #define AJOUT_LISTE_S "Ajouter à la liste $ *."                                       // fait
