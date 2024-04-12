@@ -93,12 +93,14 @@ Que la variable {nom de la variable} devienne {valeur}.
 
 ### liste
 
-#### création
-
-type: instruction
-
+#### liste vide
+type: expression
 ```
-Soit {nom de la liste} une liste vide.
+La liste vide?
+```
+ex:
+```
+Soit l La liste vide?.
 ```
 
 #### accession
