@@ -73,6 +73,38 @@ int match_num(char* num, bool with_s) {
     }
 }
 
+int* eval_float(char* str_num, int len){
+    char* str = malloc((len+1) * sizeof(char));
+    int index = 0;
+    int start = 0;
+    int exp = 1;
+    for (int i = 0; i<len; i++){
+        if (str_num[i] == ' ' || i == len) {
+            str[index] = '\0';
+            index = 0;
+            if (!strcmp(str, "zéro")) {
+                exp *= 10;
+                start = i+1;
+            }else{
+                break;
+            }
+        }else{
+            str[index] = str_num[i];
+            index++;
+        }
+    }
+    index = 0;
+    for (int i = start; i<len; i++){
+        str[index] = str_num[i];
+        index++;
+    }
+    str[index] = '\0';
+    int* result = eval_number(str, len-start);
+    result = realloc(result, 3*sizeof(int));
+    result[2] = exp;
+    return result;
+}
+
 int* eval_number(char* str_num, int len) {
     int n = 0;
     int tmp = 0;
@@ -472,12 +504,15 @@ char* str_from_float(float n) {
         return text;
     }
     n = n - (int)n;
+    int text_size = (int)strlen(text);
+    text = add_str(text, &text_size, " virgule ");
     while (n != (int)n) {
         n *= 10;
+        if ((int)n == 0){
+            text = add_str(text, &text_size, "zéro ");
+        }
     }
-    int text_size = (int)strlen(text);
     char* text_dec = str_from_int((int)n);
-    text = add_str(text, &text_size, " virgule ");
     text = add_str(text, &text_size, text_dec);
     free(text_dec);
     return text;

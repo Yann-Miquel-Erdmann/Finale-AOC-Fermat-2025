@@ -12,6 +12,13 @@
 */
 int* eval_number(char* str_num, int len);
 
+/* renvoie une liste de deux entier sous la forme [x, y, z]
+   * x est un entier 0 ou 1 qui indique le succès ou non de la conversion
+   * y est l'entier renvoyé par la fonction si x = 1
+   * z est le nombre de zéros après la virgule et avant le chiffre
+*/
+int* eval_float(char* str_num, int len);
+
 
 /* renvoie un entier du nombre num en lettre
    par nombre simple, con considère tout nombre inférieur à un million

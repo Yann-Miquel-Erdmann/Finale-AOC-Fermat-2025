@@ -145,19 +145,19 @@
 #define SI_ALORS_SINON_S "Si * alors faire:*sinon faire:*."   // fait (en tout cas on dirait)
                          
 // boucles
-#define TANT_QUE_S "Tant que * faire:*."                                                  // non implémenté
-#define POUR_SANS_PAS_S "Pour $ allant de * jusqu'à * faire:*."                           // non implémenté
-#define POUR_AVEC_PAS_S "Pour $ allant de * jusqu'à * en utilisant un pas de * faire:*."  // non implémenté
+#define TANT_QUE_S "Tant que * faire:*."                                                  // fait
+#define POUR_SANS_PAS_S "Pour $ allant de * jusqu'à * faire:*."                           // fait
+#define POUR_AVEC_PAS_S "Pour $ allant de * jusqu'à * en utilisant un pas de * faire:*."  // fait
 
 // affichage console
 #define AFFICHER_EXPR_S "Afficher *."            // fait
 #define TAILLE_S "La taille de *?"               // fait
 
 // fonctions
-#define DEFINITION_FONCTION_S "Soit $ une fonction qui lorsqu'elle est appelée execute:*."   // fait
-#define EXECUTION_FONCTION_S "Executer la fonction $."                                       // fait
+#define DEFINITION_FONCTION_S "Soit $ une fonction qui lorsqu'elle est appelée execute:*."    // fait
+#define EXECUTION_FONCTION_S "Executer la fonction $."                                        // fait
 #define RENVOI_FONCTION_S "Renvoyer *."                                                       // fait
-#define APPEL_VALEUR_FONCTION_S "La valeur renvoyée par la fonction $?"                      // fait
+#define APPEL_VALEUR_FONCTION_S "La valeur renvoyée par la fonction $?"                       // fait
 
 #define DEFINITION_FONCTION_ARGUMENT_S "Soit $ une fonction qui lorsqu'elle est appelée avec $ execute:*."   // fait
 #define EXECUTION_FONCTION_ARGUMENT_S "Executer la fonction $ avec les arguments *."                         // fait

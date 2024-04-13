@@ -19,9 +19,9 @@ bool test_expr_flottant(phrase_t* phrase) {
 
     char** res = split_word(result[0], "virgule");
     int* partie_entiere = eval_number(res[0], (int)strlen(res[0]));
-    int* partie_decimale = eval_number(res[1], (int)strlen(res[1]));
+    int* partie_decimale = eval_float(res[1], (int)strlen(res[1]));
     if (partie_entiere[0] && partie_decimale[0]) {
-        float num = (float)partie_entiere[1] + ((float)partie_decimale[1]) / (puiss10(partie_decimale[1]));
+        float num = (float)partie_entiere[1] + ((float)partie_decimale[1]) / (puiss10(partie_decimale[1])*partie_decimale[2]);
         phrase->phraseId = EXPR_FLOTTANT;
         phrase->constant = true;
         set_float(phrase->valeur, num);
