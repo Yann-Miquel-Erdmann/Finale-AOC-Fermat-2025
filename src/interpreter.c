@@ -50,36 +50,33 @@ void interpreter(function_t* function, function_list_t* functions, val_t* result
                 }
 
                 case APPEL_VALEUR_FONCTION:
-                case EXECUTION_FONCTION: {
-                    function_t* new_func = copy_function(phraseActuelle->function);
-                    new_func->ast->phraseId = 0;
-                    if (phraseActuelle->phraseId == EXECUTION_FONCTION_ARGUMENT) {
-                        interpreter(new_func, functions, NULL, layer + 1);
-                    } else {
-                        interpreter(new_func, functions, phraseActuelle->valeur, layer + 1);
-                    }
-                    free_function_t(new_func);
-
-                    phraseActuelle->interpreterArgsIndex = 0;
-                    phraseActuelle = phraseActuelle->parentPhrase;
-                    break;
-                }
-
+                case EXECUTION_FONCTION:
                 case APPEL_VALEUR_FONCTION_ARGUMENT:
                 case EXECUTION_FONCTION_ARGUMENT: {
                     function_t* new_func = copy_function(phraseActuelle->function);
                     new_func->ast->phraseId = 0;
 
-                    for (int i = 0; i < phraseActuelle->argsLen; i++) {
-                        copy_val(new_func->env->variable_list[i]->valeur,
-                                 phraseActuelle->args[i]->valeur);
+                    if (phraseActuelle->phraseId == APPEL_VALEUR_FONCTION_ARGUMENT || phraseActuelle->phraseId == EXECUTION_FONCTION_ARGUMENT) {
+                        for (int i = 0; i < phraseActuelle->argsLen; i++) {
+                            copy_val(new_func->env->variable_list[i]->valeur,
+                                    phraseActuelle->args[i]->valeur, true, true);
+                        }
                     }
 
-                    if (phraseActuelle->phraseId == EXECUTION_FONCTION_ARGUMENT) {
+                    if (phraseActuelle->phraseId == EXECUTION_FONCTION_ARGUMENT || phraseActuelle->phraseId == EXECUTION_FONCTION) {
                         interpreter(new_func, functions, NULL, layer + 1);
                     } else {
                         interpreter(new_func, functions, phraseActuelle->valeur, layer + 1);
+                        
+                        // permet le free de la valeur renvoyée
+                        val_t* retour = new_val_t(UNDEFINED);
+                        char* retour_text = malloc(8*sizeof(char));
+                        strcpy(retour_text, "retour");
+
+                        copy_val(retour, phraseActuelle->valeur, true, true);
+                        addToVariableList(function->env, new_variable(retour_text, retour));
                     }
+
                     free_function_t(new_func);
 
                     phraseActuelle->interpreterArgsIndex = 0;
@@ -88,8 +85,9 @@ void interpreter(function_t* function, function_list_t* functions, val_t* result
                 }
 
                 case RENVOI_FONCTION: {
+
                     if (result != NULL) {
-                        copy_val(result, phraseActuelle->args[0]->valeur);
+                        copy_val(result, phraseActuelle->args[0]->valeur, true, true);
                     }
                     return;
                     break;
@@ -117,14 +115,14 @@ void interpreter(function_t* function, function_list_t* functions, val_t* result
                 // variable ------------------------------------------------------
                 case MODIFICATION_VARIABLE:
                 case DEFINITION_VARIABLE_AVEC_INIT: {
-                    copy_val(phraseActuelle->variable->valeur, phraseActuelle->args[0]->valeur);
+                    copy_val(phraseActuelle->variable->valeur, phraseActuelle->args[0]->valeur, false, false);
                     phraseActuelle->interpreterArgsIndex = 0;
                     phraseActuelle = phraseActuelle->parentPhrase;
                     break;
                 }
 
                 case ACCESSION_VARIABLE: {
-                    copy_val(phraseActuelle->valeur, phraseActuelle->variable->valeur);
+                    copy_val(phraseActuelle->valeur, phraseActuelle->variable->valeur, true, true);
                     phraseActuelle->interpreterArgsIndex = 0;
                     phraseActuelle = phraseActuelle->parentPhrase;
                     break;
@@ -222,7 +220,7 @@ void interpreter(function_t* function, function_list_t* functions, val_t* result
                 }
 
                 case ACCESSION_LISTE: {
-                    copy_val(phraseActuelle->valeur, accession(phraseActuelle->variable->valeur->liste, get_int(phraseActuelle->args[0]->valeur), phraseActuelle));
+                    copy_val(phraseActuelle->valeur, accession(phraseActuelle->variable->valeur->liste, get_int(phraseActuelle->args[0]->valeur), phraseActuelle), true, true);
                     phraseActuelle->interpreterArgsIndex = 0;
                     phraseActuelle = phraseActuelle->parentPhrase;
                     break;
@@ -331,7 +329,7 @@ void interpreter(function_t* function, function_list_t* functions, val_t* result
                 case POUR_SANS_PAS: {
                     if (phraseActuelle->interpreterInnerIndex == -1) {
                         phraseActuelle->interpreterInnerIndex = 0;
-                        copy_val(phraseActuelle->variable->valeur, phraseActuelle->args[0]->valeur);
+                        copy_val(phraseActuelle->variable->valeur, phraseActuelle->args[0]->valeur, true, true);
                     }
 
                     if (get_as_float(phraseActuelle->variable->valeur) < get_as_float(phraseActuelle->args[1]->valeur)) {

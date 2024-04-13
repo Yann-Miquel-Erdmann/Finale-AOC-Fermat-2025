@@ -1,9 +1,3 @@
-Soit f une fonction qui lorsqu'elle est appelée avec n exécute:
-    Soit l La liste vide?.
-    Pour i allant de L'entier zéro? jusqu'à La variable n? faire:
-        Ajouter à la liste l La variable i?.
-        Afficher La variable i?.
-        Afficher La liste l?.
-    .
-.
-Exécuter la fonction f avec les arguments L'entier dix?.
+Soit l1 La liste vide?.
+Ajouter La liste vide? à la liste l1.
+Ajouter L'entier un? à la liste
