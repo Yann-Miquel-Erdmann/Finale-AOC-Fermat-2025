@@ -20,5 +20,6 @@ bool test_inst_def_func(phrase_t* phrase, function_list_t* function_list) {
     phrase->function = new_func;
     addToFunctionList(function_list, new_func);
 
+    free(result);
     return true;
 }

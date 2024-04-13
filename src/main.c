@@ -35,8 +35,9 @@ int main(int argc, char const* argv[]) {
         function_t* function = new_function(nom, p);
 
         function_list_t* function_list = new_function_list();
+        function_list_t* function_call_list = new_function_list();
         addToFunctionList(function_list, function);
-        tokenise(p, function, function_list);
+        tokenise(p, function, function_list, function_call_list);        
         interpreter(function, function_list, NULL, 0);
 
         free_function_list(function_list);

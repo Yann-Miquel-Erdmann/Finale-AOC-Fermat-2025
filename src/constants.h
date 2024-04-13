@@ -154,11 +154,11 @@
 #define TAILLE_S "La taille de *?"               // fait
 
 // fonctions
-#define DEFINITION_FONCTION_S "Soit $ une fonction qui lorsqu'elle est appelée execute:*."    // fait
-#define EXECUTION_FONCTION_S "Executer la fonction $."                                        // fait
+#define DEFINITION_FONCTION_S "Soit $ une fonction qui lorsqu'elle est appelée exécute:*."    // fait
+#define EXECUTION_FONCTION_S "Exécuter la fonction $."                                        // fait
 #define RENVOI_FONCTION_S "Renvoyer *."                                                       // fait
 #define APPEL_VALEUR_FONCTION_S "La valeur renvoyée par la fonction $?"                       // fait
 
-#define DEFINITION_FONCTION_ARGUMENT_S "Soit $ une fonction qui lorsqu'elle est appelée avec $ execute:*."   // fait
-#define EXECUTION_FONCTION_ARGUMENT_S "Executer la fonction $ avec les arguments *."                         // fait
+#define DEFINITION_FONCTION_ARGUMENT_S "Soit $ une fonction qui lorsqu'elle est appelée avec $ exécute:*."   // fait
+#define EXECUTION_FONCTION_ARGUMENT_S "Exécuter la fonction $ avec les arguments *."                         // fait
 #define APPEL_VALEUR_FONCTION_ARGUMENT_S "La valeur renvoyée par la fonction $ avec les arguments *?"        // fait

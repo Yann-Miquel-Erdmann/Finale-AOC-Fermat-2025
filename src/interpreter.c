@@ -125,7 +125,6 @@ void interpreter(function_t* function, function_list_t* functions, val_t* result
 
                 case ACCESSION_VARIABLE: {
                     copy_val(phraseActuelle->valeur, phraseActuelle->variable->valeur);
-                    // printf("'%d'\n", get_int(phraseActuelle->valeur));
                     phraseActuelle->interpreterArgsIndex = 0;
                     phraseActuelle = phraseActuelle->parentPhrase;
                     break;

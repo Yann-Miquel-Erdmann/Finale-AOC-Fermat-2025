@@ -210,7 +210,7 @@ int value_type(phrase_t* p1, phrase_t* p2) {
     return INT;
 }
 
-void tokenise(phrase_t* phrase, function_t* function, function_list_t* func_list) {
+void tokenise(phrase_t* phrase, function_t* function, function_list_t* func_list, function_list_t* func_call_list) {
     bool valid = true;
     if (phrase->phraseId != -1) {
         return;
@@ -219,8 +219,14 @@ void tokenise(phrase_t* phrase, function_t* function, function_list_t* func_list
         case MAIN_PHRASE:
             phrase->phraseId = MAIN_PHRASE;
             for (int i = 0; i < phrase->innerPhraseLen; i++) {
-                tokenise(phrase->innerPhrase[i], function, func_list);
+                tokenise(phrase->innerPhrase[i], function, func_list, func_call_list);
             }
+
+            // links the function calls to their respective functions
+            link_function_to_call(func_list, func_call_list);
+            // isolates each function's environment
+            isolate_func_envs(func_list);
+
             for (int i = 0; i < func_list->function_list_len; i++) {
                 func_list->function_list[i]->ast->phraseId = MAIN_PHRASE;
                 addToText(func_list->function_list[i]->ast, '#');
@@ -232,7 +238,7 @@ void tokenise(phrase_t* phrase, function_t* function, function_list_t* func_list
                 custom_error("Invalid Syntax, la somme prend 2 arguments", phrase);
             }
             for (int i = 0; i < 2; i++) {
-                tokenise(phrase->args[i], function, func_list);
+                tokenise(phrase->args[i], function, func_list, func_call_list);
                 if (phrase->args[i]->phraseId > 3 || phrase->args[i]->phraseId < 1) {
                     valid = false;
                 }
@@ -248,7 +254,7 @@ void tokenise(phrase_t* phrase, function_t* function, function_list_t* func_list
                 custom_error("Invalid Syntax, la différence prend 2 arguments", phrase);
             }
             for (int i = 0; i < 2; i++) {
-                tokenise(phrase->args[i], function, func_list);
+                tokenise(phrase->args[i], function, func_list, func_call_list);
                 if (phrase->args[i]->phraseId > 3 || phrase->args[i]->phraseId < 1) {
                     valid = false;
                 }
@@ -263,7 +269,7 @@ void tokenise(phrase_t* phrase, function_t* function, function_list_t* func_list
             }
             phrase->phraseId = PRODUIT;
             for (int i = 0; i < 2; i++) {
-                tokenise(phrase->args[i], function, func_list);
+                tokenise(phrase->args[i], function, func_list, func_call_list);
                 if (phrase->args[i]->phraseId > 3 || phrase->args[i]->phraseId < 1) {
                     valid = false;
                 }
@@ -279,7 +285,7 @@ void tokenise(phrase_t* phrase, function_t* function, function_list_t* func_list
             }
             phrase->phraseId = QUOTIENT;
             for (int i = 0; i < 2; i++) {
-                tokenise(phrase->args[i], function, func_list);
+                tokenise(phrase->args[i], function, func_list, func_call_list);
                 if (phrase->args[i]->phraseId > 3 || phrase->args[i]->phraseId < 1) {
                     valid = false;
                 }
@@ -295,7 +301,7 @@ void tokenise(phrase_t* phrase, function_t* function, function_list_t* func_list
             }
             phrase->phraseId = QUOTIENT_ENTIER;
             for (int i = 0; i < 2; i++) {
-                tokenise(phrase->args[i], function, func_list);
+                tokenise(phrase->args[i], function, func_list, func_call_list);
                 if (phrase->args[i]->phraseId > 3 || phrase->args[i]->phraseId < 1) {
                     valid = false;
                 }
@@ -311,7 +317,7 @@ void tokenise(phrase_t* phrase, function_t* function, function_list_t* func_list
             }
             phrase->phraseId = RESTE;
             for (int i = 0; i < 2; i++) {
-                tokenise(phrase->args[i], function, func_list);
+                tokenise(phrase->args[i], function, func_list, func_call_list);
                 if (phrase->args[i]->phraseId > 3 || phrase->args[i]->phraseId < 1) {
                     valid = false;
                 }
@@ -327,7 +333,7 @@ void tokenise(phrase_t* phrase, function_t* function, function_list_t* func_list
                 custom_error("Invalid Syntax, la négation booléenne prend 1 argument", phrase);
             }
             phrase->phraseId = NEGATION_BOOLEENNE;
-            tokenise(phrase->args[0], function, func_list);
+            tokenise(phrase->args[0], function, func_list, func_call_list);
             if (phrase->args[0]->phraseId <= 3 && phrase->args[0]->phraseId >= 1) {
                 negation_booleenne(phrase, true);
             }
@@ -339,7 +345,7 @@ void tokenise(phrase_t* phrase, function_t* function, function_list_t* func_list
             }
             phrase->phraseId = EGALITE;
             for (int i = 0; i < 2; i++) {
-                tokenise(phrase->args[i], function, func_list);
+                tokenise(phrase->args[i], function, func_list, func_call_list);
                 if (phrase->args[i]->phraseId > 3 || phrase->args[i]->phraseId < 1) {
                     valid = false;
                 }
@@ -354,7 +360,7 @@ void tokenise(phrase_t* phrase, function_t* function, function_list_t* func_list
             }
             phrase->phraseId = PLUS_GRAND;
             for (int i = 0; i < 2; i++) {
-                tokenise(phrase->args[i], function, func_list);
+                tokenise(phrase->args[i], function, func_list, func_call_list);
                 if (phrase->args[i]->phraseId > 3 || phrase->args[i]->phraseId < 1) {
                     valid = false;
                 }
@@ -369,7 +375,7 @@ void tokenise(phrase_t* phrase, function_t* function, function_list_t* func_list
             }
             phrase->phraseId = PLUS_PETIT;
             for (int i = 0; i < 2; i++) {
-                tokenise(phrase->args[i], function, func_list);
+                tokenise(phrase->args[i], function, func_list, func_call_list);
                 if (phrase->args[i]->phraseId > 3 || phrase->args[i]->phraseId < 1) {
                     valid = false;
                 }
@@ -384,7 +390,7 @@ void tokenise(phrase_t* phrase, function_t* function, function_list_t* func_list
             }
             phrase->phraseId = STRICT_PLUS_GRAND;
             for (int i = 0; i < 2; i++) {
-                tokenise(phrase->args[i], function, func_list);
+                tokenise(phrase->args[i], function, func_list, func_call_list);
                 if (phrase->args[i]->phraseId > 3 || phrase->args[i]->phraseId < 1) {
                     valid = false;
                 }
@@ -399,7 +405,7 @@ void tokenise(phrase_t* phrase, function_t* function, function_list_t* func_list
             }
             phrase->phraseId = STRICT_PLUS_PETIT;
             for (int i = 0; i < 2; i++) {
-                tokenise(phrase->args[i], function, func_list);
+                tokenise(phrase->args[i], function, func_list, func_call_list);
                 if (phrase->args[i]->phraseId > 3 || phrase->args[i]->phraseId < 1) {
                     valid = false;
                 }
@@ -415,14 +421,14 @@ void tokenise(phrase_t* phrase, function_t* function, function_list_t* func_list
                 custom_error("Invalid Syntax, affiche expression prend un arguments", phrase);
             }
             phrase->phraseId = AFFICHER_EXPR;
-            tokenise(phrase->args[0], function, func_list);
+            tokenise(phrase->args[0], function, func_list, func_call_list);
             break;
         case RENVOI_FONCTION:
             if (phrase->argsLen != 1 || phrase->innerPhraseLen > 0) {
                 custom_error("Invalid Syntax, renvoi prend un arguments", phrase);
             }
             phrase->phraseId = RENVOI_FONCTION;
-            tokenise(phrase->args[0], function, func_list);
+            tokenise(phrase->args[0], function, func_list, func_call_list);
             break;
         case SI_ALORS:
             if (phrase->argsLen != 1) {
@@ -432,9 +438,9 @@ void tokenise(phrase_t* phrase, function_t* function, function_list_t* func_list
                 custom_error("Invalid Syntax, si alors prend au moins 1 instruction", phrase);
             }
             phrase->phraseId = SI_ALORS;
-            tokenise(phrase->args[0], function, func_list);
+            tokenise(phrase->args[0], function, func_list, func_call_list);
             for (int i = 0; i < phrase->innerPhraseLen; i++) {
-                tokenise(phrase->innerPhrase[i], function, func_list);
+                tokenise(phrase->innerPhrase[i], function, func_list, func_call_list);
             }
             break;
         case SI_ALORS_SINON:
@@ -449,9 +455,9 @@ void tokenise(phrase_t* phrase, function_t* function, function_list_t* func_list
             }
 
             phrase->phraseId = SI_ALORS_SINON;
-            tokenise(phrase->args[0], function, func_list);
+            tokenise(phrase->args[0], function, func_list, func_call_list);
             for (int i = 0; i < phrase->innerPhraseLen; i++) {
-                tokenise(phrase->innerPhrase[i], function, func_list);
+                tokenise(phrase->innerPhrase[i], function, func_list, func_call_list);
             }
             break;
         case TANT_QUE:
@@ -462,9 +468,9 @@ void tokenise(phrase_t* phrase, function_t* function, function_list_t* func_list
                 custom_error("Invalid Syntax, tant que prend au moins 1 instruction", phrase);
             }
             phrase->phraseId = TANT_QUE;
-            tokenise(phrase->args[0], function, func_list);
+            tokenise(phrase->args[0], function, func_list, func_call_list);
             for (int i = 0; i < phrase->innerPhraseLen; i++) {
-                tokenise(phrase->innerPhrase[i], function, func_list);
+                tokenise(phrase->innerPhrase[i], function, func_list, func_call_list);
             }
             break;
 
@@ -509,19 +515,49 @@ void tokenise(phrase_t* phrase, function_t* function, function_list_t* func_list
 
             if (phrase->phraseId == DEFINITION_FONCTION || phrase->phraseId == DEFINITION_FONCTION_ARGUMENT) {
                 for (int i = 0; i < phrase->innerPhraseLen; i++) {
-                    tokenise(phrase->innerPhrase[i], phrase->function, func_list);
+                    tokenise(phrase->innerPhrase[i], phrase->function, func_list, func_call_list);
                 }
-                phrase->function->ast = copy_phrase(phrase->function->ast, NULL, phrase->function->env);
 
             } else {
                 for (int i = 0; i < phrase->argsLen; i++) {
-                    tokenise(phrase->args[i], function, func_list);
+                    tokenise(phrase->args[i], function, func_list, func_call_list);
                 }
                 for (int i = 0; i < phrase->innerPhraseLen; i++) {
-                    tokenise(phrase->innerPhrase[i], function, func_list);
+                    tokenise(phrase->innerPhrase[i], function, func_list, func_call_list);
                 }
             }
 
+            if (phrase->phraseId == EXECUTION_FONCTION || phrase->phraseId == EXECUTION_FONCTION_ARGUMENT || phrase->phraseId == APPEL_VALEUR_FONCTION || phrase->phraseId == APPEL_VALEUR_FONCTION_ARGUMENT) {
+                addToFunctionList(func_call_list, phrase->function);
+            }
+
             break;
+    }
+}
+
+void link_function_to_call(function_list_t* func_list, function_list_t* func_call_list) {
+    for (int i = 0; i < func_call_list->function_list_len; i++) {
+        function_t* f = func_call_list->function_list[i];
+        
+        f->ast->function = getFunction(func_list, f->nom);
+        if (f->ast->function == NULL) {
+            custom_error("Fonction non définie", f->ast);
+        }
+
+        free_environnement(f->env);
+        free(f->nom);
+        free(f);
+    }
+
+    free(func_call_list->function_list);
+    free(func_call_list);
+}
+
+void isolate_func_envs(function_list_t* func_list) {
+    for (int i = 0; i < func_list->function_list_len; i++) {
+        function_t* f = func_list->function_list[i];
+        if (f->ast->phraseId != MAIN_PHRASE) {
+            f->ast = copy_phrase(f->ast, NULL, f->env);
+        }
     }
 }

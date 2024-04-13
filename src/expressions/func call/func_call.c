@@ -17,7 +17,7 @@ bool test_expr_func_call(phrase_t* phrase, function_list_t* func_list) {
     }
     
     phrase->phraseId = APPEL_VALEUR_FONCTION;
-    phrase->function = getFunction(func_list, result[0]);
+    phrase->function = new_function(result[0], phrase);
 
     return true;
 }

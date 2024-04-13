@@ -16,7 +16,8 @@ bool test_inst_exec_func(phrase_t* phrase, function_list_t* function_list) {
     }
     
     phrase->phraseId = EXECUTION_FONCTION;
-    phrase->function = getFunction(function_list, result[0]);
+    phrase->function = new_function(result[0], phrase);
 
+    free(result);
     return true;
 }

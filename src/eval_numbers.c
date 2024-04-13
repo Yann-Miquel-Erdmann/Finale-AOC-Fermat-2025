@@ -102,6 +102,7 @@ int* eval_float(char* str_num, int len){
     int* result = eval_number(str, len-start);
     result = realloc(result, 3*sizeof(int));
     result[2] = exp;
+    free(str);
     return result;
 }
 
