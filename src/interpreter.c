@@ -355,9 +355,34 @@ void interpreter(function_t* function, function_list_t* functions, val_t* result
 
                     break;
                 }
-
+                case TYPE_EXPR:{
+                    char* type = malloc(DEFAULT_CHAINE_CHARS_SIZE*sizeof(char));
+                    switch (phraseActuelle->args[0]->valeur->type) {
+                        case INT:
+                            strcpy(type, "INT");
+                            break;
+                        case FLOAT:
+                            strcpy(type, "FLOAT");
+                            break;
+                        case LISTE:
+                            strcpy(type, "LISTE");
+                            break;
+                        case BOOL:
+                            strcpy(type, "BOOL");
+                            break;
+                        case CHAINE_DE_CHAR:
+                            strcpy(type, "CHAINE_DE_CHAR");
+                            break;
+                        default:
+                            strcpy(type, "UNDEFINED");
+                            break;
+                    }
+                    phraseActuelle->valeur->chaine = new_chaine_t(type);
+                    phraseActuelle = phraseActuelle->parentPhrase;
+                    break;
+                }
                 default:
-                    // printf("erreur: %d, %d\n", phraseActuelle->phraseId, phraseActuelle->constant);
+                    printf("erreur: %d, %d\n", phraseActuelle->phraseId, phraseActuelle->constant);
                     custom_error("erreur d'interprétation", phraseActuelle);
                     break;
             }

@@ -30,6 +30,7 @@ liste_t* copy_liste(liste_t* liste) {
     new_liste->valeursLen = liste->valeursLen;
     new_liste->valeursSize = liste->valeursSize;
     for (int i = 0; i < liste->valeursLen; i++) {
+        new_liste->valeurs[i] = new_val_t(UNDEFINED);
         copy_val(new_liste->valeurs[i], liste->valeurs[i]);
     }
     return new_liste;
