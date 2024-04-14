@@ -56,9 +56,6 @@ void free_phrase(phrase_t* phrase) {
     free(phrase->innerPhrase);
 
     if (phrase->valeur != NULL) {
-        if (phrase->phraseId == EXPR_LISTE_VIDE) {
-            free_liste_t(phrase->valeur->liste, true, true);
-        }
         free_val_t(phrase->valeur, false, false);
     }
 
@@ -97,7 +94,7 @@ phrase_t* copy_phrase(phrase_t* phrase, phrase_t* parent, environnement_t* new_e
     }
 
     if (phrase->valeur != NULL) {
-        new->valeur = malloc(sizeof(val_t));
+        new->valeur = new_val_t(UNDEFINED);
         copy_val(new->valeur, phrase->valeur, true, true);
     }
 

@@ -24,7 +24,8 @@ bool test_expr_chaine(phrase_t* phrase) {
     
     chaine_t* c = new_chaine_t(result[0]);
     set_char(phrase->valeur, c);
-
+    phrase->valeur->to_free_chaine = true;
+    
     free(result);
 
     return true;

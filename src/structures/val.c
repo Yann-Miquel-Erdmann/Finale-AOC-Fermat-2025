@@ -14,10 +14,14 @@ val_t* new_val_t(char type) {
         custom_error("erreur d'allocation", NULL);
         return val;
     }
+    val->type = type;
+
+    val->to_free_list = false;
+    val->to_free_chaine = false;
 
     val->liste = NULL;
-    val->type = type;
     if (type == LISTE) {
+        val->to_free_list = true;
         val->liste = new_liste_t();
     }
 
@@ -27,11 +31,11 @@ val_t* new_val_t(char type) {
 
 void free_val_t(val_t* v, bool free_chaine, bool free_liste) {
     // printf("free_val_t %p\n", v);
-    if (free_chaine && v->chaine != NULL) {
+    if ((v->to_free_chaine || free_chaine) && v->chaine != NULL) {
         free_chaine_t(v->chaine);
     }
 
-    if (free_liste && v->liste != NULL) {
+    if ((v->to_free_list || free_liste) && v->liste != NULL) {
         free_liste_t(v->liste, free_chaine, free_liste);
     }
 
@@ -39,21 +43,39 @@ void free_val_t(val_t* v, bool free_chaine, bool free_liste) {
 }
 
 void copy_val(val_t* dest, val_t* src, bool cp_chaine, bool cp_liste) {
+    if (dest == NULL || src == NULL) {
+        custom_error("copy_val: dest ou src est NULL", NULL);
+    }
     dest->type = src->type;
     dest->value = src->value;
+
+    if (dest->liste != NULL) {
+        free_liste_t(dest->liste, true, true);
+    }
     dest->chaine = NULL;
     dest->liste = NULL;
+
+    dest->to_free_chaine = false;
+    dest->to_free_list = false;
+
     if (src->type == LISTE && cp_liste) {
         dest->liste = copy_liste(src->liste);
-    }else{
+        dest->to_free_list = true;
+    } else {
+        dest->to_free_list = false;
         dest->liste = src->liste;
     }
 
-    if (src->type == CHAINE_DE_CHAR && cp_chaine) {
-        dest->chaine = copy_chaine(src->chaine);
-    }else{
-        dest->chaine = src->chaine;
-    }
+    // if (src->type == CHAINE_DE_CHAR && cp_chaine) {
+    //     if (dest->chaine != NULL) {
+    //         free_chaine_t(dest->chaine);
+    //     }
+    //     dest->to_free_chaine = true;
+    //     dest->chaine = copy_chaine(src->chaine);
+    // } else {
+    //     dest->to_free_chaine = false;
+    //     dest->chaine = src->chaine;
+    // }
 }
 int get_int(val_t* v) {
     if (v->type != INT) {
@@ -178,7 +200,6 @@ void set_char(val_t* v, chaine_t* chaine) {
 void set_undefined(val_t* v) {
     v->type = -1;
 }
-
 
 void print_val(val_t* v, bool new_line) {
     switch (v->type) {

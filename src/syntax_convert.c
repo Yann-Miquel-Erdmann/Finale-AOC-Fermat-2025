@@ -478,6 +478,7 @@ void tokenise(phrase_t* phrase, function_t* function, function_list_t* func_list
             phrase->phraseId = EXPR_LISTE_VIDE;
             phrase->valeur->type = LISTE;
             phrase->valeur->liste = new_liste_t();
+            phrase->valeur->to_free_list = true;
             phrase->constant = true;
             break;
 

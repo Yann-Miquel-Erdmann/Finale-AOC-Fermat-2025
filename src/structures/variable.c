@@ -27,7 +27,7 @@ variable_t* copy_variable(variable_t* var) {
     variable_t* new_var = malloc(sizeof(variable_t));
     new_var->nom = malloc(strlen(var->nom) + 1);
     strcpy(new_var->nom, var->nom);
-    new_var->valeur = malloc(sizeof(val_t));
+    new_var->valeur = new_val_t(UNDEFINED);
     copy_val(new_var->valeur, var->valeur, true, true);
     return new_var;
 }

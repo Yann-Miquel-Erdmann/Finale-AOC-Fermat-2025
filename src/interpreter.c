@@ -59,7 +59,7 @@ void interpreter(function_t* function, function_list_t* functions, val_t* result
                     if (phraseActuelle->phraseId == APPEL_VALEUR_FONCTION_ARGUMENT || phraseActuelle->phraseId == EXECUTION_FONCTION_ARGUMENT) {
                         for (int i = 0; i < phraseActuelle->argsLen; i++) {
                             copy_val(new_func->env->variable_list[i]->valeur,
-                                    phraseActuelle->args[i]->valeur, true, true);
+                                     phraseActuelle->args[i]->valeur, true, true);
                         }
                     }
 
@@ -67,14 +67,6 @@ void interpreter(function_t* function, function_list_t* functions, val_t* result
                         interpreter(new_func, functions, NULL, layer + 1);
                     } else {
                         interpreter(new_func, functions, phraseActuelle->valeur, layer + 1);
-                        
-                        // permet le free de la valeur renvoyée
-                        val_t* retour = new_val_t(UNDEFINED);
-                        char* retour_text = malloc(8*sizeof(char));
-                        strcpy(retour_text, "retour");
-
-                        copy_val(retour, phraseActuelle->valeur, true, true);
-                        addToVariableList(function->env, new_variable(retour_text, retour));
                     }
 
                     free_function_t(new_func);
@@ -85,7 +77,6 @@ void interpreter(function_t* function, function_list_t* functions, val_t* result
                 }
 
                 case RENVOI_FONCTION: {
-
                     if (result != NULL) {
                         copy_val(result, phraseActuelle->args[0]->valeur, true, true);
                     }
@@ -115,7 +106,7 @@ void interpreter(function_t* function, function_list_t* functions, val_t* result
                 // variable ------------------------------------------------------
                 case MODIFICATION_VARIABLE:
                 case DEFINITION_VARIABLE_AVEC_INIT: {
-                    copy_val(phraseActuelle->variable->valeur, phraseActuelle->args[0]->valeur, false, false);
+                    copy_val(phraseActuelle->variable->valeur, phraseActuelle->args[0]->valeur, true, true);
                     phraseActuelle->interpreterArgsIndex = 0;
                     phraseActuelle = phraseActuelle->parentPhrase;
                     break;
