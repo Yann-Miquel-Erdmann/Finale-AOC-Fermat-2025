@@ -85,6 +85,8 @@
 // affichage console
 #define AFFICHER_EXPR 32
 #define AFFICHER_STR 33
+#define TYPE_EXPR 43
+
 
 // fonctions
 #define DEFINITION_FONCTION 34
@@ -152,6 +154,7 @@
 // affichage console
 #define AFFICHER_EXPR_S "Afficher *."            // fait
 #define TAILLE_S "La taille de *?"               // fait
+#define TYPE_EXPR_S "Le type de *?"              // non fait
 
 // fonctions
 #define DEFINITION_FONCTION_S "Soit $ une fonction qui lorsqu'elle est appelée exécute:*."    // fait

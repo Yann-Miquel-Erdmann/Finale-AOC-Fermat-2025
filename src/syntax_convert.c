@@ -199,6 +199,9 @@ int elem_liste(char* text) {
     if (!strcmp(text, AFFICHER_EXPR_S)) {
         return AFFICHER_EXPR;
     }
+    if (!strcmp(text, TYPE_EXPR_S)) {
+        return TYPE_EXPR;
+    }
 
     return -1;
 }
@@ -481,7 +484,14 @@ void tokenise(phrase_t* phrase, function_t* function, function_list_t* func_list
             phrase->valeur->to_free_list = true;
             phrase->constant = true;
             break;
-
+        case TYPE_EXPR:
+            if (phrase->argsLen != 1) {
+                custom_error("Invalid Syntax, type prend 1 arguments", phrase);
+            }
+            phrase->phraseId = TYPE_EXPR;
+            phrase->valeur->type = CHAINE_DE_CHAR;
+            tokenise(phrase->args[0], function, func_list, func_call_list);
+            break;
         default:
             if (test_expr_entier(phrase)) {
             } else if (test_expr_flottant(phrase)) {
