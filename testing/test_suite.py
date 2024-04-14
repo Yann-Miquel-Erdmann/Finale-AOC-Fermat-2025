@@ -17,16 +17,25 @@ for line in data:
     with open('testing/python_test.FC', 'w') as f:
         f.write(line["code"])
 
-    res = subprocess.run(f"""build/interpreter testing/python_test.FC""", shell=True, capture_output=True, text=True)
-    if (res.stdout == line["output"]):
-        passed += 1
-        print(f"Test {line['name']} passed")
+    res = subprocess.run(f"""valgrind --error-exitcode=1 --leak-check=full build/interpreter testing/python_test.FC """,
+                         shell=True, capture_output=True, text=True)
+    if res.returncode != 0:
+        print("\033[91mMemory errors detected by Valgrind\033[0m")
+        print(f"err:\n{res.stderr}")
+        print(f"err:\n{res.stdout}")
     else:
-        print(f"\033[91mTest {line['name']} failed\033[0m")
-        print(f"\033[91mExpected: '{line['output']}'\033[0m")
-        print(f"\033[91mGot: '{res.stdout}'\033[0m")
+        # res = subprocess.run(f"""build/interpreter testing/python_test.FC""", shell=True, capture_output=True, text=True)
+        
+        if (res.stdout == line["output"]):
+            passed += 1
+            print(f"\033[92mTest {line['name']} passed\033[0m")
+        else:
+            print(f"\033[91mTest {line['name']} failed\033[0m")
+            print(f"\033[91mExpected: '{line['output']}'\033[0m")
+            print(f"\033[91mGot: '{res.stdout}'\033[0m")
 
-    
+
+
     total += 1
 
 print(f"Passed {passed}/{total} tests")

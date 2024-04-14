@@ -103,5 +103,10 @@
         "name": "binary_conversion",
         "code": "Soit conv_bin une fonction qui lorsqu'elle est appelée avec x exécute:\n    Soit l La liste vide?.\n    Tant que La valeur de La variable x? est strictement plus grande que la valeur de L'entier zéro?? faire:\n        Afficher La variable x?.\n        Afficher Le reste de La variable x? par L'entier deux??.\n        Ajouter à la liste l Le reste de La variable x? par L'entier deux??.\n        Que x devienne Le quotient entier de La variable x? par L'entier deux??.\n    .\n    Que l devienne La valeur renvoyée par la fonction renverser avec les arguments La liste l??.\n    Afficher La liste l?.\n.\nSoit renverser une fonction qui lorsqu'elle est appelée avec l exécute:\n    Soit x.\n    Pour i allant de La taille de La liste l?? jusqu'à Le quotient entier de La taille de La liste l?? par L'entier deux?? faire:\n        Que x devienne L'élément de la liste l à l'indice La différence de La différence de La taille de La liste l?? et de L'entier un?? et de La variable i???.\n        Remplacer l'élément de la liste l à l'indice La différence de La différence de La taille de La liste l?? et de L'entier un?? et de La variable i?? par L'élément de la liste l à l'indice La variable i??.\n\n        Remplacer l'élément de la liste l à l'indice La variable i? par La variable x?.\n    .\n    Renvoyer La liste l?.\n.\n\nExécuter la fonction conv_bin avec les arguments L'entier dix?.\n",
         "output": "dix\nzéro\ncinq\nun\ndeux\nzéro\nun\nun\n[zéro, un, zéro, un]\n"
+    },
+    {
+        "name": "list of multiple types",
+        "code": "Soit l1 La liste vide?.\nAjouter à la liste l1 La liste vide?.\nAjouter à la liste l1 L'entier un?.\n\nAfficher La liste l1?.\n",
+        "output": "[[], un]\n"
     }
 ]
