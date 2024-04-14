@@ -52,6 +52,9 @@ void copy_val(val_t* dest, val_t* src, bool cp_chaine, bool cp_liste) {
     if (dest->liste != NULL) {
         free_liste_t(dest->liste, true, true);
     }
+    if (dest->chaine != NULL) {
+        free_chaine_t(dest->chaine);
+    }
     dest->chaine = NULL;
     dest->liste = NULL;
 
@@ -66,16 +69,13 @@ void copy_val(val_t* dest, val_t* src, bool cp_chaine, bool cp_liste) {
         dest->liste = src->liste;
     }
 
-    // if (src->type == CHAINE_DE_CHAR && cp_chaine) {
-    //     if (dest->chaine != NULL) {
-    //         free_chaine_t(dest->chaine);
-    //     }
-    //     dest->to_free_chaine = true;
-    //     dest->chaine = copy_chaine(src->chaine);
-    // } else {
-    //     dest->to_free_chaine = false;
-    //     dest->chaine = src->chaine;
-    // }
+    if (src->type == CHAINE_DE_CHAR && cp_chaine) {
+        dest->chaine = copy_chaine(src->chaine);
+        dest->to_free_chaine = true;
+    } else {
+        dest->to_free_chaine = false;
+        dest->chaine = src->chaine;
+    }
 }
 int get_int(val_t* v) {
     if (v->type != INT) {
