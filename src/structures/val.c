@@ -25,13 +25,36 @@ val_t* new_val_t(char type) {
     return val;
 }
 
-void free_val_t(val_t* v) {
-    if (v->chaine != NULL) {
+void free_val_t(val_t* v, bool free_chaine, bool free_liste) {
+    // printf("free_val_t %p\n", v);
+    if (free_chaine && v->chaine != NULL) {
         free_chaine_t(v->chaine);
     }
+
+    if (free_liste && v->liste != NULL) {
+        free_liste_t(v->liste, free_chaine, free_liste);
+    }
+
     free(v);
 }
 
+void copy_val(val_t* dest, val_t* src, bool cp_chaine, bool cp_liste) {
+    dest->type = src->type;
+    dest->value = src->value;
+    dest->chaine = NULL;
+    dest->liste = NULL;
+    if (src->type == LISTE && cp_liste) {
+        dest->liste = copy_liste(src->liste);
+    }else{
+        dest->liste = src->liste;
+    }
+
+    if (src->type == CHAINE_DE_CHAR && cp_chaine) {
+        dest->chaine = copy_chaine(src->chaine);
+    }else{
+        dest->chaine = src->chaine;
+    }
+}
 int get_int(val_t* v) {
     if (v->type != INT) {
         custom_error("le type de val_t ne correspond pas, un entier est attendu", NULL);
@@ -156,19 +179,6 @@ void set_undefined(val_t* v) {
     v->type = -1;
 }
 
-void copy_val(val_t* dest, val_t* src) {
-    dest->type = src->type;
-    dest->value = src->value;
-    dest->chaine = NULL;
-    dest->liste = NULL;
-    if (src->type == LISTE) {
-        dest->liste = copy_liste(src->liste);
-    }
-
-    // if (src->type == CHAINE_DE_CHAR) {
-    //     dest->chaine = copy_chaine(src->chaine);
-    // }
-}
 
 void print_val(val_t* v, bool new_line) {
     switch (v->type) {

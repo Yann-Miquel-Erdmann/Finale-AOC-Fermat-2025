@@ -24,6 +24,18 @@ chaine_t* new_chaine_t(char* c) {
     return chaine;
 }
 
+chaine_t* copy_chaine(chaine_t* src) {
+    chaine_t* new_chaine = malloc(sizeof(chaine_t));
+    new_chaine->chars = malloc(src->chars_size * sizeof(char));
+    new_chaine->chars_len = src->chars_len;
+    new_chaine->chars_size = src->chars_size;
+    for (int i = 0; i < src->chars_len; i++) {
+        new_chaine->chars[i] = src->chars[i];
+    }
+    return new_chaine;
+}
+
+
 void ajouter_char(chaine_t* c, char e) {
     if (c->chars_len == c->chars_size) {
         c->chars_size *= 2;

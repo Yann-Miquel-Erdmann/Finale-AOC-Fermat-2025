@@ -88,5 +88,20 @@
         "name": "nombre à virgule avec zéro",
         "code": "Soit x Le flottant zéro virgule zéro cinq?.\nAfficher La variable x?.\n",
         "output": "zéro virgule zéro cinq\n"
+    },
+    {
+        "name": "quotient entier",
+        "code": "Afficher Le quotient entier de L'entier un? par L'entier deux??.",
+        "output": "zéro\n"
+    },
+    {
+        "name": "quotient",
+        "code": "Afficher Le quotient de L'entier un? par L'entier deux??.",
+        "output": "zéro virgule cinq\n"
+    },
+    {
+        "name": "binary_conversion",
+        "code": "Soit conv_bin une fonction qui lorsqu'elle est appelée avec x exécute:\n    Soit l La liste vide?.\n    Tant que La valeur de La variable x? est strictement plus grande que la valeur de L'entier zéro?? faire:\n        Afficher La variable x?.\n        Afficher Le reste de La variable x? par L'entier deux??.\n        Ajouter à la liste l Le reste de La variable x? par L'entier deux??.\n        Que x devienne Le quotient entier de La variable x? par L'entier deux??.\n    .\n    Que l devienne La valeur renvoyée par la fonction renverser avec les arguments La liste l??.\n    Afficher La liste l?.\n.\nSoit renverser une fonction qui lorsqu'elle est appelée avec l exécute:\n    Soit x.\n    Pour i allant de La taille de La liste l?? jusqu'à Le quotient entier de La taille de La liste l?? par L'entier deux?? faire:\n        Que x devienne L'élément de la liste l à l'indice La différence de La différence de La taille de La liste l?? et de L'entier un?? et de La variable i???.\n        Remplacer l'élément de la liste l à l'indice La différence de La différence de La taille de La liste l?? et de L'entier un?? et de La variable i?? par L'élément de la liste l à l'indice La variable i??.\n\n        Remplacer l'élément de la liste l à l'indice La variable i? par La variable x?.\n    .\n    Renvoyer La liste l?.\n.\n\nExécuter la fonction conv_bin avec les arguments L'entier dix?.\n",
+        "output": "dix\nzéro\ncinq\nun\ndeux\nzéro\nun\nun\n[zéro, un, zéro, un]\n"
     }
 ]

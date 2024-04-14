@@ -1,6 +1,7 @@
 #ifndef val_h
 #define val_h
 #include <stdbool.h>
+
 #include "chaine_de_char.h"
 
 typedef struct liste liste_t;
@@ -12,7 +13,8 @@ typedef struct val {
 } val_t;
 
 val_t* new_val_t(char type);
-void free_val_t(val_t* v);
+void free_val_t(val_t* v, bool free_chaine, bool free_liste);
+void copy_val(val_t* dest, val_t* src, bool copy_chaine, bool copy_liste);
 
 int get_int(val_t* v);
 float get_float(val_t* v);
@@ -30,8 +32,6 @@ void set_bool(val_t* v, bool valeur);
 void set_liste(val_t*, liste_t* l);
 void set_char(val_t* v, chaine_t* chaine);
 void set_undefined(val_t* v);
-
-void copy_val(val_t* dest, val_t* src);
 
 void print_val(val_t* v, bool new_line);
 

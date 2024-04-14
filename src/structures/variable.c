@@ -8,12 +8,7 @@
 
 void free_variable_t(variable_t* var) {
     free(var->nom);
-
-    if (var->valeur->type == LISTE) {
-        free_liste_t(var->valeur->liste);
-    }
-
-    free_val_t(var->valeur);
+    free_val_t(var->valeur, true, true);
     free(var);
 }
 
@@ -33,6 +28,6 @@ variable_t* copy_variable(variable_t* var) {
     new_var->nom = malloc(strlen(var->nom) + 1);
     strcpy(new_var->nom, var->nom);
     new_var->valeur = malloc(sizeof(val_t));
-    copy_val(new_var->valeur, var->valeur);
+    copy_val(new_var->valeur, var->valeur, true, true);
     return new_var;
 }

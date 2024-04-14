@@ -6,10 +6,11 @@
 // #include "phrase.h"
 #include "struct_liste.h"
 
-void free_liste_t(liste_t* liste) {
+void free_liste_t(liste_t* liste, bool free_chaine, bool free_liste) {
+    // printf("free liste %p\n", liste);
     for (int i = 0; i < liste->valeursLen; i++) {
         if (liste->valeurs[i] != NULL) {
-            free_val_t(liste->valeurs[i]);
+            free_val_t(liste->valeurs[i], free_chaine, free_liste);
         }
     }
     free(liste->valeurs);
@@ -31,7 +32,7 @@ liste_t* copy_liste(liste_t* liste) {
     new_liste->valeursSize = liste->valeursSize;
     for (int i = 0; i < liste->valeursLen; i++) {
         new_liste->valeurs[i] = new_val_t(UNDEFINED);
-        copy_val(new_liste->valeurs[i], liste->valeurs[i]);
+        copy_val(new_liste->valeurs[i], liste->valeurs[i], true, true);
     }
     return new_liste;
 }
@@ -50,7 +51,7 @@ int taille(liste_t* liste) {
 
 void vider_liste(liste_t* liste) {
     for (int i = 0; i < liste->valeursLen; i++) {
-        free_val_t(liste->valeurs[i]);
+        free_val_t(liste->valeurs[i], true, true);
     }
     liste->valeursLen = 0;
 }
@@ -67,16 +68,16 @@ void modification(liste_t* liste, int indice, val_t* valeur, phrase_t* p) {
         custom_error("indice hors de la liste", p);
     }
 
-    copy_val(liste->valeurs[indice], valeur);
+    copy_val(liste->valeurs[indice], valeur, true, true);
 }
 
 void ajout(liste_t* liste, val_t* valeur) {
-    if (liste->valeursLen == 
+    if (liste->valeursLen ==
         liste->valeursSize) {
         doubleValeursSize(liste);
     }
     liste->valeurs[liste->valeursLen] = new_val_t(UNDEFINED);
-    copy_val(liste->valeurs[liste->valeursLen], valeur);
+    copy_val(liste->valeurs[liste->valeursLen], valeur, true, true);
     liste->valeursLen++;
 }
 
@@ -91,7 +92,7 @@ void inserer(liste_t* liste, int indice, val_t* valeur, phrase_t* p) {
         liste->valeurs[i] = liste->valeurs[i - 1];
     }
     liste->valeurs[indice] = new_val_t(UNDEFINED);
-    copy_val(liste->valeurs[indice], valeur);
+    copy_val(liste->valeurs[indice], valeur, true, true);
     liste->valeursLen++;
 }
 
@@ -99,7 +100,7 @@ void suppression(liste_t* liste, int indice, phrase_t* p) {
     if (indice < 0 || indice >= liste->valeursLen) {
         custom_error("indice hors de la liste", p);
     }
-    free_val_t(liste->valeurs[indice]);
+    free_val_t(liste->valeurs[indice], true, true);
     for (int i = indice; i < liste->valeursLen - 1; i++) {
         liste->valeurs[i] = liste->valeurs[i + 1];
     }

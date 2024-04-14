@@ -15,7 +15,7 @@ void free_environnement(environnement_t* env) {
     free(env->variable_list);
     for (int i = 0; i < env->liste_list_len; i++) {
         if (env->liste_list[i] != NULL) {
-            free_liste_t(env->liste_list[i]);
+            free_liste_t(env->liste_list[i], true, true);
         }
     }
     free(env->liste_list);

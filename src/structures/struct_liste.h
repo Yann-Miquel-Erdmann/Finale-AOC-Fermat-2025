@@ -14,7 +14,7 @@ typedef struct liste {
     int valeursSize;
 } liste_t;
 
-void free_liste_t(liste_t* l);
+void free_liste_t(liste_t* l, bool free_chaine, bool free_liste);
 
 liste_t* new_liste_t(void);
 
