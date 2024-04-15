@@ -1,5 +1,23 @@
-Soit l1 La liste vide?.
-Ajouter à la liste l1 La liste vide?.
-Ajouter à la liste l1 L'entier un?.
+Soit conv_bin une fonction qui lorsqu'elle est appelée avec x exécute:
+    Soit l La liste vide?.
+    Tant que La valeur de La variable x? est strictement plus grande que la valeur de L'entier zéro?? faire:
+        Ajouter à la liste l Le reste de La variable x? par L'entier deux??.
+        Que x devienne Le quotient entier de La variable x? par L'entier deux??.
+    .
+    Que l devienne La valeur renvoyée par la fonction renverser avec les arguments La liste l??.
+    Afficher La liste l?.
+.
 
-Afficher La liste l1?.
+Soit renverser une fonction qui lorsqu'elle est appelée avec l exécute:
+    Soit x.
+    Pour i allant de L'entier zéro? jusqu'à Le quotient entier de La taille de La liste l?? par L'entier deux?? faire:
+        Que x devienne L'élément de la liste l à l'indice La différence de La différence de La taille de La liste l?? et de L'entier un?? et de La variable i???.
+        Remplacer l'élément de la liste l à l'indice La différence de La différence de La taille de La liste l?? et de L'entier un?? et de La variable i?? par L'élément de la liste l à l'indice La variable i??.
+        Remplacer l'élément de la liste l à l'indice La variable i? par La variable x?.
+    .
+    Renvoyer La liste l?.
+.
+
+Exécuter la fonction conv_bin avec les arguments L'entier deux-cent-trente-deux?.
+Exécuter la fonction conv_bin avec les arguments L'entier cent-soixante-douze?.
+Exécuter la fonction conv_bin avec les arguments L'entier deux-cent-cinquante-cinq?.

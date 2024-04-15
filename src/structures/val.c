@@ -70,8 +70,10 @@ void copy_val(val_t* dest, val_t* src, bool cp_chaine, bool cp_liste) {
     }
 
     if (src->type == CHAINE_DE_CHAR && cp_chaine) {
-        dest->chaine = copy_chaine(src->chaine);
-        dest->to_free_chaine = true;
+        if (src->chaine != NULL) {
+            dest->chaine = copy_chaine(src->chaine);
+            dest->to_free_chaine = true;
+        }
     } else {
         dest->to_free_chaine = false;
         dest->chaine = src->chaine;

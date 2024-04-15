@@ -235,7 +235,6 @@ void interpreter(function_t* function, function_list_t* functions, val_t* result
                     break;
                 }
                 case INSERTION_LISTE: {
-                    // printf("%d\n", phraseActuelle->args[1]->valeur->type);
                     inserer(phraseActuelle->variable->valeur->liste, get_int(phraseActuelle->args[1]->valeur), phraseActuelle->args[0]->valeur, phraseActuelle);
                     phraseActuelle->interpreterArgsIndex = 0;
                     phraseActuelle = phraseActuelle->parentPhrase;
@@ -331,9 +330,17 @@ void interpreter(function_t* function, function_list_t* functions, val_t* result
                             phraseActuelle->interpreterInnerIndex = 0;
 
                             if (phraseActuelle->phraseId == POUR_AVEC_PAS) {
-                                set_float(phraseActuelle->variable->valeur, get_as_float(phraseActuelle->variable->valeur) + get_as_float(phraseActuelle->args[2]->valeur));
+                                if (phraseActuelle->variable->valeur->type == FLOAT || phraseActuelle->args[2]->valeur->type == FLOAT){
+                                    set_float(phraseActuelle->variable->valeur, get_as_float(phraseActuelle->variable->valeur) + get_as_float(phraseActuelle->args[2]->valeur));
+                                }else{
+                                    set_int(phraseActuelle->variable->valeur, get_as_int(phraseActuelle->variable->valeur) + get_as_int(phraseActuelle->args[2]->valeur));
+                                }
                             } else {
-                                set_float(phraseActuelle->variable->valeur, get_as_float(phraseActuelle->variable->valeur) + 1);
+                                if (phraseActuelle->variable->valeur->type == FLOAT){
+                                    set_float(phraseActuelle->variable->valeur, get_as_float(phraseActuelle->variable->valeur) + 1);
+                                }else{
+                                    set_int(phraseActuelle->variable->valeur, get_as_int(phraseActuelle->variable->valeur) + 1);
+                                }
                             }
                         }
                     } else {

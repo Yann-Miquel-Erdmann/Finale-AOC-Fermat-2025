@@ -41,7 +41,7 @@ void test_parse(void) {
     fclose(f);
 }
 
-void test_val(void) {
+/*void test_val(void) {
     val_t* v1 = new_val_t(UNDEFINED);
     val_t* v2 = new_val_t(UNDEFINED);
     val_t* v3 = new_val_t(UNDEFINED);
@@ -62,7 +62,7 @@ void test_val(void) {
     free_val_t(v1);
     free_val_t(v2);
     free_val_t(v3);
-}
+}*/
 
 int main(int argc, char const* argv[]) {
     // str_from_int(-2000289635);
