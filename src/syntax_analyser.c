@@ -79,7 +79,7 @@ char** analyse(phrase_t* phrase, char* syntax, int* list_len, char* separator) {
     free(variable);
     if (phrase->text[index] != '\0' || syntax[index_const] != '\0') {
         free_l(arg_list, *list_len);
-        return false;
+        return NULL;
     }
     return arg_list;
 }
