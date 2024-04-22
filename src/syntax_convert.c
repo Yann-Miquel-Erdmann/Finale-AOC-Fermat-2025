@@ -202,6 +202,18 @@ int elem_liste(char* text) {
     if (!strcmp(text, TYPE_EXPR_S)) {
         return TYPE_EXPR;
     }
+    if (!strcmp(text, ET_S)){
+        return ET;
+    }
+    if (!strcmp(text, OU_S)){
+        return OU;
+    }
+    if (!strcmp(text, EXPR_LISTE_ELEM_S)){
+        return EXPR_LISTE_ELEM;
+    }
+    if (!strcmp(text, EXPR_RIEN_S)){
+        return EXPR_RIEN;
+    }
 
     return -1;
 }
@@ -485,12 +497,44 @@ void tokenise(phrase_t* phrase, function_t* function, function_list_t* func_list
             phrase->constant = true;
             break;
         case TYPE_EXPR:
-            if (phrase->argsLen != 1) {
+            if (phrase->innerPhraseLen > 0 || phrase->argsLen != 1) {
                 custom_error("Invalid Syntax, type prend 1 arguments", phrase);
             }
             phrase->phraseId = TYPE_EXPR;
             phrase->valeur->type = CHAINE_DE_CHAR;
             tokenise(phrase->args[0], function, func_list, func_call_list);
+            break;
+        case ET:
+            if (phrase->innerPhraseLen > 0 || phrase->argsLen != 2){
+                custom_error("Invalid Syntax, et prend 2 arguments", phrase);
+            }
+            phrase->phraseId = ET;
+            phrase->valeur->type = BOOL;
+            tokenise(phrase->args[0], function, func_list, func_call_list);
+            tokenise(phrase->args[1], function, func_list, func_call_list);
+            break;
+        case OU:
+            if (phrase->innerPhraseLen > 0 || phrase->argsLen != 2){
+                custom_error("Invalid Syntax, ou prend 2 arguments", phrase);
+            }
+            phrase->phraseId = OU;
+            phrase->valeur->type = BOOL;
+            tokenise(phrase->args[0], function, func_list, func_call_list);
+            tokenise(phrase->args[1], function, func_list, func_call_list);
+            break;
+        case EXPR_LISTE_ELEM :
+            if (phrase->innerPhraseLen > 0 || phrase->argsLen == 0){
+                custom_error("Invalid Syntax, liste d'éléments aumoins prend 1 arguments", phrase);
+            }
+            phrase->phraseId = EXPR_LISTE_ELEM;
+            phrase->valeur->type = LISTE;
+            for (int i = 0; i< phrase->argsLen; i++){
+                tokenise(phrase->args[i], function, func_list, func_call_list);
+            }
+            break;
+        case EXPR_RIEN:
+            phrase->phraseId = EXPR_RIEN;
+            phrase->valeur->type = UNDEFINED;
             break;
         default:
             if (test_expr_entier(phrase)) {

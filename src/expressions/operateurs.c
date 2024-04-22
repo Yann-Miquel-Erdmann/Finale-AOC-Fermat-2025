@@ -70,3 +70,13 @@ void negation_booleenne(phrase_t* phrase, bool constant) {
     set_bool(phrase->valeur, !get_as_bool(phrase->args[0]->valeur));
     phrase->constant = constant;
 };
+
+void ou_booleen(phrase_t* phrase, bool constant){
+    set_bool(phrase->valeur, (get_as_bool(phrase->args[0]->valeur) || (get_as_bool(phrase->args[1]->valeur))));
+    phrase->constant = constant;
+}
+
+void et_booleen(phrase_t* phrase, bool constant){
+    set_bool(phrase->valeur, (get_as_bool(phrase->args[0]->valeur) && (get_as_bool(phrase->args[1]->valeur))));
+    phrase->constant = constant;
+}

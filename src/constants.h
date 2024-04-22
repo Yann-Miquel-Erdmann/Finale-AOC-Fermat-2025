@@ -38,6 +38,7 @@
 #define EXPR_FLOTTANT 2
 #define EXPR_BOOLEEN 3
 #define EXPR_CHAINE 4
+#define EXPR_RIEN 46
 
 // structures de données
 //  * variable
@@ -55,6 +56,7 @@
 #define TAILLE 14
 #define INSERTION_LISTE 41
 #define EXPR_LISTE 42
+#define EXPR_LISTE_ELEM 47
 
 // opérateurs
 #define SOMME 15
@@ -63,7 +65,11 @@
 #define QUOTIENT 18
 #define QUOTIENT_ENTIER 19
 #define RESTE 20
+
+// opérateurs booléens
 #define NEGATION_BOOLEENNE 21
+#define OU 44
+#define ET 45
 
 // comparateurs
 
@@ -97,6 +103,8 @@
 #define EXECUTION_FONCTION_ARGUMENT 39
 #define APPEL_VALEUR_FONCTION_ARGUMENT 40
 
+// current next element: 48
+
 #define DEFAULT_SEPARATOR "?,. "
 #define STRING_SEPARATOR  "\""
 #define NUMBER_SEPARATOR  "?,."
@@ -109,6 +117,7 @@
 #define EXPR_FLOTTANT_S "Le flottant $?"            // fait
 #define EXPR_BOOLEEN_S "Le booléen $?"              // fait
 #define EXPR_CHAINE_S "La chaîne de caractères $?"  // fait
+#define EXPR_RIEN_S "Rien?"                         // non fait
 
 // structures de données
 //  * variable (fait)
@@ -118,13 +127,14 @@
 #define MODIFICATION_VARIABLE_S "Que $ devienne *."  // fait
 
 //  * liste (fait)
-#define EXPR_LISTE_VIDE_S "La liste vide?"                             // fait
+#define EXPR_LISTE_VIDE_S "La liste vide?"                                            // fait
 #define ACCESSION_LISTE_S "L'élément de la liste $ à l'indice *?"                     // fait
 #define MODIFICATION_LISTE_S "Remplacer l'élément de la liste $ à l'indice * par *."  // fait
 #define AJOUT_LISTE_S "Ajouter à la liste $ *."                                       // fait
 #define SUPPRESSION_LISTE_S "Retirer de la liste $ l'élément d'indice *."             // fait
 #define INSERTION_LISTE_S "Insérer * dans la liste $ à l'indice *."                   // fait
 #define EXPR_LISTE_S "La liste $?"                                                    // fait
+#define EXPR_LISTE_ELEM_S "La liste des éléments *?"                                  // non fait
 
 // opérateurs
 #define SOMME_S "La somme de * et de *?"                    // fait
@@ -133,7 +143,11 @@
 #define QUOTIENT_S "Le quotient de * par *?"                // fait
 #define QUOTIENT_ENTIER_S "Le quotient entier de * par *?"  // fait
 #define RESTE_S "Le reste de * par *?"                      // fait
+
+// opérateus booléens
 #define NEGATION_BOOLEENNE_S "La négation booléenne de *?"  // fait
+#define OU_S "On a * ou *?"                                 // fait
+#define ET_S "On a * et *?"                                 // fait
 
 // comparateurs
 #define EGALITE_S "La valeur de * est égale à la valeur de *?"                                // fait
@@ -144,7 +158,7 @@
 
 // conditions
 #define SI_ALORS_S "Si * alors faire:*."                      // fait
-#define SI_ALORS_SINON_S "Si * alors faire:*sinon faire:*."   // fait (en tout cas on dirait)
+#define SI_ALORS_SINON_S "Si * alors faire:*sinon faire:*."   // fait
                          
 // boucles
 #define TANT_QUE_S "Tant que * faire:*."                                                  // fait
@@ -154,7 +168,7 @@
 // affichage console
 #define AFFICHER_EXPR_S "Afficher *."            // fait
 #define TAILLE_S "La taille de *?"               // fait
-#define TYPE_EXPR_S "Le type de *?"              // non fait
+#define TYPE_EXPR_S "Le type de *?"              // fait
 
 // fonctions
 #define DEFINITION_FONCTION_S "Soit $ une fonction qui lorsqu'elle est appelée exécute:*."    // fait

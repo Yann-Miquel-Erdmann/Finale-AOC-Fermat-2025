@@ -239,8 +239,13 @@ void print_val(val_t* v, bool new_line) {
             printf("]");
             break;
         }
+            
         case CHAINE_DE_CHAR:
             printf("%s", v->chaine->chars);
+            break;
+        
+        case UNDEFINED:
+            printf("Undefined");
             break;
 
         default:

@@ -209,7 +209,21 @@ void interpreter(function_t* function, function_list_t* functions, val_t* result
                     phraseActuelle = phraseActuelle->parentPhrase;
                     break;
                 }
-
+                
+                case EXPR_LISTE_ELEM :{
+                    if (phraseActuelle->valeur->to_free_list){
+                        free_liste_t(phraseActuelle->valeur->liste, true, true);
+                    }
+                    phraseActuelle->valeur->liste = new_liste_t();
+                    phraseActuelle->valeur->to_free_list = true;
+                    for (int i = 0; i< phraseActuelle->argsLen; i++){
+                        ajout(phraseActuelle->valeur->liste, phraseActuelle->args[i]->valeur);
+                    }
+                    phraseActuelle->interpreterArgsIndex = 0;
+                    phraseActuelle = phraseActuelle->parentPhrase;
+                    break;
+                }
+                
                 case ACCESSION_LISTE: {
                     copy_val(phraseActuelle->valeur, accession(phraseActuelle->variable->valeur->liste, get_int(phraseActuelle->args[0]->valeur), phraseActuelle), true, true);
                     phraseActuelle->interpreterArgsIndex = 0;
@@ -374,6 +388,24 @@ void interpreter(function_t* function, function_list_t* functions, val_t* result
                             break;
                     }
                     phraseActuelle->valeur->chaine = new_chaine_t(type);
+                    phraseActuelle = phraseActuelle->parentPhrase;
+                    break;
+                }
+                case ET:{
+                    et_booleen(phraseActuelle, false);
+                    phraseActuelle->interpreterArgsIndex = 0;
+                    phraseActuelle = phraseActuelle->parentPhrase;
+                    break;
+                }
+                case OU:{
+                    ou_booleen(phraseActuelle, false);
+                    phraseActuelle->interpreterArgsIndex = 0;
+                    phraseActuelle = phraseActuelle->parentPhrase;
+                    break;
+                }
+                case EXPR_RIEN:{
+                    set_undefined(phraseActuelle->valeur);
+                    phraseActuelle->interpreterArgsIndex = 0;
                     phraseActuelle = phraseActuelle->parentPhrase;
                     break;
                 }
