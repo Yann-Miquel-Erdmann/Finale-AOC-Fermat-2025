@@ -117,7 +117,7 @@
 #define EXPR_FLOTTANT_S "Le flottant $?"            // fait
 #define EXPR_BOOLEEN_S "Le booléen $?"              // fait
 #define EXPR_CHAINE_S "La chaîne de caractères $?"  // fait
-#define EXPR_RIEN_S "Rien?"                         // non fait
+#define EXPR_RIEN_S "Rien?"                         // fait
 
 // structures de données
 //  * variable (fait)
@@ -134,7 +134,7 @@
 #define SUPPRESSION_LISTE_S "Retirer de la liste $ l'élément d'indice *."             // fait
 #define INSERTION_LISTE_S "Insérer * dans la liste $ à l'indice *."                   // fait
 #define EXPR_LISTE_S "La liste $?"                                                    // fait
-#define EXPR_LISTE_ELEM_S "La liste des éléments *?"                                  // non fait
+#define EXPR_LISTE_ELEM_S "La liste des éléments *?"                                  // fait
 
 // opérateurs
 #define SOMME_S "La somme de * et de *?"                    // fait

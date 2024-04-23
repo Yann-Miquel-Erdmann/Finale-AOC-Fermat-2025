@@ -22,3 +22,6 @@
 
 - ~~affichage d'une liste dans print val~~
 - liste vide
+
+## À ajouter
+- commentaires
