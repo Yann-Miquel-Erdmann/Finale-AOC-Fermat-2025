@@ -2,7 +2,7 @@
 
 ## Disclamer
 Le language n'a pas encore été totalement testé, il reste surment des bugs et de petits contournements de syntaxe.
-Il n'y a pas encore de 
+Il n'y a pas encore de commentaires
 
 ## Présentation générale et aspects spécifiques
 
@@ -56,7 +56,7 @@ Il est à noter la présence des virgules entre les différentes expressions qui
 Finalement si aucun des cas suivants n'est entre les {}, il suffit de suivre ce qui est écrit à l'intérieur.
 
 ## Les expression de base
-Les expressions base sont les expressions que vous utiliserez probablement le plus souvent
+Les expressions base sont les expressions que vous utiliserez probablement le plus souvent\
 Il peut s'agir:
 
 * d'un entier
@@ -113,49 +113,49 @@ Les liste, un incontournable objet de la programmation que se soit pour stocker 
 La liste est définie dans une variable.
 
 Il y a deux moyens de définir une liste:
-* comme une liste vide:
+* comme une liste vide:\
 _expression_
 ```
 Liste vide?
 ```
-* comme une liste d'éléments:
+* comme une liste d'éléments:\
 _expression_
 ```
 La liste des éléments {expression 1}, {expression 2}, ..., {expression n}.
 ```
 
 Plusieurs opérations sont possibles sur les listes:
-* Ajouter des éléments à la fin de la liste
+* Ajouter des éléments à la fin de la liste:\
 _instruction_
 ```
 Ajouter à la liste {nom de la liste} {expression}.
 ```
 
-* Insérer des éléments au milieu de la liste:
+* Insérer des éléments au milieu de la liste:\
 _instruction_
 ```
 Insérer {expression} dans la liste {nom de la liste} à l'index {expression: entier}.
 ```
 
-* Supprimer un élément
+* Supprimer un élément:\
 _instruction_
 ```
 Retirer de la liste {nom de la liste} l'élément d'indice {expression: entier}.
 ```
 
-* Remplacer un élément
+* Remplacer un élément:\
 _instruction_
 ```
 Remplacer l'élément de la liste {nom de la liste} à l'indice {expression: entier} par {expression}.
 ```
 
-On peut également accéder à un élément de la liste avec
+On peut également accéder à un élément de la liste avec\
 _expression_
 ```
 L'élément de la liste {nom de la liste} à l'indice {expression: entier}?
 ```
 
-Finalement, on peut accéder à la liste en entier avec
+Finalement, on peut accéder à la liste en entier avec\
 _expression_
 ```
 La liste {nom de la liste}?

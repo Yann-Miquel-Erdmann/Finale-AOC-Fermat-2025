@@ -1,5 +1,40 @@
-Soit f une fonction qui lorsqu'elle est appelée exécute:
-    Renvoyer Rien?.
+Soit swap une fonction qui lorsqu'elle est appelée avec a, i0, i1 exécute:
+    Soit c L'élément de la liste a à l'indice La variable i1??.
+    Remplacer l'élément de la liste a à l'indice La variable i1? par L'élément de la liste a à l'indice La variable i0??.
+    Remplacer l'élément de la liste a à l'indice La variable i0? par La variable c?.
+    Renvoyer La liste a?.
 .
 
-Afficher La valeur renvoyée par la fonction f?.
+Soit quicksort une fonction qui lorsqu'elle est appelée avec a, l0, hi exécute:
+    Si On a La valeur de La variable l0? est plus grande que la valeur de La variable hi?? ou La valeur de La variable l0? est strictement plus petite que la valeur de L'entier zéro??? alors faire:
+        Renvoyer La liste a?.
+    .
+    Soit result La valeur renvoyée par la fonction partition avec les arguments La variable a?, La variable l0?, La variable hi??.
+    Soit p L'élément de la liste result à l'indice L'entier zéro??.
+    Soit a L'élément de la liste result à l'indice L'entier un??.
+    Que a devienne La valeur renvoyée par la fonction quicksort avec les arguments La variable a?, La somme de La variable p? et de L'entier un??, La variable hi??.
+    Que a devienne La valeur renvoyée par la fonction quicksort avec les arguments La variable a?, La variable l0?, La différence de La variable p? et de L'entier un???.
+    Renvoyer La liste a?.
+.
+
+Soit partition une fonction qui lorsqu'elle est appelée avec a, l0, hi exécute:
+    Soit pivot L'élément de la liste a à l'indice La variable hi??.
+    Soit i La variable l0?.
+    Pour j allant de La variable l0? jusqu'à La variable hi? faire:
+        Si La valeur de L'élément de la liste a à l'indice La variable j?? est plus petite que la valeur de La variable pivot?? alors faire:
+            Que a devienne La valeur renvoyée par la fonction swap avec les arguments La variable a?, La variable i?, La variable j??.
+            Que i devienne La somme de La variable i? et de L'entier un??.
+        .
+    .
+    Que a devienne La valeur renvoyée par la fonction swap avec les arguments La variable a?, La variable i?, La variable hi??.
+    Soit b La liste vide?.
+    Ajouter à la liste b La variable i?.
+    Ajouter à la liste b La variable a?.
+    Renvoyer La variable b?.
+.
+
+Soit l La liste des éléments L'entier dix?, L'entier trois?, L'entier six?, L'entier sept?, L'entier neuf?, L'entier cinq?, L'entier deux?, L'entier huit?, L'entier un?, L'entier quatre??.
+
+Soit l2 La valeur renvoyée par la fonction quicksort avec les arguments La liste l?, L'entier zéro?, La différence de La taille de La liste l?? et de L'entier un???.
+Afficher La variable l?.
+Afficher La variable l2?.

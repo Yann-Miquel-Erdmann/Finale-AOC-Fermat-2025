@@ -40,17 +40,22 @@ phrase_t* parse_file(FILE* f) {
     char buffer = '\0';
     int line = 0;
 
+    bool in_string = false;
     bool in_comment = false;
 
     char c = '\0';
     while (fscanf(f, "%c", &c) != EOF) {
-        if (in_comment) {
+        if (in_string) {
             if (c == '"') {
-                in_comment = !in_comment;
+                in_string = !in_string;
             }
             // ajoute le caractère au texte
             addToText(phraseActuelle, c);
-
+        }else if (in_comment){
+            if (c == ')'){
+                in_comment = false;
+                buffer = ')';
+            }
         } else if (is_uppercase(c)) {
             if (phraseActuelle->textLen > 0 && phraseActuelle->text[phraseActuelle->textLen - 1] != '*') {
                 addToText(phraseActuelle, '*');
@@ -117,10 +122,12 @@ phrase_t* parse_file(FILE* f) {
                     break;
 
                 default:
-                    if (c == '"') {
-                        in_comment = !in_comment;
+                    if (c == '"' && !in_comment) {
+                        in_string = !in_string;
                     }
-
+                    if (c == '(' && !in_string) {
+                        in_comment = true;
+                    }
                     if (c == '\n') {
                         line++;
                     }
@@ -136,7 +143,7 @@ phrase_t* parse_file(FILE* f) {
                         break;
                     }
                     // enlève les espaces après les points
-                    if (c == ' ' && (buffer == '.' || buffer == ':')) {
+                    if (c == ' ' && (buffer == '.' || buffer == ':' || buffer == ')')) {
                         break;
                     }
 
@@ -145,11 +152,11 @@ phrase_t* parse_file(FILE* f) {
                     }
 
                     // ignore les sauts de lignes et les tabulations
-                    if ((c == '\n' && (buffer == '.' || buffer == ':'))) {
+                    if ((c == '\n' && (buffer == '.' || buffer == ':' || buffer == ')' || in_comment))) {
                         break;
                     } else if (c == '\n') {
+                        printf("'%c'\n", buffer);
                         // erreur manque de point en fin de ligne
-
                         custom_error(add_number_str("Il manque un point à la fin de la ligne ", line), NULL);
                         break;
                     }

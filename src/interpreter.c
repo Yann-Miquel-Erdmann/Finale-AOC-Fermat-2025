@@ -85,7 +85,7 @@ void interpreter(function_t* function, function_list_t* functions, val_t* result
                 }
 
                 case AFFICHER_EXPR: {
-                    print_val(phraseActuelle->args[0]->valeur, true);
+                    print_val(phraseActuelle->args[0]->valeur, true, phraseActuelle);
                     phraseActuelle->interpreterArgsIndex = 0;
                     phraseActuelle = phraseActuelle->parentPhrase;
                     break;
@@ -225,13 +225,13 @@ void interpreter(function_t* function, function_list_t* functions, val_t* result
                 }
                 
                 case ACCESSION_LISTE: {
-                    copy_val(phraseActuelle->valeur, accession(phraseActuelle->variable->valeur->liste, get_int(phraseActuelle->args[0]->valeur), phraseActuelle), true, true);
+                    copy_val(phraseActuelle->valeur, accession(phraseActuelle->variable->valeur->liste, get_int(phraseActuelle->args[0]->valeur, phraseActuelle), phraseActuelle), true, true);
                     phraseActuelle->interpreterArgsIndex = 0;
                     phraseActuelle = phraseActuelle->parentPhrase;
                     break;
                 }
                 case MODIFICATION_LISTE: {
-                    modification(phraseActuelle->variable->valeur->liste, get_int(phraseActuelle->args[0]->valeur), phraseActuelle->args[1]->valeur, phraseActuelle);
+                    modification(phraseActuelle->variable->valeur->liste, get_int(phraseActuelle->args[0]->valeur, phraseActuelle), phraseActuelle->args[1]->valeur, phraseActuelle);
                     phraseActuelle->interpreterArgsIndex = 0;
                     phraseActuelle = phraseActuelle->parentPhrase;
                     break;
@@ -243,13 +243,13 @@ void interpreter(function_t* function, function_list_t* functions, val_t* result
                     break;
                 }
                 case SUPPRESSION_LISTE: {
-                    suppression(phraseActuelle->variable->valeur->liste, get_int(phraseActuelle->args[0]->valeur), phraseActuelle);
+                    suppression(phraseActuelle->variable->valeur->liste, get_int(phraseActuelle->args[0]->valeur, phraseActuelle), phraseActuelle);
                     phraseActuelle->interpreterArgsIndex = 0;
                     phraseActuelle = phraseActuelle->parentPhrase;
                     break;
                 }
                 case INSERTION_LISTE: {
-                    inserer(phraseActuelle->variable->valeur->liste, get_int(phraseActuelle->args[1]->valeur), phraseActuelle->args[0]->valeur, phraseActuelle);
+                    inserer(phraseActuelle->variable->valeur->liste, get_int(phraseActuelle->args[1]->valeur, phraseActuelle), phraseActuelle->args[0]->valeur, phraseActuelle);
                     phraseActuelle->interpreterArgsIndex = 0;
                     phraseActuelle = phraseActuelle->parentPhrase;
                     break;
@@ -260,7 +260,7 @@ void interpreter(function_t* function, function_list_t* functions, val_t* result
                         phraseActuelle->interpreterInnerIndex = 0;
                     }
 
-                    if (get_bool(phraseActuelle->args[0]->valeur)) {
+                    if (get_bool(phraseActuelle->args[0]->valeur, phraseActuelle)) {
                         if (phraseActuelle->interpreterInnerIndex < phraseActuelle->innerPhraseLen) {
                             phraseActuelle->interpreterInnerIndex++;
                             phraseActuelle = phraseActuelle->innerPhrase[phraseActuelle->interpreterInnerIndex - 1];
@@ -281,7 +281,7 @@ void interpreter(function_t* function, function_list_t* functions, val_t* result
                     if (phraseActuelle->interpreterInnerIndex == -1) {
                         phraseActuelle->interpreterInnerIndex = 0;
                     }
-                    if (get_bool(phraseActuelle->args[0]->valeur)) {
+                    if (get_bool(phraseActuelle->args[0]->valeur, phraseActuelle)) {
                         if (phraseActuelle->interpreterInnerIndex <= phraseActuelle->innerSeparator) {
                             phraseActuelle->interpreterInnerIndex++;
                             phraseActuelle = phraseActuelle->innerPhrase[phraseActuelle->interpreterInnerIndex - 1];
@@ -313,7 +313,7 @@ void interpreter(function_t* function, function_list_t* functions, val_t* result
                         phraseActuelle->interpreterInnerIndex = 0;
                     }
 
-                    if (get_bool(phraseActuelle->args[0]->valeur)) {
+                    if (get_bool(phraseActuelle->args[0]->valeur, phraseActuelle)) {
                         if (phraseActuelle->interpreterInnerIndex < phraseActuelle->innerPhraseLen) {
                             phraseActuelle->interpreterInnerIndex++;
                             phraseActuelle = phraseActuelle->innerPhrase[phraseActuelle->interpreterInnerIndex - 1];
@@ -336,7 +336,7 @@ void interpreter(function_t* function, function_list_t* functions, val_t* result
                         copy_val(phraseActuelle->variable->valeur, phraseActuelle->args[0]->valeur, true, true);
                     }
 
-                    if (get_as_float(phraseActuelle->variable->valeur) < get_as_float(phraseActuelle->args[1]->valeur)) {
+                    if (get_as_float(phraseActuelle->variable->valeur, phraseActuelle) < get_as_float(phraseActuelle->args[1]->valeur, phraseActuelle)) {
                         if (phraseActuelle->interpreterInnerIndex < phraseActuelle->innerPhraseLen) {
                             phraseActuelle->interpreterInnerIndex++;
                             phraseActuelle = phraseActuelle->innerPhrase[phraseActuelle->interpreterInnerIndex - 1];
@@ -345,15 +345,15 @@ void interpreter(function_t* function, function_list_t* functions, val_t* result
 
                             if (phraseActuelle->phraseId == POUR_AVEC_PAS) {
                                 if (phraseActuelle->variable->valeur->type == FLOAT || phraseActuelle->args[2]->valeur->type == FLOAT){
-                                    set_float(phraseActuelle->variable->valeur, get_as_float(phraseActuelle->variable->valeur) + get_as_float(phraseActuelle->args[2]->valeur));
+                                    set_float(phraseActuelle->variable->valeur, get_as_float(phraseActuelle->variable->valeur, phraseActuelle) + get_as_float(phraseActuelle->args[2]->valeur, phraseActuelle));
                                 }else{
-                                    set_int(phraseActuelle->variable->valeur, get_as_int(phraseActuelle->variable->valeur) + get_as_int(phraseActuelle->args[2]->valeur));
+                                    set_int(phraseActuelle->variable->valeur, get_as_int(phraseActuelle->variable->valeur, phraseActuelle) + get_as_int(phraseActuelle->args[2]->valeur, phraseActuelle));
                                 }
                             } else {
                                 if (phraseActuelle->variable->valeur->type == FLOAT){
-                                    set_float(phraseActuelle->variable->valeur, get_as_float(phraseActuelle->variable->valeur) + 1);
+                                    set_float(phraseActuelle->variable->valeur, get_as_float(phraseActuelle->variable->valeur, phraseActuelle) + 1);
                                 }else{
-                                    set_int(phraseActuelle->variable->valeur, get_as_int(phraseActuelle->variable->valeur) + 1);
+                                    set_int(phraseActuelle->variable->valeur, get_as_int(phraseActuelle->variable->valeur, phraseActuelle) + 1);
                                 }
                             }
                         }

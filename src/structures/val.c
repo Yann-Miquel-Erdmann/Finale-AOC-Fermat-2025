@@ -79,98 +79,98 @@ void copy_val(val_t* dest, val_t* src, bool cp_chaine, bool cp_liste) {
         dest->chaine = src->chaine;
     }
 }
-int get_int(val_t* v) {
+int get_int(val_t* v, phrase_t* p) {
     if (v->type != INT) {
-        custom_error("le type de val_t ne correspond pas, un entier est attendu", NULL);
+        custom_error("le type de val_t ne correspond pas, un entier est attendu", p);
     }
     return *((int*)&(v->value));
 }
 
-float get_float(val_t* v) {
+float get_float(val_t* v, phrase_t* p) {
     if (v->type != FLOAT) {
-        custom_error("le type de val_t ne correspond pas, un flottant est attendu", NULL);
+        custom_error("le type de val_t ne correspond pas, un flottant est attendu", p);
     }
     return *((float*)&(v->value));
 }
 
-bool get_bool(val_t* v) {
+bool get_bool(val_t* v, phrase_t* p) {
     if (v->type != BOOL) {
-        custom_error("le type de val_t ne correspond pas, un booléen est attendu", NULL);
+        custom_error("le type de val_t ne correspond pas, un booléen est attendu", p);
     }
     return *((bool*)&(v->value));
 }
 
-liste_t* get_liste(val_t* v) {
+liste_t* get_liste(val_t* v, phrase_t* p) {
     if (v->type != LISTE) {
-        custom_error("le type de val_t ne correspond pas, une liste est attendue", NULL);
+        custom_error("le type de val_t ne correspond pas, une liste est attendue", p);
     }
     return v->liste;
 }
 
-chaine_t* get_char(val_t* v) {
+chaine_t* get_char(val_t* v, phrase_t* p) {
     if (v->type != CHAINE_DE_CHAR) {
-        custom_error("le type de val_t ne correspond pas, une chaîne de caractère est attendue", NULL);
+        custom_error("le type de val_t ne correspond pas, une chaîne de caractère est attendue", p);
     }
     return v->chaine;
 }
 
-int get_as_int(val_t* v) {
+int get_as_int(val_t* v, phrase_t* p) {
     switch (v->type) {
         case INT:
-            return get_int(v);
+            return get_int(v, p);
             break;
         case FLOAT:
-            return (int)get_float(v);
+            return (int)get_float(v, p);
             break;
         case BOOL:
-            if (get_bool(v)) {
+            if (get_bool(v, p)) {
                 return 1;
             } else {
                 return 0;
             }
             break;
         default:
-            custom_error("le type de val_t n'est pas reconnu dans get_as_int", NULL);
+            custom_error("le type de val_t n'est pas reconnu dans get_as_int", p);
             return 0;
             break;
     }
 }
 
-float get_as_float(val_t* v) {
+float get_as_float(val_t* v, phrase_t* p) {
     switch (v->type) {
         case INT:
-            return (float)get_int(v);
+            return (float)get_int(v, p);
             break;
         case FLOAT:
-            return get_float(v);
+            return get_float(v, p);
             break;
         case BOOL:
-            if (get_bool(v)) {
+            if (get_bool(v, p)) {
                 return 1.0;
             } else {
                 return 0.0;
             }
             break;
         default:
-            custom_error("le type de val_t n'est pas reconnu dans get_as_float", NULL);
+            custom_error("le type de val_t n'est pas reconnu dans get_as_float", p);
             return 0.0;
             break;
     }
 }
 
-bool get_as_bool(val_t* v) {
+bool get_as_bool(val_t* v, phrase_t* p) {
     switch (v->type) {
         case INT:
-            return get_int(v) != 0;
+            return get_int(v, p) != 0;
             break;
         case FLOAT:
-            return get_float(v) != 0.0;
+            return get_float(v, p) != 0.0;
             break;
         case BOOL:
-            return get_bool(v);
+            return get_bool(v, p);
             break;
         default:
-            custom_error("le type de val_t n'est pas reconnu dans get_as_bool", NULL);
+            custom_error("le type de val_t n'est pas reconnu dans get_as_bool", p);
             return false;
             break;
     }
@@ -203,10 +203,10 @@ void set_undefined(val_t* v) {
     v->type = -1;
 }
 
-void print_val(val_t* v, bool new_line) {
+void print_val(val_t* v, bool new_line, phrase_t* p) {
     switch (v->type) {
         case BOOL: {
-            if (get_bool(v)) {
+            if (get_bool(v, p)) {
                 printf("vrai");
             } else {
                 printf("faux");
@@ -215,14 +215,14 @@ void print_val(val_t* v, bool new_line) {
         }
 
         case INT: {
-            char* str = str_from_int(get_int(v));
+            char* str = str_from_int(get_int(v, p));
             printf("%s", str);
             free(str);
             break;
         }
 
         case FLOAT: {
-            char* str = str_from_float(get_float(v));
+            char* str = str_from_float(get_float(v, p));
             printf("%s", str);
             free(str);
             break;
@@ -234,7 +234,7 @@ void print_val(val_t* v, bool new_line) {
                 if (i != 0) {
                     printf(", ");
                 }
-                print_val(v->liste->valeurs[i], false);
+                print_val(v->liste->valeurs[i], false, p);
             }
             printf("]");
             break;
@@ -245,11 +245,11 @@ void print_val(val_t* v, bool new_line) {
             break;
         
         case UNDEFINED:
-            printf("Undefined");
+            printf("Rien");
             break;
 
         default:
-            custom_error("le type de val_t n'est pas reconnu dans print_val", NULL);
+            custom_error("le type de val_t n'est pas reconnu dans print_val", p);
             break;
     }
 

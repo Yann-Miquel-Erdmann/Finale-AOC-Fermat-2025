@@ -174,13 +174,13 @@ void _printPhrase(phrase_t* phrase, int decalage, int last_elem) {
     if (phrase->expr && phrase->valeur->type != -1) {
         switch (phrase->valeur->type) {
             case INT:
-                printf("  ->  %d", get_int(phrase->valeur));
+                printf("  ->  %d", get_int(phrase->valeur, phrase));
                 break;
             case FLOAT:
-                printf("  ->  %f", get_float(phrase->valeur));
+                printf("  ->  %f", get_float(phrase->valeur, phrase));
                 break;
             case BOOL:
-                if (get_bool(phrase->valeur)) {
+                if (get_bool(phrase->valeur, phrase)) {
                     printf("  ->  true");
                 } else {
                     printf("  ->  false");

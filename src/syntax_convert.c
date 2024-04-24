@@ -524,7 +524,7 @@ void tokenise(phrase_t* phrase, function_t* function, function_list_t* func_list
             break;
         case EXPR_LISTE_ELEM :
             if (phrase->innerPhraseLen > 0 || phrase->argsLen == 0){
-                custom_error("Invalid Syntax, liste d'éléments aumoins prend 1 arguments", phrase);
+                custom_error("Invalid Syntax, liste d'éléments au moins prend 1 arguments", phrase);
             }
             phrase->phraseId = EXPR_LISTE_ELEM;
             phrase->valeur->type = LISTE;
