@@ -212,9 +212,13 @@ void interpreter(function_t* function, function_list_t* functions, val_t* result
                 
                 case EXPR_LISTE_ELEM :{
                     if (phraseActuelle->valeur->to_free_list){
-                        free_liste_t(phraseActuelle->valeur->liste, true, true);
+                        vider_liste(phraseActuelle->valeur->liste);
                     }
-                    phraseActuelle->valeur->liste = new_liste_t();
+                    if (phraseActuelle->valeur->type != LISTE){
+                        phraseActuelle->valeur->type = LISTE;
+                        phraseActuelle->valeur->liste = new_liste_t();
+                    }
+                    
                     phraseActuelle->valeur->to_free_list = true;
                     for (int i = 0; i< phraseActuelle->argsLen; i++){
                         ajout(phraseActuelle->valeur->liste, phraseActuelle->args[i]->valeur);
@@ -225,31 +229,31 @@ void interpreter(function_t* function, function_list_t* functions, val_t* result
                 }
                 
                 case ACCESSION_LISTE: {
-                    copy_val(phraseActuelle->valeur, accession(phraseActuelle->variable->valeur->liste, get_int(phraseActuelle->args[0]->valeur, phraseActuelle), phraseActuelle), true, true);
+                    copy_val(phraseActuelle->valeur, accession(phraseActuelle->args[0]->valeur->liste, get_int(phraseActuelle->args[0]->valeur), phraseActuelle), true, true);
                     phraseActuelle->interpreterArgsIndex = 0;
                     phraseActuelle = phraseActuelle->parentPhrase;
                     break;
                 }
                 case MODIFICATION_LISTE: {
-                    modification(phraseActuelle->variable->valeur->liste, get_int(phraseActuelle->args[0]->valeur, phraseActuelle), phraseActuelle->args[1]->valeur, phraseActuelle);
+                    modification(phraseActuelle->args[0]->valeur->liste, get_int(phraseActuelle->args[1]->valeur), phraseActuelle->args[1]->valeur, phraseActuelle);
                     phraseActuelle->interpreterArgsIndex = 0;
                     phraseActuelle = phraseActuelle->parentPhrase;
                     break;
                 }
                 case AJOUT_LISTE: {
-                    ajout(phraseActuelle->variable->valeur->liste, phraseActuelle->args[0]->valeur);
+                    ajout(phraseActuelle->args[0]->valeur->liste, phraseActuelle->args[1]->valeur);
                     phraseActuelle->interpreterArgsIndex = 0;
                     phraseActuelle = phraseActuelle->parentPhrase;
                     break;
                 }
                 case SUPPRESSION_LISTE: {
-                    suppression(phraseActuelle->variable->valeur->liste, get_int(phraseActuelle->args[0]->valeur, phraseActuelle), phraseActuelle);
+                    suppression(phraseActuelle->args[0]->valeur->liste, get_int(phraseActuelle->args[1]->valeur), phraseActuelle);
                     phraseActuelle->interpreterArgsIndex = 0;
                     phraseActuelle = phraseActuelle->parentPhrase;
                     break;
                 }
                 case INSERTION_LISTE: {
-                    inserer(phraseActuelle->variable->valeur->liste, get_int(phraseActuelle->args[1]->valeur, phraseActuelle), phraseActuelle->args[0]->valeur, phraseActuelle);
+                    inserer(phraseActuelle->args[1]->valeur->liste, get_int(phraseActuelle->args[2]->valeur), phraseActuelle->args[0]->valeur, phraseActuelle);
                     phraseActuelle->interpreterArgsIndex = 0;
                     phraseActuelle = phraseActuelle->parentPhrase;
                     break;
