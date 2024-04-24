@@ -522,7 +522,6 @@ void tokenise(phrase_t* phrase, function_t* function, function_list_t* func_list
                 custom_error("Syntaxe invalide, liste d'éléments au moins prend 1 arguments", phrase);
             }
             phrase->phraseId = EXPR_LISTE_ELEM;
-            phrase->valeur->type = LISTE;
             for (int i = 0; i < phrase->argsLen; i++) {
                 tokenise(phrase->args[i], function, func_list, func_call_list);
             }

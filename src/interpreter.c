@@ -229,13 +229,13 @@ void interpreter(function_t* function, function_list_t* functions, val_t* result
                 }
                 
                 case ACCESSION_LISTE: {
-                    copy_val(phraseActuelle->valeur, accession(phraseActuelle->args[0]->valeur->liste, get_int(phraseActuelle->args[0]->valeur), phraseActuelle), true, true);
+                    copy_val(phraseActuelle->valeur, accession(phraseActuelle->args[0]->valeur->liste, get_int(phraseActuelle->args[1]->valeur, phraseActuelle), phraseActuelle), true, true);
                     phraseActuelle->interpreterArgsIndex = 0;
                     phraseActuelle = phraseActuelle->parentPhrase;
                     break;
                 }
                 case MODIFICATION_LISTE: {
-                    modification(phraseActuelle->args[0]->valeur->liste, get_int(phraseActuelle->args[1]->valeur), phraseActuelle->args[1]->valeur, phraseActuelle);
+                    modification(phraseActuelle->args[0]->valeur->liste, get_int(phraseActuelle->args[1]->valeur, phraseActuelle), phraseActuelle->args[2]->valeur, phraseActuelle);
                     phraseActuelle->interpreterArgsIndex = 0;
                     phraseActuelle = phraseActuelle->parentPhrase;
                     break;
@@ -247,13 +247,13 @@ void interpreter(function_t* function, function_list_t* functions, val_t* result
                     break;
                 }
                 case SUPPRESSION_LISTE: {
-                    suppression(phraseActuelle->args[0]->valeur->liste, get_int(phraseActuelle->args[1]->valeur), phraseActuelle);
+                    suppression(phraseActuelle->args[0]->valeur->liste, get_int(phraseActuelle->args[1]->valeur,phraseActuelle), phraseActuelle);
                     phraseActuelle->interpreterArgsIndex = 0;
                     phraseActuelle = phraseActuelle->parentPhrase;
                     break;
                 }
                 case INSERTION_LISTE: {
-                    inserer(phraseActuelle->args[1]->valeur->liste, get_int(phraseActuelle->args[2]->valeur), phraseActuelle->args[0]->valeur, phraseActuelle);
+                    inserer(phraseActuelle->args[1]->valeur->liste, get_int(phraseActuelle->args[2]->valeur, phraseActuelle), phraseActuelle->args[0]->valeur, phraseActuelle);
                     phraseActuelle->interpreterArgsIndex = 0;
                     phraseActuelle = phraseActuelle->parentPhrase;
                     break;

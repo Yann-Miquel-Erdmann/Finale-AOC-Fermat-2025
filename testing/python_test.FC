@@ -1,7 +1,7 @@
 Soit swap une fonction qui lorsqu'elle est appelée avec a, i0, i1 exécute:
-    Soit c L'élément de la liste a à l'indice La variable i1??.
-    Remplacer l'élément de la liste a à l'indice La variable i1? par L'élément de la liste a à l'indice La variable i0??.
-    Remplacer l'élément de la liste a à l'indice La variable i0? par La variable c?.
+ Soit c L'élément de La liste a? à l'indice La variable i1??.
+ Remplacer l'élément de La liste a? à l'indice La variable i1? par L'élément de La liste a? à l'indice La variable i0??.
+    Remplacer l'élément de La liste a? à l'indice La variable i0? par La variable c?.
     Renvoyer La liste a?.
 .
 
@@ -10,26 +10,26 @@ Soit quicksort une fonction qui lorsqu'elle est appelée avec a, l0, hi exécute
         Renvoyer La liste a?.
     .
     Soit result La valeur renvoyée par la fonction partition avec les arguments La variable a?, La variable l0?, La variable hi??.
-    Soit p L'élément de la liste result à l'indice L'entier zéro??.
-    Soit a L'élément de la liste result à l'indice L'entier un??.
+    Soit p L'élément de La liste result? à l'indice L'entier zéro??.
+    Soit a L'élément de La liste result? à l'indice L'entier un??.
     Que a devienne La valeur renvoyée par la fonction quicksort avec les arguments La variable a?, La somme de La variable p? et de L'entier un??, La variable hi??.
     Que a devienne La valeur renvoyée par la fonction quicksort avec les arguments La variable a?, La variable l0?, La différence de La variable p? et de L'entier un???.
     Renvoyer La liste a?.
 .
 
 Soit partition une fonction qui lorsqu'elle est appelée avec a, l0, hi exécute:
-    Soit pivot L'élément de la liste a à l'indice La variable hi??.
+    Soit pivot L'élément de La liste a? à l'indice La variable hi??.
     Soit i La variable l0?.
     Pour j allant de La variable l0? jusqu'à La variable hi? faire:
-        Si La valeur de L'élément de la liste a à l'indice La variable j?? est plus petite que la valeur de La variable pivot?? alors faire:
+        Si La valeur de L'élément de La liste a? à l'indice La variable j?? est plus petite que la valeur de La variable pivot?? alors faire:
             Que a devienne La valeur renvoyée par la fonction swap avec les arguments La variable a?, La variable i?, La variable j??.
             Que i devienne La somme de La variable i? et de L'entier un??.
         .
     .
     Que a devienne La valeur renvoyée par la fonction swap avec les arguments La variable a?, La variable i?, La variable hi??.
     Soit b La liste vide?.
-    Ajouter à la liste b La variable i?.
-    Ajouter à la liste b La variable a?.
+    Ajouter à La liste b? La variable i?.
+    Ajouter à La liste b? La variable a?.
     Renvoyer La variable b?.
 .
 
