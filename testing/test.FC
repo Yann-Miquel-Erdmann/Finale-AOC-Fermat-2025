@@ -36,5 +36,4 @@ Soit partition une fonction qui lorsqu'elle est appelée avec a, l0, hi exécute
 Soit l La liste des éléments L'entier dix?, L'entier trois?, L'entier six?, L'entier sept?, L'entier neuf?, L'entier cinq?, L'entier deux?, L'entier huit?, L'entier un?, L'entier quatre??.
 
 Soit l2 La valeur renvoyée par la fonction quicksort avec les arguments La liste l?, L'entier zéro?, La différence de La taille de La liste l?? et de L'entier un???.
-Afficher La variable l?.
 Afficher La variable l2?.
