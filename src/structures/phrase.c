@@ -187,6 +187,8 @@ void _printPhrase(phrase_t* phrase, int decalage, int last_elem) {
                 }
 
                 break;
+            case CHAINE_DE_CHAR:
+                printf("  ->  %s", phrase->valeur->chaine->chars);
             default:
                 break;
         }

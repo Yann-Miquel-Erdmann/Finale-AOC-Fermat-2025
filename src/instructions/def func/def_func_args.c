@@ -21,7 +21,7 @@ bool test_inst_def_func_args(phrase_t* phrase, function_list_t* function_list) {
     for (int i = 1; i < len; i++) {
         addToVariableList(new_func->env, new_variable(result[i], new_val_t(UNDEFINED)));
     }
-
+    new_func->function_arg_count = len-1;
     phrase->function = new_func;
     addToFunctionList(function_list, new_func);
     

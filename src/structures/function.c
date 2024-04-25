@@ -33,6 +33,7 @@ function_t* new_function(char* nom, phrase_t* ast) {
 function_t* copy_function(function_t* func) {
     function_t* new_func = malloc(sizeof(function_t));
     new_func->nom = malloc((int)strlen(func->nom) + 1);
+    new_func->function_arg_count = func->function_arg_count;
     strcpy(new_func->nom, func->nom);
     new_func->env = copy_environnement(func->env);
     new_func->ast = copy_phrase(func->ast,NULL, new_func->env);

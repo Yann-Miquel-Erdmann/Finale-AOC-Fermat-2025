@@ -11,6 +11,7 @@ typedef struct function{
     char* nom;
     phrase_t* ast;
     environnement_t* env;
+    int function_arg_count;
 } function_t;
 
 void free_function_t(function_t* f);
