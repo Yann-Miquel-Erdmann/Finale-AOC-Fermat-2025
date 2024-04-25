@@ -1,117 +1,122 @@
 [
-    {
-        "name": "Affichage entier",
-        "code": "Afficher L'entier trois?.",
-        "output": "trois\n"
-    },
-    {
-        "name": "Affichage flottant",
-        "code": "Afficher Le flottant trois virgule sept?.",
-        "output": "trois virgule soixante-dix millions huit\n"
-    },
-    {
-        "name": "Affichage booléen",
-        "code": "Afficher Le booléen vrai?.",
-        "output": "vrai\n"
-    },
-    {
-        "name": "Affichage booléen",
-        "code": "Afficher Le booléen faux?.",
-        "output": "faux\n"
-    },
-    {
-        "name": "Affichage chaine de caractères",
-        "code": "Afficher La chaîne de caractères \"Hello World!\"?.",
-        "output": "Hello World!\n"
-    },
-    {
-        "name": "Insertion liste",
-        "code": "Soit l La liste vide?.\nInsérer L'entier deux? dans la liste l à l'indice L'entier zéro?.\nAfficher La liste l?.",
-        "output": "[deux]\n"
-    },
-    {
-        "name": "Longueur liste",
-        "code": "Soit l La liste vide?.\nAfficher La taille de La liste l??.",
-        "output": "zéro\n"
-    },
-    {
-        "name": "Longueur chaine de caractères",
-        "code": "Afficher La taille de La chaîne de caractères \"Hello\"??.",
-        "output": "cinq\n"
-    },
-    {
-        "name": "Si avec modif de la condition",
-        "code": "Soit v L'entier trois?.\nSi La valeur de La variable v? est égale à la valeur de L'entier trois?? alors faire: \nQue v devienne L'entier sept?.\nAfficher La variable v?.\n.",
-        "output": "sept\n"
-    },
-    {
-        "name": "Si alors sinon avec si",
-        "code": "Soit v L'entier deux?.\nSi La valeur de La variable v? est égale à la valeur de L'entier deux?? alors faire: \nQue v devienne L'entier sept?.\nAfficher La variable v?.\nsinon faire:\nAfficher L'entier trois?.\n.",
-        "output": "sept\n"
-    },
-    {
-        "name": "Si alors sinon avec sinon",
-        "code": "Soit v L'entier un?.\nSi La valeur de La variable v? est égale à la valeur de L'entier deux?? alors faire: \nQue v devienne L'entier sept?.\nAfficher La variable v?.\nsinon faire:\nAfficher L'entier trois?.\n.",
-        "output": "trois\n"
-    },
-    {
-        "name": "Tant que",
-        "code": "Soit v L'entier zéro?.\nTant que La valeur de La variable v? est strictement plus petite que la valeur de L'entier dix?? faire:\nAfficher La variable v?.\nQue v devienne La somme de La variable v? et de L'entier un??.\n.",
-        "output": "zéro\nun\ndeux\ntrois\nquatre\ncinq\nsix\nsept\nhuit\nneuf\n"
-    },
-    {
-        "name": "Valeur renvoyée fonction",
-        "code": "Soit f une fonction qui lorsqu'elle est appelée avec x,y exécute:\nAfficher Le quotient de La variable x? par La variable y??.\nRenvoyer La somme de La variable x? et de La variable y??.\n.\n\nSoit x La valeur renvoyée par la fonction f avec les arguments L'entier deux?, L'entier un??.\nAfficher La variable x?.",
-        "output": "deux\ntrois\n"
-    },
-    {
-        "name": "for sans pas",
-        "code": "Pour i allant de L'entier zéro? jusqu'à L'entier trois? faire:\nAfficher La variable i?.\n.",
-        "output": "zéro\nun\ndeux\n"
-    },
-    {
-        "name": "for avec pas ",
-        "code": "Pour i allant de L'entier zéro? jusqu'à L'entier trois? en utilisant un pas de L'entier deux? faire:\nAfficher La variable i?.\n.",
-        "output": "zéro\ndeux\n"
-    },
-    {
-        "name": "remplissage liste par boucle",
-        "code": "Soit l La liste vide?.\nPour i allant de L'entier zéro? jusqu'à L'entier dix? faire:\nAjouter à la liste l La variable i?.\nAfficher La variable i?.\nAfficher La liste l?.\n.\n",
-        "output": "zéro\n[zéro]\nun\n[zéro, un]\ndeux\n[zéro, un, deux]\ntrois\n[zéro, un, deux, trois]\nquatre\n[zéro, un, deux, trois, quatre]\ncinq\n[zéro, un, deux, trois, quatre, cinq]\nsix\n[zéro, un, deux, trois, quatre, cinq, six]\nsept\n[zéro, un, deux, trois, quatre, cinq, six, sept]\nhuit\n[zéro, un, deux, trois, quatre, cinq, six, sept, huit]\nneuf\n[zéro, un, deux, trois, quatre, cinq, six, sept, huit, neuf]\n"
-    },
-    {
-        "name": "remplissage liste par boucle dans fct",
-        "code": "Soit f une fonction qui lorsqu'elle est appelée avec n exécute:\nSoit l La liste vide?.\nPour i allant de L'entier zéro? jusqu'à La variable n? faire:\nAjouter à la liste l La variable i?.\nAfficher La variable i?.\nAfficher La liste l?.\n.\n.\nExécuter la fonction f avec les arguments L'entier dix?.",
-        "output": "zéro\n[zéro]\nun\n[zéro, un]\ndeux\n[zéro, un, deux]\ntrois\n[zéro, un, deux, trois]\nquatre\n[zéro, un, deux, trois, quatre]\ncinq\n[zéro, un, deux, trois, quatre, cinq]\nsix\n[zéro, un, deux, trois, quatre, cinq, six]\nsept\n[zéro, un, deux, trois, quatre, cinq, six, sept]\nhuit\n[zéro, un, deux, trois, quatre, cinq, six, sept, huit]\nneuf\n[zéro, un, deux, trois, quatre, cinq, six, sept, huit, neuf]\n"
-    },
-    {
-        "name": "nombre à virgule avec zéro",
-        "code": "Soit x Le flottant zéro virgule zéro cinq?.\nAfficher La variable x?.\n",
-        "output": "zéro virgule zéro cinq\n"
-    },
-    {
-        "name": "quotient entier",
-        "code": "Afficher Le quotient entier de L'entier un? par L'entier deux??.",
-        "output": "zéro\n"
-    },
-    {
-        "name": "quotient",
-        "code": "Afficher Le quotient de L'entier un? par L'entier deux??.",
-        "output": "zéro virgule cinq\n"
-    },
-    {
-        "name": "binary_conversion",
-        "code": "Soit conv_bin une fonction qui lorsqu'elle est appelée avec x exécute:\n    Soit l La liste vide?.\n    Tant que La valeur de La variable x? est strictement plus grande que la valeur de L'entier zéro?? faire:\n        Afficher La variable x?.\n        Afficher Le reste de La variable x? par L'entier deux??.\n        Ajouter à la liste l Le reste de La variable x? par L'entier deux??.\n        Que x devienne Le quotient entier de La variable x? par L'entier deux??.\n    .\n    Que l devienne La valeur renvoyée par la fonction renverser avec les arguments La liste l??.\n    Afficher La liste l?.\n.\nSoit renverser une fonction qui lorsqu'elle est appelée avec l exécute:\n    Soit x.\n    Pour i allant de La taille de La liste l?? jusqu'à Le quotient entier de La taille de La liste l?? par L'entier deux?? faire:\n        Que x devienne L'élément de la liste l à l'indice La différence de La différence de La taille de La liste l?? et de L'entier un?? et de La variable i???.\n        Remplacer l'élément de la liste l à l'indice La différence de La différence de La taille de La liste l?? et de L'entier un?? et de La variable i?? par L'élément de la liste l à l'indice La variable i??.\n\n        Remplacer l'élément de la liste l à l'indice La variable i? par La variable x?.\n    .\n    Renvoyer La liste l?.\n.\n\nExécuter la fonction conv_bin avec les arguments L'entier dix?.\n",
-        "output": "dix\nzéro\ncinq\nun\ndeux\nzéro\nun\nun\n[zéro, un, zéro, un]\n"
-    },
-    {
-        "name": "list of multiple types",
-        "code": "Soit l1 La liste vide?.\nAjouter à la liste l1 La liste vide?.\nAjouter à la liste l1 L'entier un?.\n\nAfficher La liste l1?.\n",
-        "output": "[[], un]\n"
-    },
-    {
-        "name": "Quick sort",
-        "code": "Soit swap une fonction qui lorsqu'elle est appelée avec a, i0, i1 exécute:\n    Soit c L'élément de la liste a à l'indice La variable i1??.\n    Remplacer l'élément de la liste a à l'indice La variable i1? par L'élément de la liste a à l'indice La variable i0??.\n    Remplacer l'élément de la liste a à l'indice La variable i0? par La variable c?.\n    Renvoyer La liste a?.\n.\n\nSoit quicksort une fonction qui lorsqu'elle est appelée avec a, l0, hi exécute:\n    Si On a La valeur de La variable l0? est plus grande que la valeur de La variable hi?? ou La valeur de La variable l0? est strictement plus petite que la valeur de L'entier zéro??? alors faire:\n        Renvoyer La liste a?.\n    .\n    Soit result La valeur renvoyée par la fonction partition avec les arguments La variable a?, La variable l0?, La variable hi??.\n    Soit p L'élément de la liste result à l'indice L'entier zéro??.\n    Soit a L'élément de la liste result à l'indice L'entier un??.\n    Que a devienne La valeur renvoyée par la fonction quicksort avec les arguments La variable a?, La somme de La variable p? et de L'entier un??, La variable hi??.\n    Que a devienne La valeur renvoyée par la fonction quicksort avec les arguments La variable a?, La variable l0?, La différence de La variable p? et de L'entier un???.\n    Renvoyer La liste a?.\n.\n\nSoit partition une fonction qui lorsqu'elle est appelée avec a, l0, hi exécute:\n    Soit pivot L'élément de la liste a à l'indice La variable hi??.\n    Soit i La variable l0?.\n    Pour j allant de La variable l0? jusqu'à La variable hi? faire:\n        Si La valeur de L'élément de la liste a à l'indice La variable j?? est plus petite que la valeur de La variable pivot?? alors faire:\n            Que a devienne La valeur renvoyée par la fonction swap avec les arguments La variable a?, La variable i?, La variable j??.\n            Que i devienne La somme de La variable i? et de L'entier un??.\n        .\n    .\n    Que a devienne La valeur renvoyée par la fonction swap avec les arguments La variable a?, La variable i?, La variable hi??.\n    Soit b La liste vide?.\n    Ajouter à la liste b La variable i?.\n    Ajouter à la liste b La variable a?.\n    Renvoyer La variable b?.\n.\n\nSoit l La liste des éléments L'entier dix?, L'entier trois?, L'entier six?, L'entier sept?, L'entier neuf?, L'entier cinq?, L'entier deux?, L'entier huit?, L'entier un?, L'entier quatre??.\n\nSoit l2 La valeur renvoyée par la fonction quicksort avec les arguments La liste l?, L'entier zéro?, La différence de La taille de La liste l?? et de L'entier un???.\nAfficher La variable l2?.\n",
-        "output": "[un, deux, trois, quatre, cinq, six, sept, huit, neuf, dix]\n"
-    }
+  {
+    "name": "Affichage entier",
+    "code": "Afficher L'entier trois?.",
+    "output": "trois\n"
+  },
+  {
+    "name": "Affichage flottant",
+    "code": "Afficher Le flottant trois virgule sept?.",
+    "output": "trois virgule soixante-dix millions huit\n"
+  },
+  {
+    "name": "Affichage booléen",
+    "code": "Afficher Le booléen vrai?.",
+    "output": "vrai\n"
+  },
+  {
+    "name": "Affichage booléen",
+    "code": "Afficher Le booléen faux?.",
+    "output": "faux\n"
+  },
+  {
+    "name": "Affichage chaine de caractères",
+    "code": "Afficher La chaîne de caractères \"Hello World!\"?.",
+    "output": "Hello World!\n"
+  },
+  {
+    "name": "Insertion liste",
+    "code": "Soit l La liste vide?.\nInsérer L'entier deux? dans La liste l? à l'indice L'entier zéro?.\nAfficher La liste l?.",
+    "output": "[deux]\n"
+  },
+  {
+    "name": "Longueur liste",
+    "code": "Soit l La liste vide?.\nAfficher La taille de La liste l??.",
+    "output": "zéro\n"
+  },
+  {
+    "name": "Longueur chaine de caractères",
+    "code": "Afficher La taille de La chaîne de caractères \"Hello\"??.",
+    "output": "cinq\n"
+  },
+  {
+    "name": "Si avec modif de la condition",
+    "code": "Soit v L'entier trois?.\nSi La valeur de La variable v? est égale à la valeur de L'entier trois?? alors faire: \nQue v devienne L'entier sept?.\nAfficher La variable v?.\n.",
+    "output": "sept\n"
+  },
+  {
+    "name": "Si alors sinon avec si",
+    "code": "Soit v L'entier deux?.\nSi La valeur de La variable v? est égale à la valeur de L'entier deux?? alors faire: \nQue v devienne L'entier sept?.\nAfficher La variable v?.\nsinon faire:\nAfficher L'entier trois?.\n.",
+    "output": "sept\n"
+  },
+  {
+    "name": "Si alors sinon avec sinon",
+    "code": "Soit v L'entier un?.\nSi La valeur de La variable v? est égale à la valeur de L'entier deux?? alors faire: \nQue v devienne L'entier sept?.\nAfficher La variable v?.\nsinon faire:\nAfficher L'entier trois?.\n.",
+    "output": "trois\n"
+  },
+  {
+    "name": "Tant que",
+    "code": "Soit v L'entier zéro?.\nTant que La valeur de La variable v? est strictement plus petite que la valeur de L'entier dix?? faire:\nAfficher La variable v?.\nQue v devienne La somme de La variable v? et de L'entier un??.\n.",
+    "output": "zéro\nun\ndeux\ntrois\nquatre\ncinq\nsix\nsept\nhuit\nneuf\n"
+  },
+  {
+    "name": "Valeur renvoyée fonction",
+    "code": "Soit f une fonction qui lorsqu'elle est appelée avec x,y exécute:\nAfficher Le quotient de La variable x? par La variable y??.\nRenvoyer La somme de La variable x? et de La variable y??.\n.\n\nSoit x La valeur renvoyée par la fonction f avec les arguments L'entier deux?, L'entier un??.\nAfficher La variable x?.",
+    "output": "deux\ntrois\n"
+  },
+  {
+    "name": "for sans pas",
+    "code": "Pour i allant de L'entier zéro? jusqu'à L'entier trois? faire:\nAfficher La variable i?.\n.",
+    "output": "zéro\nun\ndeux\n"
+  },
+  {
+    "name": "for avec pas ",
+    "code": "Pour i allant de L'entier zéro? jusqu'à L'entier trois? en utilisant un pas de L'entier deux? faire:\nAfficher La variable i?.\n.",
+    "output": "zéro\ndeux\n"
+  },
+  {
+    "name": "remplissage liste par boucle",
+    "code": "Soit l La liste vide?.\nPour i allant de L'entier zéro? jusqu'à L'entier dix? faire:\nAjouter à La liste l? La variable i?.\nAfficher La variable i?.\nAfficher La liste l?.\n.\n",
+    "output": "zéro\n[zéro]\nun\n[zéro, un]\ndeux\n[zéro, un, deux]\ntrois\n[zéro, un, deux, trois]\nquatre\n[zéro, un, deux, trois, quatre]\ncinq\n[zéro, un, deux, trois, quatre, cinq]\nsix\n[zéro, un, deux, trois, quatre, cinq, six]\nsept\n[zéro, un, deux, trois, quatre, cinq, six, sept]\nhuit\n[zéro, un, deux, trois, quatre, cinq, six, sept, huit]\nneuf\n[zéro, un, deux, trois, quatre, cinq, six, sept, huit, neuf]\n"
+  },
+  {
+    "name": "remplissage liste par boucle dans fct",
+    "code": "Soit f une fonction qui lorsqu'elle est appelée avec n exécute:\nSoit l La liste vide?.\nPour i allant de L'entier zéro? jusqu'à La variable n? faire:\nAjouter à La liste l? La variable i?.\nAfficher La variable i?.\nAfficher La liste l?.\n.\n.\nExécuter la fonction f avec les arguments L'entier dix?.",
+    "output": "zéro\n[zéro]\nun\n[zéro, un]\ndeux\n[zéro, un, deux]\ntrois\n[zéro, un, deux, trois]\nquatre\n[zéro, un, deux, trois, quatre]\ncinq\n[zéro, un, deux, trois, quatre, cinq]\nsix\n[zéro, un, deux, trois, quatre, cinq, six]\nsept\n[zéro, un, deux, trois, quatre, cinq, six, sept]\nhuit\n[zéro, un, deux, trois, quatre, cinq, six, sept, huit]\nneuf\n[zéro, un, deux, trois, quatre, cinq, six, sept, huit, neuf]\n"
+  },
+  {
+    "name": "nombre à virgule avec zéro",
+    "code": "Soit x Le flottant zéro virgule zéro cinq?.\nAfficher La variable x?.\n",
+    "output": "zéro virgule zéro cinq\n"
+  },
+  {
+    "name": "quotient entier",
+    "code": "Afficher Le quotient entier de L'entier un? par L'entier deux??.",
+    "output": "zéro\n"
+  },
+  {
+    "name": "quotient",
+    "code": "Afficher Le quotient de L'entier un? par L'entier deux??.",
+    "output": "zéro virgule cinq\n"
+  },
+  {
+    "name": "binary_conversion",
+    "code": "Soit conv_bin une fonction qui lorsqu'elle est appelée avec x exécute:\n    Soit l La liste vide?.\n    Tant que La valeur de La variable x? est strictement plus grande que la valeur de L'entier zéro?? faire:\n        Afficher La variable x?.\n        Afficher Le reste de La variable x? par L'entier deux??.\n        Ajouter à La liste l? Le reste de La variable x? par L'entier deux??.\n        Que x devienne Le quotient entier de La variable x? par L'entier deux??.\n    .\n    Que l devienne La valeur renvoyée par la fonction renverser avec les arguments La liste l??.\n    Afficher La liste l?.\n.\nSoit renverser une fonction qui lorsqu'elle est appelée avec l exécute:\n    Soit x.\n    Pour i allant de La taille de La liste l?? jusqu'à Le quotient entier de La taille de La liste l?? par L'entier deux?? faire:\n        Que x devienne L'élément de La liste l? à l'indice La différence de La différence de La taille de La liste l?? et de L'entier un?? et de La variable i???.\n        Remplacer l'élément de La liste l? à l'indice La différence de La différence de La taille de La liste l?? et de L'entier un?? et de La variable i?? par L'élément de La liste l? à l'indice La variable i??.\n\n        Remplacer l'élément de La liste l? à l'indice La variable i? par La variable x?.\n    .\n    Renvoyer La liste l?.\n.\n\nExécuter la fonction conv_bin avec les arguments L'entier dix?.\n",
+    "output": "dix\nzéro\ncinq\nun\ndeux\nzéro\nun\nun\n[zéro, un, zéro, un]\n"
+  },
+  {
+    "name": "list of multiple types",
+    "code": "Soit l1 La liste vide?.\nAjouter à La liste l1? La liste vide?.\nAjouter à La liste l1? L'entier un?.\n\nAfficher La liste l1?.\n",
+    "output": "[[], un]\n"
+  },
+  {
+    "name": "Renvoi de Rien",
+    "code": "Soit f une fonction qui lorsqu'elle est appelée exécute:\n    Renvoyer Rien?.\n.\n\nAfficher La valeur renvoyée par la fonction f?.\n",
+    "output": "Rien\n"
+  },
+  {
+    "name": "Quick sort",
+    "code": "Soit swap une fonction qui lorsqu'elle est appelée avec a, i0, i1 exécute:\n Soit c L'élément de La liste a? à l'indice La variable i1??.\n Remplacer l'élément de La liste a? à l'indice La variable i1? par L'élément de La liste a? à l'indice La variable i0??.\n    Remplacer l'élément de La liste a? à l'indice La variable i0? par La variable c?.\n    Renvoyer La liste a?.\n.\n\nSoit quicksort une fonction qui lorsqu'elle est appelée avec a, l0, hi exécute:\n    Si On a La valeur de La variable l0? est plus grande que la valeur de La variable hi?? ou La valeur de La variable l0? est strictement plus petite que la valeur de L'entier zéro??? alors faire:\n        Renvoyer La liste a?.\n    .\n    Soit result La valeur renvoyée par la fonction partition avec les arguments La variable a?, La variable l0?, La variable hi??.\n    Soit p L'élément de La liste result? à l'indice L'entier zéro??.\n    Soit a L'élément de La liste result? à l'indice L'entier un??.\n    Que a devienne La valeur renvoyée par la fonction quicksort avec les arguments La variable a?, La somme de La variable p? et de L'entier un??, La variable hi??.\n    Que a devienne La valeur renvoyée par la fonction quicksort avec les arguments La variable a?, La variable l0?, La différence de La variable p? et de L'entier un???.\n    Renvoyer La liste a?.\n.\n\nSoit partition une fonction qui lorsqu'elle est appelée avec a, l0, hi exécute:\n    Soit pivot L'élément de La liste a? à l'indice La variable hi??.\n    Soit i La variable l0?.\n    Pour j allant de La variable l0? jusqu'à La variable hi? faire:\n        Si La valeur de L'élément de La liste a? à l'indice La variable j?? est plus petite que la valeur de La variable pivot?? alors faire:\n            Que a devienne La valeur renvoyée par la fonction swap avec les arguments La variable a?, La variable i?, La variable j??.\n            Que i devienne La somme de La variable i? et de L'entier un??.\n        .\n    .\n    Que a devienne La valeur renvoyée par la fonction swap avec les arguments La variable a?, La variable i?, La variable hi??.\n    Soit b La liste vide?.\n    Ajouter à La liste b? La variable i?.\n    Ajouter à La liste b? La variable a?.\n    Renvoyer La variable b?.\n.\n\nSoit l La liste des éléments L'entier dix?, L'entier trois?, L'entier six?, L'entier sept?, L'entier neuf?, L'entier cinq?, L'entier deux?, L'entier huit?, L'entier un?, L'entier quatre??.\n\nSoit l2 La valeur renvoyée par la fonction quicksort avec les arguments La liste l?, L'entier zéro?, La différence de La taille de La liste l?? et de L'entier un???.\nAfficher La variable l2?.\n",
+    "output": "[un, deux, trois, quatre, cinq, six, sept, huit, neuf, dix]\n"
+  }
 ]

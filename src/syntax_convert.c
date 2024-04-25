@@ -178,6 +178,7 @@ int elem_liste(char* text) {
     if (!strcmp(text, MAIN_PHRASE_S)) {
         return MAIN_PHRASE;
     }
+    
     if (!strcmp(text, EGALITE_S)) {
         return EGALITE;
     }
@@ -193,28 +194,48 @@ int elem_liste(char* text) {
     if (!strcmp(text, STRICT_PLUS_PETIT_S)) {
         return STRICT_PLUS_PETIT;
     }
+    if (!strcmp(text, ET_S)) {
+        return ET;
+    }
+    if (!strcmp(text, OU_S)) {
+        return OU;
+    }
+
     if (!strcmp(text, EXPR_LISTE_VIDE_S)) {
         return EXPR_LISTE_VIDE;
+    }
+    if (!strcmp(text, AJOUT_LISTE_S)) {
+        return AJOUT_LISTE;
+    }
+    if (!strcmp(text, ACCESSION_LISTE_S)) {
+        return ACCESSION_LISTE;
+    }
+    if (!strcmp(text, MODIFICATION_LISTE_S)) {
+        return MODIFICATION_LISTE;
+    }
+    if (!strcmp(text, SUPPRESSION_LISTE_S)) {
+        return SUPPRESSION_LISTE;
+    }
+    if (!strcmp(text, INSERTION_LISTE_S)) {
+        return INSERTION_LISTE;
+    }
+    if (!strcmp(text, EXPR_LISTE_ELEM_S)) {
+        return EXPR_LISTE_ELEM;
+    }
+
+    if (!strcmp(text, TYPE_EXPR_S)) {
+        return TYPE_EXPR;
+    }
+    if (!strcmp(text, EXPR_RIEN_S)) {
+        return EXPR_RIEN;
+    }
+
+    if (!strcmp(text, TAILLE_S)) {
+        return TAILLE;
     }
     if (!strcmp(text, AFFICHER_EXPR_S)) {
         return AFFICHER_EXPR;
     }
-    if (!strcmp(text, TYPE_EXPR_S)) {
-        return TYPE_EXPR;
-    }
-    if (!strcmp(text, ET_S)){
-        return ET;
-    }
-    if (!strcmp(text, OU_S)){
-        return OU;
-    }
-    if (!strcmp(text, EXPR_LISTE_ELEM_S)){
-        return EXPR_LISTE_ELEM;
-    }
-    if (!strcmp(text, EXPR_RIEN_S)){
-        return EXPR_RIEN;
-    }
-
     return -1;
 }
 
@@ -250,7 +271,7 @@ void tokenise(phrase_t* phrase, function_t* function, function_list_t* func_list
         case SOMME:
             phrase->phraseId = SOMME;
             if (phrase->innerPhraseLen > 0 || phrase->argsLen != 2) {
-                custom_error("Invalid Syntax, la somme prend 2 arguments", phrase);
+                custom_error("Syntaxe invalide, la somme prend 2 arguments", phrase);
             }
             for (int i = 0; i < 2; i++) {
                 tokenise(phrase->args[i], function, func_list, func_call_list);
@@ -266,7 +287,7 @@ void tokenise(phrase_t* phrase, function_t* function, function_list_t* func_list
         case DIFFERENCE:
             phrase->phraseId = DIFFERENCE;
             if (phrase->innerPhraseLen > 0 || phrase->argsLen != 2) {
-                custom_error("Invalid Syntax, la différence prend 2 arguments", phrase);
+                custom_error("Syntaxe invalide, la différence prend 2 arguments", phrase);
             }
             for (int i = 0; i < 2; i++) {
                 tokenise(phrase->args[i], function, func_list, func_call_list);
@@ -280,7 +301,7 @@ void tokenise(phrase_t* phrase, function_t* function, function_list_t* func_list
             break;
         case PRODUIT:
             if (phrase->innerPhraseLen > 0 || phrase->argsLen != 2) {
-                custom_error("Invalid Syntax, le produit prend 2 arguments", phrase);
+                custom_error("Syntaxe invalide, le produit prend 2 arguments", phrase);
             }
             phrase->phraseId = PRODUIT;
             for (int i = 0; i < 2; i++) {
@@ -296,7 +317,7 @@ void tokenise(phrase_t* phrase, function_t* function, function_list_t* func_list
 
         case QUOTIENT:
             if (phrase->innerPhraseLen > 0 || phrase->argsLen != 2) {
-                custom_error("Invalid Syntax, quotient prend 2 arguments", phrase);
+                custom_error("Syntaxe invalide, quotient prend 2 arguments", phrase);
             }
             phrase->phraseId = QUOTIENT;
             for (int i = 0; i < 2; i++) {
@@ -312,7 +333,7 @@ void tokenise(phrase_t* phrase, function_t* function, function_list_t* func_list
 
         case QUOTIENT_ENTIER:
             if (phrase->innerPhraseLen > 0 || phrase->argsLen != 2) {
-                custom_error("Invalid Syntax, le quotient entier prend 2 arguments", phrase);
+                custom_error("Syntaxe invalide, le quotient entier prend 2 arguments", phrase);
             }
             phrase->phraseId = QUOTIENT_ENTIER;
             for (int i = 0; i < 2; i++) {
@@ -328,7 +349,7 @@ void tokenise(phrase_t* phrase, function_t* function, function_list_t* func_list
 
         case RESTE:
             if (phrase->innerPhraseLen > 0 || phrase->argsLen != 2) {
-                custom_error("Invalid Syntax, le reste prend 2 arguments", phrase);
+                custom_error("Syntaxe invalide, le reste prend 2 arguments", phrase);
             }
             phrase->phraseId = RESTE;
             for (int i = 0; i < 2; i++) {
@@ -345,7 +366,7 @@ void tokenise(phrase_t* phrase, function_t* function, function_list_t* func_list
         case NEGATION_BOOLEENNE:
 
             if (phrase->innerPhraseLen > 0 || phrase->argsLen != 1) {
-                custom_error("Invalid Syntax, la négation booléenne prend 1 argument", phrase);
+                custom_error("Syntaxe invalide, la négation booléenne prend 1 argument", phrase);
             }
             phrase->phraseId = NEGATION_BOOLEENNE;
             tokenise(phrase->args[0], function, func_list, func_call_list);
@@ -356,7 +377,7 @@ void tokenise(phrase_t* phrase, function_t* function, function_list_t* func_list
 
         case EGALITE:
             if (phrase->innerPhraseLen > 0 || phrase->argsLen != 2) {
-                custom_error("Invalid Syntax, l'égalité prend 2 arguments", phrase);
+                custom_error("Syntaxe invalide, l'égalité prend 2 arguments", phrase);
             }
             phrase->phraseId = EGALITE;
             for (int i = 0; i < 2; i++) {
@@ -371,7 +392,7 @@ void tokenise(phrase_t* phrase, function_t* function, function_list_t* func_list
             break;
         case PLUS_GRAND:
             if (phrase->innerPhraseLen > 0 || phrase->argsLen != 2) {
-                custom_error("Invalid Syntax, la comparaison prend 2 arguments", phrase);
+                custom_error("Syntaxe invalide, la comparaison prend 2 arguments", phrase);
             }
             phrase->phraseId = PLUS_GRAND;
             for (int i = 0; i < 2; i++) {
@@ -386,7 +407,7 @@ void tokenise(phrase_t* phrase, function_t* function, function_list_t* func_list
             break;
         case PLUS_PETIT:
             if (phrase->innerPhraseLen > 0 || phrase->argsLen != 2) {
-                custom_error("Invalid Syntax, la comparaison prend 2 arguments", phrase);
+                custom_error("Syntaxe invalide, la comparaison prend 2 arguments", phrase);
             }
             phrase->phraseId = PLUS_PETIT;
             for (int i = 0; i < 2; i++) {
@@ -401,7 +422,7 @@ void tokenise(phrase_t* phrase, function_t* function, function_list_t* func_list
             break;
         case STRICT_PLUS_GRAND:
             if (phrase->innerPhraseLen > 0 || phrase->argsLen != 2) {
-                custom_error("Invalid Syntax, la comparaison prend 2 arguments", phrase);
+                custom_error("Syntaxe invalide, la comparaison prend 2 arguments", phrase);
             }
             phrase->phraseId = STRICT_PLUS_GRAND;
             for (int i = 0; i < 2; i++) {
@@ -416,7 +437,7 @@ void tokenise(phrase_t* phrase, function_t* function, function_list_t* func_list
             break;
         case STRICT_PLUS_PETIT:
             if (phrase->innerPhraseLen > 0 || phrase->argsLen != 2) {
-                custom_error("Invalid Syntax, la comparaison prend 2 arguments", phrase);
+                custom_error("Syntaxe invalide, la comparaison prend 2 arguments", phrase);
             }
             phrase->phraseId = STRICT_PLUS_PETIT;
             for (int i = 0; i < 2; i++) {
@@ -433,24 +454,24 @@ void tokenise(phrase_t* phrase, function_t* function, function_list_t* func_list
             break;
         case AFFICHER_EXPR:
             if (phrase->argsLen != 1 || phrase->innerPhraseLen > 0) {
-                custom_error("Invalid Syntax, affiche expression prend un arguments", phrase);
+                custom_error("Syntaxe invalide, affiche expression prend un arguments", phrase);
             }
             phrase->phraseId = AFFICHER_EXPR;
             tokenise(phrase->args[0], function, func_list, func_call_list);
             break;
         case RENVOI_FONCTION:
             if (phrase->argsLen != 1 || phrase->innerPhraseLen > 0) {
-                custom_error("Invalid Syntax, renvoi prend un arguments", phrase);
+                custom_error("Syntaxe invalide, renvoi prend un arguments", phrase);
             }
             phrase->phraseId = RENVOI_FONCTION;
             tokenise(phrase->args[0], function, func_list, func_call_list);
             break;
         case SI_ALORS:
             if (phrase->argsLen != 1) {
-                custom_error("Invalid Syntax, si alors prend 1 arguments", phrase);
+                custom_error("Syntaxe invalide, si alors prend 1 arguments", phrase);
             }
             if (phrase->innerPhraseLen == 0) {
-                custom_error("Invalid Syntax, si alors prend au moins 1 instruction", phrase);
+                custom_error("Syntaxe invalide, si alors prend au moins 1 instruction", phrase);
             }
             phrase->phraseId = SI_ALORS;
             tokenise(phrase->args[0], function, func_list, func_call_list);
@@ -460,13 +481,13 @@ void tokenise(phrase_t* phrase, function_t* function, function_list_t* func_list
             break;
         case SI_ALORS_SINON:
             if (phrase->argsLen != 1) {
-                custom_error("Invalid Syntax, 'si alors sinon' prend 1 arguments", phrase);
+                custom_error("Syntaxe invalide, 'si alors sinon' prend 1 arguments", phrase);
             }
             if (phrase->innerSeparator == -1) {
-                custom_error("Invalid Syntax, 'si alors sinon' prend au moins 1 instruction dans le si", phrase);
+                custom_error("Syntaxe invalide, 'si alors sinon' prend au moins 1 instruction dans le si", phrase);
             }
             if (phrase->innerSeparator >= phrase->innerPhraseLen - 1) {
-                custom_error("Invalid Syntax, 'si alors sinon' prend au moins 1 instruction dans le sinon", phrase);
+                custom_error("Syntaxe invalide, 'si alors sinon' prend au moins 1 instruction dans le sinon", phrase);
             }
 
             phrase->phraseId = SI_ALORS_SINON;
@@ -477,10 +498,10 @@ void tokenise(phrase_t* phrase, function_t* function, function_list_t* func_list
             break;
         case TANT_QUE:
             if (phrase->argsLen != 1) {
-                custom_error("Invalid Syntax, tant que prend 1 arguments", phrase);
+                custom_error("Syntaxe invalide, tant que prend 1 arguments", phrase);
             }
             if (phrase->innerPhraseLen == 0) {
-                custom_error("Invalid Syntax, tant que prend au moins 1 instruction", phrase);
+                custom_error("Syntaxe invalide, tant que prend au moins 1 instruction", phrase);
             }
             phrase->phraseId = TANT_QUE;
             tokenise(phrase->args[0], function, func_list, func_call_list);
@@ -496,17 +517,68 @@ void tokenise(phrase_t* phrase, function_t* function, function_list_t* func_list
             phrase->valeur->to_free_list = true;
             phrase->constant = true;
             break;
+        case EXPR_LISTE_ELEM:
+            if (phrase->innerPhraseLen > 0 || phrase->argsLen == 0) {
+                custom_error("Syntaxe invalide, liste d'éléments au moins prend 1 arguments", phrase);
+            }
+            phrase->phraseId = EXPR_LISTE_ELEM;
+            for (int i = 0; i < phrase->argsLen; i++) {
+                tokenise(phrase->args[i], function, func_list, func_call_list);
+            }
+            break;
+        case AJOUT_LISTE:
+            if (phrase->innerPhraseLen > 0 || phrase->argsLen != 2) {
+                custom_error("Syntaxe invalide, ajout liste prend 2 arguments", phrase);
+            }
+            phrase->phraseId = AJOUT_LISTE;
+            tokenise(phrase->args[0], function, func_list, func_call_list);
+            tokenise(phrase->args[1], function, func_list, func_call_list);
+            break;
+        case ACCESSION_LISTE:
+            if (phrase->innerPhraseLen > 0 || phrase->argsLen != 2) {
+                custom_error("Syntaxe invalide, accès liste prend 2 arguments", phrase);
+            }
+            phrase->phraseId = ACCESSION_LISTE;
+            tokenise(phrase->args[0], function, func_list, func_call_list);
+            tokenise(phrase->args[1], function, func_list, func_call_list);
+            break;
+        case MODIFICATION_LISTE:
+            if (phrase->innerPhraseLen > 0 || phrase->argsLen != 3) {
+                custom_error("Syntaxe invalide, modification liste prend 3 arguments", phrase);
+            }
+            phrase->phraseId = MODIFICATION_LISTE;
+            tokenise(phrase->args[0], function, func_list, func_call_list);
+            tokenise(phrase->args[1], function, func_list, func_call_list);
+            tokenise(phrase->args[2], function, func_list, func_call_list);
+            break;
+        case SUPPRESSION_LISTE:
+            if (phrase->innerPhraseLen > 0 || phrase->argsLen != 2) {
+                custom_error("Syntaxe invalide, suppression liste prend 2 arguments", phrase);
+            }
+            phrase->phraseId = SUPPRESSION_LISTE;
+            tokenise(phrase->args[0], function, func_list, func_call_list);
+            tokenise(phrase->args[1], function, func_list, func_call_list);
+            break;
+        case INSERTION_LISTE:
+            if (phrase->innerPhraseLen > 0 || phrase->argsLen != 3) {
+                custom_error("Syntaxe invalide, insertion liste prend 3 arguments", phrase);
+            }
+            phrase->phraseId = INSERTION_LISTE;
+            tokenise(phrase->args[0], function, func_list, func_call_list);
+            tokenise(phrase->args[1], function, func_list, func_call_list);
+            tokenise(phrase->args[2], function, func_list, func_call_list);
+            break;
         case TYPE_EXPR:
             if (phrase->innerPhraseLen > 0 || phrase->argsLen != 1) {
-                custom_error("Invalid Syntax, type prend 1 arguments", phrase);
+                custom_error("Syntaxe invalide, type prend 1 arguments", phrase);
             }
             phrase->phraseId = TYPE_EXPR;
             phrase->valeur->type = CHAINE_DE_CHAR;
             tokenise(phrase->args[0], function, func_list, func_call_list);
             break;
         case ET:
-            if (phrase->innerPhraseLen > 0 || phrase->argsLen != 2){
-                custom_error("Invalid Syntax, et prend 2 arguments", phrase);
+            if (phrase->innerPhraseLen > 0 || phrase->argsLen != 2) {
+                custom_error("Syntaxe invalide, et prend 2 arguments", phrase);
             }
             phrase->phraseId = ET;
             phrase->valeur->type = BOOL;
@@ -514,28 +586,27 @@ void tokenise(phrase_t* phrase, function_t* function, function_list_t* func_list
             tokenise(phrase->args[1], function, func_list, func_call_list);
             break;
         case OU:
-            if (phrase->innerPhraseLen > 0 || phrase->argsLen != 2){
-                custom_error("Invalid Syntax, ou prend 2 arguments", phrase);
+            if (phrase->innerPhraseLen > 0 || phrase->argsLen != 2) {
+                custom_error("Syntaxe invalide, ou prend 2 arguments", phrase);
             }
             phrase->phraseId = OU;
             phrase->valeur->type = BOOL;
             tokenise(phrase->args[0], function, func_list, func_call_list);
             tokenise(phrase->args[1], function, func_list, func_call_list);
             break;
-        case EXPR_LISTE_ELEM :
-            if (phrase->innerPhraseLen > 0 || phrase->argsLen == 0){
-                custom_error("Invalid Syntax, liste d'éléments au moins prend 1 arguments", phrase);
-            }
-            phrase->phraseId = EXPR_LISTE_ELEM;
-            phrase->valeur->type = LISTE;
-            for (int i = 0; i< phrase->argsLen; i++){
-                tokenise(phrase->args[i], function, func_list, func_call_list);
-            }
-            break;
         case EXPR_RIEN:
             phrase->phraseId = EXPR_RIEN;
             phrase->valeur->type = UNDEFINED;
             break;
+        case TAILLE:
+            if (phrase->innerPhraseLen > 0 || phrase->argsLen != 1) {
+                custom_error("Syntaxe invalide, taille prend 1 arguments", phrase);
+            }
+            phrase->phraseId = TAILLE;
+            phrase->valeur->type = INT;
+            tokenise(phrase->args[0], function, func_list, func_call_list);
+            break;
+
         default:
             if (test_expr_entier(phrase)) {
             } else if (test_expr_flottant(phrase)) {
@@ -547,12 +618,6 @@ void tokenise(phrase_t* phrase, function_t* function, function_list_t* func_list
             } else if (test_expr_access_var(phrase, function)) {
             } else if (test_inst_modif_var(phrase, function)) {
                 // liste
-            } else if (test_expr_access_list(phrase, function)) {
-            } else if (test_inst_add_list(phrase, function)) {
-            } else if (test_inst_modif_list(phrase, function)) {
-            } else if (test_inst_suppr_list(phrase, function)) {
-            } else if (test_expr_taille(phrase, function)) {
-            } else if (test_inst_insert_list(phrase, function)) {
             } else if (test_expr_list(phrase, function)) {
                 // fonction
             } else if (test_inst_def_func_args(phrase, func_list)) {
@@ -593,7 +658,7 @@ void tokenise(phrase_t* phrase, function_t* function, function_list_t* func_list
 void link_function_to_call(function_list_t* func_list, function_list_t* func_call_list) {
     for (int i = 0; i < func_call_list->function_list_len; i++) {
         function_t* f = func_call_list->function_list[i];
-        
+
         f->ast->function = getFunction(func_list, f->nom);
         if (f->ast->function == NULL) {
             custom_error("Fonction non définie", f->ast);

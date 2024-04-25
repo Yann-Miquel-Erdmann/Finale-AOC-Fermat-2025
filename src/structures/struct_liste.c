@@ -7,7 +7,7 @@
 #include "struct_liste.h"
 
 void free_liste_t(liste_t* liste, bool free_chaine, bool free_liste) {
-    // printf("free liste %p\n", liste);
+// printf("free liste %p\n", liste);
     for (int i = 0; i < liste->valeursLen; i++) {
         if (liste->valeurs[i] != NULL) {
             free_val_t(liste->valeurs[i], free_chaine, free_liste);
