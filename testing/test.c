@@ -85,13 +85,13 @@ int main(int argc, char const* argv[]) {
     tokenise(p, function, function_list, function_call_list);
 
     // printPhrase(p);
-    for (int i = 0; i < function_list->function_list_len; i++) {
+    /*for (int i = 0; i < function_list->function_list_len; i++) {
         // printf("function: '%s'\n", function_list->function_list[i]->nom);
         printPhrase(function_list->function_list[i]->ast);
         // printf("======\n\n");
-    }
+    }*/
 
-    // printf("====== Début execution ======\n\n");
+    printf("====== Début execution ======\n\n");
     interpreter(function, function_list, NULL, 0);
 
     free_function_list(function_list);

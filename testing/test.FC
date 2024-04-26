@@ -1,17 +1,2 @@
-Soit f une fonction qui lorsqu'elle est appelée avec s exécute:
-    Afficher La variable s?.
-    Si La valeur de L'entier un? est strictement plus petite que la valeur de L'entier zéro?? alors faire:
-        Afficher La variable s?.
-        Soit l La liste vide?.
-        Ajouter à la liste l La variable s?.
-        Renvoyer La variable l?.
-    sinon faire:
-        Soit l La valeur renvoyée par la fonction f avec les arguments La variable s??.
-        Ajouter à la liste l La variable s?.
-        Afficher La liste l?.
-        Afficher La variable s?.
-        Renvoyer La liste l?.
-    .
-.
-
-Afficher La valeur renvoyée par la fonction f avec les arguments La chaîne de caractères "Test"??.
+Soit x La valeur de La chaîne de caractères "122"? est égale à la valeur de La chaîne de caractères "123"??.
+Afficher La variable x?.

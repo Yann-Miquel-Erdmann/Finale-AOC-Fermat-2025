@@ -57,6 +57,9 @@ void interpreter(function_t* function, function_list_t* functions, val_t* result
                     new_func->ast->phraseId = 0;
 
                     if (phraseActuelle->phraseId == APPEL_VALEUR_FONCTION_ARGUMENT || phraseActuelle->phraseId == EXECUTION_FONCTION_ARGUMENT) {
+                        if (phraseActuelle->argsLen != new_func->function_arg_count){
+                            custom_error("Le nombre d'arguments données ne correspond pas ou nombre d'arguments voulus", phraseActuelle);
+                        }
                         for (int i = 0; i < phraseActuelle->argsLen; i++) {
                             copy_val(new_func->env->variable_list[i]->valeur,
                                      phraseActuelle->args[i]->valeur, true, true);
