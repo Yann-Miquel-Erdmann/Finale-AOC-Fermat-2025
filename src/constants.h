@@ -17,7 +17,7 @@
 #define DEFAULT_FUNCTION_LIST_SIZE 64
 
 // val_t type
-#define UNDEFINED -1
+#define UNDEFINED 6
 #define INT 1
 #define FLOAT 2
 #define BOOL 3
@@ -127,14 +127,14 @@
 #define MODIFICATION_VARIABLE_S "Que $ devienne *."  // fait
 
 //  * liste (fait)
-#define EXPR_LISTE_VIDE_S "La liste vide?"                                            // fait
+#define EXPR_LISTE_VIDE_S "La liste vide?"                                   // fait
 #define ACCESSION_LISTE_S "L'élément de * à l'indice *?"                     // fait
 #define MODIFICATION_LISTE_S "Remplacer l'élément de * à l'indice * par *."  // fait
 #define AJOUT_LISTE_S "Ajouter à * *."                                       // fait
 #define SUPPRESSION_LISTE_S "Retirer de * l'élément d'indice *."             // fait
 #define INSERTION_LISTE_S "Insérer * dans * à l'indice *."                   // fait
-#define EXPR_LISTE_S "La liste $?"                                                    // fait
-#define EXPR_LISTE_ELEM_S "La liste des éléments *?"                                  // fait
+#define EXPR_LISTE_S "La liste $?"                                           // fait
+#define EXPR_LISTE_ELEM_S "La liste des éléments *?"                         // fait
 
 // opérateurs
 #define SOMME_S "La somme de * et de *?"                    // fait
@@ -167,15 +167,15 @@
 
 // affichage console
 #define AFFICHER_EXPR_S "Afficher *."            // fait
-#define TAILLE_S "La taille de *?"               // fait
 #define TYPE_EXPR_S "Le type de *?"              // fait
+#define TAILLE_S "La taille de *?"               // fait
 
 // fonctions
 #define DEFINITION_FONCTION_S "Soit $ une fonction qui lorsqu'elle est appelée exécute:*."    // fait
 #define EXECUTION_FONCTION_S "Exécuter la fonction $."                                        // fait
 #define RENVOI_FONCTION_S "Renvoyer *."                                                       // fait
-#define APPEL_VALEUR_FONCTION_S "La valeur renvoyée par la fonction $?"                       // fait => à changer
+#define APPEL_VALEUR_FONCTION_S "Le renvoi de la fonction $?"                                 // fait
 
 #define DEFINITION_FONCTION_ARGUMENT_S "Soit $ une fonction qui lorsqu'elle est appelée avec $ exécute:*."   // fait
 #define EXECUTION_FONCTION_ARGUMENT_S "Exécuter la fonction $ avec les arguments *."                         // fait
-#define APPEL_VALEUR_FONCTION_ARGUMENT_S "La valeur renvoyée par la fonction $ avec les arguments *?"        // fait => à changer
+#define APPEL_VALEUR_FONCTION_ARGUMENT_S "Le renvoi de la fonction $ avec les arguments *?"                  // fait

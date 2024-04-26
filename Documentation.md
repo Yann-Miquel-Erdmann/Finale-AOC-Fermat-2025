@@ -12,7 +12,7 @@ Pro tip: Comme en français, si vous ne voulez pas avoir une phrase trop compliq
 
 Le language à d'abord une spécificité: toutes les phrases commencent une majuscule et se terminent par un point.
 Si vous voulez récupérer une valeur, à la place d'un point à la fin, il faudra mettre un point d'interrogation comme si vous posiez une question.
-/!\ toute majuscule sera considérée comme le début d'une nouvelle phrase, elles ne doivent donc avoir que cet usage. Même avertissement pour le point et le point virgule.
+/!\ toute majuscule sera considérée comme le début d'une nouvelle phrase, elles ne doivent donc avoir que cet usage. Même avertissement pour le point et le point d'interrogation.
 Malheureusement la ponctuation parfaite avec de telles règles n'existe pas, il est donc possible que vous vous retrouviez avec plusieurs points ou points d'interrogation d'affilés
 ou des majuscules au milieu de phrases.
 
@@ -69,7 +69,7 @@ Le flottant {flottant en toutes lettre avec virgule}?
 ```
 * d'un booléen
 ```
-Le booléen {vrai/faux}
+Le booléen {vrai/faux}?
 ```
 * d'une chaîne de carractères
 ```
@@ -196,9 +196,184 @@ _expression_
 ```
 Le reste de {expression numérique} par {expression numérique}?
 ```
- Il y a également quelques opérateurs booléens simples:
- * La négation booléenne:\
- _expression_
- ```
- La négation booléenne de {expression}?
- ``
+Il y a également quelques opérateurs booléens simples:
+* La négation booléenne:\
+_expression_
+```
+La négation booléenne de {expression}?
+```
+* Le Et booléen:\
+_expression_
+```
+On a {expression} et {expression}?
+```
+* Le Ou booléen:\
+_expression_
+```
+On a {expression} ou {expression}?
+```
+
+## Comparateurs et structures conditionnelles
+Pour vos programmes, vous aurez certainement besoin d'executer certains éléments de code seulement si une certaine condition est vérifiée.
+Pour cela, vous pouvez choisir parmis deux structures conditionnelles:
+* Si alors:\
+_instruction_
+```
+Si {expression} alors faire:
+    {instruction 1}.
+    {instruction 2}.
+    ...
+    {instruction n}.
+.
+```
+/!\ ne pas oublier le point à la fin de la condition.
+Note: La tabulation n'est pas obligatoire mais permet d'augmenter la lisibilité.
+* Si alors sinon:\
+_instruction_
+```
+Si {expression} alors faire:
+    {instruction 1}.
+    {instruction 2}.
+    ...
+    {instruction n}.
+sinon faire:
+    {instruction 1}.
+    {instruction 2}.
+    ...
+    {instruction n}.
+.
+```
+Note: vous porterez une attention particulière au sinon qui n'a pas de majuscule.
+
+Les comparateurs vous seront utile, vous l'aurez deviné, pour comparer.
+Ceux si ne sont pas encore compatibles avec les liste mais le seront bientot.
+Pour comparer, vous aurez à votre disposition:
+* L'égalité:\
+_expression_
+```
+La valeur de {expression} est égale à la valeur de {expression}?
+```
+* L'inégalité inférieur:\
+_expression_
+```
+La valeur de {expression} est plus petite que la valeur de {expression}?
+```
+* L'ingalité stricte inférieur:\
+_expression_
+```
+La valeur de {expression} est strictement plus petite que la valeur de {expression}?
+```
+* L'inégalité supérieur:
+_expression_
+```
+La valeur de {expression} est plus grande que la valeur de {expression}?
+```
+* L'inégalité stricte supérieur:
+_expression_
+```
+La valeur de {expression} est strictement plus grande que la valeur de {expression}?
+```
+
+## Boucles
+Écrire peut être repidement fatiguant, surtout s'il sagit de lignes plutot répétitives.
+Pour régler ce problème, vous aurez plusieurs boucles à votre disposition:
+* Tant que:\
+_instruction_
+```
+Tant que {expression} faire:
+    {instruction 1}.
+    {instruction 2}.
+    ...
+    {instruction n}.
+.
+```
+* Pour:\
+_instruction_
+```
+Pour {nom de la variable} allant de {expression numérique} jusqu'à {expression numérique} faire:
+    {instruction 1}.
+    {instruction 2}.
+    ...
+    {instruction n}.
+.
+```
+* Pour avec pas:
+_instruction_
+```
+Pour {nom de la variable} alland de {expression numérique} jusqu'à {expression numérique} en utilisant un pas de {expression numérique} faire:
+    {instruction 1}.
+    {instruction 2}.
+    ...
+    {instruction n}.
+.
+```
+
+## Affichages et debug
+Il pourra en cas d'erreur dans votre code être pratique de pouvoir afficher les éléments qui pourraient poser problème.
+
+On peut tout d'abord afficher toute expression dans la console:\
+_instruction_
+```
+Afficher {expression}.
+```
+On peut également récupérer la taille d'une liste ou d'une chaine de caractère:\
+_expression_
+```
+La taille de {chaîne de caractère/liste}?
+```
+Enfin, on peut récupérer le type de d'une expression sous forme de chaine de caractère:\
+_expression_
+```
+Le type de {expression}?
+```
+
+## Fonctions
+Les fonctions sont très utiles pour exécuter un morceau de programme souvent réutilisé à différents endroits du votre code.
+Une focntion se définit de la manière suivante:\
+_instruction_
+```
+Soit {nom de la fonction} une fonction qui lorsqu'elle appelée exécute:
+    {instruction 1}.
+    {instruction 2}.
+    ...
+    {instruction n}.
+.
+```
+Elles peuvent être également définies avec des arguments:\
+_instruction_
+```
+Soit {nom de la fonction} une fonction qui lorsqu'elle appelée avec {nom de la variable 1}, ..., {nom de la variable n} exécute:
+    {instruction 1}.
+    {instruction 2}.
+    ...
+    {instruction n}.
+.
+```
+
+Pour exécuter une fonction:\
+_instruction_
+```
+Exécuter la fonction f.
+```
+Et avec des arguments:\
+_instruction_
+```
+Exécuter la fonction f avec les arguments {expression 1}, ..., {expression n}.
+```
+
+Il peut s'avérer utile de pouvoir renvoyer une valeur dans une fonction et de pouvoir la récupérer.
+Pour renvoyer une valeur:
+_instruction_
+```
+Renvoyer {expression}.
+```
+Pour récupérer la valeur:
+_expression_
+```
+Le renvoi de la fonction {nom de la fonction}?
+```
+Et avec des arguments:\
+_expression_
+```
+Le renvoi de la fonction {nom de la fonction} avec les arguments {expression 1}, ..., {expression n}?
+```

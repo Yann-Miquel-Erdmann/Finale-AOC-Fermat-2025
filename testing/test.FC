@@ -1,2 +1,5 @@
-Soit x La négation booléenne de La chaîne de caractères ""??.
-Afficher La variable x?.
+Soit f une fonction qui lorsqu'elle est appelée exécute:
+    Afficher L'entier un?.
+.
+
+Afficher Le renvoi de la fonction f?.

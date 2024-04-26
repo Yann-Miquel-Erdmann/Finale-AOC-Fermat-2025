@@ -175,6 +175,9 @@ bool get_as_bool(val_t* v, phrase_t* p) {
         case LISTE:
             return get_liste(v, p)->valeursLen != 0;
             break;
+        case UNDEFINED:
+            return false;
+            break;
         default:
             custom_error("le type de val_t n'est pas reconnu dans get_as_bool", p);
             return false;
@@ -206,7 +209,7 @@ void set_char(val_t* v, chaine_t* chaine) {
 }
 
 void set_undefined(val_t* v) {
-    v->type = -1;
+    v->type = UNDEFINED;
 }
 
 void print_val(val_t* v, bool new_line, phrase_t* p) {
