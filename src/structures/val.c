@@ -169,6 +169,12 @@ bool get_as_bool(val_t* v, phrase_t* p) {
         case BOOL:
             return get_bool(v, p);
             break;
+        case CHAINE_DE_CHAR:
+            return get_char(v, p)->chars_len != 0;
+            break;
+        case LISTE:
+            return get_liste(v, p)->valeursLen != 0;
+            break;
         default:
             custom_error("le type de val_t n'est pas reconnu dans get_as_bool", p);
             return false;

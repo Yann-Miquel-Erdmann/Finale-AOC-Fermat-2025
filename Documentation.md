@@ -160,3 +160,45 @@ _expression_
 ```
 La liste {nom de la liste}?
 ```
+
+## Les opérateurs
+Il a a différens opérateurs qui vous permetterons d'effectuer toute sorte de calculs sur les types de bases
+La plupart d'entre eux ne fonctionnent que sur les types numériques de base i.e. les entiers, les flottants et les booléens.
+
+Parmis ces opérateurs, on retrouve
+* la somme:\
+_expression_
+```
+La somme de {expression numérique} et de {expression numérique}?
+```
+* la différence:\
+_expression_
+```
+La différence de {expression numérique} et de {expression numérique}?
+```
+* le produit:\
+_expression_
+```
+Le produit de {expression numérique} et de {expression numérique}?
+```
+* le quotient:\
+_expression_
+```
+Le quotient de {expression numérique} par {expression numérique}?
+```
+* le quotient entier:\
+_expression_
+```
+Le quotient entier de {expression numérique} par {expression numérique}?
+```
+* Le reste (ou modulo):\
+_expression_
+```
+Le reste de {expression numérique} par {expression numérique}?
+```
+ Il y a également quelques opérateurs booléens simples:
+ * La négation booléenne:\
+ _expression_
+ ```
+ La négation booléenne de {expression}?
+ ``

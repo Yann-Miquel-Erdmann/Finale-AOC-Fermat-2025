@@ -28,7 +28,7 @@ char** analyse(phrase_t* phrase, char* syntax, int* list_len, char* separator) {
                 }
             }
             if (mode == 0) {
-                if (var_len == 0){
+                if (var_len == 0 && phrase->text[index-1] != '"'){
                     mode = 1;
                     index++;
                     continue;
