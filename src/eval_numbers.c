@@ -124,7 +124,7 @@ int* eval_number(char* str_num, int len) {
                     break;
                 }
             }
-            if (!strcmp(str, "mille") && last_separator == '-' && ten_power > 3 && i == len) {
+            if ((!strcmp(str, "mille") && last_separator == '-' && ten_power > 3 && i == len) || (!strcmp(str, "mille") && last_separator == ' ' && tmp == 0)) {
                 if (tmp == 0) {
                     n += 1000;
                 } else {
