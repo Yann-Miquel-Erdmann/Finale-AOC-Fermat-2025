@@ -37,6 +37,12 @@ void set_liste(val_t*, liste_t* l);
 void set_char(val_t* v, chaine_t* chaine);
 void set_undefined(val_t* v);
 
+char* str_type(val_t* v);
+
+bool is_equal(val_t* v1, val_t* v2, phrase_t* p);
+bool is_greater(val_t* v1, val_t* v2, phrase_t* p);
+bool is_strict_greater(val_t* v1, val_t* v2, phrase_t* p);
+
 void print_val(val_t* v, bool new_line, phrase_t* p);
 
 #endif

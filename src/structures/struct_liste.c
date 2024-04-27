@@ -106,3 +106,16 @@ void suppression(liste_t* liste, int indice, phrase_t* p) {
     }
     liste->valeursLen--;
 }
+
+
+bool is_equal_list(liste_t* l1, liste_t* l2, phrase_t* p) {
+    if (l1->valeursLen != l2->valeursLen) {
+        return false;
+    }
+    for (int i = 0; i < l1->valeursLen; i++) {
+        if (!is_equal(l1->valeurs[i], l2->valeurs[i], p)) {
+            return false;
+        }
+    }
+    return true;
+}

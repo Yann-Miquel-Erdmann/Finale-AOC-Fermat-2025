@@ -212,6 +212,116 @@ void set_undefined(val_t* v) {
     v->type = UNDEFINED;
 }
 
+char* str_type(val_t* v) {
+    switch (v->type) {
+        case INT:
+            return "int";
+            break;
+        case FLOAT:
+            return "float";
+            break;
+        case BOOL:
+            return "bool";
+            break;
+        case LISTE:
+            return "liste";
+            break;
+        case CHAINE_DE_CHAR:
+            return "chaine de caractère";
+            break;
+        default:
+            return "undefined";
+            break;
+    }
+}
+
+
+bool is_equal(val_t* v1, val_t* v2, phrase_t* p) {
+
+    switch (v1->type<<4 | v2->type) {
+        case INT<<4 | INT:
+        case BOOL<<4 | INT:
+        case INT<<4 | BOOL:
+            return get_as_int(v1, p) == get_as_int(v2, p);
+            break;
+
+        case FLOAT<<4 | FLOAT:
+        case FLOAT<<4 | INT:
+        case INT<<4 | FLOAT:
+        case FLOAT<<4 | BOOL:
+        case BOOL<<4 | FLOAT:
+            return get_as_float(v1, p) == get_as_float(v2, p);
+            break;
+
+        case BOOL<<4 | BOOL:
+            return get_bool(v1, p) == get_bool(v2, p);
+            break;
+
+        case CHAINE_DE_CHAR<<4 | CHAINE_DE_CHAR:
+            return strcmp(get_char(v1, p)->chars, get_char(v2, p)->chars) == 0;
+            break;
+        case LISTE<<4 | LISTE:
+            return is_equal_list(get_liste(v1, p), get_liste(v2, p), p);
+            break;
+        default:
+            char* error = malloc(100 * sizeof(char));
+            sprintf(error, "Impossible de comparer l'égalité d'un élément de type %s et d'un élément de type %s.", str_type(v1), str_type(v2));
+            custom_error(error, p);
+            return false;
+            break;
+    }
+} 
+
+bool is_greater(val_t* v1, val_t* v2, phrase_t* p) {
+    switch (v1->type<<4 | v2->type) {
+        case INT<<4 | INT:
+        case BOOL<<4 | INT:
+        case INT<<4 | BOOL:
+            return get_as_int(v1, p) >= get_as_int(v2, p);
+            break;
+
+        case FLOAT<<4 | FLOAT:
+        case FLOAT<<4 | INT:
+        case INT<<4 | FLOAT:
+        case FLOAT<<4 | BOOL:
+        case BOOL<<4 | FLOAT:
+            return get_as_float(v1, p) >= get_as_float(v2, p);
+            break;
+
+        default:
+            char* error = malloc(100*sizeof(char));
+            sprintf(error, "Impossible de comparer un élément de type %s et un élément de type %s.", str_type(v1), str_type(v2));
+            custom_error(error, p);
+            return false;
+            break;
+    }
+}
+
+bool is_strict_greater(val_t* v1, val_t* v2, phrase_t* p) {
+    switch (v1->type<<4 | v2->type) {
+        case INT<<4 | INT:
+        case BOOL<<4 | INT:
+        case INT<<4 | BOOL:
+            return get_as_int(v1, p) > get_as_int(v2, p);
+            break;
+
+        case FLOAT<<4 | FLOAT:
+        case FLOAT<<4 | INT:
+        case INT<<4 | FLOAT:
+        case FLOAT<<4 | BOOL:
+        case BOOL<<4 | FLOAT:
+            return get_as_float(v1, p) > get_as_float(v2, p);
+            break;
+
+        default:
+            char* error = malloc(100*sizeof(char));
+            sprintf(error, "Impossible de comparer un élément de type %s et un élément de type %s.", str_type(v1), str_type(v2));
+            custom_error(error, p);
+            return false;
+            break;
+    }
+}
+
 void print_val(val_t* v, bool new_line, phrase_t* p) {
     switch (v->type) {
         case BOOL: {
@@ -266,3 +376,6 @@ void print_val(val_t* v, bool new_line, phrase_t* p) {
         printf("\n");
     }
 };
+
+
+
