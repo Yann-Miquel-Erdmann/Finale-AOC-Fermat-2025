@@ -8,21 +8,6 @@
 #include "structures/val.h"
 #include "syntax_convert.h"
 
-char* add_number_str(char* str, int n) {
-    char* final = malloc((strlen(str) + log_10_entier(n) + 1) * sizeof(char));
-    strcpy(final, str);
-    char* num = malloc((log_10_entier(n) + 1) * sizeof(char));
-    int index = log_10_entier(n) - 1;
-    while (n > 0) {
-        num[index] = (n % 10) + 48;
-        n /= 10;
-        index--;
-    }
-    strcat(final, num);
-    free(num);
-    return final;
-}
-
 // renvoie vrai si c est majuscule
 bool is_uppercase(char c) {
     if (c < 91 && c > 64) {
@@ -80,7 +65,9 @@ phrase_t* parse_file(FILE* f) {
                     phraseActuelle = phraseActuelle->parentPhrase;
 
                     if (phraseActuelle == NULL) {
-                        custom_error(add_number_str("Il y a un point de trop à la ligne ", line + 1), NULL);
+                        char* err_mess = malloc(100*sizeof(char));
+                        sprintf(err_mess, "Syntax Error: Il y a un point de trop à la ligne %d", line+1);
+                        custom_error(err_mess, NULL);
                     }
 
                     // la phrase est une instruction et on l'ajoute
@@ -153,10 +140,10 @@ phrase_t* parse_file(FILE* f) {
                     // ignore les sauts de lignes et les tabulations
                     if ((c == '\n' && (buffer == '.' || buffer == ':' || buffer == ')' || in_comment))) {
                         break;
-                    } else if (c == '\n') {
-                        printf("'%c'\n", buffer);
-                        // erreur manque de point en fin de ligne
-                        custom_error(add_number_str("Il manque un point à la fin de la ligne ", line), NULL);
+                    } else if (c == '\n' && !in_comment) {
+                        char* err_mess = malloc(100*sizeof(char));
+                        sprintf(err_mess, "Syntax Error: Il manque un point à la fin de la ligne %d", line);
+                        custom_error(err_mess, NULL);
                         break;
                     }
 

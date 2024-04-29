@@ -93,6 +93,7 @@ int main(int argc, char const* argv[]) {
 
     printf("====== Début execution ======\n\n");
     interpreter(function, function_list, NULL, 0);
+    printf("\n======= Fin execution =======\n");
 
     free_function_list(function_list);
     fclose(f);
