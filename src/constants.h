@@ -166,10 +166,10 @@
 #define POUR_AVEC_PAS_S "Pour $ allant de * jusqu'à * en utilisant un pas de * faire:*."  // fait
 
 // affichage console
-#define AFFICHER_EXPR_S "Afficher *."                                   // à faire
-#define TYPE_EXPR_S "Le type de *?"                                     // fait
-#define AFFICHER_EXPR_NO_RETURN_S "Afficher * sans retour à la ligne"   // à faire
-#define TAILLE_S "La taille de *?"                                      // fait
+#define AFFICHER_EXPR_S "Afficher *."                                    // fait
+#define TYPE_EXPR_S "Le type de *?"                                      // fait
+#define AFFICHER_EXPR_NO_RETURN_S "Afficher * sans retour à la ligne."   // fait
+#define TAILLE_S "La taille de *?"                                       // fait
 
 // fonctions
 #define DEFINITION_FONCTION_S "Soit $ une fonction qui lorsqu'elle est appelée exécute:*."    // fait
