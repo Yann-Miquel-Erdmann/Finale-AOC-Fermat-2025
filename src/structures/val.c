@@ -438,7 +438,14 @@ void print_val(val_t* v, bool new_line, phrase_t* p) {
         }
             
         case CHAINE_DE_CHAR:
-            printf("%s", v->chaine->chars);
+            for (int i = 0; i< v->chaine->chars_len; i++){
+                if (i < v->chaine->chars_len -1 && v->chaine->chars[i] == '\\' && v->chaine->chars[i+1] == 'n'){
+                    printf("\n");
+                    i++;
+                }else{
+                    printf("%c", v->chaine->chars[i]);
+                }
+            }
             break;
         
         case UNDEFINED:
