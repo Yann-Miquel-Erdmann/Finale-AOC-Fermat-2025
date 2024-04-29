@@ -1,124 +1,12 @@
 (égalité)
 Afficher La chaîne de caractères  "égalité" ?.
 
-Soit x La valeur de Le flottant un virgule zéro? est égale à la valeur de Le flottant un virgule zéro??.
-Afficher La variable x?.
-Soit x La valeur de Le flottant un virgule zéro? est égale à la valeur de Le flottant deux virgule zéro??.
-Afficher La variable x?.
-Soit x La valeur de Le flottant un virgule zéro? est égale à la valeur de Le booléen faux??.
-Afficher La variable x?.
-Soit x La valeur de Le flottant zéro virgule zéro? est égale à la valeur de Le booléen faux??.
-Afficher La variable x?.
-Soit x La valeur de Le flottant zéro virgule zéro? est égale à la valeur de L'entier zéro??.
-Afficher La variable x?.
-Soit x La valeur de Le flottant zéro virgule zéro? est égale à la valeur de L'entier un??.
-Afficher La variable x?.
 
-
-
-(strictement plus grand)
-Afficher La chaîne de caractères  "strictement plus grand" ?.
-
-Soit x La valeur de Le flottant un virgule zéro? est strictement plus grande que la valeur de Le flottant un virgule zéro??.
+Soit x La valeur de La liste des éléments L'entier zéro?, L'entier un?? est égale à la valeur de La liste des éléments L'entier zéro?, L'entier un???.
 Afficher La variable x?.
-Soit x La valeur de Le flottant un virgule zéro? est strictement plus grande que la valeur de Le flottant deux virgule zéro??.
+Soit x La valeur de La liste des éléments L'entier zéro?, L'entier un?? est égale à la valeur de La liste des éléments L'entier zéro?, L'entier deux???.
 Afficher La variable x?.
-Soit x La valeur de Le flottant deux virgule zéro? est strictement plus grande que la valeur de Le flottant un virgule zéro??.
+Soit x La valeur de La liste des éléments La liste des éléments L'entier zéro?, L'entier un??, La liste des éléments L'entier deux?, L'entier trois??? est égale à la valeur de La liste des éléments La liste des éléments L'entier zéro?, L'entier un??, La liste des éléments L'entier deux?, L'entier trois????.
 Afficher La variable x?.
-Soit x La valeur de Le flottant un virgule zéro? est strictement plus grande que la valeur de Le booléen faux??.
-Afficher La variable x?.
-Soit x La valeur de Le booléen faux? est strictement plus grande que la valeur de Le flottant un virgule zéro??.
-Afficher La variable x?.
-Soit x La valeur de Le flottant zéro virgule zéro? est strictement plus grande que la valeur de Le booléen faux??.
-Afficher La variable x?.
-Soit x La valeur de Le booléen faux? est strictement plus grande que la valeur de Le flottant zéro virgule zéro??.
-Afficher La variable x?.
-Soit x La valeur de Le flottant zéro virgule zéro? est strictement plus grande que la valeur de L'entier zéro??.
-Afficher La variable x?.
-Soit x La valeur de Le flottant zéro virgule zéro? est strictement plus grande que la valeur de L'entier un??.
-Afficher La variable x?.
-Soit x La valeur de Le flottant zéro virgule un? est strictement plus grande que la valeur de L'entier zéro??.
-Afficher La variable x?.
-Soit x La valeur de Le flottant zéro virgule zéro? est strictement plus grande que la valeur de L'entier moins un??.
-Afficher La variable x?.
-
-
-(plus grand)
-Afficher La chaîne de caractères  "plus grand" ?.
-
-Soit x La valeur de Le flottant un virgule zéro? est plus grande que la valeur de Le flottant un virgule zéro??.
-Afficher La variable x?.
-Soit x La valeur de Le flottant un virgule zéro? est plus grande que la valeur de Le flottant deux virgule zéro??.
-Afficher La variable x?.
-Soit x La valeur de Le flottant deux virgule zéro? est plus grande que la valeur de Le flottant un virgule zéro??.
-Afficher La variable x?.
-Soit x La valeur de Le flottant un virgule zéro? est plus grande que la valeur de Le booléen faux??.
-Afficher La variable x?.
-Soit x La valeur de Le booléen faux? est plus grande que la valeur de Le flottant un virgule zéro??.
-Afficher La variable x?.
-Soit x La valeur de Le flottant zéro virgule zéro? est plus grande que la valeur de Le booléen faux??.
-Afficher La variable x?.
-Soit x La valeur de Le booléen faux? est plus grande que la valeur de Le flottant zéro virgule zéro??.
-Afficher La variable x?.
-Soit x La valeur de Le flottant zéro virgule zéro? est plus grande que la valeur de L'entier zéro??.
-Afficher La variable x?.
-Soit x La valeur de Le flottant zéro virgule zéro? est plus grande que la valeur de L'entier un??.
-Afficher La variable x?.
-Soit x La valeur de Le flottant zéro virgule un? est plus grande que la valeur de L'entier zéro??.
-Afficher La variable x?.
-Soit x La valeur de Le flottant zéro virgule zéro? est plus grande que la valeur de L'entier moins un??.
-Afficher La variable x?.
-
-
-(strictement plus petit)
-Afficher La chaîne de caractères  "strictement plus petit" ?.
-
-Soit x La valeur de Le flottant un virgule zéro? est strictement plus petite que la valeur de Le flottant un virgule zéro??.
-Afficher La variable x?.
-Soit x La valeur de Le flottant un virgule zéro? est strictement plus petite que la valeur de Le flottant deux virgule zéro??.
-Afficher La variable x?.
-Soit x La valeur de Le flottant deux virgule zéro? est strictement plus petite que la valeur de Le flottant un virgule zéro??.
-Afficher La variable x?.
-Soit x La valeur de Le flottant un virgule zéro? est strictement plus petite que la valeur de Le booléen faux??.
-Afficher La variable x?.
-Soit x La valeur de Le booléen faux? est strictement plus petite que la valeur de Le flottant un virgule zéro??.
-Afficher La variable x?.
-Soit x La valeur de Le flottant zéro virgule zéro? est strictement plus petite que la valeur de Le booléen faux??.
-Afficher La variable x?.
-Soit x La valeur de Le booléen faux? est strictement plus petite que la valeur de Le flottant zéro virgule zéro??.
-Afficher La variable x?.
-Soit x La valeur de Le flottant zéro virgule zéro? est strictement plus petite que la valeur de L'entier zéro??.
-Afficher La variable x?.
-Soit x La valeur de Le flottant zéro virgule zéro? est strictement plus petite que la valeur de L'entier un??.
-Afficher La variable x?.
-Soit x La valeur de Le flottant zéro virgule un? est strictement plus petite que la valeur de L'entier zéro??.
-Afficher La variable x?.
-Soit x La valeur de Le flottant zéro virgule zéro? est strictement plus petite que la valeur de L'entier moins un??.
-Afficher La variable x?.
-
-
-(plus petit)
-Afficher La chaîne de caractères  "plus petit" ?.
-
-Soit x La valeur de Le flottant un virgule zéro? est plus petite que la valeur de Le flottant un virgule zéro??.
-Afficher La variable x?.
-Soit x La valeur de Le flottant un virgule zéro? est plus petite que la valeur de Le flottant deux virgule zéro??.
-Afficher La variable x?.
-Soit x La valeur de Le flottant deux virgule zéro? est plus petite que la valeur de Le flottant un virgule zéro??.
-Afficher La variable x?.
-Soit x La valeur de Le flottant un virgule zéro? est plus petite que la valeur de Le booléen faux??.
-Afficher La variable x?.
-Soit x La valeur de Le booléen faux? est plus petite que la valeur de Le flottant un virgule zéro??.
-Afficher La variable x?.
-Soit x La valeur de Le flottant zéro virgule zéro? est plus petite que la valeur de Le booléen faux??.
-Afficher La variable x?.
-Soit x La valeur de Le booléen faux? est plus petite que la valeur de Le flottant zéro virgule zéro??.
-Afficher La variable x?.
-Soit x La valeur de Le flottant zéro virgule zéro? est plus petite que la valeur de L'entier zéro??.
-Afficher La variable x?.
-Soit x La valeur de Le flottant zéro virgule zéro? est plus petite que la valeur de L'entier un??.
-Afficher La variable x?.
-Soit x La valeur de Le flottant zéro virgule un? est plus petite que la valeur de L'entier zéro??.
-Afficher La variable x?.
-Soit x La valeur de Le flottant zéro virgule zéro? est plus petite que la valeur de L'entier moins un??.
+Soit x La valeur de La liste vide? est égale à la valeur de La liste vide??.
 Afficher La variable x?.
