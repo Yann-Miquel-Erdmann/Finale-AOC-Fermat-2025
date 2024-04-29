@@ -260,15 +260,35 @@ bool is_equal(val_t* v1, val_t* v2, phrase_t* p) {
         case CHAINE_DE_CHAR<<4 | CHAINE_DE_CHAR:
             return strcmp(get_char(v1, p)->chars, get_char(v2, p)->chars) == 0;
             break;
+            
         case LISTE<<4 | LISTE:
             return is_equal_list(get_liste(v1, p), get_liste(v2, p), p);
             break;
-        default:
+        
+        case UNDEFINED<<4 | INT:
+        case UNDEFINED<<4 | FLOAT:
+        case UNDEFINED<<4 | BOOL:
+        case UNDEFINED<<4 | CHAINE_DE_CHAR:
+        case UNDEFINED<<4 | LISTE:
+        case INT<<4 | UNDEFINED:
+        case FLOAT<<4 | UNDEFINED:
+        case BOOL<<4 | UNDEFINED:
+        case CHAINE_DE_CHAR<<4 | UNDEFINED:
+        case LISTE<<4 | UNDEFINED:
+            return false;
+            break;
+        
+        case UNDEFINED<<4 | UNDEFINED:
+            return true;
+            break;
+        
+        default:{
             char* error = malloc(100 * sizeof(char));
             sprintf(error, "Impossible de comparer l'égalité d'un élément de type %s et d'un élément de type %s.", str_type(v1), str_type(v2));
             custom_error(error, p);
             return false;
             break;
+        }
     }
 } 
 
@@ -287,13 +307,39 @@ bool is_greater(val_t* v1, val_t* v2, phrase_t* p) {
         case BOOL<<4 | FLOAT:
             return get_as_float(v1, p) >= get_as_float(v2, p);
             break;
-
-        default:
+            
+        case CHAINE_DE_CHAR<<4 | CHAINE_DE_CHAR:
+            return strcmp(get_char(v1, p)->chars, get_char(v2, p)->chars) >= 0;
+            break;
+            
+        case LISTE<<4 | LISTE:
+            return is_greater_list(get_liste(v1, p), get_liste(v2, p), p);
+            break;
+            
+        case UNDEFINED<<4 | INT:
+        case UNDEFINED<<4 | FLOAT:
+        case UNDEFINED<<4 | BOOL:
+        case UNDEFINED<<4 | CHAINE_DE_CHAR:
+        case UNDEFINED<<4 | LISTE:
+            return false;
+            break;
+            
+        case INT<<4 | UNDEFINED:
+        case FLOAT<<4 | UNDEFINED:
+        case BOOL<<4 | UNDEFINED:
+        case CHAINE_DE_CHAR<<4 | UNDEFINED:
+        case LISTE<<4 | UNDEFINED:
+        case UNDEFINED<<4 | UNDEFINED:
+            return true;
+            break;
+        
+        default:{
             char* error = malloc(100*sizeof(char));
             sprintf(error, "Impossible de comparer un élément de type %s et un élément de type %s.", str_type(v1), str_type(v2));
             custom_error(error, p);
             return false;
             break;
+        }
     }
 }
 
@@ -312,13 +358,39 @@ bool is_strict_greater(val_t* v1, val_t* v2, phrase_t* p) {
         case BOOL<<4 | FLOAT:
             return get_as_float(v1, p) > get_as_float(v2, p);
             break;
+            
+        case CHAINE_DE_CHAR<<4 | CHAINE_DE_CHAR:
+            return strcmp(get_char(v1, p)->chars, get_char(v2, p)->chars) > 0;
+            break;
+        
+        case LISTE<<4 | LISTE:
+            return is_strict_greater_list(get_liste(v1, p), get_liste(v2, p), p);
+            break;
 
-        default:
+        case UNDEFINED<<4 | INT:
+        case UNDEFINED<<4 | FLOAT:
+        case UNDEFINED<<4 | BOOL:
+        case UNDEFINED<<4 | CHAINE_DE_CHAR:
+        case UNDEFINED<<4 | LISTE:
+        case UNDEFINED<<4 | UNDEFINED:
+            return false;
+            break;
+            
+        case INT<<4 | UNDEFINED:
+        case FLOAT<<4 | UNDEFINED:
+        case BOOL<<4 | UNDEFINED:
+        case CHAINE_DE_CHAR<<4 | UNDEFINED:
+        case LISTE<<4 | UNDEFINED:
+            return true;
+            break;
+        
+        default:{
             char* error = malloc(100*sizeof(char));
             sprintf(error, "Impossible de comparer un élément de type %s et un élément de type %s.", str_type(v1), str_type(v2));
             custom_error(error, p);
             return false;
             break;
+        }
     }
 }
 
@@ -353,7 +425,13 @@ void print_val(val_t* v, bool new_line, phrase_t* p) {
                 if (i != 0) {
                     printf(", ");
                 }
-                print_val(v->liste->valeurs[i], false, p);
+                if (v->liste->valeurs[i]->type == CHAINE_DE_CHAR){
+                    printf("\"");
+                    print_val(v->liste->valeurs[i], false, p);
+                    printf("\"");
+                }else{
+                    print_val(v->liste->valeurs[i], false, p);
+                }
             }
             printf("]");
             break;

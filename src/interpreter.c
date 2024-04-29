@@ -87,8 +87,13 @@ void interpreter(function_t* function, function_list_t* functions, val_t* result
                     break;
                 }
 
-                case AFFICHER_EXPR: {
-                    print_val(phraseActuelle->args[0]->valeur, true, phraseActuelle);
+                case AFFICHER_EXPR: 
+                case AFFICHER_EXPR_NO_RETURN:{
+                    for (int i = 0; i<phraseActuelle->argsLen-1; i++){
+                        print_val(phraseActuelle->args[i]->valeur, false, phraseActuelle);
+                        printf(" ");
+                    }
+                    print_val(phraseActuelle->args[phraseActuelle->argsLen-1]->valeur, phraseActuelle->phraseId == AFFICHER_EXPR, phraseActuelle);
                     phraseActuelle->interpreterArgsIndex = 0;
                     phraseActuelle = phraseActuelle->parentPhrase;
                     break;

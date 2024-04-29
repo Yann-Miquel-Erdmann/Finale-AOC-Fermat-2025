@@ -120,7 +120,6 @@ phrase_t* parse_file(FILE* f) {
                     buffer = c;
                     phraseActuelle->innerSeparator = phraseActuelle->innerPhraseLen - 1;
                     break;
-
                 default:
                     if (c == '"' && !in_comment) {
                         in_string = !in_string;

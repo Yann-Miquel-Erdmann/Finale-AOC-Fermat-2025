@@ -2,8 +2,8 @@
 
 ## À ajouter
 ~~- commentaires~~
-- comparaison liste
-- comparaison chaîne de caractères
+~~- comparaison liste~~
+~~- comparaison chaîne de caractères~~
 ~~- changement syntaxe liste~~
-- syntaxe et ou
+- syntaxe et ou (ok pour le moment)
 ~~- cas de test chaîne de char~~

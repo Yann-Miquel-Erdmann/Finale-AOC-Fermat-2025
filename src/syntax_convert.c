@@ -236,6 +236,9 @@ int elem_liste(char* text) {
     if (!strcmp(text, AFFICHER_EXPR_S)) {
         return AFFICHER_EXPR;
     }
+    if (!strcmp(text, AFFICHER_EXPR_NO_RETURN_S)){
+        return AFFICHER_EXPR_NO_RETURN;
+    }
     return -1;
 }
 
@@ -453,11 +456,23 @@ void tokenise(phrase_t* phrase, function_t* function, function_list_t* func_list
 
             break;
         case AFFICHER_EXPR:
-            if (phrase->argsLen != 1 || phrase->innerPhraseLen > 0) {
-                custom_error("Syntaxe invalide, affiche expression prend un arguments", phrase);
+            if (phrase->argsLen == 0 || phrase->innerPhraseLen > 0) {
+                custom_error("Syntaxe invalide, affiche expression prend au moins un arguments", phrase);
             }
             phrase->phraseId = AFFICHER_EXPR;
-            tokenise(phrase->args[0], function, func_list, func_call_list);
+            for (int i = 0; i<phrase->argsLen; i++){
+                tokenise(phrase->args[i], function, func_list, func_call_list);
+            }
+            
+            break;
+        case AFFICHER_EXPR_NO_RETURN:
+            if (phrase->argsLen == 0 || phrase->innerPhraseLen > 0) {
+                custom_error("Syntaxe invalide, affiche expression sans retour prend au moins un arguments", phrase);
+            }
+            phrase->phraseId = AFFICHER_EXPR_NO_RETURN;
+            for (int i = 0; i<phrase->argsLen; i++){
+                tokenise(phrase->args[i], function, func_list, func_call_list);
+            }
             break;
         case RENVOI_FONCTION:
             if (phrase->argsLen != 1 || phrase->innerPhraseLen > 0) {
