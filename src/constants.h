@@ -7,7 +7,7 @@
 #define DEFAULT_VALEURS_LIST_SIZE 128
 
 // constantes structures chaine_t
-#define DEFAULT_CHAINE_CHARS_SIZE 128
+#define DEFAULT_CHAINE_CHARS_SIZE 8
 
 // constantes structures environnement_t
 #define DEFAULT_VARIABLES_LIST_SIZE 64
