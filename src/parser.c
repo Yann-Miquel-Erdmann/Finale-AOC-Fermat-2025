@@ -165,9 +165,17 @@ phrase_t* parse_file(FILE* f) {
                         
                         break;
                     }
-
+                    
+                    // check si l'écriture est valide i.e. pas directement dans la mainphrase
+                    if (phraseActuelle == mainPhrase && !in_comment){
+                        char* error = malloc(100*sizeof(char));
+                        sprintf(error, "Syntax Error, ligne %d: \"%c\"%s", line, c, " n'est pas un début de phrase valide.");
+                        custom_error(error, NULL);
+                    }
+                    
                     // ajoute le caractère au texte
                     addToText(phraseActuelle, c);
+                    
                     buffer = c;
                     break;
             }
