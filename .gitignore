@@ -3,3 +3,5 @@ build/*
 .*          
 test
 a.out
+
+*.code-workspace
