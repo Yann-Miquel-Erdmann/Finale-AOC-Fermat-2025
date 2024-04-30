@@ -1,8 +1,7 @@
 # Documentation du language
 
 ## Disclamer
-Le language n'a pas encore été totalement testé, il reste surment des bugs et de petits contournements de syntaxe.
-Il n'y a pas encore de commentaires
+Le language n'a pas encore été totalement testé, il reste surement des bugs et de petits contournements de syntaxe.
 
 ## Présentation générale et aspects spécifiques
 
@@ -128,31 +127,31 @@ Plusieurs opérations sont possibles sur les listes:
 * Ajouter des éléments à la fin de la liste:\
 _instruction_
 ```
-Ajouter à la liste {nom de la liste} {expression}.
+Ajouter à {expression: liste} {expression}.
 ```
 
 * Insérer des éléments au milieu de la liste:\
 _instruction_
 ```
-Insérer {expression} dans la liste {nom de la liste} à l'index {expression: entier}.
+Insérer {expression} dans {expression: liste} à l'index {expression: entier}.
 ```
 
 * Supprimer un élément:\
 _instruction_
 ```
-Retirer de la liste {nom de la liste} l'élément d'indice {expression: entier}.
+Retirer de {expression: liste} l'élément d'indice {expression: entier}.
 ```
 
 * Remplacer un élément:\
 _instruction_
 ```
-Remplacer l'élément de la liste {nom de la liste} à l'indice {expression: entier} par {expression}.
+Remplacer l'élément de {expression: liste} à l'indice {expression: entier} par {expression}.
 ```
 
 On peut également accéder à un élément de la liste avec\
 _expression_
 ```
-L'élément de la liste {nom de la liste} à l'indice {expression: entier}?
+L'élément de {expression: liste} à l'indice {expression: entier}?
 ```
 
 Finalement, on peut accéder à la liste en entier avec\
@@ -162,7 +161,7 @@ La liste {nom de la liste}?
 ```
 
 ## Les opérateurs
-Il a a différens opérateurs qui vous permetterons d'effectuer toute sorte de calculs sur les types de bases
+Il a a différents opérateurs qui vous permetterons d'effectuer toute sorte de calculs sur les types de bases
 La plupart d'entre eux ne fonctionnent que sur les types numériques de base i.e. les entiers, les flottants et les booléens.
 
 Parmis ces opérateurs, on retrouve
@@ -246,7 +245,6 @@ sinon faire:
 Note: vous porterez une attention particulière au sinon qui n'a pas de majuscule.
 
 Les comparateurs vous seront utile, vous l'aurez deviné, pour comparer.
-Ceux si ne sont pas encore compatibles avec les liste mais le seront bientot.
 Pour comparer, vous aurez à votre disposition:
 * L'égalité:\
 _expression_
@@ -275,7 +273,7 @@ La valeur de {expression} est strictement plus grande que la valeur de {expressi
 ```
 
 ## Boucles
-Écrire peut être repidement fatiguant, surtout s'il sagit de lignes plutot répétitives.
+Écrire peut être rapidement fatiguant, surtout s'il sagit de lignes plutôt répétitives.
 Pour régler ce problème, vous aurez plusieurs boucles à votre disposition:
 * Tant que:\
 _instruction_
