@@ -67,8 +67,14 @@ void interpreter(function_t* function, function_list_t* functions, val_t* result
                     }
 
                     if (phraseActuelle->phraseId == EXECUTION_FONCTION_ARGUMENT || phraseActuelle->phraseId == EXECUTION_FONCTION) {
+                        if (phraseActuelle->argsLen != new_func->function_arg_count){
+                            custom_error("Le nombre d'arguments données ne correspond pas ou nombre d'arguments voulus", phraseActuelle);
+                        }
                         interpreter(new_func, functions, NULL, layer + 1);
                     } else {
+                        if (phraseActuelle->argsLen != new_func->function_arg_count){
+                            custom_error("Le nombre d'arguments données ne correspond pas ou nombre d'arguments voulus", phraseActuelle);
+                        }
                         interpreter(new_func, functions, phraseActuelle->valeur, layer + 1);
                     }
 
@@ -204,6 +210,9 @@ void interpreter(function_t* function, function_list_t* functions, val_t* result
 
                 // liste -----------------------------------------------------------------
                 case EXPR_LISTE: {
+                    if (phraseActuelle->variable->valeur->type != LISTE){
+                        custom_error("La variable n'est pas une liste", phraseActuelle);
+                    }
                     phraseActuelle->valeur->type = phraseActuelle->variable->valeur->type;
                     phraseActuelle->valeur->liste = phraseActuelle->variable->valeur->liste;
                     phraseActuelle->interpreterArgsIndex = 0;
@@ -237,30 +246,45 @@ void interpreter(function_t* function, function_list_t* functions, val_t* result
                 }
                 
                 case ACCESSION_LISTE: {
+                    if (phraseActuelle->valeur == NULL || phraseActuelle->valeur->type != LISTE){
+                        custom_error("La variable n'est pas une liste", phraseActuelle);
+                    }
                     copy_val(phraseActuelle->valeur, accession(phraseActuelle->args[0]->valeur->liste, get_int(phraseActuelle->args[1]->valeur, phraseActuelle), phraseActuelle), true, true);
                     phraseActuelle->interpreterArgsIndex = 0;
                     phraseActuelle = phraseActuelle->parentPhrase;
                     break;
                 }
                 case MODIFICATION_LISTE: {
+                    if (phraseActuelle->valeur == NULL || phraseActuelle->valeur->type != LISTE){
+                        custom_error("La variable n'est pas une liste", phraseActuelle);
+                    }
                     modification(phraseActuelle->args[0]->valeur->liste, get_int(phraseActuelle->args[1]->valeur, phraseActuelle), phraseActuelle->args[2]->valeur, phraseActuelle);
                     phraseActuelle->interpreterArgsIndex = 0;
                     phraseActuelle = phraseActuelle->parentPhrase;
                     break;
                 }
                 case AJOUT_LISTE: {
+                    if (phraseActuelle->valeur == NULL || phraseActuelle->valeur->type != LISTE){
+                        custom_error("La variable n'est pas une liste", phraseActuelle);
+                    }
                     ajout(phraseActuelle->args[0]->valeur->liste, phraseActuelle->args[1]->valeur);
                     phraseActuelle->interpreterArgsIndex = 0;
                     phraseActuelle = phraseActuelle->parentPhrase;
                     break;
                 }
                 case SUPPRESSION_LISTE: {
+                    if (phraseActuelle->valeur == NULL || phraseActuelle->valeur->type != LISTE){
+                        custom_error("La variable n'est pas une liste", phraseActuelle);
+                    }
                     suppression(phraseActuelle->args[0]->valeur->liste, get_int(phraseActuelle->args[1]->valeur,phraseActuelle), phraseActuelle);
                     phraseActuelle->interpreterArgsIndex = 0;
                     phraseActuelle = phraseActuelle->parentPhrase;
                     break;
                 }
                 case INSERTION_LISTE: {
+                    if (phraseActuelle->valeur == NULL || phraseActuelle->valeur->type != LISTE){
+                        custom_error("La variable n'est pas une liste", phraseActuelle);
+                    }
                     inserer(phraseActuelle->args[1]->valeur->liste, get_int(phraseActuelle->args[2]->valeur, phraseActuelle), phraseActuelle->args[0]->valeur, phraseActuelle);
                     phraseActuelle->interpreterArgsIndex = 0;
                     phraseActuelle = phraseActuelle->parentPhrase;

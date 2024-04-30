@@ -213,26 +213,31 @@ void set_undefined(val_t* v) {
 }
 
 char* str_type(val_t* v) {
+    char* type = malloc(10*sizeof(char));
     switch (v->type) {
         case INT:
-            return "int";
+            strcpy(type, "int");
             break;
         case FLOAT:
-            return "float";
+            strcpy(type, "float");
             break;
         case BOOL:
-            return "bool";
+            strcpy(type, "bool");
             break;
         case LISTE:
-            return "liste";
+            strcpy(type, "liste");
             break;
         case CHAINE_DE_CHAR:
-            return "chaine de caractère";
+            strcpy(type, "chaine de caractère");
+            break;
+        case UNDEFINED:
+            strcpy(type, "rien");
             break;
         default:
-            return "undefined";
+            strcpy(type, "undefined");
             break;
     }
+    return type;
 }
 
 
