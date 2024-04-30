@@ -246,7 +246,7 @@ void interpreter(function_t* function, function_list_t* functions, val_t* result
                 }
                 
                 case ACCESSION_LISTE: {
-                    if (phraseActuelle->valeur == NULL || phraseActuelle->valeur->type != LISTE){
+                    if (phraseActuelle->args[0]->valeur == NULL || phraseActuelle->args[0]->valeur->type != LISTE){
                         custom_error("La variable n'est pas une liste", phraseActuelle);
                     }
                     copy_val(phraseActuelle->valeur, accession(phraseActuelle->args[0]->valeur->liste, get_int(phraseActuelle->args[1]->valeur, phraseActuelle), phraseActuelle), true, true);
@@ -255,7 +255,7 @@ void interpreter(function_t* function, function_list_t* functions, val_t* result
                     break;
                 }
                 case MODIFICATION_LISTE: {
-                    if (phraseActuelle->valeur == NULL || phraseActuelle->valeur->type != LISTE){
+                    if (phraseActuelle->args[0]->valeur == NULL || phraseActuelle->args[0]->valeur->type != LISTE){
                         custom_error("La variable n'est pas une liste", phraseActuelle);
                     }
                     modification(phraseActuelle->args[0]->valeur->liste, get_int(phraseActuelle->args[1]->valeur, phraseActuelle), phraseActuelle->args[2]->valeur, phraseActuelle);
@@ -264,7 +264,7 @@ void interpreter(function_t* function, function_list_t* functions, val_t* result
                     break;
                 }
                 case AJOUT_LISTE: {
-                    if (phraseActuelle->valeur == NULL || phraseActuelle->valeur->type != LISTE){
+                    if (phraseActuelle->args[0]->valeur == NULL || phraseActuelle->args[0]->valeur->type != LISTE){
                         custom_error("La variable n'est pas une liste", phraseActuelle);
                     }
                     ajout(phraseActuelle->args[0]->valeur->liste, phraseActuelle->args[1]->valeur);
@@ -273,7 +273,7 @@ void interpreter(function_t* function, function_list_t* functions, val_t* result
                     break;
                 }
                 case SUPPRESSION_LISTE: {
-                    if (phraseActuelle->valeur == NULL || phraseActuelle->valeur->type != LISTE){
+                    if (phraseActuelle->args[0]->valeur == NULL || phraseActuelle->args[0]->valeur->type != LISTE){
                         custom_error("La variable n'est pas une liste", phraseActuelle);
                     }
                     suppression(phraseActuelle->args[0]->valeur->liste, get_int(phraseActuelle->args[1]->valeur,phraseActuelle), phraseActuelle);
@@ -282,7 +282,7 @@ void interpreter(function_t* function, function_list_t* functions, val_t* result
                     break;
                 }
                 case INSERTION_LISTE: {
-                    if (phraseActuelle->valeur == NULL || phraseActuelle->valeur->type != LISTE){
+                    if (phraseActuelle->args[1]->valeur == NULL || phraseActuelle->args[1]->valeur->type != LISTE){
                         custom_error("La variable n'est pas une liste", phraseActuelle);
                     }
                     inserer(phraseActuelle->args[1]->valeur->liste, get_int(phraseActuelle->args[2]->valeur, phraseActuelle), phraseActuelle->args[0]->valeur, phraseActuelle);
