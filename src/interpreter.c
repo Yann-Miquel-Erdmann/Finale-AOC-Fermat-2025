@@ -404,6 +404,7 @@ void interpreter(function_t* function, function_list_t* functions, val_t* result
                 case TYPE_EXPR:{
                     
                     phraseActuelle->valeur->chaine = new_chaine_t(str_type(phraseActuelle->args[0]->valeur));
+                    
                     phraseActuelle = phraseActuelle->parentPhrase;
                     break;
                 }

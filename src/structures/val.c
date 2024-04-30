@@ -213,7 +213,7 @@ void set_undefined(val_t* v) {
 }
 
 char* str_type(val_t* v) {
-    char* type = malloc(10*sizeof(char));
+    char* type = malloc(20*sizeof(char));
     switch (v->type) {
         case INT:
             strcpy(type, "int");
