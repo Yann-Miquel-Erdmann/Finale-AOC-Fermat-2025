@@ -8,3 +8,5 @@ build/interpreter: $(OBJECTS)
 	gcc $(CFLAGS) -c -o $@ $<
 clean:
 	rm -f $(OBJECTS) 
+test:
+	python3 ./testing/test_suite.py

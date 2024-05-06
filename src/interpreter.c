@@ -57,7 +57,7 @@ void interpreter(function_t* function, function_list_t* functions, val_t* result
                     new_func->ast->phraseId = 0;
 
                     if (phraseActuelle->phraseId == APPEL_VALEUR_FONCTION_ARGUMENT || phraseActuelle->phraseId == EXECUTION_FONCTION_ARGUMENT) {
-                        if (phraseActuelle->argsLen != new_func->function_arg_count){
+                        if (phraseActuelle->argsLen != new_func->function_arg_count) {
                             custom_error("Le nombre d'arguments données ne correspond pas ou nombre d'arguments voulus", phraseActuelle);
                         }
                         for (int i = 0; i < phraseActuelle->argsLen; i++) {
@@ -67,12 +67,12 @@ void interpreter(function_t* function, function_list_t* functions, val_t* result
                     }
 
                     if (phraseActuelle->phraseId == EXECUTION_FONCTION_ARGUMENT || phraseActuelle->phraseId == EXECUTION_FONCTION) {
-                        if (phraseActuelle->argsLen != new_func->function_arg_count){
+                        if (phraseActuelle->argsLen != new_func->function_arg_count) {
                             custom_error("Le nombre d'arguments données ne correspond pas ou nombre d'arguments voulus", phraseActuelle);
                         }
                         interpreter(new_func, functions, NULL, layer + 1);
                     } else {
-                        if (phraseActuelle->argsLen != new_func->function_arg_count){
+                        if (phraseActuelle->argsLen != new_func->function_arg_count) {
                             custom_error("Le nombre d'arguments données ne correspond pas ou nombre d'arguments voulus", phraseActuelle);
                         }
                         interpreter(new_func, functions, phraseActuelle->valeur, layer + 1);
@@ -93,13 +93,13 @@ void interpreter(function_t* function, function_list_t* functions, val_t* result
                     break;
                 }
 
-                case AFFICHER_EXPR: 
-                case AFFICHER_EXPR_NO_RETURN:{
-                    for (int i = 0; i<phraseActuelle->argsLen-1; i++){
+                case AFFICHER_EXPR:
+                case AFFICHER_EXPR_NO_RETURN: {
+                    for (int i = 0; i < phraseActuelle->argsLen - 1; i++) {
                         print_val(phraseActuelle->args[i]->valeur, false, phraseActuelle);
                         printf(" ");
                     }
-                    print_val(phraseActuelle->args[phraseActuelle->argsLen-1]->valeur, phraseActuelle->phraseId == AFFICHER_EXPR, phraseActuelle);
+                    print_val(phraseActuelle->args[phraseActuelle->argsLen - 1]->valeur, phraseActuelle->phraseId == AFFICHER_EXPR, phraseActuelle);
                     phraseActuelle->interpreterArgsIndex = 0;
                     phraseActuelle = phraseActuelle->parentPhrase;
                     break;
@@ -127,7 +127,12 @@ void interpreter(function_t* function, function_list_t* functions, val_t* result
                 }
 
                 case ACCESSION_VARIABLE: {
-                    copy_val(phraseActuelle->valeur, phraseActuelle->variable->valeur, true, true);
+                    if (phraseActuelle->valeur->type == LISTE) {
+                        phraseActuelle->valeur->type = phraseActuelle->variable->valeur->type;
+                        phraseActuelle->valeur->liste = phraseActuelle->variable->valeur->liste;
+                    } else {
+                        copy_val(phraseActuelle->valeur, phraseActuelle->variable->valeur, true, false);
+                    }
                     phraseActuelle->interpreterArgsIndex = 0;
                     phraseActuelle = phraseActuelle->parentPhrase;
                     break;
@@ -210,7 +215,7 @@ void interpreter(function_t* function, function_list_t* functions, val_t* result
 
                 // liste -----------------------------------------------------------------
                 case EXPR_LISTE: {
-                    if (phraseActuelle->variable->valeur->type != LISTE){
+                    if (phraseActuelle->variable->valeur->type != LISTE) {
                         custom_error("La variable n'est pas une liste", phraseActuelle);
                     }
                     phraseActuelle->valeur->type = phraseActuelle->variable->valeur->type;
@@ -226,27 +231,27 @@ void interpreter(function_t* function, function_list_t* functions, val_t* result
                     phraseActuelle = phraseActuelle->parentPhrase;
                     break;
                 }
-                
-                case EXPR_LISTE_ELEM :{
-                    if (phraseActuelle->valeur->to_free_list){
+
+                case EXPR_LISTE_ELEM: {
+                    if (phraseActuelle->valeur->to_free_list) {
                         vider_liste(phraseActuelle->valeur->liste);
                     }
-                    if (phraseActuelle->valeur->type != LISTE){
+                    if (phraseActuelle->valeur->type != LISTE) {
                         phraseActuelle->valeur->type = LISTE;
                         phraseActuelle->valeur->liste = new_liste_t();
                     }
-                    
+
                     phraseActuelle->valeur->to_free_list = true;
-                    for (int i = 0; i< phraseActuelle->argsLen; i++){
+                    for (int i = 0; i < phraseActuelle->argsLen; i++) {
                         ajout(phraseActuelle->valeur->liste, phraseActuelle->args[i]->valeur);
                     }
                     phraseActuelle->interpreterArgsIndex = 0;
                     phraseActuelle = phraseActuelle->parentPhrase;
                     break;
                 }
-                
+
                 case ACCESSION_LISTE: {
-                    if (phraseActuelle->args[0]->valeur == NULL || phraseActuelle->args[0]->valeur->type != LISTE){
+                    if (phraseActuelle->args[0]->valeur == NULL || phraseActuelle->args[0]->valeur->type != LISTE) {
                         custom_error("La variable n'est pas une liste", phraseActuelle);
                     }
                     copy_val(phraseActuelle->valeur, accession(phraseActuelle->args[0]->valeur->liste, get_int(phraseActuelle->args[1]->valeur, phraseActuelle), phraseActuelle), true, true);
@@ -255,7 +260,7 @@ void interpreter(function_t* function, function_list_t* functions, val_t* result
                     break;
                 }
                 case MODIFICATION_LISTE: {
-                    if (phraseActuelle->args[0]->valeur == NULL || phraseActuelle->args[0]->valeur->type != LISTE){
+                    if (phraseActuelle->args[0]->valeur == NULL || phraseActuelle->args[0]->valeur->type != LISTE) {
                         custom_error("La variable n'est pas une liste", phraseActuelle);
                     }
                     modification(phraseActuelle->args[0]->valeur->liste, get_int(phraseActuelle->args[1]->valeur, phraseActuelle), phraseActuelle->args[2]->valeur, phraseActuelle);
@@ -264,7 +269,7 @@ void interpreter(function_t* function, function_list_t* functions, val_t* result
                     break;
                 }
                 case AJOUT_LISTE: {
-                    if (phraseActuelle->args[0]->valeur == NULL || phraseActuelle->args[0]->valeur->type != LISTE){
+                    if (phraseActuelle->args[0]->valeur == NULL || phraseActuelle->args[0]->valeur->type != LISTE) {
                         custom_error("La variable n'est pas une liste", phraseActuelle);
                     }
                     ajout(phraseActuelle->args[0]->valeur->liste, phraseActuelle->args[1]->valeur);
@@ -273,16 +278,16 @@ void interpreter(function_t* function, function_list_t* functions, val_t* result
                     break;
                 }
                 case SUPPRESSION_LISTE: {
-                    if (phraseActuelle->args[0]->valeur == NULL || phraseActuelle->args[0]->valeur->type != LISTE){
+                    if (phraseActuelle->args[0]->valeur == NULL || phraseActuelle->args[0]->valeur->type != LISTE) {
                         custom_error("La variable n'est pas une liste", phraseActuelle);
                     }
-                    suppression(phraseActuelle->args[0]->valeur->liste, get_int(phraseActuelle->args[1]->valeur,phraseActuelle), phraseActuelle);
+                    suppression(phraseActuelle->args[0]->valeur->liste, get_int(phraseActuelle->args[1]->valeur, phraseActuelle), phraseActuelle);
                     phraseActuelle->interpreterArgsIndex = 0;
                     phraseActuelle = phraseActuelle->parentPhrase;
                     break;
                 }
                 case INSERTION_LISTE: {
-                    if (phraseActuelle->args[1]->valeur == NULL || phraseActuelle->args[1]->valeur->type != LISTE){
+                    if (phraseActuelle->args[1]->valeur == NULL || phraseActuelle->args[1]->valeur->type != LISTE) {
                         custom_error("La variable n'est pas une liste", phraseActuelle);
                     }
                     inserer(phraseActuelle->args[1]->valeur->liste, get_int(phraseActuelle->args[2]->valeur, phraseActuelle), phraseActuelle->args[0]->valeur, phraseActuelle);
@@ -380,15 +385,15 @@ void interpreter(function_t* function, function_list_t* functions, val_t* result
                             phraseActuelle->interpreterInnerIndex = 0;
 
                             if (phraseActuelle->phraseId == POUR_AVEC_PAS) {
-                                if (phraseActuelle->variable->valeur->type == FLOAT || phraseActuelle->args[2]->valeur->type == FLOAT){
+                                if (phraseActuelle->variable->valeur->type == FLOAT || phraseActuelle->args[2]->valeur->type == FLOAT) {
                                     set_float(phraseActuelle->variable->valeur, get_as_float(phraseActuelle->variable->valeur, phraseActuelle) + get_as_float(phraseActuelle->args[2]->valeur, phraseActuelle));
-                                }else{
+                                } else {
                                     set_int(phraseActuelle->variable->valeur, get_as_int(phraseActuelle->variable->valeur, phraseActuelle) + get_as_int(phraseActuelle->args[2]->valeur, phraseActuelle));
                                 }
                             } else {
-                                if (phraseActuelle->variable->valeur->type == FLOAT){
+                                if (phraseActuelle->variable->valeur->type == FLOAT) {
                                     set_float(phraseActuelle->variable->valeur, get_as_float(phraseActuelle->variable->valeur, phraseActuelle) + 1);
-                                }else{
+                                } else {
                                     set_int(phraseActuelle->variable->valeur, get_as_int(phraseActuelle->variable->valeur, phraseActuelle) + 1);
                                 }
                             }
@@ -401,26 +406,25 @@ void interpreter(function_t* function, function_list_t* functions, val_t* result
 
                     break;
                 }
-                case TYPE_EXPR:{
-                    
+                case TYPE_EXPR: {
                     phraseActuelle->valeur->chaine = new_chaine_t(str_type(phraseActuelle->args[0]->valeur));
-                    
+
                     phraseActuelle = phraseActuelle->parentPhrase;
                     break;
                 }
-                case ET:{
+                case ET: {
                     et_booleen(phraseActuelle, false);
                     phraseActuelle->interpreterArgsIndex = 0;
                     phraseActuelle = phraseActuelle->parentPhrase;
                     break;
                 }
-                case OU:{
+                case OU: {
                     ou_booleen(phraseActuelle, false);
                     phraseActuelle->interpreterArgsIndex = 0;
                     phraseActuelle = phraseActuelle->parentPhrase;
                     break;
                 }
-                case EXPR_RIEN:{
+                case EXPR_RIEN: {
                     set_undefined(phraseActuelle->valeur);
                     phraseActuelle->interpreterArgsIndex = 0;
                     phraseActuelle = phraseActuelle->parentPhrase;

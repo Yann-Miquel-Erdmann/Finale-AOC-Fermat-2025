@@ -37,6 +37,7 @@ void free_val_t(val_t* v, bool free_chaine, bool free_liste) {
 
     if ((v->to_free_list || free_liste) && v->liste != NULL) {
         free_liste_t(v->liste, free_chaine, free_liste);
+        v->liste = NULL;
     }
 
     free(v);
@@ -51,9 +52,12 @@ void copy_val(val_t* dest, val_t* src, bool cp_chaine, bool cp_liste) {
 
     if (dest->liste != NULL) {
         free_liste_t(dest->liste, true, true);
+        dest->liste = NULL;
+
     }
     if (dest->chaine != NULL) {
         free_chaine_t(dest->chaine);
+        dest->chaine = NULL;
     }
     dest->chaine = NULL;
     dest->liste = NULL;
