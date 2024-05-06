@@ -22,11 +22,11 @@ phrase_t* parse_file(FILE* f) {
     addToText(mainPhrase, '\0');
 
     phrase_t* phraseActuelle = mainPhrase;
-    char buffer = '\0';
+    char buffer = '.';
     int line = 0;
 
     bool in_string = false;
-    bool in_comment = false;
+    int in_comment = 0;
 
     char c = '\0';
     while (fscanf(f, "%c", &c) != EOF) {
@@ -38,8 +38,11 @@ phrase_t* parse_file(FILE* f) {
             addToText(phraseActuelle, c);
         }else if (in_comment){
             if (c == ')'){
-                in_comment = false;
+                in_comment -= 1;
                 buffer = ')';
+            }
+            if (c == '('){
+                in_comment += 1;
             }
         } else if (is_uppercase(c)) {
             if (phraseActuelle->textLen > 0 && phraseActuelle->text[phraseActuelle->textLen - 1] != '*') {
@@ -112,7 +115,7 @@ phrase_t* parse_file(FILE* f) {
                         in_string = !in_string;
                     }
                     if (c == '(' && !in_string) {
-                        in_comment = true;
+                        in_comment += 1;
                     }
                     if (c == '\n') {
                         line++;
@@ -168,7 +171,9 @@ phrase_t* parse_file(FILE* f) {
             }
         }
     }
-
+    if (in_comment){
+        custom_error("Une parenthèse n'a pas été fermée", NULL);
+    }
     if (mainPhrase != phraseActuelle) {
         // probablement à changer + essayer de trouver où est-ce qu'il manque un point
         char* err_mess = malloc((strlen(phraseActuelle->text) * 2 + 31) * sizeof(char));

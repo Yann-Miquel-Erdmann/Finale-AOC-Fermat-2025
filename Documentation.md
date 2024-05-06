@@ -368,10 +368,10 @@ Renvoyer {expression}.
 Pour récupérer la valeur:
 _expression_
 ```
-Le renvoi de la fonction {nom de la fonction}?
+Le résultat de la fonction {nom de la fonction}?
 ```
 Et avec des arguments:\
 _expression_
 ```
-Le renvoi de la fonction {nom de la fonction} avec les arguments {expression 1}, ..., {expression n}?
+Le résultat de la fonction {nom de la fonction} avec les arguments {expression 1}, ..., {expression n}?
 ```

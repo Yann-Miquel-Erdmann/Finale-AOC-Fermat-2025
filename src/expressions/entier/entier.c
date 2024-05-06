@@ -6,7 +6,7 @@ bool test_expr_entier(phrase_t* phrase) {
     }
 
     int len = 0;
-
+    // printf("%s\n", phrase->text);
     char** result = analyse(phrase, EXPR_ENTIER_S, &len, NUMBER_SEPARATOR);
 
     if (result == NULL) {
