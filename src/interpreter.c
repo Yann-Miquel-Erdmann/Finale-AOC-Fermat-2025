@@ -13,7 +13,7 @@ void interpreter(function_t* function, function_list_t* functions, val_t* result
         custom_error("limite de récursion atteinte", NULL);
     }
     phrase_t* phraseActuelle = function->ast;
-
+    phrase_t* last_loop = NULL;
     while (phraseActuelle != NULL) {
         // printf("'%s' %d %d %d %d %p\n", phraseActuelle->text, phraseActuelle->phraseId, phraseActuelle->argsLen, phraseActuelle->interpreterArgsIndex, (int)phraseActuelle->constant, phraseActuelle);
 
@@ -184,6 +184,12 @@ void interpreter(function_t* function, function_list_t* functions, val_t* result
                     // comparateurs ----------------------------------------------------------
                 case EGALITE: {
                     egalite(phraseActuelle, false);
+                    phraseActuelle->interpreterArgsIndex = 0;
+                    phraseActuelle = phraseActuelle->parentPhrase;
+                    break;
+                }
+                case INEGALITE: {
+                    inegalite(phraseActuelle, false);
                     phraseActuelle->interpreterArgsIndex = 0;
                     phraseActuelle = phraseActuelle->parentPhrase;
                     break;
@@ -406,6 +412,19 @@ void interpreter(function_t* function, function_list_t* functions, val_t* result
 
                     break;
                 }
+
+                case QUITTER_BOUCLE: {
+                    phraseActuelle->interpreterInnerIndex = -1;
+                    phraseActuelle->interpreterArgsIndex = 0;
+                    // réinitialise la boucle
+                    phraseActuelle = phraseActuelle->innerPhrase[0];
+                    phraseActuelle->interpreterInnerIndex = -1;
+                    phraseActuelle->interpreterArgsIndex = 0;
+                    // continue dans le programme
+                    phraseActuelle = phraseActuelle->parentPhrase;
+                    break;
+                }
+
                 case TYPE_EXPR: {
                     phraseActuelle->valeur->chaine = new_chaine_t(str_type(phraseActuelle->args[0]->valeur));
 

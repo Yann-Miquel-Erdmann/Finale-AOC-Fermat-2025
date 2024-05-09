@@ -172,6 +172,9 @@ int elem_liste(char* text) {
     if (!strcmp(text, TANT_QUE_S)) {
         return TANT_QUE;
     }
+    if (!strcmp(text, QUITTER_BOUCLE_S)){
+        return QUITTER_BOUCLE;
+    }
     if (!strcmp(text, RENVOI_FONCTION_S)) {
         return RENVOI_FONCTION;
     }
@@ -181,6 +184,9 @@ int elem_liste(char* text) {
     
     if (!strcmp(text, EGALITE_S)) {
         return EGALITE;
+    }
+    if (!strcmp(text, INEGALITE_S)) {
+        return INEGALITE;
     }
     if (!strcmp(text, PLUS_GRAND_S)) {
         return PLUS_GRAND;
@@ -250,14 +256,14 @@ int value_type(phrase_t* p1, phrase_t* p2) {
 }
 
 void tokenise(phrase_t* phrase, function_t* function, function_list_t* func_list, function_list_t* func_call_list) {
-    bool valid = true;
     if (phrase->phraseId != -1) {
         return;
     }
+    bool constant = true;
     switch (elem_liste(phrase->text)) {
         case MAIN_PHRASE:
             if (phrase->argsLen > 0){
-                custom_error("La phrase pricipale ne prend pas d'arguments", NULL);
+                custom_error("La phrase principale ne prend pas d'arguments", NULL);
             }
             phrase->phraseId = MAIN_PHRASE;
             for (int i = 0; i < phrase->innerPhraseLen; i++) {
@@ -281,11 +287,11 @@ void tokenise(phrase_t* phrase, function_t* function, function_list_t* func_list
             }
             for (int i = 0; i < 2; i++) {
                 tokenise(phrase->args[i], function, func_list, func_call_list);
-                if (phrase->args[i]->phraseId > 3 || phrase->args[i]->phraseId < 1) {
-                    valid = false;
+                if (phrase->args[i]->phraseId > 4 || phrase->args[i]->phraseId < 1) {
+                    constant = false;
                 }
             }
-            if (valid) {
+            if (constant) {
                 somme(phrase, true);
             }
             break;
@@ -297,11 +303,11 @@ void tokenise(phrase_t* phrase, function_t* function, function_list_t* func_list
             }
             for (int i = 0; i < 2; i++) {
                 tokenise(phrase->args[i], function, func_list, func_call_list);
-                if (phrase->args[i]->phraseId > 3 || phrase->args[i]->phraseId < 1) {
-                    valid = false;
+                if (phrase->args[i]->phraseId > 4 || phrase->args[i]->phraseId < 1) {
+                    constant = false;
                 }
             }
-            if (valid) {
+            if (constant) {
                 difference(phrase, true);
             }
             break;
@@ -312,11 +318,11 @@ void tokenise(phrase_t* phrase, function_t* function, function_list_t* func_list
             phrase->phraseId = PRODUIT;
             for (int i = 0; i < 2; i++) {
                 tokenise(phrase->args[i], function, func_list, func_call_list);
-                if (phrase->args[i]->phraseId > 3 || phrase->args[i]->phraseId < 1) {
-                    valid = false;
+                if (phrase->args[i]->phraseId > 4 || phrase->args[i]->phraseId < 1) {
+                    constant = false;
                 }
             }
-            if (valid) {
+            if (constant) {
                 produit(phrase, true);
             }
             break;
@@ -328,11 +334,11 @@ void tokenise(phrase_t* phrase, function_t* function, function_list_t* func_list
             phrase->phraseId = QUOTIENT;
             for (int i = 0; i < 2; i++) {
                 tokenise(phrase->args[i], function, func_list, func_call_list);
-                if (phrase->args[i]->phraseId > 3 || phrase->args[i]->phraseId < 1) {
-                    valid = false;
+                if (phrase->args[i]->phraseId > 4 || phrase->args[i]->phraseId < 1) {
+                    constant = false;
                 }
             }
-            if (valid) {
+            if (constant) {
                 quotient(phrase, true);
             }
             break;
@@ -344,11 +350,11 @@ void tokenise(phrase_t* phrase, function_t* function, function_list_t* func_list
             phrase->phraseId = QUOTIENT_ENTIER;
             for (int i = 0; i < 2; i++) {
                 tokenise(phrase->args[i], function, func_list, func_call_list);
-                if (phrase->args[i]->phraseId > 3 || phrase->args[i]->phraseId < 1) {
-                    valid = false;
+                if (phrase->args[i]->phraseId > 4 || phrase->args[i]->phraseId < 1) {
+                    constant = false;
                 }
             }
-            if (valid) {
+            if (constant) {
                 quotient_entier(phrase, true);
             }
             break;
@@ -360,11 +366,11 @@ void tokenise(phrase_t* phrase, function_t* function, function_list_t* func_list
             phrase->phraseId = RESTE;
             for (int i = 0; i < 2; i++) {
                 tokenise(phrase->args[i], function, func_list, func_call_list);
-                if (phrase->args[i]->phraseId > 3 || phrase->args[i]->phraseId < 1) {
-                    valid = false;
+                if (phrase->args[i]->phraseId > 4 || phrase->args[i]->phraseId < 1) {
+                    constant = false;
                 }
             }
-            if (valid) {
+            if (constant) {
                 reste(phrase, true);
             }
 
@@ -388,14 +394,31 @@ void tokenise(phrase_t* phrase, function_t* function, function_list_t* func_list
             phrase->phraseId = EGALITE;
             for (int i = 0; i < 2; i++) {
                 tokenise(phrase->args[i], function, func_list, func_call_list);
-                if (phrase->args[i]->phraseId > 3 || phrase->args[i]->phraseId < 1) {
-                    valid = false;
+                if (phrase->args[i]->phraseId > 4 || phrase->args[i]->phraseId < 1) {
+                    constant = false;
                 }
             }
-            if (valid) {
+            if (constant) {
                 egalite(phrase, true);
             }
             break;
+
+        case INEGALITE:
+            if (phrase->innerPhraseLen > 0 || phrase->argsLen != 2) {
+                custom_error("Syntaxe invalide, l'égalité prend 2 arguments", phrase);
+            }
+            phrase->phraseId = INEGALITE;
+            for (int i = 0; i < 2; i++) {
+                tokenise(phrase->args[i], function, func_list, func_call_list);
+                if (phrase->args[i]->phraseId > 4 || phrase->args[i]->phraseId < 1) {
+                    constant = false;
+                }
+            }
+            if (constant) {
+                inegalite(phrase, true);
+            }
+            break;
+
         case PLUS_GRAND:
             if (phrase->innerPhraseLen > 0 || phrase->argsLen != 2) {
                 custom_error("Syntaxe invalide, la comparaison prend 2 arguments", phrase);
@@ -403,11 +426,11 @@ void tokenise(phrase_t* phrase, function_t* function, function_list_t* func_list
             phrase->phraseId = PLUS_GRAND;
             for (int i = 0; i < 2; i++) {
                 tokenise(phrase->args[i], function, func_list, func_call_list);
-                if (phrase->args[i]->phraseId > 3 || phrase->args[i]->phraseId < 1) {
-                    valid = false;
+                if (phrase->args[i]->phraseId > 4 || phrase->args[i]->phraseId < 1) {
+                    constant = false;
                 }
             }
-            if (valid) {
+            if (constant) {
                 plus_grand(phrase, true);
             }
             break;
@@ -418,11 +441,11 @@ void tokenise(phrase_t* phrase, function_t* function, function_list_t* func_list
             phrase->phraseId = PLUS_PETIT;
             for (int i = 0; i < 2; i++) {
                 tokenise(phrase->args[i], function, func_list, func_call_list);
-                if (phrase->args[i]->phraseId > 3 || phrase->args[i]->phraseId < 1) {
-                    valid = false;
+                if (phrase->args[i]->phraseId > 4 || phrase->args[i]->phraseId < 1) {
+                    constant = false;
                 }
             }
-            if (valid) {
+            if (constant) {
                 plus_petit(phrase, true);
             }
             break;
@@ -433,11 +456,11 @@ void tokenise(phrase_t* phrase, function_t* function, function_list_t* func_list
             phrase->phraseId = STRICT_PLUS_GRAND;
             for (int i = 0; i < 2; i++) {
                 tokenise(phrase->args[i], function, func_list, func_call_list);
-                if (phrase->args[i]->phraseId > 3 || phrase->args[i]->phraseId < 1) {
-                    valid = false;
+                if (phrase->args[i]->phraseId > 4 || phrase->args[i]->phraseId < 1) {
+                    constant = false;
                 }
             }
-            if (valid) {
+            if (constant) {
                 strict_plus_grand(phrase, true);
             }
             break;
@@ -448,11 +471,11 @@ void tokenise(phrase_t* phrase, function_t* function, function_list_t* func_list
             phrase->phraseId = STRICT_PLUS_PETIT;
             for (int i = 0; i < 2; i++) {
                 tokenise(phrase->args[i], function, func_list, func_call_list);
-                if (phrase->args[i]->phraseId > 3 || phrase->args[i]->phraseId < 1) {
-                    valid = false;
+                if (phrase->args[i]->phraseId > 4 || phrase->args[i]->phraseId < 1) {
+                    constant = false;
                 }
             }
-            if (valid) {
+            if (constant) {
                 strict_plus_petit(phrase, true);
             }
             break;
@@ -526,6 +549,21 @@ void tokenise(phrase_t* phrase, function_t* function, function_list_t* func_list
             for (int i = 0; i < phrase->innerPhraseLen; i++) {
                 tokenise(phrase->innerPhrase[i], function, func_list, func_call_list);
             }
+            break;
+        case QUITTER_BOUCLE:
+            if (phrase->argsLen != 0 || phrase->innerPhraseLen != 0) {
+                custom_error("Syntaxe invalide, quitter boucle ne prend pas d'arguments", phrase);
+            }
+            phrase_t* p = phrase->parentPhrase;
+            while (p->phraseId != TANT_QUE && p->phraseId != POUR_SANS_PAS && p->phraseId != POUR_AVEC_PAS) {
+                if (p->parentPhrase == NULL) {
+                    custom_error("Syntaxe invalide, quitter boucle doit être dans une boucle", phrase);
+                }
+                p = p->parentPhrase;
+            }
+            addToInner(phrase, p);  // quitter boucle prend en argument la boucle (tant que, pour sans pas, pour avec pas
+
+            phrase->phraseId = QUITTER_BOUCLE;
             break;
 
         case EXPR_LISTE_VIDE:
