@@ -26,7 +26,7 @@ bool test_expr_flottant(phrase_t* phrase) {
         phrase->constant = true;
         set_float(phrase->valeur, num);
     } else {
-        custom_error("invalid flottant", phrase);
+        custom_error("Flottant invalide", phrase);
     }
 
     free(res[0]);

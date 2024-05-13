@@ -43,6 +43,8 @@ bool is_equal(val_t* v1, val_t* v2, phrase_t* p);
 bool is_greater(val_t* v1, val_t* v2, phrase_t* p);
 bool is_strict_greater(val_t* v1, val_t* v2, phrase_t* p);
 
-void print_val(val_t* v, bool new_line, phrase_t* p);
+int taille(phrase_t* phrase);
+    
+    void print_val(val_t * v, bool new_line, phrase_t* p);
 
 #endif

@@ -22,7 +22,7 @@ liste_t* copy_liste(liste_t* l);
 
 void doubleValeursSize(liste_t* l);
 
-int taille(liste_t* l);
+int taille_liste(liste_t* l);
 
 void vider_liste(liste_t* l);
 

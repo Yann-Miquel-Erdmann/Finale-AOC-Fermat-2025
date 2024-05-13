@@ -105,13 +105,7 @@ void interpreter(function_t* function, function_list_t* functions, val_t* result
                     break;
                 }
                 case TAILLE: {
-                    if (phraseActuelle->args[0]->valeur->type == LISTE) {
-                        set_int(phraseActuelle->valeur, taille(phraseActuelle->args[0]->valeur->liste));
-                    } else if (phraseActuelle->args[0]->valeur->type == CHAINE_DE_CHAR) {
-                        set_int(phraseActuelle->valeur, phraseActuelle->args[0]->valeur->chaine->chars_len);
-                    } else {
-                        custom_error("taille ne peut être appliqué qu'à une liste ou une chaîne de caractères", phraseActuelle);
-                    }
+                    taille(phraseActuelle);
                     phraseActuelle->interpreterArgsIndex = 0;
                     phraseActuelle = phraseActuelle->parentPhrase;
                     break;

@@ -172,7 +172,7 @@ int elem_liste(char* text) {
     if (!strcmp(text, TANT_QUE_S)) {
         return TANT_QUE;
     }
-    if (!strcmp(text, QUITTER_BOUCLE_S)){
+    if (!strcmp(text, QUITTER_BOUCLE_S)) {
         return QUITTER_BOUCLE;
     }
     if (!strcmp(text, RENVOI_FONCTION_S)) {
@@ -181,7 +181,7 @@ int elem_liste(char* text) {
     if (!strcmp(text, MAIN_PHRASE_S)) {
         return MAIN_PHRASE;
     }
-    
+
     if (!strcmp(text, EGALITE_S)) {
         return EGALITE;
     }
@@ -242,7 +242,7 @@ int elem_liste(char* text) {
     if (!strcmp(text, AFFICHER_EXPR_S)) {
         return AFFICHER_EXPR;
     }
-    if (!strcmp(text, AFFICHER_EXPR_NO_RETURN_S)){
+    if (!strcmp(text, AFFICHER_EXPR_NO_RETURN_S)) {
         return AFFICHER_EXPR_NO_RETURN;
     }
     return -1;
@@ -262,7 +262,7 @@ void tokenise(phrase_t* phrase, function_t* function, function_list_t* func_list
     bool constant = true;
     switch (elem_liste(phrase->text)) {
         case MAIN_PHRASE:
-            if (phrase->argsLen > 0){
+            if (phrase->argsLen > 0) {
                 custom_error("La phrase principale ne prend pas d'arguments", NULL);
             }
             phrase->phraseId = MAIN_PHRASE;
@@ -287,7 +287,7 @@ void tokenise(phrase_t* phrase, function_t* function, function_list_t* func_list
             }
             for (int i = 0; i < 2; i++) {
                 tokenise(phrase->args[i], function, func_list, func_call_list);
-                if (phrase->args[i]->phraseId > 4 || phrase->args[i]->phraseId < 1) {
+                if (!phrase->args[i]->constant) {
                     constant = false;
                 }
             }
@@ -303,7 +303,7 @@ void tokenise(phrase_t* phrase, function_t* function, function_list_t* func_list
             }
             for (int i = 0; i < 2; i++) {
                 tokenise(phrase->args[i], function, func_list, func_call_list);
-                if (phrase->args[i]->phraseId > 4 || phrase->args[i]->phraseId < 1) {
+                if (!phrase->args[i]->constant) {
                     constant = false;
                 }
             }
@@ -318,7 +318,7 @@ void tokenise(phrase_t* phrase, function_t* function, function_list_t* func_list
             phrase->phraseId = PRODUIT;
             for (int i = 0; i < 2; i++) {
                 tokenise(phrase->args[i], function, func_list, func_call_list);
-                if (phrase->args[i]->phraseId > 4 || phrase->args[i]->phraseId < 1) {
+                if (!phrase->args[i]->constant) {
                     constant = false;
                 }
             }
@@ -334,7 +334,7 @@ void tokenise(phrase_t* phrase, function_t* function, function_list_t* func_list
             phrase->phraseId = QUOTIENT;
             for (int i = 0; i < 2; i++) {
                 tokenise(phrase->args[i], function, func_list, func_call_list);
-                if (phrase->args[i]->phraseId > 4 || phrase->args[i]->phraseId < 1) {
+                if (!phrase->args[i]->constant) {
                     constant = false;
                 }
             }
@@ -350,7 +350,7 @@ void tokenise(phrase_t* phrase, function_t* function, function_list_t* func_list
             phrase->phraseId = QUOTIENT_ENTIER;
             for (int i = 0; i < 2; i++) {
                 tokenise(phrase->args[i], function, func_list, func_call_list);
-                if (phrase->args[i]->phraseId > 4 || phrase->args[i]->phraseId < 1) {
+                if (!phrase->args[i]->constant) {
                     constant = false;
                 }
             }
@@ -366,7 +366,7 @@ void tokenise(phrase_t* phrase, function_t* function, function_list_t* func_list
             phrase->phraseId = RESTE;
             for (int i = 0; i < 2; i++) {
                 tokenise(phrase->args[i], function, func_list, func_call_list);
-                if (phrase->args[i]->phraseId > 4 || phrase->args[i]->phraseId < 1) {
+                if (!phrase->args[i]->constant) {
                     constant = false;
                 }
             }
@@ -382,7 +382,7 @@ void tokenise(phrase_t* phrase, function_t* function, function_list_t* func_list
             }
             phrase->phraseId = NEGATION_BOOLEENNE;
             tokenise(phrase->args[0], function, func_list, func_call_list);
-            if (phrase->args[0]->phraseId <= 3 && phrase->args[0]->phraseId >= 1) {
+            if (phrase->args[0]->constant) {
                 negation_booleenne(phrase, true);
             }
             break;
@@ -394,7 +394,7 @@ void tokenise(phrase_t* phrase, function_t* function, function_list_t* func_list
             phrase->phraseId = EGALITE;
             for (int i = 0; i < 2; i++) {
                 tokenise(phrase->args[i], function, func_list, func_call_list);
-                if (phrase->args[i]->phraseId > 4 || phrase->args[i]->phraseId < 1) {
+                if (!phrase->args[i]->constant) {
                     constant = false;
                 }
             }
@@ -410,7 +410,7 @@ void tokenise(phrase_t* phrase, function_t* function, function_list_t* func_list
             phrase->phraseId = INEGALITE;
             for (int i = 0; i < 2; i++) {
                 tokenise(phrase->args[i], function, func_list, func_call_list);
-                if (phrase->args[i]->phraseId > 4 || phrase->args[i]->phraseId < 1) {
+                if (!phrase->args[i]->constant) {
                     constant = false;
                 }
             }
@@ -426,7 +426,7 @@ void tokenise(phrase_t* phrase, function_t* function, function_list_t* func_list
             phrase->phraseId = PLUS_GRAND;
             for (int i = 0; i < 2; i++) {
                 tokenise(phrase->args[i], function, func_list, func_call_list);
-                if (phrase->args[i]->phraseId > 4 || phrase->args[i]->phraseId < 1) {
+                if (!phrase->args[i]->constant) {
                     constant = false;
                 }
             }
@@ -441,7 +441,7 @@ void tokenise(phrase_t* phrase, function_t* function, function_list_t* func_list
             phrase->phraseId = PLUS_PETIT;
             for (int i = 0; i < 2; i++) {
                 tokenise(phrase->args[i], function, func_list, func_call_list);
-                if (phrase->args[i]->phraseId > 4 || phrase->args[i]->phraseId < 1) {
+                if (!phrase->args[i]->constant) {
                     constant = false;
                 }
             }
@@ -456,7 +456,7 @@ void tokenise(phrase_t* phrase, function_t* function, function_list_t* func_list
             phrase->phraseId = STRICT_PLUS_GRAND;
             for (int i = 0; i < 2; i++) {
                 tokenise(phrase->args[i], function, func_list, func_call_list);
-                if (phrase->args[i]->phraseId > 4 || phrase->args[i]->phraseId < 1) {
+                if (!phrase->args[i]->constant) {
                     constant = false;
                 }
             }
@@ -471,7 +471,7 @@ void tokenise(phrase_t* phrase, function_t* function, function_list_t* func_list
             phrase->phraseId = STRICT_PLUS_PETIT;
             for (int i = 0; i < 2; i++) {
                 tokenise(phrase->args[i], function, func_list, func_call_list);
-                if (phrase->args[i]->phraseId > 4 || phrase->args[i]->phraseId < 1) {
+                if (!phrase->args[i]->constant) {
                     constant = false;
                 }
             }
@@ -486,17 +486,17 @@ void tokenise(phrase_t* phrase, function_t* function, function_list_t* func_list
                 custom_error("Syntaxe invalide, affiche expression prend au moins un arguments", phrase);
             }
             phrase->phraseId = AFFICHER_EXPR;
-            for (int i = 0; i<phrase->argsLen; i++){
+            for (int i = 0; i < phrase->argsLen; i++) {
                 tokenise(phrase->args[i], function, func_list, func_call_list);
             }
-            
+
             break;
         case AFFICHER_EXPR_NO_RETURN:
             if (phrase->argsLen == 0 || phrase->innerPhraseLen > 0) {
                 custom_error("Syntaxe invalide, affiche expression sans retour prend au moins un arguments", phrase);
             }
             phrase->phraseId = AFFICHER_EXPR_NO_RETURN;
-            for (int i = 0; i<phrase->argsLen; i++){
+            for (int i = 0; i < phrase->argsLen; i++) {
                 tokenise(phrase->args[i], function, func_list, func_call_list);
             }
             break;
@@ -631,6 +631,13 @@ void tokenise(phrase_t* phrase, function_t* function, function_list_t* func_list
             phrase->phraseId = TYPE_EXPR;
             phrase->valeur->type = CHAINE_DE_CHAR;
             tokenise(phrase->args[0], function, func_list, func_call_list);
+            if (phrase->args[0]->constant) {
+                phrase->constant = true;
+                phrase->valeur->type = CHAINE_DE_CHAR;
+                phrase->valeur->to_free_chaine = true;
+                phrase->valeur->chaine = new_chaine_t(str_type(phrase->args[0]->valeur));
+            }
+
             break;
         case ET:
             if (phrase->innerPhraseLen > 0 || phrase->argsLen != 2) {
@@ -640,6 +647,11 @@ void tokenise(phrase_t* phrase, function_t* function, function_list_t* func_list
             phrase->valeur->type = BOOL;
             tokenise(phrase->args[0], function, func_list, func_call_list);
             tokenise(phrase->args[1], function, func_list, func_call_list);
+
+            if (phrase->args[0]->constant && phrase->args[1]->constant) {
+                et_booleen(phrase, true);
+            }
+
             break;
         case OU:
             if (phrase->innerPhraseLen > 0 || phrase->argsLen != 2) {
@@ -649,10 +661,15 @@ void tokenise(phrase_t* phrase, function_t* function, function_list_t* func_list
             phrase->valeur->type = BOOL;
             tokenise(phrase->args[0], function, func_list, func_call_list);
             tokenise(phrase->args[1], function, func_list, func_call_list);
+
+            if (phrase->args[0]->constant && phrase->args[1]->constant) {
+                ou_booleen(phrase, true);
+            }
             break;
         case EXPR_RIEN:
             phrase->phraseId = EXPR_RIEN;
             phrase->valeur->type = UNDEFINED;
+            phrase->constant = true;
             break;
         case TAILLE:
             if (phrase->innerPhraseLen > 0 || phrase->argsLen != 1) {
@@ -661,6 +678,10 @@ void tokenise(phrase_t* phrase, function_t* function, function_list_t* func_list
             phrase->phraseId = TAILLE;
             phrase->valeur->type = INT;
             tokenise(phrase->args[0], function, func_list, func_call_list);
+            if (phrase->args[0]->constant) {
+                taille(phrase);
+                phrase->constant = true;
+            }
             break;
 
         default:
