@@ -400,7 +400,7 @@ bool is_strict_greater(val_t* v1, val_t* v2, phrase_t* p) {
     }
 }
 
-int taille(phrase_t* phrase) {
+void taille(phrase_t* phrase) {
     if (phrase->args[0]->valeur->type == LISTE) {
         set_int(phrase->valeur, taille_liste(phrase->args[0]->valeur->liste));
     } else if (phrase->args[0]->valeur->type == CHAINE_DE_CHAR) {

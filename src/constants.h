@@ -95,6 +95,9 @@
 #define AFFICHER_EXPR_NO_RETURN 33
 #define TYPE_EXPR 43
 
+// aléatoire
+#define DEFINIR_SEED 50
+#define NOMBRE_ALEATOIRE 51
 
 // fonctions
 #define DEFINITION_FONCTION 34
@@ -105,7 +108,8 @@
 #define EXECUTION_FONCTION_ARGUMENT 39
 #define APPEL_VALEUR_FONCTION_ARGUMENT 40
 
-// current next element: 50
+// current next element: 52
+
 #define DEFAULT_SEPARATOR "?,. "
 #define STRING_SEPARATOR  "\""
 #define NUMBER_SEPARATOR  "?,."
@@ -152,7 +156,7 @@
 
 // comparateurs
 #define EGALITE_S "La valeur de * est égale à la valeur de *?"                                // fait
-#define INEGALITE_S "La valeur de * est différente de la valeur de *?"                                // fait
+#define INEGALITE_S "La valeur de * est différente de la valeur de *?"                        // fait
 #define PLUS_GRAND_S "La valeur de * est plus grande que la valeur de *?"                     // fait
 #define PLUS_PETIT_S "La valeur de * est plus petite que la valeur de *?"                     // fait
 #define STRICT_PLUS_GRAND_S "La valeur de * est strictement plus grande que la valeur de *?"  // fait
@@ -175,12 +179,16 @@
 #define TYPE_EXPR_S "Le type de *?"                                      // fait
 #define TAILLE_S "La taille de *?"                                       // fait
 
+// aléatoire
+#define DEFINIR_SEED_S "Mettre la seed aléatoire à *."
+#define NOMBRE_ALEATOIRE_S "Un nombre aléatoire?"
+
 // fonctions
 #define DEFINITION_FONCTION_S "Soit $ une fonction qui lorsqu'elle est appelée exécute:*."    // fait
 #define EXECUTION_FONCTION_S "Exécuter la fonction $."                                        // fait
 #define RENVOI_FONCTION_S "Renvoyer *."                                                       // fait
-#define APPEL_VALEUR_FONCTION_S "Le résultat de la fonction $?"                                 // fait
+#define APPEL_VALEUR_FONCTION_S "Le résultat de la fonction $?"                               // fait
 
 #define DEFINITION_FONCTION_ARGUMENT_S "Soit $ une fonction qui lorsqu'elle est appelée avec $ exécute:*."   // fait
 #define EXECUTION_FONCTION_ARGUMENT_S "Exécuter la fonction $ avec les arguments *."                         // fait
-#define APPEL_VALEUR_FONCTION_ARGUMENT_S "Le résultat de la fonction $ avec les arguments *?"                  // fait
+#define APPEL_VALEUR_FONCTION_ARGUMENT_S "Le résultat de la fonction $ avec les arguments *?"                // fait

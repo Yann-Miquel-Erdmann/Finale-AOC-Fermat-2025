@@ -150,7 +150,7 @@
         "output": "Ligne 1.\nLigne 2.\n"
     },
     {
-        "name": "2024-04-30_15-32-22 (not working yet)",
+        "name": "2024-04-30_15-32-22",
         "code": "Soit main une fonction qui lorsqu'elle est appelée exécute:\n    Soit l La liste des éléments L'entier trois?, L'entier deux??.\n    Ajouter à La variable l? La liste l?.\n    Ajouter à La variable l? La liste l?.\n    Afficher La variable l?.\n.\nExécuter la fonction main.",
         "output": "[trois, deux, [trois, deux], [trois, deux, [trois, deux]]]\n"
     },

@@ -2,18 +2,21 @@
 
 #include <string.h>
 
+
 #include "constants.h"
 #include "custom_error.h"
 #include "eval_numbers.h"
 #include "expressions/comparateurs.h"
 #include "expressions/operateurs.h"
+#include "syntax_convert.h"
+#include <math.h>
 
 void interpreter(function_t* function, function_list_t* functions, val_t* result, int layer) {
     if (layer > MAX_RECUSION_DEPTH) {
         custom_error("limite de récursion atteinte", NULL);
     }
     phrase_t* phraseActuelle = function->ast;
-    phrase_t* last_loop = NULL;
+    //phrase_t* last_loop = NULL;
     while (phraseActuelle != NULL) {
         // printf("'%s' %d %d %d %d %p\n", phraseActuelle->text, phraseActuelle->phraseId, phraseActuelle->argsLen, phraseActuelle->interpreterArgsIndex, (int)phraseActuelle->constant, phraseActuelle);
 
@@ -439,6 +442,18 @@ void interpreter(function_t* function, function_list_t* functions, val_t* result
                 }
                 case EXPR_RIEN: {
                     set_undefined(phraseActuelle->valeur);
+                    phraseActuelle->interpreterArgsIndex = 0;
+                    phraseActuelle = phraseActuelle->parentPhrase;
+                    break;
+                }
+                case DEFINIR_SEED: {
+                    srand(get_as_int(phraseActuelle->args[0]->valeur, phraseActuelle));
+                    phraseActuelle->interpreterArgsIndex = 0;
+                    phraseActuelle = phraseActuelle->parentPhrase;
+                    break;
+                }
+                case NOMBRE_ALEATOIRE: {
+                    set_float(phraseActuelle->valeur, ((float)rand()/(float)2147483647));
                     phraseActuelle->interpreterArgsIndex = 0;
                     phraseActuelle = phraseActuelle->parentPhrase;
                     break;

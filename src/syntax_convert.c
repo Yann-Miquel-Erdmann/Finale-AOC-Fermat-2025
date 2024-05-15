@@ -245,6 +245,12 @@ int elem_liste(char* text) {
     if (!strcmp(text, AFFICHER_EXPR_NO_RETURN_S)) {
         return AFFICHER_EXPR_NO_RETURN;
     }
+    if (!strcmp(text, DEFINIR_SEED_S)){
+        return DEFINIR_SEED;
+    }
+    if (!strcmp(text, NOMBRE_ALEATOIRE_S)){
+        return NOMBRE_ALEATOIRE;
+    }
     return -1;
 }
 
@@ -561,7 +567,7 @@ void tokenise(phrase_t* phrase, function_t* function, function_list_t* func_list
                 }
                 p = p->parentPhrase;
             }
-            addToInner(phrase, p);  // quitter boucle prend en argument la boucle (tant que, pour sans pas, pour avec pas
+            addToInner(phrase, p);  // quitter boucle prend en argument la boucle (tant que, pour sans pas, pour avec pas)
 
             phrase->phraseId = QUITTER_BOUCLE;
             break;
@@ -683,7 +689,17 @@ void tokenise(phrase_t* phrase, function_t* function, function_list_t* func_list
                 phrase->constant = true;
             }
             break;
-
+        case DEFINIR_SEED:
+            if (phrase->innerPhraseLen > 0 || phrase->argsLen != 1) {
+                custom_error("Syntaxe invalide, definition seed prend 1 arguments", phrase);
+            }
+            phrase->phraseId = DEFINIR_SEED;
+            tokenise(phrase->args[0], function, func_list, func_call_list);
+            break;
+        case NOMBRE_ALEATOIRE:
+            phrase->phraseId = NOMBRE_ALEATOIRE;
+            phrase->valeur->type = FLOAT;
+            break;
         default:
             if (test_expr_entier(phrase)) {
             } else if (test_expr_flottant(phrase)) {

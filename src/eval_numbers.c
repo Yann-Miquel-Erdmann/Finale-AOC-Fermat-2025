@@ -509,7 +509,7 @@ char* str_from_float(float n) {
     }
     char* text_int = str_from_int((int)n);
     text = add_str(text, &text_size, text_int);
-    if ((float)(int)n == n) {
+    if (((float)(int)n) == n) {
         return text;
     }
     n = n - (int)n;
