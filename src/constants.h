@@ -74,6 +74,7 @@
 // comparateurs
 
 #define EGALITE 22
+#define INEGALITE 48
 #define PLUS_GRAND 23
 #define PLUS_PETIT 24
 #define STRICT_PLUS_GRAND 25
@@ -87,6 +88,7 @@
 #define TANT_QUE 29
 #define POUR_SANS_PAS 30
 #define POUR_AVEC_PAS 31
+#define QUITTER_BOUCLE 49
 
 // affichage console
 #define AFFICHER_EXPR 32
@@ -103,8 +105,7 @@
 #define EXECUTION_FONCTION_ARGUMENT 39
 #define APPEL_VALEUR_FONCTION_ARGUMENT 40
 
-// current next element: 48
-
+// current next element: 50
 #define DEFAULT_SEPARATOR "?,. "
 #define STRING_SEPARATOR  "\""
 #define NUMBER_SEPARATOR  "?,."
@@ -144,13 +145,14 @@
 #define QUOTIENT_ENTIER_S "Le quotient entier de * par *?"  // fait
 #define RESTE_S "Le reste de * par *?"                      // fait
 
-// opérateus booléens
+// opérateur booléens
 #define NEGATION_BOOLEENNE_S "La négation booléenne de *?"  // fait
 #define OU_S "On a * ou *?"                                 // fait
 #define ET_S "On a * et *?"                                 // fait
 
 // comparateurs
 #define EGALITE_S "La valeur de * est égale à la valeur de *?"                                // fait
+#define INEGALITE_S "La valeur de * est différente de la valeur de *?"                                // fait
 #define PLUS_GRAND_S "La valeur de * est plus grande que la valeur de *?"                     // fait
 #define PLUS_PETIT_S "La valeur de * est plus petite que la valeur de *?"                     // fait
 #define STRICT_PLUS_GRAND_S "La valeur de * est strictement plus grande que la valeur de *?"  // fait
@@ -164,11 +166,13 @@
 #define TANT_QUE_S "Tant que * faire:*."                                                  // fait
 #define POUR_SANS_PAS_S "Pour $ allant de * jusqu'à * faire:*."                           // fait
 #define POUR_AVEC_PAS_S "Pour $ allant de * jusqu'à * en utilisant un pas de * faire:*."  // fait
+#define QUITTER_BOUCLE_S "Quitter la boucle."                                             // fait
+
 
 // affichage console
 #define AFFICHER_EXPR_S "Afficher *."                                    // fait
-#define TYPE_EXPR_S "Le type de *?"                                      // fait
 #define AFFICHER_EXPR_NO_RETURN_S "Afficher * sans retour à la ligne."   // fait
+#define TYPE_EXPR_S "Le type de *?"                                      // fait
 #define TAILLE_S "La taille de *?"                                       // fait
 
 // fonctions

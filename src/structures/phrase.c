@@ -50,8 +50,10 @@ void free_phrase(phrase_t* phrase) {
     }
     free(phrase->args);
 
-    for (int i = 0; i < phrase->innerPhraseLen; i++) {
-        free_phrase(phrase->innerPhrase[i]);
+    if (phrase->phraseId != QUITTER_BOUCLE) {
+        for (int i = 0; i < phrase->innerPhraseLen; i++) {
+            free_phrase(phrase->innerPhrase[i]);
+        }
     }
     free(phrase->innerPhrase);
 
@@ -188,7 +190,7 @@ void _printPhrase(phrase_t* phrase, int decalage, int last_elem) {
 
                 break;
             case CHAINE_DE_CHAR:
-                if (phrase->constant){
+                if (phrase->constant) {
                     printf("  ->  %s", phrase->valeur->chaine->chars);
                 }
             default:
