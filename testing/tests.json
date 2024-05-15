@@ -152,6 +152,11 @@
     {
         "name": "2024-04-30_15-32-22 (not working yet)",
         "code": "Soit main une fonction qui lorsqu'elle est appelée exécute:\n    Soit l La liste des éléments L'entier trois?, L'entier deux??.\n    Ajouter à La variable l? La liste l?.\n    Ajouter à La variable l? La liste l?.\n    Afficher La variable l?.\n.\nExécuter la fonction main.",
-        "output":"[trois, deux, [trois, deux], [trois, deux, [trois, deux]]]\n"
+        "output": "[trois, deux, [trois, deux], [trois, deux, [trois, deux]]]\n"
+    },
+    {
+        "name": "2024-04-30_15-28-33",
+        "code": "Afficher La différence de Le flottant zéro virgule trente? et de Le flottant zéro virgule cinq??.",
+        "output": "moins zéro virgule dix-neuf millions neuf-cent-quatre-vingt-dix-neuf mille neuf-cent-quatre-vingt-dix-huit\n"
     }
 ]

@@ -1,3 +1,7 @@
-Afficher La chaîne de caractères "Ligne 1."?.
-Afficher La chaîne de caractères "Ligne "? sans retour à la ligne.
-Afficher La chaîne de caractères "2."?.
+Soit main une fonction qui lorsqu'elle est appelée exécute:
+    Soit l La liste des éléments L'entier trois?, L'entier deux??.
+    Ajouter à La variable l? La liste l?.
+    Ajouter à La variable l? La liste l?.
+    Afficher La variable l?.
+.
+Exécuter la fonction main.

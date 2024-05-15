@@ -16,6 +16,9 @@ bool test_inst_var_init(phrase_t* phrase, function_t* function) {
     if (len > 1) {
         custom_error("too many arguments given", phrase);
     }
+    if (phrase->argsLen != 1 || phrase->innerPhraseLen > 0){
+        custom_error("Initialisation de variable prend un seul argument", phrase);
+    }
 
     phrase->phraseId = DEFINITION_VARIABLE_AVEC_INIT;
     phrase->constant = false;

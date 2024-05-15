@@ -15,6 +15,9 @@ bool test_expr_func_call_args(phrase_t* phrase, function_list_t* func_list) {
     if (len > 1) {
         custom_error("too many arguments given", phrase);
     }
+    if (phrase->argsLen == 0 || phrase->innerPhraseLen > 0){
+        custom_error("Appel de fonction prend au moins un argument", phrase);
+    }
     
     phrase->phraseId = APPEL_VALEUR_FONCTION_ARGUMENT;
     phrase->function = new_function(result[0], phrase);

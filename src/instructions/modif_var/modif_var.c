@@ -14,6 +14,9 @@ bool test_inst_modif_var(phrase_t* phrase, function_t* function) {
     if (len > 1) {
         custom_error("too many arguments given", phrase);
     }
+    if (phrase->argsLen != 1 || phrase->innerPhraseLen > 0){
+        custom_error("Modification de variable prend un seul argument", phrase);
+    }
 
     phrase->phraseId = MODIFICATION_VARIABLE;
     phrase->variable = getVariable(function->env, result[0]);

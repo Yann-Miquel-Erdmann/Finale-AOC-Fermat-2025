@@ -4,7 +4,7 @@
 
 char* add_str(char* str, int* taille, char* added) {
     if (str == NULL) {
-        custom_error("", NULL);
+        custom_error("str est NULL", NULL);
     }
 
     int len = (int)strlen(added);
@@ -13,11 +13,12 @@ char* add_str(char* str, int* taille, char* added) {
         *(taille) *= 2;
         str = realloc(str, (*(taille)) * sizeof(char));
         if (str == NULL) {
-            custom_error("", NULL);
+            custom_error("erreur lors de la réallocation de str ", NULL);
             exit(0);
         }
     }
     strcat(str, added);
+    strcat(str, "");
     return str;
 }
 
@@ -498,14 +499,21 @@ char* str_from_int(int n) {
 }
 
 char* str_from_float(float n) {
-    // printf("%f\n", n);
-    char* text = str_from_int((int)n);
-
+    int text_size = 1;
+    // printf("%f, %d\n", n, (int)n);
+    char* text = malloc(text_size*sizeof(char));
+    text[0] = '\0';
+    if (n < 0){
+        text = add_str(text, &text_size, "moins ");
+        n = -n;
+    }
+    char* text_int = str_from_int((int)n);
+    text = add_str(text, &text_size, text_int);
     if ((float)(int)n == n) {
         return text;
     }
     n = n - (int)n;
-    int text_size = (int)strlen(text);
+    text_size = (int)strlen(text);
     text = add_str(text, &text_size, " virgule ");
     while (n != (int)n) {
         n *= 10;
@@ -516,5 +524,6 @@ char* str_from_float(float n) {
     char* text_dec = str_from_int((int)n);
     text = add_str(text, &text_size, text_dec);
     free(text_dec);
+    free(text_int);
     return text;
 }

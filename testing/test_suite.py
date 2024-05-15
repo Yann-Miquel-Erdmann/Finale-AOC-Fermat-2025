@@ -25,7 +25,7 @@ for line in data:
         f.write(line["code"])
     if platform.system() == "Darwin" : # pour que erwan puisse faire les tests
         
-        res = subprocess.run(f"""/usr/local/bin/valgrind --gen-suppressions=all --error-exitcode=1 --leak-check=full --suppressions=testing/minimal.supp build/interpreter testing/python_test.FC """,
+        res = subprocess.run(f"""/usr/local/bin/valgrind --error-exitcode=1 --leak-check=full --suppressions=testing/minimal.supp build/interpreter testing/python_test.FC """,
                          shell=True, capture_output=True, text=True)
     else:
         res = subprocess.run(f"""valgrind --error-exitcode=1 --leak-check=full build/interpreter testing/python_test.FC """,

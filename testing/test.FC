@@ -1,2 +1,14 @@
-Soit l La liste vide?.
-Ajouter à La variable l? L'entier quatre?.
+Soit afficherlentier une fonction qui lorsqu'elle est appelée avec entier exécute:
+    Soit conversion_entiers La liste des éléments La chaîne de caractères "0"?, La chaîne de caractères "1"?, La chaîne de caractères "2"?, La chaîne de caractères "3"?, La chaîne de caractères "4"?, La chaîne de caractères "5"?, La chaîne de caractères "6"?, La chaîne de caractères "7"?, La chaîne de caractères "8"?, La chaîne de caractères "9"??.
+    Soit l La liste vide?.
+    Tant que La négation booléenne de La valeur de La variable entier? est égale à la valeur de L'entier zéro??? faire:
+        Ajouter à La liste l? Le reste de La variable entier? par L'entier dix??.
+        Que entier devienne Le quotient entier de La variable entier? par L'entier dix??.
+    .
+    Soit n La taille de La variable l??.
+    Pour i allant de L'entier zéro? jusqu'à La variable n? faire:
+        Afficher L'élément de La liste conversion_entiers? à l'indice L'élément de La liste l? à l'indice La différence de La différence de La variable n? et de La variable i?? et de L'entier un???? sans retour à la ligne.
+    .
+.
+
+Exécuter la fonction afficherlentier avec les arguments L'entier deux-cent-quatre-vingt-dix-huit-mille-sept-cent-quatre-vingt-dix-neuf?.
