@@ -7,3 +7,5 @@ a.out
 
 *.code-workspace
 *.FC
+perf.data
+perf.data.old

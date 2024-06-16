@@ -21,8 +21,8 @@ bool test_expr_entier(phrase_t* phrase, environnement_t* env) {
     if (result_num[0]) {
         phrase->phraseId = EXPR_ENTIER;
         phrase->constant = true;
-        // printf("%p\n", getValeur(env, phrase->uniqueId));
-        set_int(getValeur(env, phrase->uniqueId), result_num[1]);
+        // printf("%p\n", env->phraseValeurs[ phrase->uniqueId]);
+        set_int(env->phraseValeurs[phrase->uniqueId], result_num[1]);
     } else {
         char* err = malloc((strlen(result[0]) + 32) * sizeof(char));
 

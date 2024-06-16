@@ -166,10 +166,10 @@ int elem_liste(char* text) {
     if (!strcmp(text, AFFICHER_EXPR_NO_RETURN_S)) {
         return AFFICHER_EXPR_NO_RETURN;
     }
-    if (!strcmp(text, DEFINIR_SEED_S)){
+    if (!strcmp(text, DEFINIR_SEED_S)) {
         return DEFINIR_SEED;
     }
-    if (!strcmp(text, NOMBRE_ALEATOIRE_S)){
+    if (!strcmp(text, NOMBRE_ALEATOIRE_S)) {
         return NOMBRE_ALEATOIRE;
     }
     return -1;
@@ -558,10 +558,10 @@ void tokenise(phrase_t* phrase, function_t* function, function_list_t* func_list
             // printf("suivant: %s\n", phrase->suivant->text);
 
             tokenise(phrase->args[0], function, func_list, func_call_list, uniqueId, parent_loop, false, NULL);
-            for (int i = 0; i < phrase->innerPhraseLen-1; i++) {
+            for (int i = 0; i < phrase->innerPhraseLen - 1; i++) {
                 tokenise(phrase->innerPhrase[i], function, func_list, func_call_list, uniqueId, parent_loop, false, NULL);
             }
-            tokenise(phrase->innerPhrase[phrase->innerPhraseLen-1], function, func_list, func_call_list, uniqueId, parent_loop, true, phrase->suivant);
+            tokenise(phrase->innerPhrase[phrase->innerPhraseLen - 1], function, func_list, func_call_list, uniqueId, parent_loop, true, phrase->suivant);
 
             break;
         case SI_ALORS_SINON:
@@ -650,9 +650,9 @@ void tokenise(phrase_t* phrase, function_t* function, function_list_t* func_list
                 phrase->suivant = inLoopSuivantPointer;
             }
 
-            getValeur(function->env, phrase->uniqueId)->type = LISTE;
-            getValeur(function->env, phrase->uniqueId)->liste = new_liste_t();
-            getValeur(function->env, phrase->uniqueId)->to_free_list = true;
+            function->env->phraseValeurs[phrase->uniqueId]->type = LISTE;
+            function->env->phraseValeurs[phrase->uniqueId]->liste = new_liste_t();
+            function->env->phraseValeurs[phrase->uniqueId]->to_free_list = true;
             phrase->constant = true;
             break;
         case EXPR_LISTE_ELEM:
@@ -746,13 +746,13 @@ void tokenise(phrase_t* phrase, function_t* function, function_list_t* func_list
                 phrase->suivant = inLoopSuivantPointer;
             }
 
-            getValeur(function->env, phrase->uniqueId)->type = CHAINE_DE_CHAR;
+            function->env->phraseValeurs[phrase->uniqueId]->type = CHAINE_DE_CHAR;
             tokenise(phrase->args[0], function, func_list, func_call_list, uniqueId, parent_loop, false, NULL);
             if (phrase->args[0]->constant) {
                 phrase->constant = true;
-                getValeur(function->env, phrase->uniqueId)->type = CHAINE_DE_CHAR;
-                getValeur(function->env, phrase->uniqueId)->to_free_chaine = true;
-                getValeur(function->env, phrase->uniqueId)->chaine = new_chaine_t(str_type(getValeur(function->env, phrase->args[0]->uniqueId)));
+                function->env->phraseValeurs[phrase->uniqueId]->type = CHAINE_DE_CHAR;
+                function->env->phraseValeurs[phrase->uniqueId]->to_free_chaine = true;
+                function->env->phraseValeurs[phrase->uniqueId]->chaine = new_chaine_t(str_type(getValeur(function->env, phrase->args[0]->uniqueId)));
             }
 
             break;
@@ -766,7 +766,7 @@ void tokenise(phrase_t* phrase, function_t* function, function_list_t* func_list
                 phrase->suivant = inLoopSuivantPointer;
             }
 
-            getValeur(function->env, phrase->uniqueId)->type = BOOL;
+            function->env->phraseValeurs[phrase->uniqueId]->type = BOOL;
             tokenise(phrase->args[0], function, func_list, func_call_list, uniqueId, parent_loop, false, NULL);
             tokenise(phrase->args[1], function, func_list, func_call_list, uniqueId, parent_loop, false, NULL);
 
@@ -785,7 +785,7 @@ void tokenise(phrase_t* phrase, function_t* function, function_list_t* func_list
                 phrase->suivant = inLoopSuivantPointer;
             }
 
-            getValeur(function->env, phrase->uniqueId)->type = BOOL;
+            function->env->phraseValeurs[phrase->uniqueId]->type = BOOL;
             tokenise(phrase->args[0], function, func_list, func_call_list, uniqueId, parent_loop, false, NULL);
             tokenise(phrase->args[1], function, func_list, func_call_list, uniqueId, parent_loop, false, NULL);
 
@@ -801,7 +801,7 @@ void tokenise(phrase_t* phrase, function_t* function, function_list_t* func_list
                 phrase->suivant = inLoopSuivantPointer;
             }
 
-            getValeur(function->env, phrase->uniqueId)->type = UNDEFINED;
+            function->env->phraseValeurs[phrase->uniqueId]->type = UNDEFINED;
             break;
         case TAILLE:
             if (phrase->innerPhraseLen > 0 || phrase->argsLen != 1) {
@@ -813,7 +813,7 @@ void tokenise(phrase_t* phrase, function_t* function, function_list_t* func_list
                 phrase->suivant = inLoopSuivantPointer;
             }
 
-            getValeur(function->env, phrase->uniqueId)->type = INT;
+            function->env->phraseValeurs[phrase->uniqueId]->type = INT;
             tokenise(phrase->args[0], function, func_list, func_call_list, uniqueId, parent_loop, false, NULL);
             if (phrase->args[0]->constant) {
                 taille(phrase, function->env);
@@ -829,10 +829,9 @@ void tokenise(phrase_t* phrase, function_t* function, function_list_t* func_list
             break;
         case NOMBRE_ALEATOIRE:
             phrase->phraseId = NOMBRE_ALEATOIRE;
-            getValeur(function->env, phrase->uniqueId)->type = FLOAT;
+            function->env->phraseValeurs[phrase->uniqueId]->type = FLOAT;
             break;
         default: {
-
             if (test_expr_entier(phrase, function->env)) {
             } else if (test_expr_flottant(phrase, function->env)) {
             } else if (test_expr_booleen(phrase, function->env)) {
@@ -981,7 +980,7 @@ void removeConstants(phrase_t* phrase) {
     // printf("phrases with inner len: %d\n", phrasesWithInnerLen);
 
     int i = 0;
-    while( i < phrasesWithInnerLen) {
+    while (i < phrasesWithInnerLen) {
         while (phrasesWithInner[i]->suivantInner1 != NULL && (phrasesWithInner[i]->suivantInner1->constant || phrasesWithInner[i]->suivantInner1->phraseId == DEFINITION_FONCTION || phrasesWithInner[i]->suivantInner1->phraseId == DEFINITION_FONCTION_ARGUMENT)) {
             if (phrasesWithInner[i]->suivantInner1->phraseId == DEFINITION_FONCTION || phrasesWithInner[i]->suivantInner1->phraseId == DEFINITION_FONCTION_ARGUMENT) {
                 if (phrasesWithInnerLen == phrasesWithInnerSize) {
@@ -990,8 +989,8 @@ void removeConstants(phrase_t* phrase) {
                 }
                 phrasesWithInner[phrasesWithInnerLen] = phrasesWithInner[i]->suivantInner1;
                 phrasesWithInnerLen++;
-            } 
-            
+            }
+
             phrasesWithInner[i]->suivantInner1 = phrasesWithInner[i]->suivantInner1->suivant;
         }
 
@@ -1023,8 +1022,6 @@ void removeConstants(phrase_t* phrase) {
 
             // exit(1);
         }
-
-
 
         i++;
     }

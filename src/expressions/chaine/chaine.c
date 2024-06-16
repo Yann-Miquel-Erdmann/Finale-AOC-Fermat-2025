@@ -24,8 +24,8 @@ bool test_expr_chaine(phrase_t* phrase, environnement_t* env) {
     phrase->expr = true;
 
     chaine_t* c = new_chaine_t(result[0]);
-    set_char(getValeur(env, phrase->uniqueId), c);
-    getValeur(env, phrase->uniqueId)->to_free_chaine = true;
+    set_char(env->phraseValeurs[phrase->uniqueId], c);
+    env->phraseValeurs[phrase->uniqueId]->to_free_chaine = true;
 
     free(result);
 

@@ -35,7 +35,7 @@ void free_val_t(val_t* v, bool free_chaine, bool free_liste) {
         free_chaine_t(v->chaine);
     }
 
-    if (v->to_free_list  && v->liste != NULL) {
+    if (v->to_free_list && v->liste != NULL) {
         free_liste_t(v->liste, free_chaine, free_liste);
         v->liste = NULL;
     }
@@ -59,8 +59,6 @@ void copy_val(val_t* dest, val_t* src, bool cp_chaine, bool cp_liste) {
         free_chaine_t(dest->chaine);
         dest->chaine = NULL;
     }
-    dest->chaine = NULL;
-    dest->liste = NULL;
 
     dest->to_free_chaine = false;
     dest->to_free_list = false;
@@ -402,9 +400,9 @@ bool is_strict_greater(val_t* v1, val_t* v2, phrase_t* p, environnement_t* env) 
 
 void taille(phrase_t* phrase, environnement_t* env) {
     if (getValeur(env, phrase->args[0]->uniqueId)->type == LISTE) {
-        set_int(getValeur(env, phrase->uniqueId), taille_liste(getValeur(env, phrase->args[0]->uniqueId)->liste));
+        set_int(env->phraseValeurs[phrase->uniqueId], taille_liste(getValeur(env, phrase->args[0]->uniqueId)->liste));
     } else if (getValeur(env, phrase->args[0]->uniqueId)->type == CHAINE_DE_CHAR) {
-        set_int(getValeur(env, phrase->uniqueId), getValeur(env, phrase->args[0]->uniqueId)->chaine->chars_len);
+        set_int(env->phraseValeurs[phrase->uniqueId], getValeur(env, phrase->args[0]->uniqueId)->chaine->chars_len);
     } else {
         custom_error("taille ne peut être appliqué qu'à une liste ou une chaîne de caractères", phrase, env);
     }

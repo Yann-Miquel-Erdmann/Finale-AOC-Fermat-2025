@@ -34,7 +34,7 @@ bool test_expr_flottant(phrase_t* phrase, environnement_t* env) {
         phrase->phraseId = EXPR_FLOTTANT;
 
         phrase->constant = true;
-        set_float(getValeur(env, phrase->uniqueId), num);
+        set_float(env->phraseValeurs[phrase->uniqueId], num);
     } else {
         custom_error("Flottant invalide", phrase, env);
     }

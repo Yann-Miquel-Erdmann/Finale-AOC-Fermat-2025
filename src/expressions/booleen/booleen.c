@@ -16,17 +16,17 @@ bool test_expr_booleen(phrase_t* phrase, environnement_t* env) {
         custom_error("too many arguments given", phrase, env);
     }
 
-        if (!strcmp(result[0], "vrai")) {
+    if (!strcmp(result[0], "vrai")) {
         // printf("booléen: vrai\n");
         phrase->phraseId = EXPR_BOOLEEN;
         phrase->constant = true;
-        set_bool(getValeur(env, phrase->uniqueId), true);
+        set_bool(env->phraseValeurs[phrase->uniqueId], true);
     } else if (!strcmp(result[0], "faux")) {
         // printf("booléen: faux\n");
         phrase->phraseId = EXPR_BOOLEEN;
         phrase->constant = true;
 
-        set_bool(getValeur(env, phrase->uniqueId), false);
+        set_bool(env->phraseValeurs[phrase->uniqueId], false);
     } else {
         custom_error("Le booléen doit être vrai ou faux.", phrase, env);
     }
