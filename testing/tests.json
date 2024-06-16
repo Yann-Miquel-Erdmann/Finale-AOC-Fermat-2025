@@ -168,5 +168,10 @@
         "name": "Quitter la boucle",
         "code": "Soit a L'entier zéro?.\nPour i allant de L'entier zéro? jusqu'à L'entier cinq? faire:\n    Soit a La somme de La variable a? et de L'entier un??.\n    Si La valeur de La variable a? est égale à la valeur de L'entier quatre?? alors faire:\n        Afficher La variable a?.\n        Afficher La variable i?.\n        Quitter la boucle.\n    .\n.\nAfficher La variable a?.\nAfficher La variable i?.\n\n\nSoit a L'entier zéro?.\nPour i allant de L'entier zéro? jusqu'à L'entier dix? en utilisant un pas de L'entier deux? faire:\n    Soit a La somme de La variable a? et de L'entier un??.\n    Si La valeur de La variable a? est égale à la valeur de L'entier quatre?? alors faire:\n        Afficher La variable a?.\n        Afficher La variable i?.\n        Quitter la boucle.\n    .\n.\nAfficher La variable a?.\nAfficher La variable i?.\n\n\nSoit a L'entier zéro?.\nTant que La valeur de La variable a? est strictement plus petite que la valeur de L'entier dix?? faire:\n    Soit a La somme de La variable a? et de L'entier un??.\n    Si La valeur de La variable a? est égale à la valeur de L'entier quatre?? alors faire:\n        Afficher La variable a?.\n        Quitter la boucle.\n    .\n.\nAfficher La variable a?.",
         "output": "quatre\ntrois\nquatre\ntrois\nquatre\nsix\nquatre\nsix\nquatre\nquatre\n"
+    },
+    {
+        "name": "Test ajoult liste de liste",
+        "code": "Soit l La liste vide?.\nAjouter à La liste l? La liste vide?.\nAjouter à L'élément de La liste l? à l'indice L'entier zéro?? L'entier deux?.\nAfficher La liste l?.",
+        "output": "[[deux]]"
     }
 ]
