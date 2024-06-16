@@ -9,8 +9,8 @@ typedef struct liste liste_t;
 typedef struct phrase phrase_t;
 
 typedef struct val {
-    char type;
-    long int value;
+    int type;
+    int value;
     bool to_free_list;
     bool to_free_chaine;
     liste_t* liste;

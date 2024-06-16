@@ -1,6 +1,7 @@
 #include "eval_numbers.h"
 
 #include "custom_error.h"
+#include <math.h>
 
 char* add_str(char* str, int* taille, char* added) {
     if (str == NULL) {
@@ -14,6 +15,7 @@ char* add_str(char* str, int* taille, char* added) {
         str = realloc(str, (*(taille)) * sizeof(char));
         if (str == NULL) {
             custom_error("", NULL, NULL);
+            exit(1);
         }
     }
     strcat(str, added);
@@ -77,13 +79,14 @@ float eval_float(char* str_num, int len, bool* valid) {
     char* str = malloc((len + 1) * sizeof(char));
     int index = 0;
     int start = 0;
-    int exp = 1;
+    float exp = 1;
     for (int i = 0; i < len; i++) {
         if (str_num[i] == ' ' || i == len) {
             str[index] = '\0';
             index = 0;
             if (!strcmp(str, "zéro")) {
                 start = i + 1;
+                exp *= 10;
             } else {
                 break;
             }
@@ -91,7 +94,6 @@ float eval_float(char* str_num, int len, bool* valid) {
             str[index] = str_num[i];
             index++;
         }
-        exp *= 10;
     }
     index = 0;
     for (int i = start; i < len; i++) {
@@ -99,9 +101,9 @@ float eval_float(char* str_num, int len, bool* valid) {
         index++;
     }
     str[index] = '\0';
-    float result = (float)eval_number(str, len - start, valid) / exp;
-    
-    return result;
+    float result = (float)eval_number(str, len - start, valid);
+    exp *= pow(10,(int)(((log(len) - log(result))/log(10)) + 1));
+    return result/exp;
 }
 
 int eval_number(char* str_num, int len, bool* valid) {
@@ -248,6 +250,7 @@ int eval_number(char* str_num, int len, bool* valid) {
             }
         }
     }
+    free(str);
     return n*sign;
 }
 
@@ -503,6 +506,7 @@ char* str_from_float(float n) {
     char* text_int = str_from_int((int)n);
     text = add_str(text, &text_size, text_int);
     if (((float)(int)n) == n) {
+        free(text_int);
         return text;
     }
     n = n - (int)n;

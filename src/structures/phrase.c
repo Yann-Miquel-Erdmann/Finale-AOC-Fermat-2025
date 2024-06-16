@@ -233,6 +233,7 @@ phrase_t* parent_loop(phrase_t* phrase, environnement_t* env) {
     while (p->phraseId != TANT_QUE && p->phraseId != POUR_SANS_PAS && p->phraseId != POUR_AVEC_PAS) {
         if (p->parentPhrase == NULL) {
             custom_error("Syntaxe invalide, quitter boucle doit être dans une boucle", phrase, env);
+            exit(1);
         }
         p = p->parentPhrase;
     }

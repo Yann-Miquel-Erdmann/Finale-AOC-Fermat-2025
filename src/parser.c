@@ -25,6 +25,7 @@ phrase_t* parse_file(FILE* f) {
     phrase_t* Prec = NULL;
     phrase_t* Inst1 = NULL;
     phrase_t* Inst2 = phraseActuelle;
+    bool encountered_uppercase = false;
 
     char buffer = '.';
     int line = 0;
@@ -48,6 +49,7 @@ phrase_t* parse_file(FILE* f) {
                 in_comment += 1;
             }
         } else if (is_uppercase(c)) {
+            encountered_uppercase = true;
             if (phraseActuelle->textLen > 0 && phraseActuelle->text[phraseActuelle->textLen - 1] != '*') {
                 addToText(phraseActuelle, '*');
             }
@@ -66,6 +68,13 @@ phrase_t* parse_file(FILE* f) {
             addToText(phraseActuelle, c);
 
         } else {
+            // check si l'écriture est valide i.e. pas directement dans la mainPhrase
+            if (!encountered_uppercase && c != '('){
+                char* error = malloc(100 * sizeof(char));
+                sprintf(error, "Syntax Error, ligne %d: \"%c\"%s", line, c, " n'est pas un début de phrase valide.");
+                custom_error(error, NULL, NULL);
+                exit(1);
+            }
             switch (c) {
                 case '.':
                     if (buffer == ' ') {  // pour enlever les espaces avant les points (éviter quelques erreurs difficiles à trouver)
@@ -76,7 +85,7 @@ phrase_t* parse_file(FILE* f) {
                     addToText(phraseActuelle, '\0');
                     phraseActuelle->inst = true;
                     phraseActuelle->expr = false;
-
+                    
                     Inst1->suivant = Prec;
 
                     phraseActuelle = phraseActuelle->parentPhrase;
@@ -85,6 +94,7 @@ phrase_t* parse_file(FILE* f) {
                         char* err_mess = malloc(100 * sizeof(char));
                         sprintf(err_mess, "Syntax Error: Il y a un point de trop à la ligne %d", line + 1);
                         custom_error(err_mess, NULL, NULL);
+                        exit(1);
                     }
 
                     // la phrase est une instruction et on l'ajoute
@@ -172,13 +182,6 @@ phrase_t* parse_file(FILE* f) {
                     // n'ajoute pas les espaces en debut de ligne ou après un espace
                     if (c == ' ' && (phraseActuelle->textLen == 0 || phraseActuelle->text[phraseActuelle->textLen - 1] == ' ')) {
                         break;
-                    }
-
-                    // check si l'écriture est valide i.e. pas directement dans la mainPhrase
-                    if (phraseActuelle == mainPhrase && !in_comment) {
-                        char* error = malloc(100 * sizeof(char));
-                        sprintf(error, "Syntax Error, ligne %d: \"%c\"%s", line, c, " n'est pas un début de phrase valide.");
-                        custom_error(error, NULL, NULL);
                     }
 
                     // ajoute le caractère au texte

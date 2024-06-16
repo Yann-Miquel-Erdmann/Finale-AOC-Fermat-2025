@@ -47,6 +47,7 @@ void copy_val(val_t* dest, val_t* src, bool cp_chaine, bool cp_liste) {
     // printf("copy %p -> %p   %d %d\n", src, dest, cp_chaine, cp_liste);
     if (dest == NULL || src == NULL) {
         custom_error("copy_val: dest ou src est NULL", NULL, NULL);
+        exit(1);
     }
     dest->type = src->type;
     dest->value = src->value;
