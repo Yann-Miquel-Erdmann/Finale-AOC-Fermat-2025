@@ -17,9 +17,6 @@ bool test_inst_exec_func_args(phrase_t* phrase, function_list_t* function_list, 
     if (phrase->argsLen == 0 || phrase->innerPhraseLen > 0){
         custom_error("Exécution de fonction prend au moins un argument", phrase, env);
     }
-    if (phrase->argsLen == 0 || phrase->innerPhraseLen > 0){
-        custom_error("Éxecution de fonction prend au moins un argument", phrase, env);
-    }
     
     phrase->phraseId = EXECUTION_FONCTION_ARGUMENT;
     phrase->function = new_function(result[0], phrase);

@@ -13,8 +13,7 @@ char* add_str(char* str, int* taille, char* added) {
         *(taille) *= 2;
         str = realloc(str, (*(taille)) * sizeof(char));
         if (str == NULL) {
-            custom_error("", NULL);
-            exit(0);
+            custom_error("", NULL, NULL);
         }
     }
     strcat(str, added);
