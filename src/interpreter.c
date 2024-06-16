@@ -1,7 +1,7 @@
 #include "interpreter.h"
 
+#include <math.h>
 #include <string.h>
-
 
 #include "constants.h"
 #include "custom_error.h"
@@ -9,7 +9,6 @@
 #include "expressions/comparateurs.h"
 #include "expressions/operateurs.h"
 #include "syntax_convert.h"
-#include <math.h>
 
 void interpreter(function_t* function, function_list_t* functions, val_t* result, int layer) {
     if (layer > MAX_RECUSION_DEPTH) {
@@ -40,7 +39,7 @@ void interpreter(function_t* function, function_list_t* functions, val_t* result
         // if (phraseActuelle->suivantInner2 != NULL) {
         //     printf("suivantInner2 %s  --->   %s\n", phraseActuelle->text, phraseActuelle->suivantInner2->text);
         // }
-        // printf("\n");
+        // printf("\n");F
 
         // printf("'%s' %d %d %d\n", phraseActuelle->text, phraseActuelle->phraseId, phraseActuelle->interpreterInnerIndex, (int)phraseActuelle->constant);
         switch (phraseActuelle->phraseId) {
@@ -73,7 +72,7 @@ void interpreter(function_t* function, function_list_t* functions, val_t* result
                     }
                     for (int i = 0; i < phraseActuelle->argsLen; i++) {
                         copy_val(new_func->env->variable_list[i]->valeur,
-                                 getValeur(env, phraseActuelle->args[i]->uniqueId), true, true);
+                                 env->phraseValeurs[phraseActuelle->args[i]->uniqueId], true, true);
                     }
                 }
 
@@ -86,7 +85,7 @@ void interpreter(function_t* function, function_list_t* functions, val_t* result
                     if (phraseActuelle->argsLen != new_func->function_arg_count) {
                         custom_error("Le nombre d'arguments données ne correspond pas ou nombre d'arguments voulus", phraseActuelle, env);
                     }
-                    interpreter(new_func, functions, getValeur(env, phraseActuelle->uniqueId), layer + 1);
+                    interpreter(new_func, functions, env->phraseValeurs[phraseActuelle->uniqueId], layer + 1);
                 }
 
                 free_environnement(new_func->env);
@@ -98,7 +97,7 @@ void interpreter(function_t* function, function_list_t* functions, val_t* result
 
             case RENVOI_FONCTION: {
                 if (result != NULL) {
-                    copy_val(result, getValeur(env, phraseActuelle->args[0]->uniqueId), true, true);
+                    copy_val(result, env->phraseValeurs[phraseActuelle->args[0]->uniqueId], true, true);
                 }
                 return;
                 break;
@@ -107,10 +106,10 @@ void interpreter(function_t* function, function_list_t* functions, val_t* result
             case AFFICHER_EXPR:
             case AFFICHER_EXPR_NO_RETURN: {
                 for (int i = 0; i < phraseActuelle->argsLen - 1; i++) {
-                    print_val(getValeur(env, phraseActuelle->args[i]->uniqueId), false, phraseActuelle, env);
+                    print_val(env->phraseValeurs[phraseActuelle->args[i]->uniqueId], false, phraseActuelle, env);
                     printf(" ");
                 }
-                print_val(getValeur(env, phraseActuelle->args[phraseActuelle->argsLen - 1]->uniqueId), phraseActuelle->phraseId == AFFICHER_EXPR, phraseActuelle, env);
+                print_val(env->phraseValeurs[phraseActuelle->args[phraseActuelle->argsLen - 1]->uniqueId], phraseActuelle->phraseId == AFFICHER_EXPR, phraseActuelle, env);
 
                 phraseActuelle = phraseActuelle->suivant;
                 break;
@@ -126,7 +125,7 @@ void interpreter(function_t* function, function_list_t* functions, val_t* result
             case MODIFICATION_VARIABLE:
             case DEFINITION_VARIABLE_AVEC_INIT: {
                 // printf("modif variable %s\n", phraseActuelle->text);
-                copy_val(getVariable(env, phraseActuelle->variableId)->valeur, getValeur(env, phraseActuelle->args[0]->uniqueId), true, true);
+                copy_val(getVariable(env, phraseActuelle->variableId)->valeur, env->phraseValeurs[phraseActuelle->args[0]->uniqueId], true, true);
 
                 phraseActuelle = phraseActuelle->suivant;
                 break;
@@ -134,12 +133,12 @@ void interpreter(function_t* function, function_list_t* functions, val_t* result
 
             case ACCESSION_VARIABLE: {
                 if (getVariable(env, phraseActuelle->variableId)->valeur->type == LISTE) {
-                    // printf("accession liste\n");
-                    getValeur(env, phraseActuelle->uniqueId)->type = getVariable(env, phraseActuelle->variableId)->valeur->type;
-                    getValeur(env, phraseActuelle->uniqueId)->liste = getVariable(env, phraseActuelle->variableId)->valeur->liste;
-                    getValeur(env, phraseActuelle->uniqueId)->to_free_list = false;
+                    env->phraseValeurs[phraseActuelle->uniqueId]->type = getVariable(env, phraseActuelle->variableId)->valeur->type;
+                    env->phraseValeurs[phraseActuelle->uniqueId]->liste = getVariable(env, phraseActuelle->variableId)->valeur->liste;
+                    env->phraseValeurs[phraseActuelle->uniqueId]->to_free_list = false;
+
                 } else {
-                    copy_val(getValeur(env, phraseActuelle->uniqueId), getVariable(env, phraseActuelle->variableId)->valeur, true, true);
+                    copy_val(env->phraseValeurs[phraseActuelle->uniqueId], getVariable(env, phraseActuelle->variableId)->valeur, true, true);
                 }
 
                 phraseActuelle = phraseActuelle->suivant;
@@ -232,34 +231,34 @@ void interpreter(function_t* function, function_list_t* functions, val_t* result
                     custom_error("La variable n'est pas une liste", phraseActuelle, env);
                 }
 
-                // copy_val(getValeur(env, phraseActuelle->uniqueId), getVariable(env,phraseActuelle->variableId)->valeur,true,true);
-                getValeur(env, phraseActuelle->uniqueId)->type = getVariable(env, phraseActuelle->variableId)->valeur->type;
-                getValeur(env, phraseActuelle->uniqueId)->liste = getVariable(env, phraseActuelle->variableId)->valeur->liste;
-                getValeur(env, phraseActuelle->uniqueId)->to_free_list = false;
+                // copy_val(env->phraseValeurs[phraseActuelle->uniqueId], getVariable(env,phraseActuelle->variableId)->valeur,true,true);
+                env->phraseValeurs[phraseActuelle->uniqueId]->type = getVariable(env, phraseActuelle->variableId)->valeur->type;
+                env->phraseValeurs[phraseActuelle->uniqueId]->liste = getVariable(env, phraseActuelle->variableId)->valeur->liste;
+                env->phraseValeurs[phraseActuelle->uniqueId]->to_free_list = false;
 
                 phraseActuelle = phraseActuelle->suivant;
                 break;
             }
 
             case EXPR_LISTE_VIDE: {
-                vider_liste(getValeur(env, phraseActuelle->uniqueId)->liste);
+                vider_liste(env->phraseValeurs[phraseActuelle->uniqueId]->liste);
 
                 phraseActuelle = phraseActuelle->suivant;
                 break;
             }
 
             case EXPR_LISTE_ELEM: {
-                if (getValeur(env, phraseActuelle->uniqueId)->to_free_list) {
-                    vider_liste(getValeur(env, phraseActuelle->uniqueId)->liste);
+                if (env->phraseValeurs[phraseActuelle->uniqueId]->to_free_list) {
+                    vider_liste(env->phraseValeurs[phraseActuelle->uniqueId]->liste);
                 }
-                if (getValeur(env, phraseActuelle->uniqueId)->type != LISTE) {
-                    getValeur(env, phraseActuelle->uniqueId)->type = LISTE;
-                    getValeur(env, phraseActuelle->uniqueId)->liste = new_liste_t();
+                if (env->phraseValeurs[phraseActuelle->uniqueId]->type != LISTE) {
+                    env->phraseValeurs[phraseActuelle->uniqueId]->type = LISTE;
+                    env->phraseValeurs[phraseActuelle->uniqueId]->liste = new_liste_t();
                 }
 
-                getValeur(env, phraseActuelle->uniqueId)->to_free_list = true;
+                env->phraseValeurs[phraseActuelle->uniqueId]->to_free_list = true;
                 for (int i = 0; i < phraseActuelle->argsLen; i++) {
-                    ajout(getValeur(env, phraseActuelle->uniqueId)->liste, getValeur(env, phraseActuelle->args[i]->uniqueId));
+                    ajout(env->phraseValeurs[phraseActuelle->uniqueId]->liste, env->phraseValeurs[phraseActuelle->args[i]->uniqueId]);
                 }
 
                 phraseActuelle = phraseActuelle->suivant;
@@ -267,52 +266,59 @@ void interpreter(function_t* function, function_list_t* functions, val_t* result
             }
 
             case ACCESSION_LISTE: {
-                if (getValeur(env, phraseActuelle->args[0]->uniqueId) == NULL || getValeur(env, phraseActuelle->args[0]->uniqueId)->type != LISTE) {
+                if (env->phraseValeurs[phraseActuelle->args[0]->uniqueId] == NULL || env->phraseValeurs[phraseActuelle->args[0]->uniqueId]->type != LISTE) {
                     custom_error("La variable n'est pas une liste", phraseActuelle, env);
                 }
-                copy_val(getValeur(env, phraseActuelle->uniqueId), accession(getValeur(env, phraseActuelle->args[0]->uniqueId)->liste, get_int(getValeur(env, phraseActuelle->args[1]->uniqueId), phraseActuelle, env), phraseActuelle, env), true, true);
+                // ne fait pas de deep copy pour les listes et les chaînes de caractères (pour pouvoir les modifier à l’intérieur d'une liste)
+                if (accession(env->phraseValeurs[phraseActuelle->args[0]->uniqueId]->liste, get_int(env->phraseValeurs[phraseActuelle->args[1]->uniqueId], phraseActuelle, env), phraseActuelle, env)->type == LISTE) {
+                    copy_val(env->phraseValeurs[phraseActuelle->uniqueId], accession(env->phraseValeurs[phraseActuelle->args[0]->uniqueId]->liste, get_int(env->phraseValeurs[phraseActuelle->args[1]->uniqueId], phraseActuelle, env), phraseActuelle, env), true, false);
+                } else if (accession(env->phraseValeurs[phraseActuelle->args[0]->uniqueId]->liste, get_int(env->phraseValeurs[phraseActuelle->args[1]->uniqueId], phraseActuelle, env), phraseActuelle, env)->type == CHAINE_DE_CHAR) {
+                    copy_val(env->phraseValeurs[phraseActuelle->uniqueId], accession(env->phraseValeurs[phraseActuelle->args[0]->uniqueId]->liste, get_int(env->phraseValeurs[phraseActuelle->args[1]->uniqueId], phraseActuelle, env), phraseActuelle, env), false, true);
+                } else {
+                    copy_val(env->phraseValeurs[phraseActuelle->uniqueId], accession(env->phraseValeurs[phraseActuelle->args[0]->uniqueId]->liste, get_int(env->phraseValeurs[phraseActuelle->args[1]->uniqueId], phraseActuelle, env), phraseActuelle, env), true, true);
+                }
 
                 phraseActuelle = phraseActuelle->suivant;
                 break;
             }
             case MODIFICATION_LISTE: {
-                if (getValeur(env, phraseActuelle->args[0]->uniqueId) == NULL || getValeur(env, phraseActuelle->args[0]->uniqueId)->type != LISTE) {
+                if (env->phraseValeurs[phraseActuelle->args[0]->uniqueId] == NULL || env->phraseValeurs[phraseActuelle->args[0]->uniqueId]->type != LISTE) {
                     custom_error("La variable n'est pas une liste", phraseActuelle, env);
                 }
-                modification(getValeur(env, phraseActuelle->args[0]->uniqueId)->liste, get_int(getValeur(env, phraseActuelle->args[1]->uniqueId), phraseActuelle, env), getValeur(env, phraseActuelle->args[2]->uniqueId), phraseActuelle, env);
+                modification(env->phraseValeurs[phraseActuelle->args[0]->uniqueId]->liste, get_int(env->phraseValeurs[phraseActuelle->args[1]->uniqueId], phraseActuelle, env), env->phraseValeurs[phraseActuelle->args[2]->uniqueId], phraseActuelle, env);
 
                 phraseActuelle = phraseActuelle->suivant;
                 break;
             }
             case AJOUT_LISTE: {
-                if (getValeur(env, phraseActuelle->args[0]->uniqueId) == NULL || getValeur(env, phraseActuelle->args[0]->uniqueId)->type != LISTE) {
+                if (env->phraseValeurs[phraseActuelle->args[0]->uniqueId] == NULL || env->phraseValeurs[phraseActuelle->args[0]->uniqueId]->type != LISTE) {
                     custom_error("La variable n'est pas une liste", phraseActuelle, env);
                 }
-                ajout(getValeur(env, phraseActuelle->args[0]->uniqueId)->liste, getValeur(env, phraseActuelle->args[1]->uniqueId));
+                ajout(env->phraseValeurs[phraseActuelle->args[0]->uniqueId]->liste, env->phraseValeurs[phraseActuelle->args[1]->uniqueId]);
 
                 phraseActuelle = phraseActuelle->suivant;
                 break;
             }
             case SUPPRESSION_LISTE: {
-                if (getValeur(env, phraseActuelle->args[0]->uniqueId) == NULL || getValeur(env, phraseActuelle->args[0]->uniqueId)->type != LISTE) {
+                if (env->phraseValeurs[phraseActuelle->args[0]->uniqueId] == NULL || env->phraseValeurs[phraseActuelle->args[0]->uniqueId]->type != LISTE) {
                     custom_error("La variable n'est pas une liste", phraseActuelle, env);
                 }
-                suppression(getValeur(env, phraseActuelle->args[0]->uniqueId)->liste, get_int(getValeur(env, phraseActuelle->args[1]->uniqueId), phraseActuelle, env), phraseActuelle, env);
+                suppression(env->phraseValeurs[phraseActuelle->args[0]->uniqueId]->liste, get_int(env->phraseValeurs[phraseActuelle->args[1]->uniqueId], phraseActuelle, env), phraseActuelle, env);
 
                 phraseActuelle = phraseActuelle->suivant;
                 break;
             }
             case INSERTION_LISTE: {
-                if (getValeur(env, phraseActuelle->args[1]->uniqueId) == NULL || getValeur(env, phraseActuelle->args[1]->uniqueId)->type != LISTE) {
+                if (env->phraseValeurs[phraseActuelle->args[1]->uniqueId] == NULL || env->phraseValeurs[phraseActuelle->args[1]->uniqueId]->type != LISTE) {
                     custom_error("La variable n'est pas une liste", phraseActuelle, env);
                 }
-                inserer(getValeur(env, phraseActuelle->args[1]->uniqueId)->liste, get_int(getValeur(env, phraseActuelle->args[2]->uniqueId), phraseActuelle, env), getValeur(env, phraseActuelle->args[0]->uniqueId), phraseActuelle, env);
+                inserer(env->phraseValeurs[phraseActuelle->args[1]->uniqueId]->liste, get_int(env->phraseValeurs[phraseActuelle->args[2]->uniqueId], phraseActuelle, env), env->phraseValeurs[phraseActuelle->args[0]->uniqueId], phraseActuelle, env);
 
                 phraseActuelle = phraseActuelle->suivant;
                 break;
             }
             case SI_ALORS: {
-                if (get_bool(getValeur(env, phraseActuelle->args[0]->uniqueId), phraseActuelle, env)) {
+                if (get_bool(env->phraseValeurs[phraseActuelle->args[0]->uniqueId], phraseActuelle, env)) {
                     phraseActuelle = phraseActuelle->suivantInner1;
                 } else {
                     phraseActuelle = phraseActuelle->suivant;
@@ -321,7 +327,7 @@ void interpreter(function_t* function, function_list_t* functions, val_t* result
             }
 
             case SI_ALORS_SINON: {
-                if (get_bool(getValeur(env, phraseActuelle->args[0]->uniqueId), phraseActuelle, env)) {
+                if (get_bool(env->phraseValeurs[phraseActuelle->args[0]->uniqueId], phraseActuelle, env)) {
                     phraseActuelle = phraseActuelle->suivantInner1;
                 } else {
                     phraseActuelle = phraseActuelle->suivantInner2;
@@ -331,7 +337,7 @@ void interpreter(function_t* function, function_list_t* functions, val_t* result
             }
 
             case TANT_QUE: {
-                if (get_bool(getValeur(env, phraseActuelle->args[0]->uniqueId), phraseActuelle, env)) {
+                if (get_bool(env->phraseValeurs[phraseActuelle->args[0]->uniqueId], phraseActuelle, env)) {
                     phraseActuelle = phraseActuelle->suivantInner1;
                 } else {
                     phraseActuelle = phraseActuelle->suivant;
@@ -342,13 +348,13 @@ void interpreter(function_t* function, function_list_t* functions, val_t* result
             case POUR_AVEC_PAS:
             case POUR_SANS_PAS: {
                 if (getVariable(env, phraseActuelle->variableId)->valeur->type == UNDEFINED) {  //  initialisation de l’itérateur
-                    copy_val(getVariable(env, phraseActuelle->variableId)->valeur, getValeur(env, phraseActuelle->args[0]->uniqueId), true, true);
+                    copy_val(getVariable(env, phraseActuelle->variableId)->valeur, env->phraseValeurs[phraseActuelle->args[0]->uniqueId], true, true);
                 } else {  // incrémentation de l'itérateur
                     if (phraseActuelle->phraseId == POUR_AVEC_PAS) {
-                        if (getVariable(env, phraseActuelle->variableId)->valeur->type == FLOAT || getValeur(env, phraseActuelle->args[2]->uniqueId)->type == FLOAT) {
-                            set_float(getVariable(env, phraseActuelle->variableId)->valeur, get_as_float(getVariable(env, phraseActuelle->variableId)->valeur, phraseActuelle, env) + get_as_float(getValeur(env, phraseActuelle->args[2]->uniqueId), phraseActuelle, env));
+                        if (getVariable(env, phraseActuelle->variableId)->valeur->type == FLOAT || env->phraseValeurs[phraseActuelle->args[2]->uniqueId]->type == FLOAT) {
+                            set_float(getVariable(env, phraseActuelle->variableId)->valeur, get_as_float(getVariable(env, phraseActuelle->variableId)->valeur, phraseActuelle, env) + get_as_float(env->phraseValeurs[phraseActuelle->args[2]->uniqueId], phraseActuelle, env));
                         } else {
-                            set_int(getVariable(env, phraseActuelle->variableId)->valeur, get_as_int(getVariable(env, phraseActuelle->variableId)->valeur, phraseActuelle, env) + get_as_int(getValeur(env, phraseActuelle->args[2]->uniqueId), phraseActuelle, env));
+                            set_int(getVariable(env, phraseActuelle->variableId)->valeur, get_as_int(getVariable(env, phraseActuelle->variableId)->valeur, phraseActuelle, env) + get_as_int(env->phraseValeurs[phraseActuelle->args[2]->uniqueId], phraseActuelle, env));
                         }
                     } else {
                         if (getVariable(env, phraseActuelle->variableId)->valeur->type == FLOAT) {
@@ -359,7 +365,7 @@ void interpreter(function_t* function, function_list_t* functions, val_t* result
                     }
                 }
 
-                if (get_as_float(getVariable(env, phraseActuelle->variableId)->valeur, phraseActuelle, env) < get_as_float(getValeur(env, phraseActuelle->args[1]->uniqueId), phraseActuelle, env)) {
+                if (get_as_float(getVariable(env, phraseActuelle->variableId)->valeur, phraseActuelle, env) < get_as_float(env->phraseValeurs[phraseActuelle->args[1]->uniqueId], phraseActuelle, env)) {
                     phraseActuelle = phraseActuelle->suivantInner1;
                 } else {
                     getVariable(env, phraseActuelle->variableId)->valeur->type = UNDEFINED;
@@ -379,7 +385,7 @@ void interpreter(function_t* function, function_list_t* functions, val_t* result
             }
 
             case TYPE_EXPR: {
-                getValeur(env, phraseActuelle->uniqueId)->chaine = new_chaine_t(str_type(getValeur(env, phraseActuelle->args[0]->uniqueId)));
+                env->phraseValeurs[phraseActuelle->uniqueId]->chaine = new_chaine_t(str_type(env->phraseValeurs[phraseActuelle->args[0]->uniqueId]));
 
                 phraseActuelle = phraseActuelle->suivant;
                 break;
@@ -397,7 +403,7 @@ void interpreter(function_t* function, function_list_t* functions, val_t* result
                 break;
             }
             case EXPR_RIEN: {
-                set_undefined(getValeur(env, phraseActuelle->uniqueId));
+                set_undefined(env->phraseValeurs[phraseActuelle->uniqueId]);
 
                 phraseActuelle = phraseActuelle->suivant;
                 break;

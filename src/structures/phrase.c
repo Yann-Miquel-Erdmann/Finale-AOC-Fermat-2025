@@ -166,16 +166,16 @@ void _printPhrase(phrase_t* phrase, int decalage, int last_elem, environnement_t
         }
     }
     printf("%s", phrase->text);
-    if (phrase->expr && getValeur(env, phrase->uniqueId)->type != -1) {
-        switch (getValeur(env, phrase->uniqueId)->type) {
+    if (phrase->expr && env->phraseValeurs[phrase->uniqueId]->type != -1) {
+        switch (env->phraseValeurs[phrase->uniqueId]->type) {
             case INT:
-                printf("  ->  %d", get_int(getValeur(env, phrase->uniqueId), phrase, env));
+                printf("  ->  %d", get_int(env->phraseValeurs[phrase->uniqueId], phrase, env));
                 break;
             case FLOAT:
-                printf("  ->  %f", get_float(getValeur(env, phrase->uniqueId), phrase, env));
+                printf("  ->  %f", get_float(env->phraseValeurs[phrase->uniqueId], phrase, env));
                 break;
             case BOOL:
-                if (get_bool(getValeur(env, phrase->uniqueId), phrase, env)) {
+                if (get_bool(env->phraseValeurs[phrase->uniqueId], phrase, env)) {
                     printf("  ->  true");
                 } else {
                     printf("  ->  false");
@@ -184,7 +184,7 @@ void _printPhrase(phrase_t* phrase, int decalage, int last_elem, environnement_t
                 break;
             case CHAINE_DE_CHAR:
                 if (phrase->constant) {
-                    printf("  ->  %s", getValeur(env, phrase->uniqueId)->chaine->chars);
+                    printf("  ->  %s", env->phraseValeurs[phrase->uniqueId]->chaine->chars);
                 }
             default:
                 break;
