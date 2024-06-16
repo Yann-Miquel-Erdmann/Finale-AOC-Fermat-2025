@@ -2,32 +2,26 @@
 
 #include "../constants.h"
 
-void egalite(phrase_t* phrase, bool constant) {
-    set_bool(phrase->valeur, is_equal(phrase->args[0]->valeur, phrase->args[1]->valeur, phrase));
-    phrase->constant = constant;
+void egalite(phrase_t* phrase, environnement_t* env) {
+    set_bool(getValeur(env, phrase->uniqueId), is_equal(getValeur(env, phrase->args[0]->uniqueId), getValeur(env, phrase->args[1]->uniqueId), phrase, env));
 };
 
-void inegalite(phrase_t* phrase, bool constant) {
-    set_bool(phrase->valeur, !is_equal(phrase->args[0]->valeur, phrase->args[1]->valeur, phrase));
-    phrase->constant = constant;
+void inegalite(phrase_t* phrase, environnement_t* env) {
+    set_bool(getValeur(env, phrase->uniqueId), !is_equal(getValeur(env, phrase->args[0]->uniqueId), getValeur(env, phrase->args[1]->uniqueId), phrase, env));
 };
 
-void plus_grand(phrase_t* phrase, bool constant) {
-    set_bool(phrase->valeur, is_greater(phrase->args[0]->valeur, phrase->args[1]->valeur, phrase));
-    phrase->constant = constant;
+void plus_grand(phrase_t* phrase, environnement_t* env) {
+    set_bool(getValeur(env, phrase->uniqueId), is_greater(getValeur(env, phrase->args[0]->uniqueId), getValeur(env, phrase->args[1]->uniqueId), phrase, env));
 };
 
-void strict_plus_grand(phrase_t* phrase, bool constant) {
-    set_bool(phrase->valeur, is_strict_greater(phrase->args[0]->valeur, phrase->args[1]->valeur, phrase));
-    phrase->constant = constant;
+void strict_plus_grand(phrase_t* phrase, environnement_t* env) {
+    set_bool(getValeur(env, phrase->uniqueId), is_strict_greater(getValeur(env, phrase->args[0]->uniqueId), getValeur(env, phrase->args[1]->uniqueId), phrase, env));
 };
 
-void plus_petit(phrase_t* phrase, bool constant) {
-    set_bool(phrase->valeur, !is_strict_greater(phrase->args[0]->valeur, phrase->args[1]->valeur, phrase));
-    phrase->constant = constant;
+void plus_petit(phrase_t* phrase, environnement_t* env) {
+    set_bool(getValeur(env, phrase->uniqueId), !is_strict_greater(getValeur(env, phrase->args[0]->uniqueId), getValeur(env, phrase->args[1]->uniqueId), phrase, env));
 };
 
-void strict_plus_petit(phrase_t* phrase, bool constant) {
-    set_bool(phrase->valeur, !is_greater(phrase->args[0]->valeur, phrase->args[1]->valeur, phrase));
-    phrase->constant = constant;
+void strict_plus_petit(phrase_t* phrase, environnement_t* env) {
+    set_bool(getValeur(env, phrase->uniqueId), !is_greater(getValeur(env, phrase->args[0]->uniqueId), getValeur(env, phrase->args[1]->uniqueId), phrase, env));
 };

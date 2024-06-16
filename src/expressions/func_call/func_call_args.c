@@ -1,6 +1,6 @@
 #include "../expressions.h"
 
-bool test_expr_func_call_args(phrase_t* phrase, function_list_t* func_list) {
+bool test_expr_func_call_args(phrase_t* phrase, function_list_t* func_list, environnement_t* env) {
     if (phrase->phraseId != -1) {
         return false;
     }
@@ -13,13 +13,14 @@ bool test_expr_func_call_args(phrase_t* phrase, function_list_t* func_list) {
         return false;
     }
     if (len > 1) {
-        custom_error("too many arguments given", phrase);
+        custom_error("too many arguments given", phrase, env);
     }
     if (phrase->argsLen == 0 || phrase->innerPhraseLen > 0){
-        custom_error("Appel de fonction prend au moins un argument", phrase);
+        custom_error("Appel de fonction prend au moins un argument", phrase, env);
     }
     
     phrase->phraseId = APPEL_VALEUR_FONCTION_ARGUMENT;
+
     phrase->function = new_function(result[0], phrase);
 
     free(result);

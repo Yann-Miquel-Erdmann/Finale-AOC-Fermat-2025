@@ -1,5 +1,7 @@
 #include "phrase.h"
 
+#include "../custom_error.h"
+
 phrase_t* new_phrase(phrase_t* parent) {
     phrase_t* phrase = malloc(sizeof(phrase_t));
 
@@ -11,24 +13,26 @@ phrase_t* new_phrase(phrase_t* parent) {
     phrase->args = malloc(DEFAULT_PHRASE_ARGS * sizeof(phrase_t*));
     phrase->argsLen = 0;
     phrase->argsSize = DEFAULT_PHRASE_ARGS;
-    phrase->interpreterArgsIndex = 0;
+    phrase->constant_removed = false;
 
     phrase->parentPhrase = parent;
+    phrase->suivant = NULL;
+    phrase->suivantInner1 = NULL;
+    phrase->suivantInner2 = NULL;
 
     phrase->innerPhrase = malloc(DEFAULT_PHRASE_INNER * sizeof(phrase_t*));
     phrase->innerPhraseLen = 0;
     phrase->innerPhraseSize = DEFAULT_PHRASE_INNER;
-    phrase->interpreterInnerIndex = -1;
     phrase->innerSeparator = 0;
 
     phrase->phraseId = -1;
+    phrase->uniqueId = -1;
 
     phrase->inst = false;
     phrase->expr = false;
 
     phrase->function = NULL;
-    phrase->variable = NULL;
-    phrase->valeur = NULL;
+    phrase->variableId = -1;
 
     phrase->error = false;
     phrase->constant = false;
@@ -50,16 +54,11 @@ void free_phrase(phrase_t* phrase) {
     }
     free(phrase->args);
 
-    if (phrase->phraseId != QUITTER_BOUCLE) {
-        for (int i = 0; i < phrase->innerPhraseLen; i++) {
-            free_phrase(phrase->innerPhrase[i]);
-        }
+    for (int i = 0; i < phrase->innerPhraseLen; i++) {
+        free_phrase(phrase->innerPhrase[i]);
     }
-    free(phrase->innerPhrase);
 
-    if (phrase->valeur != NULL) {
-        free_val_t(phrase->valeur, false, false);
-    }
+    free(phrase->innerPhrase);
 
     free(phrase);
 }
@@ -69,11 +68,11 @@ phrase_t* copy_phrase(phrase_t* phrase, phrase_t* parent, environnement_t* new_e
     strcpy(new->text, phrase->text);
     new->textLen = phrase->textLen;
     new->textSize = phrase->textSize;
-    new->argsLen = phrase->argsLen;
-    new->argsSize = phrase->argsSize;
 
     new->phraseId = phrase->phraseId;
 
+    new->argsLen = phrase->argsLen;
+    new->argsSize = phrase->argsSize;
     for (int i = 0; i < phrase->argsLen; i++) {
         new->args[i] = copy_phrase(phrase->args[i], new, new_env);
     }
@@ -91,14 +90,8 @@ phrase_t* copy_phrase(phrase_t* phrase, phrase_t* parent, environnement_t* new_e
     if (phrase->function != NULL) {
         new->function = phrase->function;
     }
-    if (phrase->variable != NULL) {
-        new->variable = getVariable(new_env, phrase->variable->nom);
-    }
 
-    if (phrase->valeur != NULL) {
-        new->valeur = new_val_t(UNDEFINED);
-        copy_val(new->valeur, phrase->valeur, true, true);
-    }
+    new->variableId = phrase->variableId;
 
     new->error = phrase->error;
     new->constant = phrase->constant;
@@ -110,7 +103,7 @@ phrase_t* copy_phrase(phrase_t* phrase, phrase_t* parent, environnement_t* new_e
 void doubleInnerSize(phrase_t* phrase) {
     phrase->innerPhrase = realloc(phrase->innerPhrase, phrase->innerPhraseSize * 2 * sizeof(phrase_t*));
     if (phrase->innerPhrase == NULL) {
-        custom_error("manque de mémoire pour phrase innerPhrase", NULL);
+        custom_error("manque de mémoire pour phrase innerPhrase", NULL, NULL);
     }
     phrase->innerPhraseSize *= 2;
 }
@@ -118,7 +111,7 @@ void doubleInnerSize(phrase_t* phrase) {
 void doubleTextSize(phrase_t* phrase) {
     phrase->text = realloc(phrase->text, phrase->textSize * 2 * sizeof(char));
     if (phrase->text == NULL) {
-        custom_error("manque de mémoire pour phrase text", NULL);
+        custom_error("manque de mémoire pour phrase text", NULL, NULL);
     }
     phrase->textSize *= 2;
 }
@@ -126,7 +119,7 @@ void doubleTextSize(phrase_t* phrase) {
 void doubleArgsSize(phrase_t* phrase) {
     phrase->args = realloc(phrase->args, phrase->argsSize * 2 * sizeof(phrase_t*));
     if (phrase->args == NULL) {
-        custom_error("manque de mémoire pour phrase args", NULL);
+        custom_error("manque de mémoire pour phrase args", NULL, NULL);
     }
     phrase->argsSize *= 2;
 }
@@ -155,7 +148,7 @@ void addToText(phrase_t* phrase, char c) {
     phrase->textLen++;
 }
 
-void _printPhrase(phrase_t* phrase, int decalage, int last_elem) {
+void _printPhrase(phrase_t* phrase, int decalage, int last_elem, environnement_t* env) {
     if (phrase->inst) {
         for (int i = 0; i < decalage; i++) {
             printf("|\t");
@@ -173,16 +166,16 @@ void _printPhrase(phrase_t* phrase, int decalage, int last_elem) {
         }
     }
     printf("%s", phrase->text);
-    if (phrase->expr && phrase->valeur->type != -1) {
-        switch (phrase->valeur->type) {
+    if (phrase->expr && getValeur(env, phrase->uniqueId)->type != -1) {
+        switch (getValeur(env, phrase->uniqueId)->type) {
             case INT:
-                printf("  ->  %d", get_int(phrase->valeur, phrase));
+                printf("  ->  %d", get_int(getValeur(env, phrase->uniqueId), phrase, env));
                 break;
             case FLOAT:
-                printf("  ->  %f", get_float(phrase->valeur, phrase));
+                printf("  ->  %f", get_float(getValeur(env, phrase->uniqueId), phrase, env));
                 break;
             case BOOL:
-                if (get_bool(phrase->valeur, phrase)) {
+                if (get_bool(getValeur(env, phrase->uniqueId), phrase, env)) {
                     printf("  ->  true");
                 } else {
                     printf("  ->  false");
@@ -191,7 +184,7 @@ void _printPhrase(phrase_t* phrase, int decalage, int last_elem) {
                 break;
             case CHAINE_DE_CHAR:
                 if (phrase->constant) {
-                    printf("  ->  %s", phrase->valeur->chaine->chars);
+                    printf("  ->  %s", getValeur(env, phrase->uniqueId)->chaine->chars);
                 }
             default:
                 break;
@@ -210,9 +203,9 @@ void _printPhrase(phrase_t* phrase, int decalage, int last_elem) {
 
         printf("args:\n");
         for (int i = 0; i < phrase->argsLen - 1; i++) {
-            _printPhrase(phrase->args[i], decalage + 1, 0);
+            _printPhrase(phrase->args[i], decalage + 1, 0, env);
         }
-        _printPhrase(phrase->args[phrase->argsLen - 1], decalage + 1, last_elem + 1);
+        _printPhrase(phrase->args[phrase->argsLen - 1], decalage + 1, last_elem + 1, env);
     }
 
     if (phrase->innerPhraseLen > 0) {
@@ -222,15 +215,26 @@ void _printPhrase(phrase_t* phrase, int decalage, int last_elem) {
 
         printf("inner :\n");
         for (int i = 0; i < phrase->innerPhraseLen - 1; i++) {
-            _printPhrase(phrase->innerPhrase[i], decalage + 1, 0);
+            _printPhrase(phrase->innerPhrase[i], decalage + 1, 0, env);
         }
-        _printPhrase(phrase->innerPhrase[phrase->innerPhraseLen - 1], decalage + 1, last_elem + 1);
+        _printPhrase(phrase->innerPhrase[phrase->innerPhraseLen - 1], decalage + 1, last_elem + 1, env);
     }
 }
 
-void printPhrase(phrase_t* phrase) {
+void printPhrase(phrase_t* phrase, environnement_t* env) {
     for (int i = 0; i < phrase->innerPhraseLen; i++) {
         // printf("print inner %s %d\n", phrase->text, i);
-        _printPhrase(phrase->innerPhrase[i], 0, false);
+        _printPhrase(phrase->innerPhrase[i], 0, false, env);
     }
+}
+
+phrase_t* parent_loop(phrase_t* phrase, environnement_t* env) {
+    phrase_t* p = phrase->parentPhrase;
+    while (p->phraseId != TANT_QUE && p->phraseId != POUR_SANS_PAS && p->phraseId != POUR_AVEC_PAS) {
+        if (p->parentPhrase == NULL) {
+            custom_error("Syntaxe invalide, quitter boucle doit être dans une boucle", phrase, env);
+        }
+        p = p->parentPhrase;
+    }
+    return p;
 }

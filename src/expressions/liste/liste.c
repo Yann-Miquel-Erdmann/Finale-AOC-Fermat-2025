@@ -13,16 +13,17 @@ bool test_expr_list(phrase_t* phrase, function_t* function) {
         return false;
     }
     if (len > 1) {
-        custom_error("too many arguments given", phrase);
+        custom_error("too many arguments given", phrase, function->env);
     }
 
     phrase->phraseId = EXPR_LISTE;
-    variable_t* var = getVariable(function->env, result[0]);
-    if (var == NULL) {
-        custom_error("variable not found", phrase);
+
+    phrase->variableId = getVariableId(function->env, result[0]);
+    if (phrase->variableId == -1) {
+        custom_error("variable not found", phrase, function->env);
     }
 
-    phrase->variable = var;
+ 
 
     free_l(result, len);
 

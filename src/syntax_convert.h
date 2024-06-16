@@ -11,13 +11,15 @@
 #include "structures/function.h"
 #include "structures/phrase.h"
 
-void tokenise(phrase_t* phrase, function_t* function, function_list_t* function_list, function_list_t* func_call_list);   
-void link_function_to_call(function_list_t* func_list, function_list_t* func_call_list);
+void tokenise(phrase_t* phrase, function_t* function, function_list_t* function_list, function_list_t* func_call_list, int* uniqueId, phrase_t* parent_loop, bool inLoopSuivant, phrase_t* inLoopSuivantPointer);
+void link_function_to_call(function_list_t* func_list, function_list_t* func_call_list, environnement_t* env);
 void isolate_func_envs(function_list_t* func_list);
-char** cut_a_b(char* s, int a, int b);
+void removeConstants(phrase_t* phrase);
+phrase_t* recLastArg(phrase_t* phrase);
+phrase_t* recLastInner(phrase_t* phrase);
+
 char** split_word(char* str, char* separator);
-int log_10_entier(int a);
+
 int puiss10(int a);
-void free_pointers(char** ptr);
 
 #endif

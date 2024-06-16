@@ -150,7 +150,7 @@
         "output": "Ligne 1.\nLigne 2.\n"
     },
     {
-        "name": "2024-04-30_15-32-22 (not working yet)",
+        "name": "2024-04-30_15-32-22",
         "code": "Soit main une fonction qui lorsqu'elle est appelée exécute:\n    Soit l La liste des éléments L'entier trois?, L'entier deux??.\n    Ajouter à La variable l? La liste l?.\n    Ajouter à La variable l? La liste l?.\n    Afficher La variable l?.\n.\nExécuter la fonction main.",
         "output": "[trois, deux, [trois, deux], [trois, deux, [trois, deux]]]\n"
     },
@@ -166,7 +166,7 @@
     },
     {
         "name": "Quitter la boucle",
-        "code": "Soit a L'entier zéro?.\nPour i allant de L'entier zéro? jusqu'à L'entier cinq? faire:\n    Soit a La somme de La variable a? et de L'entier un??.\n    Si La valeur de La variable a? est égale à la valeur de L'entier quatre?? alors faire:\n        Afficher La variable a?.\n        Afficher La variable i?.\n        Quitter la boucle.\n    .\n.\nAfficher La variable a?.\nAfficher La variable i?.\n\n\nSoit a L'entier zéro?.\nPour i allant de L'entier zéro? jusqu'à L'entier dix? en utilisant un pas de L'entier deux? faire:\n    Soit a La somme de La variable a? et de L'entier un??.\n    Si La valeur de La variable a? est égale à la valeur de L'entier quatre?? alors faire:\n        Afficher La variable a?.\n        Afficher La variable i?.\n        Quitter la boucle.\n    .\n.\nAfficher La variable a?.\nAfficher La variable i?.\n\n\nSoit a L'entier zéro?.\nTant que La valeur de La variable a? est strictement plus petite que la valeur de L'entier dix?? faire:\n    Soit a La somme de La variable a? et de L'entier un??.\n    Si La valeur de La variable a? est égale à la valeur de L'entier quatre?? alors faire:\n        Afficher La variable a?.\n        Quitter la boucle.\n    .\n.\nAfficher La variable a?.",
-        "output": "quatre\ntrois\nquatre\ntrois\nquatre\nsix\nquatre\nsix\nquatre\nquatre\n"
+        "code": "Soit a L'entier zéro?.\nPour i allant de L'entier zéro? jusqu'à L'entier cinq? faire:\n    Soit a La somme de La variable a? et de L'entier un??.\n    Si La valeur de La variable a? est égale à la valeur de L'entier quatre?? alors faire:\n        Afficher La variable a?.\n        Afficher La variable i?.\n        Quitter la boucle.\n    .\n.\nAfficher La variable a?.\n\n\nSoit a L'entier zéro?.\nPour i allant de L'entier zéro? jusqu'à L'entier dix? en utilisant un pas de L'entier deux? faire:\n    Soit a La somme de La variable a? et de L'entier un??.\n    Si La valeur de La variable a? est égale à la valeur de L'entier quatre?? alors faire:\n        Afficher La variable a?.\n        Afficher La variable i?.\n        Quitter la boucle.\n    .\n.\nAfficher La variable a?.\n\n\nSoit a L'entier zéro?.\nTant que La valeur de La variable a? est strictement plus petite que la valeur de L'entier dix?? faire:\n    Soit a La somme de La variable a? et de L'entier un??.\n    Si La valeur de La variable a? est égale à la valeur de L'entier quatre?? alors faire:\n        Afficher La variable a?.\n        Quitter la boucle.\n    .\n.\nAfficher La variable a?.",
+        "output": "quatre\ntrois\nquatre\nquatre\nsix\nquatre\nquatre\nquatre\n"
     }
 ]

@@ -4,7 +4,7 @@
 
 char* add_str(char* str, int* taille, char* added) {
     if (str == NULL) {
-        custom_error("str est NULL", NULL);
+        custom_error("str est NULL", NULL, NULL);
     }
 
     int len = (int)strlen(added);
@@ -13,7 +13,7 @@ char* add_str(char* str, int* taille, char* added) {
         *(taille) *= 2;
         str = realloc(str, (*(taille)) * sizeof(char));
         if (str == NULL) {
-            custom_error("erreur lors de la réallocation de str ", NULL);
+            custom_error("", NULL);
             exit(0);
         }
     }
@@ -74,34 +74,34 @@ int match_num(char* num, bool with_s) {
     }
 }
 
-int* eval_float(char* str_num, int len){
-    char* str = malloc((len+1) * sizeof(char));
+int* eval_float(char* str_num, int len) {
+    char* str = malloc((len + 1) * sizeof(char));
     int index = 0;
     int start = 0;
     int exp = 1;
-    for (int i = 0; i<len; i++){
+    for (int i = 0; i < len; i++) {
         if (str_num[i] == ' ' || i == len) {
             str[index] = '\0';
             index = 0;
             if (!strcmp(str, "zéro")) {
                 exp *= 10;
-                start = i+1;
-            }else{
+                start = i + 1;
+            } else {
                 break;
             }
-        }else{
+        } else {
             str[index] = str_num[i];
             index++;
         }
     }
     index = 0;
-    for (int i = start; i<len; i++){
+    for (int i = start; i < len; i++) {
         str[index] = str_num[i];
         index++;
     }
     str[index] = '\0';
-    int* result = eval_number(str, len-start);
-    result = realloc(result, 3*sizeof(int));
+    int* result = eval_number(str, len - start);
+    result = realloc(result, 3 * sizeof(int));
     result[2] = exp;
     free(str);
     return result;
@@ -517,7 +517,7 @@ char* str_from_float(float n) {
     text = add_str(text, &text_size, " virgule ");
     while (n != (int)n) {
         n *= 10;
-        if ((int)n == 0){
+        if ((int)n == 0) {
             text = add_str(text, &text_size, "zéro ");
         }
     }

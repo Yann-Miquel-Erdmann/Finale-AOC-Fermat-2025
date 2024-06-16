@@ -11,7 +11,7 @@
 val_t* new_val_t(char type) {
     val_t* val = malloc(sizeof(val_t));
     if (val == NULL) {
-        custom_error("erreur d'allocation", NULL);
+        custom_error("erreur d'allocation", NULL, NULL);
         return val;
     }
     val->type = type;
@@ -35,7 +35,7 @@ void free_val_t(val_t* v, bool free_chaine, bool free_liste) {
         free_chaine_t(v->chaine);
     }
 
-    if ((v->to_free_list || free_liste) && v->liste != NULL) {
+    if (v->to_free_list  && v->liste != NULL) {
         free_liste_t(v->liste, free_chaine, free_liste);
         v->liste = NULL;
     }
@@ -44,8 +44,9 @@ void free_val_t(val_t* v, bool free_chaine, bool free_liste) {
 }
 
 void copy_val(val_t* dest, val_t* src, bool cp_chaine, bool cp_liste) {
+    // printf("copy %p -> %p   %d %d\n", src, dest, cp_chaine, cp_liste);
     if (dest == NULL || src == NULL) {
-        custom_error("copy_val: dest ou src est NULL", NULL);
+        custom_error("copy_val: dest ou src est NULL", NULL, NULL);
     }
     dest->type = src->type;
     dest->value = src->value;
@@ -66,9 +67,9 @@ void copy_val(val_t* dest, val_t* src, bool cp_chaine, bool cp_liste) {
 
     if (src->type == LISTE && cp_liste) {
         dest->liste = copy_liste(src->liste);
+        // printf("hard copy %p %p\n", dest->liste, src->liste);
         dest->to_free_list = true;
     } else {
-        dest->to_free_list = false;
         dest->liste = src->liste;
     }
 
@@ -78,111 +79,110 @@ void copy_val(val_t* dest, val_t* src, bool cp_chaine, bool cp_liste) {
             dest->to_free_chaine = true;
         }
     } else {
-        dest->to_free_chaine = false;
         dest->chaine = src->chaine;
     }
 }
-int get_int(val_t* v, phrase_t* p) {
+int get_int(val_t* v, phrase_t* p, environnement_t* env) {
     if (v->type != INT) {
-        custom_error("le type de val_t ne correspond pas, un entier est attendu", p);
+        custom_error("le type de val_t ne correspond pas, un entier est attendu", p, env);
     }
     return *((int*)&(v->value));
 }
 
-float get_float(val_t* v, phrase_t* p) {
+float get_float(val_t* v, phrase_t* p, environnement_t* env) {
     if (v->type != FLOAT) {
-        custom_error("le type de val_t ne correspond pas, un flottant est attendu", p);
+        custom_error("le type de val_t ne correspond pas, un flottant est attendu", p, env);
     }
     return *((float*)&(v->value));
 }
 
-bool get_bool(val_t* v, phrase_t* p) {
+bool get_bool(val_t* v, phrase_t* p, environnement_t* env) {
     if (v->type != BOOL) {
-        custom_error("le type de val_t ne correspond pas, un booléen est attendu", p);
+        custom_error("le type de val_t ne correspond pas, un booléen est attendu", p, env);
     }
     return *((bool*)&(v->value));
 }
 
-liste_t* get_liste(val_t* v, phrase_t* p) {
+liste_t* get_liste(val_t* v, phrase_t* p, environnement_t* env) {
     if (v->type != LISTE) {
-        custom_error("le type de val_t ne correspond pas, une liste est attendue", p);
+        custom_error("le type de val_t ne correspond pas, une liste est attendue", p, env);
     }
     return v->liste;
 }
 
-chaine_t* get_char(val_t* v, phrase_t* p) {
+chaine_t* get_char(val_t* v, phrase_t* p, environnement_t* env) {
     if (v->type != CHAINE_DE_CHAR) {
-        custom_error("le type de val_t ne correspond pas, une chaîne de caractère est attendue", p);
+        custom_error("le type de val_t ne correspond pas, une chaîne de caractère est attendue", p, env);
     }
     return v->chaine;
 }
 
-int get_as_int(val_t* v, phrase_t* p) {
+int get_as_int(val_t* v, phrase_t* p, environnement_t* env) {
     switch (v->type) {
         case INT:
-            return get_int(v, p);
+            return get_int(v, p, env);
             break;
         case FLOAT:
-            return (int)get_float(v, p);
+            return (int)get_float(v, p, env);
             break;
         case BOOL:
-            if (get_bool(v, p)) {
+            if (get_bool(v, p, env)) {
                 return 1;
             } else {
                 return 0;
             }
             break;
         default:
-            custom_error("le type de val_t n'est pas reconnu dans get_as_int", p);
+            custom_error("le type de val_t n'est pas reconnu dans get_as_int", p, env);
             return 0;
             break;
     }
 }
 
-float get_as_float(val_t* v, phrase_t* p) {
+float get_as_float(val_t* v, phrase_t* p, environnement_t* env) {
     switch (v->type) {
         case INT:
-            return (float)get_int(v, p);
+            return (float)get_int(v, p, env);
             break;
         case FLOAT:
-            return get_float(v, p);
+            return get_float(v, p, env);
             break;
         case BOOL:
-            if (get_bool(v, p)) {
+            if (get_bool(v, p, env)) {
                 return 1.0;
             } else {
                 return 0.0;
             }
             break;
         default:
-            custom_error("le type de val_t n'est pas reconnu dans get_as_float", p);
+            custom_error("le type de val_t n'est pas reconnu dans get_as_float", p, env);
             return 0.0;
             break;
     }
 }
 
-bool get_as_bool(val_t* v, phrase_t* p) {
+bool get_as_bool(val_t* v, phrase_t* p, environnement_t* env) {
     switch (v->type) {
         case INT:
-            return get_int(v, p) != 0;
+            return get_int(v, p, env) != 0;
             break;
         case FLOAT:
-            return get_float(v, p) != 0.0;
+            return get_float(v, p, env) != 0.0;
             break;
         case BOOL:
-            return get_bool(v, p);
+            return get_bool(v, p, env);
             break;
         case CHAINE_DE_CHAR:
-            return get_char(v, p)->chars_len != 0;
+            return get_char(v, p, env)->chars_len != 0;
             break;
         case LISTE:
-            return get_liste(v, p)->valeursLen != 0;
+            return get_liste(v, p, env)->valeursLen != 0;
             break;
         case UNDEFINED:
             return false;
             break;
         default:
-            custom_error("le type de val_t n'est pas reconnu dans get_as_bool", p);
+            custom_error("le type de val_t n'est pas reconnu dans get_as_bool", p, env);
             return false;
             break;
     }
@@ -231,7 +231,7 @@ char* str_type(val_t* v) {
             strcpy(type, "liste");
             break;
         case CHAINE_DE_CHAR:
-            strcpy(type, "chaine de caractère");
+            strcpy(type, "chaîne de caractère");
             break;
         case UNDEFINED:
             strcpy(type, "rien");
@@ -243,12 +243,12 @@ char* str_type(val_t* v) {
     return type;
 }
 
-bool is_equal(val_t* v1, val_t* v2, phrase_t* p) {
+bool is_equal(val_t* v1, val_t* v2, phrase_t* p, environnement_t* env) {
     switch (v1->type << 4 | v2->type) {
         case INT << 4 | INT:
         case BOOL << 4 | INT:
         case INT << 4 | BOOL:
-            return get_as_int(v1, p) == get_as_int(v2, p);
+            return get_as_int(v1, p, env) == get_as_int(v2, p, env);
             break;
 
         case FLOAT << 4 | FLOAT:
@@ -256,19 +256,19 @@ bool is_equal(val_t* v1, val_t* v2, phrase_t* p) {
         case INT << 4 | FLOAT:
         case FLOAT << 4 | BOOL:
         case BOOL << 4 | FLOAT:
-            return get_as_float(v1, p) == get_as_float(v2, p);
+            return get_as_float(v1, p, env) == get_as_float(v2, p, env);
             break;
 
         case BOOL << 4 | BOOL:
-            return get_bool(v1, p) == get_bool(v2, p);
+            return get_bool(v1, p, env) == get_bool(v2, p, env);
             break;
 
         case CHAINE_DE_CHAR << 4 | CHAINE_DE_CHAR:
-            return strcmp(get_char(v1, p)->chars, get_char(v2, p)->chars) == 0;
+            return strcmp(get_char(v1, p, env)->chars, get_char(v2, p, env)->chars) == 0;
             break;
 
         case LISTE << 4 | LISTE:
-            return is_equal_list(get_liste(v1, p), get_liste(v2, p), p);
+            return is_equal_list(get_liste(v1, p, env), get_liste(v2, p, env), p, env);
             break;
 
         case UNDEFINED << 4 | INT:
@@ -291,19 +291,19 @@ bool is_equal(val_t* v1, val_t* v2, phrase_t* p) {
         default: {
             char* error = malloc(100 * sizeof(char));
             sprintf(error, "Impossible de comparer l'égalité d'un élément de type %s et d'un élément de type %s.", str_type(v1), str_type(v2));
-            custom_error(error, p);
+            custom_error(error, p, env);
             return false;
             break;
         }
     }
 }
 
-bool is_greater(val_t* v1, val_t* v2, phrase_t* p) {
+bool is_greater(val_t* v1, val_t* v2, phrase_t* p, environnement_t* env) {
     switch (v1->type << 4 | v2->type) {
         case INT << 4 | INT:
         case BOOL << 4 | INT:
         case INT << 4 | BOOL:
-            return get_as_int(v1, p) >= get_as_int(v2, p);
+            return get_as_int(v1, p, env) >= get_as_int(v2, p, env);
             break;
 
         case FLOAT << 4 | FLOAT:
@@ -311,15 +311,15 @@ bool is_greater(val_t* v1, val_t* v2, phrase_t* p) {
         case INT << 4 | FLOAT:
         case FLOAT << 4 | BOOL:
         case BOOL << 4 | FLOAT:
-            return get_as_float(v1, p) >= get_as_float(v2, p);
+            return get_as_float(v1, p, env) >= get_as_float(v2, p, env);
             break;
 
         case CHAINE_DE_CHAR << 4 | CHAINE_DE_CHAR:
-            return strcmp(get_char(v1, p)->chars, get_char(v2, p)->chars) >= 0;
+            return strcmp(get_char(v1, p, env)->chars, get_char(v2, p, env)->chars) >= 0;
             break;
 
         case LISTE << 4 | LISTE:
-            return is_greater_list(get_liste(v1, p), get_liste(v2, p), p);
+            return is_greater_list(get_liste(v1, p, env), get_liste(v2, p, env), p, env);
             break;
 
         case UNDEFINED << 4 | INT:
@@ -342,19 +342,19 @@ bool is_greater(val_t* v1, val_t* v2, phrase_t* p) {
         default: {
             char* error = malloc(100 * sizeof(char));
             sprintf(error, "Impossible de comparer un élément de type %s et un élément de type %s.", str_type(v1), str_type(v2));
-            custom_error(error, p);
+            custom_error(error, p, env);
             return false;
             break;
         }
     }
 }
 
-bool is_strict_greater(val_t* v1, val_t* v2, phrase_t* p) {
+bool is_strict_greater(val_t* v1, val_t* v2, phrase_t* p, environnement_t* env) {
     switch (v1->type << 4 | v2->type) {
         case INT << 4 | INT:
         case BOOL << 4 | INT:
         case INT << 4 | BOOL:
-            return get_as_int(v1, p) > get_as_int(v2, p);
+            return get_as_int(v1, p, env) > get_as_int(v2, p, env);
             break;
 
         case FLOAT << 4 | FLOAT:
@@ -362,15 +362,15 @@ bool is_strict_greater(val_t* v1, val_t* v2, phrase_t* p) {
         case INT << 4 | FLOAT:
         case FLOAT << 4 | BOOL:
         case BOOL << 4 | FLOAT:
-            return get_as_float(v1, p) > get_as_float(v2, p);
+            return get_as_float(v1, p, env) > get_as_float(v2, p, env);
             break;
 
         case CHAINE_DE_CHAR << 4 | CHAINE_DE_CHAR:
-            return strcmp(get_char(v1, p)->chars, get_char(v2, p)->chars) > 0;
+            return strcmp(get_char(v1, p, env)->chars, get_char(v2, p, env)->chars) > 0;
             break;
 
         case LISTE << 4 | LISTE:
-            return is_strict_greater_list(get_liste(v1, p), get_liste(v2, p), p);
+            return is_strict_greater_list(get_liste(v1, p, env), get_liste(v2, p, env), p, env);
             break;
 
         case UNDEFINED << 4 | INT:
@@ -393,27 +393,27 @@ bool is_strict_greater(val_t* v1, val_t* v2, phrase_t* p) {
         default: {
             char* error = malloc(100 * sizeof(char));
             sprintf(error, "Impossible de comparer un élément de type %s et un élément de type %s.", str_type(v1), str_type(v2));
-            custom_error(error, p);
+            custom_error(error, p, env);
             return false;
             break;
         }
     }
 }
 
-int taille(phrase_t* phrase) {
-    if (phrase->args[0]->valeur->type == LISTE) {
-        set_int(phrase->valeur, taille_liste(phrase->args[0]->valeur->liste));
-    } else if (phrase->args[0]->valeur->type == CHAINE_DE_CHAR) {
-        set_int(phrase->valeur, phrase->args[0]->valeur->chaine->chars_len);
+void taille(phrase_t* phrase, environnement_t* env) {
+    if (getValeur(env, phrase->args[0]->uniqueId)->type == LISTE) {
+        set_int(getValeur(env, phrase->uniqueId), taille_liste(getValeur(env, phrase->args[0]->uniqueId)->liste));
+    } else if (getValeur(env, phrase->args[0]->uniqueId)->type == CHAINE_DE_CHAR) {
+        set_int(getValeur(env, phrase->uniqueId), getValeur(env, phrase->args[0]->uniqueId)->chaine->chars_len);
     } else {
-        custom_error("taille ne peut être appliqué qu'à une liste ou une chaîne de caractères", phrase);
+        custom_error("taille ne peut être appliqué qu'à une liste ou une chaîne de caractères", phrase, env);
     }
 }
 
-void print_val(val_t* v, bool new_line, phrase_t* p) {
+void print_val(val_t* v, bool new_line, phrase_t* p, environnement_t* env) {
     switch (v->type) {
         case BOOL: {
-            if (get_bool(v, p)) {
+            if (get_bool(v, p, env)) {
                 printf("vrai");
             } else {
                 printf("faux");
@@ -422,14 +422,14 @@ void print_val(val_t* v, bool new_line, phrase_t* p) {
         }
 
         case INT: {
-            char* str = str_from_int(get_int(v, p));
+            char* str = str_from_int(get_int(v, p, env));
             printf("%s", str);
             free(str);
             break;
         }
 
         case FLOAT: {
-            char* str = str_from_float(get_float(v, p));
+            char* str = str_from_float(get_float(v, p, env));
             printf("%s", str);
             free(str);
             break;
@@ -443,10 +443,10 @@ void print_val(val_t* v, bool new_line, phrase_t* p) {
                 }
                 if (v->liste->valeurs[i]->type == CHAINE_DE_CHAR) {
                     printf("\"");
-                    print_val(v->liste->valeurs[i], false, p);
+                    print_val(v->liste->valeurs[i], false, p, env);
                     printf("\"");
                 } else {
-                    print_val(v->liste->valeurs[i], false, p);
+                    print_val(v->liste->valeurs[i], false, p, env);
                 }
             }
             printf("]");
@@ -469,7 +469,7 @@ void print_val(val_t* v, bool new_line, phrase_t* p) {
             break;
 
         default:
-            custom_error("le type de val_t n'est pas reconnu dans print_val", p);
+            custom_error("le type de val_t n'est pas reconnu dans print_val", p, env);
             break;
     }
 

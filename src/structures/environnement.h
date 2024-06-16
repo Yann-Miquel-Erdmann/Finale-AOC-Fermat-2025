@@ -5,21 +5,26 @@
 
 typedef struct environnement {
     variable_t** variable_list;
-    int variable_list_len;
+    int variableListLen;
     int variable_list_size;
-    liste_t** liste_list;
-    int liste_list_len;
-    int liste_list_size;
+
+    val_t** phraseValeurs;
+    int phraseValeurs_len;
+    int phraseValeurs_size;
 } environnement_t;
 
 void free_environnement(environnement_t* env);
 environnement_t* copy_environnement(environnement_t* env);
 
-environnement_t* new_environnement(void);
+environnement_t* new_environnement();
+
+void doubleValeurListSize(environnement_t* env);
+void linkValeur(environnement_t* env);
 
 void doubleVariableListSize(environnement_t* env);
 void addToVariableList(environnement_t* env, variable_t* var);
 
-variable_t* getVariable(environnement_t* env, char* nom);
-
+int getVariableId(environnement_t* env, char* nom);
+variable_t* getVariable(environnement_t* env, int variableId);
+val_t* getValeur(environnement_t* env, int indice);
 #endif

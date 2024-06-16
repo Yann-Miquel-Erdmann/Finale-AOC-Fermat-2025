@@ -1,12 +1,22 @@
 SOURCES = $(shell find src -type f -name '*.c')
 HEADERS = $(shell find src -type f -name '*.h')
 OBJECTS = $(patsubst %.c,%.o,$(SOURCES))
-CFLAGS = -g -O0 
-build/interpreter: $(OBJECTS)
-	gcc -o $@ $^ -lm
-%.o: %.c $(SOURCES)
-	gcc $(CFLAGS) -c -o $@ $<
+CFLAGS = -g -Wall -Wextra -O0 
+
+build: $(OBJECTS)
+	gcc -o build/interpreter $^ -lm
+
+build/%.o: src/%.c $(HEADERS)
+	mkdir -p $(@D)
+	gcc $(CFLAGS) -c $< -o $@
+
+fast:
+	make build CFLAGS='-Ofast'
+
 clean:
 	rm -f $(OBJECTS) 
-test:
+test_suite:
 	python3 ./testing/test_suite.py
+
+test:
+	valgrind ./build/interpreter ./testing/test.FC
