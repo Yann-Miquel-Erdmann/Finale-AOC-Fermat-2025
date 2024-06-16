@@ -1,6 +1,6 @@
 #include "../expressions.h"
 
-bool test_expr_booleen(phrase_t* phrase) {
+bool test_expr_booleen(phrase_t* phrase, environnement_t* env) {
     if (phrase->phraseId != -1) {
         return false;
     }
@@ -13,22 +13,22 @@ bool test_expr_booleen(phrase_t* phrase) {
         return false;
     }
     if (len > 1) {
-        custom_error("too many arguments given", phrase);
+        custom_error("too many arguments given", phrase, env);
     }
 
-    if (!strcmp(result[0], "vrai")) {
+        if (!strcmp(result[0], "vrai")) {
         // printf("booléen: vrai\n");
         phrase->phraseId = EXPR_BOOLEEN;
         phrase->constant = true;
-        set_bool(phrase->valeur, true);
+        set_bool(getValeur(env, phrase->uniqueId), true);
     } else if (!strcmp(result[0], "faux")) {
         // printf("booléen: faux\n");
         phrase->phraseId = EXPR_BOOLEEN;
         phrase->constant = true;
 
-        set_bool(phrase->valeur, false);
+        set_bool(getValeur(env, phrase->uniqueId), false);
     } else {
-        custom_error("Le booléen doit être vrai ou faux.", phrase);
+        custom_error("Le booléen doit être vrai ou faux.", phrase, env);
     }
     free_l(result, len);
 

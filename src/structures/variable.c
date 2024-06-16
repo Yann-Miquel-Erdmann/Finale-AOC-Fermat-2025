@@ -7,6 +7,7 @@
 #include "struct_liste.h"
 
 void free_variable_t(variable_t* var) {
+    // printf("free variable %p %s\n", var, var->nom);
     free(var->nom);
     free_val_t(var->valeur, true, true);
     free(var);

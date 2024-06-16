@@ -41,7 +41,7 @@ void doubleValeursSize(liste_t* liste) {
     liste->valeursSize *= 2;
     liste->valeurs = realloc(liste->valeurs, sizeof(val_t*) * liste->valeursSize);
     if (liste->valeurs == NULL) {
-        custom_error("manque de mémoire pour liste valeurs size", NULL);
+        custom_error("manque de mémoire pour liste valeurs size", NULL, NULL);
     }
 }
 
@@ -56,16 +56,16 @@ void vider_liste(liste_t* liste) {
     liste->valeursLen = 0;
 }
 
-val_t* accession(liste_t* liste, int indice, phrase_t* p) {
+val_t* accession(liste_t* liste, int indice, phrase_t* p, environnement_t* env) {
     if (indice < 0 || indice >= liste->valeursLen) {
-        custom_error("indice hors de la liste", p);
+        custom_error("indice hors de la liste", p, env);
     }
     return liste->valeurs[indice];
 }
 
-void modification(liste_t* liste, int indice, val_t* valeur, phrase_t* p) {
+void modification(liste_t* liste, int indice, val_t* valeur, phrase_t* p, environnement_t* env) {
     if (indice < 0 || indice >= liste->valeursLen) {
-        custom_error("indice hors de la liste", p);
+        custom_error("indice hors de la liste", p, env);
     }
 
     copy_val(liste->valeurs[indice], valeur, true, true);
@@ -81,9 +81,9 @@ void ajout(liste_t* liste, val_t* valeur) {
     liste->valeursLen++;
 }
 
-void inserer(liste_t* liste, int indice, val_t* valeur, phrase_t* p) {
+void inserer(liste_t* liste, int indice, val_t* valeur, phrase_t* p, environnement_t* env) {
     if (indice < 0 || indice > liste->valeursLen) {
-        custom_error("indice hors de la liste", p);
+        custom_error("indice hors de la liste", p, env);
     }
     if (liste->valeursLen == liste->valeursSize) {
         doubleValeursSize(liste);
@@ -96,9 +96,9 @@ void inserer(liste_t* liste, int indice, val_t* valeur, phrase_t* p) {
     liste->valeursLen++;
 }
 
-void suppression(liste_t* liste, int indice, phrase_t* p) {
+void suppression(liste_t* liste, int indice, phrase_t* p, environnement_t* env) {
     if (indice < 0 || indice >= liste->valeursLen) {
-        custom_error("indice hors de la liste", p);
+        custom_error("indice hors de la liste", p, env);
     }
     free_val_t(liste->valeurs[indice], true, true);
     for (int i = indice; i < liste->valeursLen - 1; i++) {
@@ -107,19 +107,19 @@ void suppression(liste_t* liste, int indice, phrase_t* p) {
     liste->valeursLen--;
 }
 
-bool is_equal_list(liste_t* l1, liste_t* l2, phrase_t* p) {
+bool is_equal_list(liste_t* l1, liste_t* l2, phrase_t* p, environnement_t* env) {
     if (l1->valeursLen != l2->valeursLen) {
         return false;
     }
     for (int i = 0; i < l1->valeursLen; i++) {
-        if (!is_equal(l1->valeurs[i], l2->valeurs[i], p)) {
+        if (!is_equal(l1->valeurs[i], l2->valeurs[i], p, env)) {
             return false;
         }
     }
     return true;
 }
 
-bool is_greater_list(liste_t* l1, liste_t* l2, phrase_t* p) {
+bool is_greater_list(liste_t* l1, liste_t* l2, phrase_t* p, environnement_t* env) {
     if (l1->valeursLen == 0 && l2->valeursLen == 0) {
         return true;
     }
@@ -134,9 +134,9 @@ bool is_greater_list(liste_t* l1, liste_t* l2, phrase_t* p) {
     }
 
     for (int i = 0; i < mini; i++) {
-        if (is_strict_greater(l1->valeurs[i], l2->valeurs[i], p)) {
+        if (is_strict_greater(l1->valeurs[i], l2->valeurs[i], p, env)) {
             return true;
-        } else if (!is_greater(l1->valeurs[i], l2->valeurs[i], p)) {
+        } else if (!is_greater(l1->valeurs[i], l2->valeurs[i], p, env)) {
             return false;
         }
     }
@@ -146,7 +146,7 @@ bool is_greater_list(liste_t* l1, liste_t* l2, phrase_t* p) {
     return true;
 }
 
-bool is_strict_greater_list(liste_t* l1, liste_t* l2, phrase_t* p) {
+bool is_strict_greater_list(liste_t* l1, liste_t* l2, phrase_t* p, environnement_t* env) {
     if (l1->valeursLen == 0 && l2->valeursLen == 0) {
         return false;
     }
@@ -161,9 +161,9 @@ bool is_strict_greater_list(liste_t* l1, liste_t* l2, phrase_t* p) {
     }
 
     for (int i = 0; i < mini; i++) {
-        if (is_strict_greater(l1->valeurs[i], l2->valeurs[i], p)) {
+        if (is_strict_greater(l1->valeurs[i], l2->valeurs[i], p, env)) {
             return true;
-        } else if (!is_greater(l1->valeurs[i], l2->valeurs[i], p)) {
+        } else if (!is_greater(l1->valeurs[i], l2->valeurs[i], p, env)) {
             return false;
         }
     }

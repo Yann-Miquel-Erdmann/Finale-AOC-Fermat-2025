@@ -1,16 +1,14 @@
 Soit nb L'entier un million?.
 Soit np La liste des éléments L'entier deux??.
 Soit nombre L'entier trois?.
-
 Tant que La valeur de La taille de La liste np?? est strictement plus petite que la valeur de La variable nb?? faire:
-
     Pour i allant de L'entier zéro? jusqu'à La taille de La liste np?? faire:
         Si La valeur de Le reste de La variable nombre? par L'élément de La liste np? à l'indice La variable i??? est égale à la valeur de L'entier zéro?? alors faire:
-            Que i devienne La taille de La liste np??.
+            Quitter la boucle.
         sinon faire:
             Si La valeur de Le produit de L'élément de La liste np? à l'indice La variable i?? et de L'élément de La liste np? à l'indice La variable i??? est strictement plus grande que la valeur de La variable nombre?? alors faire:
                 Ajouter à La liste np? La variable nombre?.  
-                Que i devienne La taille de La liste np??.
+                Quitter la boucle.
             .
         .
     .

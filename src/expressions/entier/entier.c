@@ -1,6 +1,6 @@
 #include "../expressions.h"
 
-bool test_expr_entier(phrase_t* phrase) {
+bool test_expr_entier(phrase_t* phrase, environnement_t* env) {
     if (phrase->phraseId != -1) {
         return false;
     }
@@ -13,7 +13,7 @@ bool test_expr_entier(phrase_t* phrase) {
         return false;
     }
     if (len > 1) {
-        custom_error("too many arguments given", phrase);
+        custom_error("too many arguments given", phrase, env);
     }
 
     int* result_num = eval_number(result[0], (int)strlen(result[0]));
@@ -21,14 +21,15 @@ bool test_expr_entier(phrase_t* phrase) {
     if (result_num[0]) {
         phrase->phraseId = EXPR_ENTIER;
         phrase->constant = true;
-        set_int(phrase->valeur, result_num[1]);
+        // printf("%p\n", getValeur(env, phrase->uniqueId));
+        set_int(getValeur(env, phrase->uniqueId), result_num[1]);
     } else {
         char* err = malloc((strlen(result[0]) + 32) * sizeof(char));
 
         strcpy(err, result[0]);
         strcat(err, " isn't recognized as an integer.");
 
-        custom_error(err, phrase);
+        custom_error(err, phrase, env);
     }
     free(result_num);
 

@@ -5,15 +5,15 @@
 
 #include "../constants.h"
 #include "../custom_error.h"
-#include "phrase.h"
 #include "environnement.h"
+#include "phrase.h"
 
 void free_function_t(function_t* func) {
-    if (func->ast == NULL){
+    if (func->ast == NULL) {
         return;
     }
-    free_phrase(func->ast);
-    if (func->nom != NULL){
+    // free_phrase(func->ast);
+    if (func->nom != NULL) {
         free(func->nom);
     }
 
@@ -36,11 +36,10 @@ function_t* copy_function(function_t* func) {
     new_func->function_arg_count = func->function_arg_count;
     strcpy(new_func->nom, func->nom);
     new_func->env = copy_environnement(func->env);
-    new_func->ast = copy_phrase(func->ast,NULL, new_func->env);
+    new_func->ast = copy_phrase(func->ast, NULL, new_func->env);
     new_func->ast->parentPhrase = NULL;
     return new_func;
 }
-
 
 function_list_t* new_function_list(void) {
     function_list_t* func_list = malloc(sizeof(function_list_t));
@@ -54,7 +53,7 @@ void doubleFunctionListSize(function_list_t* func_list) {
     func_list->function_list_size *= 2;
     func_list->function_list = realloc(func_list->function_list, sizeof(function_t*) * func_list->function_list_size);
     if (func_list->function_list == NULL) {
-        custom_error("manque de mémoire pour function list size", NULL);
+        custom_error("manque de mémoire pour function list size", NULL, NULL);
     }
 }
 

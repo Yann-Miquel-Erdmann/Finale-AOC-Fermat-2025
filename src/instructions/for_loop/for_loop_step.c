@@ -13,21 +13,22 @@ bool test_inst_for_loop_step(phrase_t* phrase, function_t* function) {
         return false;
     }
     if (len > 1) {
-        custom_error("too many arguments given", phrase);
+        custom_error("too many arguments given", phrase, function->env);
     }
 
     phrase->phraseId = POUR_AVEC_PAS;
     phrase->inst = true;
 
-    phrase->variable = getVariable(function->env, result[0]);
-    if (phrase->variable == NULL) {
-        phrase->variable = new_variable(result[0], new_val_t(UNDEFINED));
-        set_undefined(phrase->variable->valeur);
-        addToVariableList(function->env, phrase->variable);
+    phrase->variableId = getVariableId(function->env, result[0]);
+    if (phrase->variableId == -1) {
+        variable_t* var = new_variable(result[0], new_val_t(UNDEFINED));
+        phrase->variableId = function->env->variableListLen;
+        addToVariableList(function->env, var);
     } else {
         free(result[0]);
-        set_undefined(phrase->variable->valeur);
     }
+
+    // linearize
 
     free(result);
     return true;

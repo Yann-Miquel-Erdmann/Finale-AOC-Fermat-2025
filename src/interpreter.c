@@ -13,456 +13,399 @@
 
 void interpreter(function_t* function, function_list_t* functions, val_t* result, int layer) {
     if (layer > MAX_RECUSION_DEPTH) {
-        custom_error("limite de récursion atteinte", NULL);
+        custom_error("limite de récursion atteinte", NULL, NULL);
     }
+    if (function->ast->innerPhraseLen == 0) {
+        return;
+    }
+
+    environnement_t* env = function->env;
+
+    // phrase_t* ptemp = new_phrase(NULL);
+    // ptemp->suivant = function->ast;
     phrase_t* phraseActuelle = function->ast;
-    //phrase_t* last_loop = NULL;
+    // free_phrase(ptemp);
+
     while (phraseActuelle != NULL) {
-        // printf("'%s' %d %d %d %d %p\n", phraseActuelle->text, phraseActuelle->phraseId, phraseActuelle->argsLen, phraseActuelle->interpreterArgsIndex, (int)phraseActuelle->constant, phraseActuelle);
+        // printf("'%s' %d %d %d %p\n", phraseActuelle->text, phraseActuelle->phraseId, phraseActuelle->argsLen, (int)phraseActuelle->constant, phraseActuelle);
 
-        if (phraseActuelle->constant) {
-            phraseActuelle->interpreterArgsIndex = 0;
-            phraseActuelle = phraseActuelle->parentPhrase;
-        } else if (phraseActuelle->interpreterArgsIndex < phraseActuelle->argsLen) {
-            phraseActuelle->interpreterArgsIndex++;
-            phraseActuelle = phraseActuelle->args[phraseActuelle->interpreterArgsIndex - 1];
-        } else {
-            // printf("'%s' %d %d %d\n", phraseActuelle->text, phraseActuelle->phraseId, phraseActuelle->interpreterInnerIndex, (int)phraseActuelle->constant);
-            switch (phraseActuelle->phraseId) {
-                case DEFINITION_FONCTION_ARGUMENT:
-                case DEFINITION_FONCTION: {
-                    phraseActuelle->interpreterArgsIndex = 0;
-                    phraseActuelle = phraseActuelle->parentPhrase;
-                    break;
-                }
-                case MAIN_PHRASE: {
-                    if (phraseActuelle->interpreterInnerIndex == -1) {
-                        phraseActuelle->interpreterInnerIndex = 0;
-                    }
+        // if (phraseActuelle->suivant != NULL) {
+        //     printf("%s  --->   %s\n", phraseActuelle->text, phraseActuelle->suivant->text);
+        // } else {
+        //     printf("%s  --->   NULL\n", phraseActuelle->text);
+        // }
+        // if (phraseActuelle->suivantInner1 != NULL) {
+        //     printf("suivantInner1 %s  --->   %s\n", phraseActuelle->text, phraseActuelle->suivantInner1->text);
+        // }
+        // if (phraseActuelle->suivantInner2 != NULL) {
+        //     printf("suivantInner2 %s  --->   %s\n", phraseActuelle->text, phraseActuelle->suivantInner2->text);
+        // }
+        // printf("\n");
 
-                    // printf("main phrase: '%s', %d\n", function->nom, phraseActuelle->interpreterInnerIndex);
-                    if (phraseActuelle->interpreterInnerIndex < phraseActuelle->innerPhraseLen) {
-                        phraseActuelle->interpreterInnerIndex++;
-                        // printf("'%s' %d %d %d, %d\n", phraseActuelle->text, phraseActuelle->phraseId, phraseActuelle->interpreterInnerIndex, phraseActuelle->innerPhraseLen, (int)phraseActuelle->constant);
-                        phraseActuelle = phraseActuelle->innerPhrase[phraseActuelle->interpreterInnerIndex - 1];
-                    } else {
-                        phraseActuelle->interpreterArgsIndex = 0;
-                        phraseActuelle = phraseActuelle->parentPhrase;
-                    }
-                    break;
-                }
-
-                case APPEL_VALEUR_FONCTION:
-                case EXECUTION_FONCTION:
-                case APPEL_VALEUR_FONCTION_ARGUMENT:
-                case EXECUTION_FONCTION_ARGUMENT: {
-                    function_t* new_func = copy_function(phraseActuelle->function);
-                    new_func->ast->phraseId = 0;
-
-                    if (phraseActuelle->phraseId == APPEL_VALEUR_FONCTION_ARGUMENT || phraseActuelle->phraseId == EXECUTION_FONCTION_ARGUMENT) {
-                        if (phraseActuelle->argsLen != new_func->function_arg_count) {
-                            custom_error("Le nombre d'arguments données ne correspond pas ou nombre d'arguments voulus", phraseActuelle);
-                        }
-                        for (int i = 0; i < phraseActuelle->argsLen; i++) {
-                            copy_val(new_func->env->variable_list[i]->valeur,
-                                     phraseActuelle->args[i]->valeur, true, true);
-                        }
-                    }
-
-                    if (phraseActuelle->phraseId == EXECUTION_FONCTION_ARGUMENT || phraseActuelle->phraseId == EXECUTION_FONCTION) {
-                        if (phraseActuelle->argsLen != new_func->function_arg_count) {
-                            custom_error("Le nombre d'arguments données ne correspond pas ou nombre d'arguments voulus", phraseActuelle);
-                        }
-                        interpreter(new_func, functions, NULL, layer + 1);
-                    } else {
-                        if (phraseActuelle->argsLen != new_func->function_arg_count) {
-                            custom_error("Le nombre d'arguments données ne correspond pas ou nombre d'arguments voulus", phraseActuelle);
-                        }
-                        interpreter(new_func, functions, phraseActuelle->valeur, layer + 1);
-                    }
-
-                    free_function_t(new_func);
-
-                    phraseActuelle->interpreterArgsIndex = 0;
-                    phraseActuelle = phraseActuelle->parentPhrase;
-                    break;
-                }
-
-                case RENVOI_FONCTION: {
-                    if (result != NULL) {
-                        copy_val(result, phraseActuelle->args[0]->valeur, true, true);
-                    }
-                    return;
-                    break;
-                }
-
-                case AFFICHER_EXPR:
-                case AFFICHER_EXPR_NO_RETURN: {
-                    for (int i = 0; i < phraseActuelle->argsLen - 1; i++) {
-                        print_val(phraseActuelle->args[i]->valeur, false, phraseActuelle);
-                        printf(" ");
-                    }
-                    print_val(phraseActuelle->args[phraseActuelle->argsLen - 1]->valeur, phraseActuelle->phraseId == AFFICHER_EXPR, phraseActuelle);
-                    phraseActuelle->interpreterArgsIndex = 0;
-                    phraseActuelle = phraseActuelle->parentPhrase;
-                    break;
-                }
-                case TAILLE: {
-                    taille(phraseActuelle);
-                    phraseActuelle->interpreterArgsIndex = 0;
-                    phraseActuelle = phraseActuelle->parentPhrase;
-                    break;
-                }
-
-                // variable ------------------------------------------------------
-                case MODIFICATION_VARIABLE:
-                case DEFINITION_VARIABLE_AVEC_INIT: {
-                    copy_val(phraseActuelle->variable->valeur, phraseActuelle->args[0]->valeur, true, true);
-                    phraseActuelle->interpreterArgsIndex = 0;
-                    phraseActuelle = phraseActuelle->parentPhrase;
-                    break;
-                }
-
-                case ACCESSION_VARIABLE: {
-                    if (phraseActuelle->valeur->type == LISTE) {
-                        phraseActuelle->valeur->type = phraseActuelle->variable->valeur->type;
-                        phraseActuelle->valeur->liste = phraseActuelle->variable->valeur->liste;
-                    } else {
-                        copy_val(phraseActuelle->valeur, phraseActuelle->variable->valeur, true, false);
-                    }
-                    phraseActuelle->interpreterArgsIndex = 0;
-                    phraseActuelle = phraseActuelle->parentPhrase;
-                    break;
-                }
-
-                    // opérateurs ---------------------------------------------------
-                case SOMME: {
-                    somme(phraseActuelle, false);
-                    phraseActuelle->interpreterArgsIndex = 0;
-                    phraseActuelle = phraseActuelle->parentPhrase;
-                    break;
-                }
-                case DIFFERENCE: {
-                    difference(phraseActuelle, false);
-                    phraseActuelle->interpreterArgsIndex = 0;
-                    phraseActuelle = phraseActuelle->parentPhrase;
-                    break;
-                }
-                case PRODUIT: {
-                    produit(phraseActuelle, false);
-                    phraseActuelle->interpreterArgsIndex = 0;
-                    phraseActuelle = phraseActuelle->parentPhrase;
-                    break;
-                }
-                case QUOTIENT: {
-                    quotient(phraseActuelle, false);
-                    phraseActuelle->interpreterArgsIndex = 0;
-                    phraseActuelle = phraseActuelle->parentPhrase;
-                    break;
-                }
-                case QUOTIENT_ENTIER: {
-                    quotient_entier(phraseActuelle, false);
-                    phraseActuelle->interpreterArgsIndex = 0;
-                    phraseActuelle = phraseActuelle->parentPhrase;
-                    break;
-                }
-                case RESTE: {
-                    reste(phraseActuelle, false);
-                    phraseActuelle->interpreterArgsIndex = 0;
-                    phraseActuelle = phraseActuelle->parentPhrase;
-                    break;
-                }
-                case NEGATION_BOOLEENNE: {
-                    negation_booleenne(phraseActuelle, false);
-                    phraseActuelle->interpreterArgsIndex = 0;
-                    phraseActuelle = phraseActuelle->parentPhrase;
-                    break;
-                }
-                    // comparateurs ----------------------------------------------------------
-                case EGALITE: {
-                    egalite(phraseActuelle, false);
-                    phraseActuelle->interpreterArgsIndex = 0;
-                    phraseActuelle = phraseActuelle->parentPhrase;
-                    break;
-                }
-                case INEGALITE: {
-                    inegalite(phraseActuelle, false);
-                    phraseActuelle->interpreterArgsIndex = 0;
-                    phraseActuelle = phraseActuelle->parentPhrase;
-                    break;
-                }
-                case PLUS_GRAND: {
-                    plus_grand(phraseActuelle, false);
-                    phraseActuelle->interpreterArgsIndex = 0;
-                    phraseActuelle = phraseActuelle->parentPhrase;
-                    break;
-                }
-                case STRICT_PLUS_GRAND: {
-                    strict_plus_grand(phraseActuelle, false);
-                    phraseActuelle->interpreterArgsIndex = 0;
-                    phraseActuelle = phraseActuelle->parentPhrase;
-                    break;
-                }
-                case PLUS_PETIT: {
-                    plus_petit(phraseActuelle, false);
-                    phraseActuelle->interpreterArgsIndex = 0;
-                    phraseActuelle = phraseActuelle->parentPhrase;
-                    break;
-                }
-                case STRICT_PLUS_PETIT: {
-                    strict_plus_petit(phraseActuelle, false);
-                    phraseActuelle->interpreterArgsIndex = 0;
-                    phraseActuelle = phraseActuelle->parentPhrase;
-                    break;
-                }
-
-                // liste -----------------------------------------------------------------
-                case EXPR_LISTE: {
-                    if (phraseActuelle->variable->valeur->type != LISTE) {
-                        custom_error("La variable n'est pas une liste", phraseActuelle);
-                    }
-                    phraseActuelle->valeur->type = phraseActuelle->variable->valeur->type;
-                    phraseActuelle->valeur->liste = phraseActuelle->variable->valeur->liste;
-                    phraseActuelle->interpreterArgsIndex = 0;
-                    phraseActuelle = phraseActuelle->parentPhrase;
-                    break;
-                }
-
-                case EXPR_LISTE_VIDE: {
-                    vider_liste(phraseActuelle->valeur->liste);
-                    phraseActuelle->interpreterArgsIndex = 0;
-                    phraseActuelle = phraseActuelle->parentPhrase;
-                    break;
-                }
-
-                case EXPR_LISTE_ELEM: {
-                    if (phraseActuelle->valeur->to_free_list) {
-                        vider_liste(phraseActuelle->valeur->liste);
-                    }
-                    if (phraseActuelle->valeur->type != LISTE) {
-                        phraseActuelle->valeur->type = LISTE;
-                        phraseActuelle->valeur->liste = new_liste_t();
-                    }
-
-                    phraseActuelle->valeur->to_free_list = true;
-                    for (int i = 0; i < phraseActuelle->argsLen; i++) {
-                        ajout(phraseActuelle->valeur->liste, phraseActuelle->args[i]->valeur);
-                    }
-                    phraseActuelle->interpreterArgsIndex = 0;
-                    phraseActuelle = phraseActuelle->parentPhrase;
-                    break;
-                }
-
-                case ACCESSION_LISTE: {
-                    if (phraseActuelle->args[0]->valeur == NULL || phraseActuelle->args[0]->valeur->type != LISTE) {
-                        custom_error("La variable n'est pas une liste", phraseActuelle);
-                    }
-                    copy_val(phraseActuelle->valeur, accession(phraseActuelle->args[0]->valeur->liste, get_int(phraseActuelle->args[1]->valeur, phraseActuelle), phraseActuelle), true, true);
-                    phraseActuelle->interpreterArgsIndex = 0;
-                    phraseActuelle = phraseActuelle->parentPhrase;
-                    break;
-                }
-                case MODIFICATION_LISTE: {
-                    if (phraseActuelle->args[0]->valeur == NULL || phraseActuelle->args[0]->valeur->type != LISTE) {
-                        custom_error("La variable n'est pas une liste", phraseActuelle);
-                    }
-                    modification(phraseActuelle->args[0]->valeur->liste, get_int(phraseActuelle->args[1]->valeur, phraseActuelle), phraseActuelle->args[2]->valeur, phraseActuelle);
-                    phraseActuelle->interpreterArgsIndex = 0;
-                    phraseActuelle = phraseActuelle->parentPhrase;
-                    break;
-                }
-                case AJOUT_LISTE: {
-                    if (phraseActuelle->args[0]->valeur == NULL || phraseActuelle->args[0]->valeur->type != LISTE) {
-                        custom_error("La variable n'est pas une liste", phraseActuelle);
-                    }
-                    ajout(phraseActuelle->args[0]->valeur->liste, phraseActuelle->args[1]->valeur);
-                    phraseActuelle->interpreterArgsIndex = 0;
-                    phraseActuelle = phraseActuelle->parentPhrase;
-                    break;
-                }
-                case SUPPRESSION_LISTE: {
-                    if (phraseActuelle->args[0]->valeur == NULL || phraseActuelle->args[0]->valeur->type != LISTE) {
-                        custom_error("La variable n'est pas une liste", phraseActuelle);
-                    }
-                    suppression(phraseActuelle->args[0]->valeur->liste, get_int(phraseActuelle->args[1]->valeur, phraseActuelle), phraseActuelle);
-                    phraseActuelle->interpreterArgsIndex = 0;
-                    phraseActuelle = phraseActuelle->parentPhrase;
-                    break;
-                }
-                case INSERTION_LISTE: {
-                    if (phraseActuelle->args[1]->valeur == NULL || phraseActuelle->args[1]->valeur->type != LISTE) {
-                        custom_error("La variable n'est pas une liste", phraseActuelle);
-                    }
-                    inserer(phraseActuelle->args[1]->valeur->liste, get_int(phraseActuelle->args[2]->valeur, phraseActuelle), phraseActuelle->args[0]->valeur, phraseActuelle);
-                    phraseActuelle->interpreterArgsIndex = 0;
-                    phraseActuelle = phraseActuelle->parentPhrase;
-                    break;
-                }
-
-                case SI_ALORS: {
-                    if (phraseActuelle->interpreterInnerIndex == -1) {
-                        phraseActuelle->interpreterInnerIndex = 0;
-                    }
-
-                    if (get_bool(phraseActuelle->args[0]->valeur, phraseActuelle)) {
-                        if (phraseActuelle->interpreterInnerIndex < phraseActuelle->innerPhraseLen) {
-                            phraseActuelle->interpreterInnerIndex++;
-                            phraseActuelle = phraseActuelle->innerPhrase[phraseActuelle->interpreterInnerIndex - 1];
-                        } else {
-                            phraseActuelle->interpreterInnerIndex = 0;
-                            phraseActuelle->interpreterArgsIndex = 0;
-                            phraseActuelle = phraseActuelle->parentPhrase;
-                        }
-                    } else {
-                        phraseActuelle->interpreterInnerIndex = -1;
-                        phraseActuelle->interpreterArgsIndex = 0;
-                        phraseActuelle = phraseActuelle->parentPhrase;
-                    }
-                    break;
-                }
-
-                case SI_ALORS_SINON: {
-                    if (phraseActuelle->interpreterInnerIndex == -1) {
-                        phraseActuelle->interpreterInnerIndex = 0;
-                    }
-                    if (get_bool(phraseActuelle->args[0]->valeur, phraseActuelle)) {
-                        if (phraseActuelle->interpreterInnerIndex <= phraseActuelle->innerSeparator) {
-                            phraseActuelle->interpreterInnerIndex++;
-                            phraseActuelle = phraseActuelle->innerPhrase[phraseActuelle->interpreterInnerIndex - 1];
-                        } else {
-                            phraseActuelle->interpreterInnerIndex = -1;
-                            phraseActuelle->interpreterArgsIndex = 0;
-                            phraseActuelle = phraseActuelle->parentPhrase;
-                        }
-
-                    } else {
-                        if (phraseActuelle->interpreterInnerIndex == 0) {
-                            phraseActuelle->interpreterInnerIndex = phraseActuelle->innerSeparator + 1;
-                        }
-                        if (phraseActuelle->interpreterInnerIndex < phraseActuelle->innerPhraseLen) {
-                            phraseActuelle->interpreterInnerIndex++;
-                            phraseActuelle = phraseActuelle->innerPhrase[phraseActuelle->interpreterInnerIndex - 1];
-                        } else {
-                            phraseActuelle->interpreterInnerIndex = -1;
-                            phraseActuelle->interpreterArgsIndex = 0;
-                            phraseActuelle = phraseActuelle->parentPhrase;
-                        }
-                    }
-
-                    break;
-                }
-
-                case TANT_QUE: {
-                    if (phraseActuelle->interpreterInnerIndex == -1) {
-                        phraseActuelle->interpreterInnerIndex = 0;
-                    }
-
-                    if (get_bool(phraseActuelle->args[0]->valeur, phraseActuelle)) {
-                        if (phraseActuelle->interpreterInnerIndex < phraseActuelle->innerPhraseLen) {
-                            phraseActuelle->interpreterInnerIndex++;
-                            phraseActuelle = phraseActuelle->innerPhrase[phraseActuelle->interpreterInnerIndex - 1];
-                        } else {
-                            phraseActuelle->interpreterArgsIndex = 0;
-                            phraseActuelle->interpreterInnerIndex = -1;
-                        }
-                    } else {
-                        phraseActuelle->interpreterInnerIndex = -1;
-                        phraseActuelle->interpreterArgsIndex = 0;
-                        phraseActuelle = phraseActuelle->parentPhrase;
-                    }
-                    break;
-                }
-
-                case POUR_AVEC_PAS:
-                case POUR_SANS_PAS: {
-                    if (phraseActuelle->interpreterInnerIndex == -1) {
-                        phraseActuelle->interpreterInnerIndex = 0;
-                        copy_val(phraseActuelle->variable->valeur, phraseActuelle->args[0]->valeur, true, true);
-                    }
-
-                    if (get_as_float(phraseActuelle->variable->valeur, phraseActuelle) < get_as_float(phraseActuelle->args[1]->valeur, phraseActuelle)) {
-                        if (phraseActuelle->interpreterInnerIndex < phraseActuelle->innerPhraseLen) {
-                            phraseActuelle->interpreterInnerIndex++;
-                            phraseActuelle = phraseActuelle->innerPhrase[phraseActuelle->interpreterInnerIndex - 1];
-                        } else {
-                            phraseActuelle->interpreterInnerIndex = 0;
-
-                            if (phraseActuelle->phraseId == POUR_AVEC_PAS) {
-                                if (phraseActuelle->variable->valeur->type == FLOAT || phraseActuelle->args[2]->valeur->type == FLOAT) {
-                                    set_float(phraseActuelle->variable->valeur, get_as_float(phraseActuelle->variable->valeur, phraseActuelle) + get_as_float(phraseActuelle->args[2]->valeur, phraseActuelle));
-                                } else {
-                                    set_int(phraseActuelle->variable->valeur, get_as_int(phraseActuelle->variable->valeur, phraseActuelle) + get_as_int(phraseActuelle->args[2]->valeur, phraseActuelle));
-                                }
-                            } else {
-                                if (phraseActuelle->variable->valeur->type == FLOAT) {
-                                    set_float(phraseActuelle->variable->valeur, get_as_float(phraseActuelle->variable->valeur, phraseActuelle) + 1);
-                                } else {
-                                    set_int(phraseActuelle->variable->valeur, get_as_int(phraseActuelle->variable->valeur, phraseActuelle) + 1);
-                                }
-                            }
-                        }
-                    } else {
-                        phraseActuelle->interpreterInnerIndex = -1;
-                        phraseActuelle->interpreterArgsIndex = 0;
-                        phraseActuelle = phraseActuelle->parentPhrase;
-                    }
-
-                    break;
-                }
-
-                case QUITTER_BOUCLE: {
-                    phraseActuelle->interpreterInnerIndex = -1;
-                    phraseActuelle->interpreterArgsIndex = 0;
-                    // réinitialise la boucle
-                    phraseActuelle = phraseActuelle->innerPhrase[0];
-                    phraseActuelle->interpreterInnerIndex = -1;
-                    phraseActuelle->interpreterArgsIndex = 0;
-                    // continue dans le programme
-                    phraseActuelle = phraseActuelle->parentPhrase;
-                    break;
-                }
-
-                case TYPE_EXPR: {
-                    phraseActuelle->valeur->chaine = new_chaine_t(str_type(phraseActuelle->args[0]->valeur));
-
-                    phraseActuelle = phraseActuelle->parentPhrase;
-                    break;
-                }
-                case ET: {
-                    et_booleen(phraseActuelle, false);
-                    phraseActuelle->interpreterArgsIndex = 0;
-                    phraseActuelle = phraseActuelle->parentPhrase;
-                    break;
-                }
-                case OU: {
-                    ou_booleen(phraseActuelle, false);
-                    phraseActuelle->interpreterArgsIndex = 0;
-                    phraseActuelle = phraseActuelle->parentPhrase;
-                    break;
-                }
-                case EXPR_RIEN: {
-                    set_undefined(phraseActuelle->valeur);
-                    phraseActuelle->interpreterArgsIndex = 0;
-                    phraseActuelle = phraseActuelle->parentPhrase;
-                    break;
-                }
-                case DEFINIR_SEED: {
-                    srand(get_as_int(phraseActuelle->args[0]->valeur, phraseActuelle));
-                    phraseActuelle->interpreterArgsIndex = 0;
-                    phraseActuelle = phraseActuelle->parentPhrase;
-                    break;
-                }
-                case NOMBRE_ALEATOIRE: {
-                    set_float(phraseActuelle->valeur, ((float)rand()/(float)2147483647));
-                    phraseActuelle->interpreterArgsIndex = 0;
-                    phraseActuelle = phraseActuelle->parentPhrase;
-                    break;
-                }
-                default:
-                    printf("erreur: %d, %d\n", phraseActuelle->phraseId, phraseActuelle->constant);
-                    custom_error("erreur d'interprétation", phraseActuelle);
-                    break;
+        // printf("'%s' %d %d %d\n", phraseActuelle->text, phraseActuelle->phraseId, phraseActuelle->interpreterInnerIndex, (int)phraseActuelle->constant);
+        switch (phraseActuelle->phraseId) {
+            case DEFINITION_FONCTION_ARGUMENT:
+            case DEFINITION_FONCTION: {
+                phraseActuelle = phraseActuelle->suivant;
+                break;
             }
+            case MAIN_PHRASE: {
+                // printf("main\n");
+                phraseActuelle = phraseActuelle->suivantInner1;
+                // printf("%s\n", phraseActuelle->text);
+                break;
+            }
+
+            case APPEL_VALEUR_FONCTION:
+            case EXECUTION_FONCTION:
+            case APPEL_VALEUR_FONCTION_ARGUMENT:
+            case EXECUTION_FONCTION_ARGUMENT: {
+                function_t* new_func = malloc(sizeof(function_t));
+                new_func->nom = phraseActuelle->function->nom;
+                new_func->ast = phraseActuelle->function->ast;
+                new_func->function_arg_count = phraseActuelle->function->function_arg_count;
+                new_func->env = copy_environnement(phraseActuelle->function->env);
+                new_func->ast->phraseId = 0;
+
+                if (phraseActuelle->phraseId == APPEL_VALEUR_FONCTION_ARGUMENT || phraseActuelle->phraseId == EXECUTION_FONCTION_ARGUMENT) {
+                    if (phraseActuelle->argsLen != new_func->function_arg_count) {
+                        custom_error("Le nombre d'arguments données ne correspond pas ou nombre d'arguments voulus", phraseActuelle, env);
+                    }
+                    for (int i = 0; i < phraseActuelle->argsLen; i++) {
+                        copy_val(new_func->env->variable_list[i]->valeur,
+                                 getValeur(env, phraseActuelle->args[i]->uniqueId), true, true);
+                    }
+                }
+
+                if (phraseActuelle->phraseId == EXECUTION_FONCTION_ARGUMENT || phraseActuelle->phraseId == EXECUTION_FONCTION) {
+                    if (phraseActuelle->argsLen != new_func->function_arg_count) {
+                        custom_error("Le nombre d'arguments données ne correspond pas ou nombre d'arguments voulus", phraseActuelle, env);
+                    }
+                    interpreter(new_func, functions, NULL, layer + 1);
+                } else {
+                    if (phraseActuelle->argsLen != new_func->function_arg_count) {
+                        custom_error("Le nombre d'arguments données ne correspond pas ou nombre d'arguments voulus", phraseActuelle, env);
+                    }
+                    interpreter(new_func, functions, getValeur(env, phraseActuelle->uniqueId), layer + 1);
+                }
+
+                free_environnement(new_func->env);
+                free(new_func);
+
+                phraseActuelle = phraseActuelle->suivant;
+                break;
+            }
+
+            case RENVOI_FONCTION: {
+                if (result != NULL) {
+                    copy_val(result, getValeur(env, phraseActuelle->args[0]->uniqueId), true, true);
+                }
+                return;
+                break;
+            }
+
+            case AFFICHER_EXPR:
+            case AFFICHER_EXPR_NO_RETURN: {
+                for (int i = 0; i < phraseActuelle->argsLen - 1; i++) {
+                    print_val(getValeur(env, phraseActuelle->args[i]->uniqueId), false, phraseActuelle, env);
+                    printf(" ");
+                }
+                print_val(getValeur(env, phraseActuelle->args[phraseActuelle->argsLen - 1]->uniqueId), phraseActuelle->phraseId == AFFICHER_EXPR, phraseActuelle, env);
+
+                phraseActuelle = phraseActuelle->suivant;
+                break;
+            }
+            case TAILLE: {
+                taille(phraseActuelle, env);
+
+                phraseActuelle = phraseActuelle->suivant;
+                break;
+            }
+
+            // variable ------------------------------------------------------
+            case MODIFICATION_VARIABLE:
+            case DEFINITION_VARIABLE_AVEC_INIT: {
+                // printf("modif variable %s\n", phraseActuelle->text);
+                copy_val(getVariable(env, phraseActuelle->variableId)->valeur, getValeur(env, phraseActuelle->args[0]->uniqueId), true, true);
+
+                phraseActuelle = phraseActuelle->suivant;
+                break;
+            }
+
+            case ACCESSION_VARIABLE: {
+                if (getVariable(env, phraseActuelle->variableId)->valeur->type == LISTE) {
+                    // printf("accession liste\n");
+                    getValeur(env, phraseActuelle->uniqueId)->type = getVariable(env, phraseActuelle->variableId)->valeur->type;
+                    getValeur(env, phraseActuelle->uniqueId)->liste = getVariable(env, phraseActuelle->variableId)->valeur->liste;
+                    getValeur(env, phraseActuelle->uniqueId)->to_free_list = false;
+                } else {
+                    copy_val(getValeur(env, phraseActuelle->uniqueId), getVariable(env, phraseActuelle->variableId)->valeur, true, true);
+                }
+
+                phraseActuelle = phraseActuelle->suivant;
+                break;
+            }
+
+                // opérateurs ---------------------------------------------------
+            case SOMME: {
+                somme(phraseActuelle, env);
+
+                phraseActuelle = phraseActuelle->suivant;
+                break;
+            }
+            case DIFFERENCE: {
+                difference(phraseActuelle, env);
+
+                phraseActuelle = phraseActuelle->suivant;
+                break;
+            }
+            case PRODUIT: {
+                produit(phraseActuelle, env);
+
+                phraseActuelle = phraseActuelle->suivant;
+                break;
+            }
+            case QUOTIENT: {
+                quotient(phraseActuelle, env);
+
+                phraseActuelle = phraseActuelle->suivant;
+                break;
+            }
+            case QUOTIENT_ENTIER: {
+                quotient_entier(phraseActuelle, env);
+
+                phraseActuelle = phraseActuelle->suivant;
+                break;
+            }
+            case RESTE: {
+                reste(phraseActuelle, env);
+
+                phraseActuelle = phraseActuelle->suivant;
+                break;
+            }
+            case NEGATION_BOOLEENNE: {
+                negation_booleenne(phraseActuelle, env);
+
+                phraseActuelle = phraseActuelle->suivant;
+                break;
+            }
+                // comparateurs ----------------------------------------------------------
+            case EGALITE: {
+                egalite(phraseActuelle, env);
+
+                phraseActuelle = phraseActuelle->suivant;
+                break;
+            }
+            case INEGALITE: {
+                inegalite(phraseActuelle, env);
+
+                phraseActuelle = phraseActuelle->suivant;
+                break;
+            }
+            case PLUS_GRAND: {
+                plus_grand(phraseActuelle, env);
+
+                phraseActuelle = phraseActuelle->suivant;
+                break;
+            }
+            case STRICT_PLUS_GRAND: {
+                strict_plus_grand(phraseActuelle, env);
+
+                phraseActuelle = phraseActuelle->suivant;
+                break;
+            }
+            case PLUS_PETIT: {
+                plus_petit(phraseActuelle, env);
+
+                phraseActuelle = phraseActuelle->suivant;
+                break;
+            }
+            case STRICT_PLUS_PETIT: {
+                strict_plus_petit(phraseActuelle, env);
+                phraseActuelle = phraseActuelle->suivant;
+                break;
+            }
+
+            // liste -----------------------------------------------------------------
+            case EXPR_LISTE: {
+                if (getVariable(env, phraseActuelle->variableId)->valeur->type != LISTE) {
+                    custom_error("La variable n'est pas une liste", phraseActuelle, env);
+                }
+
+                // copy_val(getValeur(env, phraseActuelle->uniqueId), getVariable(env,phraseActuelle->variableId)->valeur,true,true);
+                getValeur(env, phraseActuelle->uniqueId)->type = getVariable(env, phraseActuelle->variableId)->valeur->type;
+                getValeur(env, phraseActuelle->uniqueId)->liste = getVariable(env, phraseActuelle->variableId)->valeur->liste;
+                getValeur(env, phraseActuelle->uniqueId)->to_free_list = false;
+
+                phraseActuelle = phraseActuelle->suivant;
+                break;
+            }
+
+            case EXPR_LISTE_VIDE: {
+                vider_liste(getValeur(env, phraseActuelle->uniqueId)->liste);
+
+                phraseActuelle = phraseActuelle->suivant;
+                break;
+            }
+
+            case EXPR_LISTE_ELEM: {
+                if (getValeur(env, phraseActuelle->uniqueId)->to_free_list) {
+                    vider_liste(getValeur(env, phraseActuelle->uniqueId)->liste);
+                }
+                if (getValeur(env, phraseActuelle->uniqueId)->type != LISTE) {
+                    getValeur(env, phraseActuelle->uniqueId)->type = LISTE;
+                    getValeur(env, phraseActuelle->uniqueId)->liste = new_liste_t();
+                }
+
+                getValeur(env, phraseActuelle->uniqueId)->to_free_list = true;
+                for (int i = 0; i < phraseActuelle->argsLen; i++) {
+                    ajout(getValeur(env, phraseActuelle->uniqueId)->liste, getValeur(env, phraseActuelle->args[i]->uniqueId));
+                }
+
+                phraseActuelle = phraseActuelle->suivant;
+                break;
+            }
+
+            case ACCESSION_LISTE: {
+                if (getValeur(env, phraseActuelle->args[0]->uniqueId) == NULL || getValeur(env, phraseActuelle->args[0]->uniqueId)->type != LISTE) {
+                    custom_error("La variable n'est pas une liste", phraseActuelle, env);
+                }
+                copy_val(getValeur(env, phraseActuelle->uniqueId), accession(getValeur(env, phraseActuelle->args[0]->uniqueId)->liste, get_int(getValeur(env, phraseActuelle->args[1]->uniqueId), phraseActuelle, env), phraseActuelle, env), true, true);
+
+                phraseActuelle = phraseActuelle->suivant;
+                break;
+            }
+            case MODIFICATION_LISTE: {
+                if (getValeur(env, phraseActuelle->args[0]->uniqueId) == NULL || getValeur(env, phraseActuelle->args[0]->uniqueId)->type != LISTE) {
+                    custom_error("La variable n'est pas une liste", phraseActuelle, env);
+                }
+                modification(getValeur(env, phraseActuelle->args[0]->uniqueId)->liste, get_int(getValeur(env, phraseActuelle->args[1]->uniqueId), phraseActuelle, env), getValeur(env, phraseActuelle->args[2]->uniqueId), phraseActuelle, env);
+
+                phraseActuelle = phraseActuelle->suivant;
+                break;
+            }
+            case AJOUT_LISTE: {
+                if (getValeur(env, phraseActuelle->args[0]->uniqueId) == NULL || getValeur(env, phraseActuelle->args[0]->uniqueId)->type != LISTE) {
+                    custom_error("La variable n'est pas une liste", phraseActuelle, env);
+                }
+                ajout(getValeur(env, phraseActuelle->args[0]->uniqueId)->liste, getValeur(env, phraseActuelle->args[1]->uniqueId));
+
+                phraseActuelle = phraseActuelle->suivant;
+                break;
+            }
+            case SUPPRESSION_LISTE: {
+                if (getValeur(env, phraseActuelle->args[0]->uniqueId) == NULL || getValeur(env, phraseActuelle->args[0]->uniqueId)->type != LISTE) {
+                    custom_error("La variable n'est pas une liste", phraseActuelle, env);
+                }
+                suppression(getValeur(env, phraseActuelle->args[0]->uniqueId)->liste, get_int(getValeur(env, phraseActuelle->args[1]->uniqueId), phraseActuelle, env), phraseActuelle, env);
+
+                phraseActuelle = phraseActuelle->suivant;
+                break;
+            }
+            case INSERTION_LISTE: {
+                if (getValeur(env, phraseActuelle->args[1]->uniqueId) == NULL || getValeur(env, phraseActuelle->args[1]->uniqueId)->type != LISTE) {
+                    custom_error("La variable n'est pas une liste", phraseActuelle, env);
+                }
+                inserer(getValeur(env, phraseActuelle->args[1]->uniqueId)->liste, get_int(getValeur(env, phraseActuelle->args[2]->uniqueId), phraseActuelle, env), getValeur(env, phraseActuelle->args[0]->uniqueId), phraseActuelle, env);
+
+                phraseActuelle = phraseActuelle->suivant;
+                break;
+            }
+            case SI_ALORS: {
+                if (get_bool(getValeur(env, phraseActuelle->args[0]->uniqueId), phraseActuelle, env)) {
+                    phraseActuelle = phraseActuelle->suivantInner1;
+                } else {
+                    phraseActuelle = phraseActuelle->suivant;
+                }
+                break;
+            }
+
+            case SI_ALORS_SINON: {
+                if (get_bool(getValeur(env, phraseActuelle->args[0]->uniqueId), phraseActuelle, env)) {
+                    phraseActuelle = phraseActuelle->suivantInner1;
+                } else {
+                    phraseActuelle = phraseActuelle->suivantInner2;
+                }
+
+                break;
+            }
+
+            case TANT_QUE: {
+                if (get_bool(getValeur(env, phraseActuelle->args[0]->uniqueId), phraseActuelle, env)) {
+                    phraseActuelle = phraseActuelle->suivantInner1;
+                } else {
+                    phraseActuelle = phraseActuelle->suivant;
+                }
+                break;
+            }
+
+            case POUR_AVEC_PAS:
+            case POUR_SANS_PAS: {
+                if (getVariable(env, phraseActuelle->variableId)->valeur->type == UNDEFINED) {  //  initialisation de l’itérateur
+                    copy_val(getVariable(env, phraseActuelle->variableId)->valeur, getValeur(env, phraseActuelle->args[0]->uniqueId), true, true);
+                } else {  // incrémentation de l'itérateur
+                    if (phraseActuelle->phraseId == POUR_AVEC_PAS) {
+                        if (getVariable(env, phraseActuelle->variableId)->valeur->type == FLOAT || getValeur(env, phraseActuelle->args[2]->uniqueId)->type == FLOAT) {
+                            set_float(getVariable(env, phraseActuelle->variableId)->valeur, get_as_float(getVariable(env, phraseActuelle->variableId)->valeur, phraseActuelle, env) + get_as_float(getValeur(env, phraseActuelle->args[2]->uniqueId), phraseActuelle, env));
+                        } else {
+                            set_int(getVariable(env, phraseActuelle->variableId)->valeur, get_as_int(getVariable(env, phraseActuelle->variableId)->valeur, phraseActuelle, env) + get_as_int(getValeur(env, phraseActuelle->args[2]->uniqueId), phraseActuelle, env));
+                        }
+                    } else {
+                        if (getVariable(env, phraseActuelle->variableId)->valeur->type == FLOAT) {
+                            set_float(getVariable(env, phraseActuelle->variableId)->valeur, get_as_float(getVariable(env, phraseActuelle->variableId)->valeur, phraseActuelle, env) + 1);
+                        } else {
+                            set_int(getVariable(env, phraseActuelle->variableId)->valeur, get_as_int(getVariable(env, phraseActuelle->variableId)->valeur, phraseActuelle, env) + 1);
+                        }
+                    }
+                }
+
+                if (get_as_float(getVariable(env, phraseActuelle->variableId)->valeur, phraseActuelle, env) < get_as_float(getValeur(env, phraseActuelle->args[1]->uniqueId), phraseActuelle, env)) {
+                    phraseActuelle = phraseActuelle->suivantInner1;
+                } else {
+                    getVariable(env, phraseActuelle->variableId)->valeur->type = UNDEFINED;
+                    phraseActuelle = phraseActuelle->suivant;
+                }
+                break;
+            }
+
+            case QUITTER_BOUCLE: {
+                // réinitialise l'itérateur de la boucle pour
+                if (phraseActuelle->suivant->phraseId == POUR_AVEC_PAS || phraseActuelle->suivant->phraseId == POUR_SANS_PAS) {
+                    getVariable(env, phraseActuelle->suivant->variableId)->valeur->type = UNDEFINED;
+                }
+
+                phraseActuelle = phraseActuelle->suivant->suivant;
+                break;
+            }
+
+            case TYPE_EXPR: {
+                getValeur(env, phraseActuelle->uniqueId)->chaine = new_chaine_t(str_type(getValeur(env, phraseActuelle->args[0]->uniqueId)));
+
+                phraseActuelle = phraseActuelle->suivant;
+                break;
+            }
+            case ET: {
+                et_booleen(phraseActuelle, env);
+
+                phraseActuelle = phraseActuelle->suivant;
+                break;
+            }
+            case OU: {
+                ou_booleen(phraseActuelle, env);
+
+                phraseActuelle = phraseActuelle->suivant;
+                break;
+            }
+            case EXPR_RIEN: {
+                set_undefined(getValeur(env, phraseActuelle->uniqueId));
+
+                phraseActuelle = phraseActuelle->suivant;
+                break;
+            }
+            default:
+                printf("erreur: %d, %d\n", phraseActuelle->phraseId, phraseActuelle->constant);
+                custom_error("erreur d'interprétation", phraseActuelle, env);
+                break;
         }
     }
 }

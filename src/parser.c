@@ -22,13 +22,17 @@ phrase_t* parse_file(FILE* f) {
     addToText(mainPhrase, '\0');
 
     phrase_t* phraseActuelle = mainPhrase;
+    phrase_t* Prec = NULL;
+    phrase_t* Inst1 = NULL;
+    phrase_t* Inst2 = phraseActuelle;
+
     char buffer = '.';
     int line = 0;
 
     bool in_string = false;
     int in_comment = 0;
-
     char c = '\0';
+    char prec_c;
     while (fscanf(f, "%c", &c) != EOF) {
         if (in_string) {
             if (c == '"') {
@@ -36,19 +40,27 @@ phrase_t* parse_file(FILE* f) {
             }
             // ajoute le caractère au texte
             addToText(phraseActuelle, c);
-        }else if (in_comment){
-            if (c == ')'){
+        } else if (in_comment) {
+            if (c == ')') {
                 in_comment -= 1;
-                buffer = ')';
             }
-            if (c == '('){
+            if (c == '(') {
                 in_comment += 1;
             }
         } else if (is_uppercase(c)) {
             if (phraseActuelle->textLen > 0 && phraseActuelle->text[phraseActuelle->textLen - 1] != '*') {
                 addToText(phraseActuelle, '*');
             }
-            addToArg(phraseActuelle, new_phrase(phraseActuelle));
+            phrase_t* n = new_phrase(phraseActuelle);
+            addToArg(phraseActuelle, n);
+
+            n->suivant = Prec;
+            if (buffer == '.' || buffer == ':') {
+                Inst1 = Inst2;
+                Inst2 = n;
+                // printf("switch  char: '%c' inst1:%s\n",c, Inst1->text);
+            }
+            Prec = n;
 
             phraseActuelle = phraseActuelle->args[phraseActuelle->argsLen - 1];
             addToText(phraseActuelle, c);
@@ -65,12 +77,14 @@ phrase_t* parse_file(FILE* f) {
                     phraseActuelle->inst = true;
                     phraseActuelle->expr = false;
 
+                    Inst1->suivant = Prec;
+
                     phraseActuelle = phraseActuelle->parentPhrase;
 
                     if (phraseActuelle == NULL) {
-                        char* err_mess = malloc(100*sizeof(char));
-                        sprintf(err_mess, "Syntax Error: Il y a un point de trop à la ligne %d", line+1);
-                        custom_error(err_mess, NULL);
+                        char* err_mess = malloc(100 * sizeof(char));
+                        sprintf(err_mess, "Syntax Error: Il y a un point de trop à la ligne %d", line + 1);
+                        custom_error(err_mess, NULL, NULL);
                     }
 
                     // la phrase est une instruction et on l'ajoute
@@ -94,9 +108,6 @@ phrase_t* parse_file(FILE* f) {
                     phraseActuelle->expr = true;
                     phraseActuelle->inst = false;
 
-                    phraseActuelle->valeur = new_val_t(UNDEFINED);
-                    set_undefined(phraseActuelle->valeur);
-
                     phraseActuelle = phraseActuelle->parentPhrase;
                     buffer = c;
                     break;
@@ -108,6 +119,13 @@ phrase_t* parse_file(FILE* f) {
                         addToText(phraseActuelle, c);
                     }
                     buffer = c;
+
+                    // printf("inst1->suivant  '%s'  -->  ", Inst1->text);
+                    // fflush(stdout);
+                    // printf("'%s'\n", Prec->text);
+
+                    Inst1->suivant = Prec;
+
                     phraseActuelle->innerSeparator = phraseActuelle->innerPhraseLen - 1;
                     break;
                 default:
@@ -116,6 +134,7 @@ phrase_t* parse_file(FILE* f) {
                     }
                     if (c == '(' && !in_string) {
                         in_comment += 1;
+                        break;
                     }
                     if (c == '\n') {
                         line++;
@@ -132,7 +151,7 @@ phrase_t* parse_file(FILE* f) {
                         break;
                     }
                     // enlève les espaces après les points
-                    if (c == ' ' && (buffer == '.' || buffer == ':' || buffer == ')')) {
+                    if (c == ' ' && (buffer == '.' || buffer == ':')) {
                         break;
                     }
 
@@ -141,38 +160,38 @@ phrase_t* parse_file(FILE* f) {
                     }
 
                     // ignore les sauts de lignes et les tabulations
-                    if ((c == '\n' && (buffer == '.' || buffer == ':' || buffer == ')' || in_comment))) {
+                    if ((c == '\n' && (buffer == '.' || buffer == ':' || prec_c == ')' || in_comment))) {
                         break;
                     } else if (c == '\n' && !in_comment) {
-                        char* err_mess = malloc(100*sizeof(char));
+                        char* err_mess = malloc(100 * sizeof(char));
                         sprintf(err_mess, "Syntax Error: Il manque un point à la fin de la ligne %d", line);
-                        custom_error(err_mess, NULL);
+                        custom_error(err_mess, NULL, NULL);
                         break;
                     }
 
                     // n'ajoute pas les espaces en debut de ligne ou après un espace
                     if (c == ' ' && (phraseActuelle->textLen == 0 || phraseActuelle->text[phraseActuelle->textLen - 1] == ' ')) {
-                        
                         break;
                     }
-                    
-                    // check si l'écriture est valide i.e. pas directement dans la mainphrase
-                    if (phraseActuelle == mainPhrase && !in_comment){
-                        char* error = malloc(100*sizeof(char));
+
+                    // check si l'écriture est valide i.e. pas directement dans la mainPhrase
+                    if (phraseActuelle == mainPhrase && !in_comment) {
+                        char* error = malloc(100 * sizeof(char));
                         sprintf(error, "Syntax Error, ligne %d: \"%c\"%s", line, c, " n'est pas un début de phrase valide.");
-                        custom_error(error, NULL);
+                        custom_error(error, NULL, NULL);
                     }
-                    
+
                     // ajoute le caractère au texte
                     addToText(phraseActuelle, c);
-                    
                     buffer = c;
+
                     break;
             }
         }
+        prec_c = c;
     }
-    if (in_comment){
-        custom_error("Une parenthèse n'a pas été fermée", NULL);
+    if (in_comment) {
+        custom_error("Une parenthèse n'a pas été fermée", NULL, NULL);
     }
     if (mainPhrase != phraseActuelle) {
         // probablement à changer + essayer de trouver où est-ce qu'il manque un point
@@ -184,8 +203,10 @@ phrase_t* parse_file(FILE* f) {
             strcat(err_mess, "~");
         }
         strcat(err_mess, "^");
-        custom_error(err_mess, false);
+        custom_error(err_mess, NULL, NULL);
     }
+
+    Inst2->suivant = NULL;
 
     addToText(mainPhrase, '\0');
     return mainPhrase;
