@@ -371,7 +371,7 @@ char* str_from_chuck(int n) {
             break;
         case 1:
             if (tens == 1 || tens == 7 || tens == 9) {
-                if (tens != 1) {
+                if (tens == 7) {
                     text = add_str(text, &text_size, "et-");
                 }
                 text = add_str(text, &text_size, "onze");
@@ -484,7 +484,7 @@ char* str_from_int(int n) {
             char* thousands = str_from_chuck(e_3);
             text = add_str(text, &text_size, thousands);
             free(thousands);
-            text = add_str(text, &text_size, " mille");
+            text = add_str(text, &text_size, "-mille");
         }
     }
     if (e_9 != 0 || e_6 != 0 || e_3 != 0) {
