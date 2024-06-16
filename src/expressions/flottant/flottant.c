@@ -27,10 +27,12 @@ bool test_expr_flottant(phrase_t* phrase, environnement_t* env) {
     }
 
     char** res = split_word(result[0], "virgule");
-    int* partie_entiere = eval_number(res[0], (int)strlen(res[0]));
-    int* partie_decimale = eval_float(res[1], (int)strlen(res[1]));
-    if (partie_entiere[0] && partie_decimale[0]) {
-        float num = (float)partie_entiere[1] + ((float)partie_decimale[1]) / (puiss10(partie_decimale[1]) * partie_decimale[2]);
+    bool valid_entier;
+    int partie_entiere = eval_number(res[0], (int)strlen(res[0]), &valid_entier);
+    bool valid_flotant;
+    float partie_decimale = eval_float(res[1], (int)strlen(res[1]), &valid_flotant);
+    if (valid_entier && valid_flotant) {
+        float num = (float)partie_entiere + partie_decimale;
         phrase->phraseId = EXPR_FLOTTANT;
 
         phrase->constant = true;
@@ -43,8 +45,6 @@ bool test_expr_flottant(phrase_t* phrase, environnement_t* env) {
     free(res[1]);
     free(res);
 
-    free(partie_entiere);
-    free(partie_decimale);
     free_l(result, len);
 
     return true;

@@ -16,13 +16,14 @@ bool test_expr_entier(phrase_t* phrase, environnement_t* env) {
         custom_error("too many arguments given", phrase, env);
     }
 
-    int* result_num = eval_number(result[0], (int)strlen(result[0]));
+    bool valid;
+    int result_num = eval_number(result[0], (int)strlen(result[0]), &valid);
 
-    if (result_num[0]) {
+    if (valid) {
         phrase->phraseId = EXPR_ENTIER;
         phrase->constant = true;
         // printf("%p\n", getValeur(env, phrase->uniqueId));
-        set_int(getValeur(env, phrase->uniqueId), result_num[1]);
+        set_int(getValeur(env, phrase->uniqueId), result_num);
     } else {
         char* err = malloc((strlen(result[0]) + 32) * sizeof(char));
 
@@ -31,7 +32,6 @@ bool test_expr_entier(phrase_t* phrase, environnement_t* env) {
 
         custom_error(err, phrase, env);
     }
-    free(result_num);
 
     free_l(result, len);
 

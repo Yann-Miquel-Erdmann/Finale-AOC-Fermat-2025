@@ -73,7 +73,7 @@ int match_num(char* num, bool with_s) {
     }
 }
 
-int* eval_float(char* str_num, int len) {
+float eval_float(char* str_num, int len, bool* valid) {
     char* str = malloc((len + 1) * sizeof(char));
     int index = 0;
     int start = 0;
@@ -83,7 +83,6 @@ int* eval_float(char* str_num, int len) {
             str[index] = '\0';
             index = 0;
             if (!strcmp(str, "zéro")) {
-                exp *= 10;
                 start = i + 1;
             } else {
                 break;
@@ -92,6 +91,7 @@ int* eval_float(char* str_num, int len) {
             str[index] = str_num[i];
             index++;
         }
+        exp *= 10;
     }
     index = 0;
     for (int i = start; i < len; i++) {
@@ -99,28 +99,26 @@ int* eval_float(char* str_num, int len) {
         index++;
     }
     str[index] = '\0';
-    int* result = eval_number(str, len - start);
-    result = realloc(result, 3 * sizeof(int));
-    result[2] = exp;
-    free(str);
+    float result = (float)eval_number(str, len - start, valid) / exp;
+    
     return result;
 }
 
-int* eval_number(char* str_num, int len) {
+int eval_number(char* str_num, int len, bool* valid) {
     int n = 0;
     int tmp = 0;
     int str_len = 2;
     char* str = malloc(str_len * sizeof(char));
     int index = 0;
     int sign = 1;
-    bool valid = true;
+    *valid = true;
     char last_separator = ' ';
     int ten_power = 99;  // dernière puissance de dix placée pour savoir si les nombres donnés sont bien dans un bon ordre
     for (int i = 0; i <= len; i++) {
         if (str_num[i] == ' ' || i == len) {  // espace ou fin du nombre
             if (!strcmp(str, "zéro")) {
                 if (i != len || tmp != 0) {
-                    valid = false;
+                    *valid = false;
                     break;
                 }
             }
@@ -165,7 +163,7 @@ int* eval_number(char* str_num, int len) {
             } else {
                 int result = match_num(str, true);
                 if (result == -1 || last_separator == '*') {
-                    valid = false;
+                    *valid = false;
                     // printf("error %d, '%s', %d\n", tmp, str, ten_power)
                     break;
                 } else {
@@ -178,7 +176,7 @@ int* eval_number(char* str_num, int len) {
                     } else if (result > 9 && result < 20 && (tmp % 100 == 60 || tmp % 100 == 80)) {
                         tmp += result;
                     } else {
-                        valid = false;
+                        *valid = false;
                         break;
                     }
                 }
@@ -198,7 +196,7 @@ int* eval_number(char* str_num, int len) {
             if (result != -1) {
                 if (result == 0) {
                     if (i != len || tmp != 0) {
-                        valid = false;
+                        *valid = false;
                         break;
                     }
                 } else if (result == 100 && tmp < 100) {
@@ -213,7 +211,7 @@ int* eval_number(char* str_num, int len) {
                 } else if (result > 9 && result < 20 && (tmp % 100 == 60 || tmp % 100 == 80)) {
                     tmp += result;
                 } else {
-                    valid = false;
+                    *valid = false;
                     break;
                 }
             } else {
@@ -226,7 +224,7 @@ int* eval_number(char* str_num, int len) {
                     n += 1000 * tmp;
                     tmp = 0;
                 } else {
-                    valid = false;
+                    *valid = false;
                     // printf("error 0, %s\n", str);
 
                     break;
@@ -250,11 +248,7 @@ int* eval_number(char* str_num, int len) {
             }
         }
     }
-    int* l = malloc(2 * sizeof(int));
-    l[0] = (int)valid;
-    l[1] = n * sign;
-    free(str);
-    return l;
+    return n*sign;
 }
 
 char* str_from_chuck(int n) {

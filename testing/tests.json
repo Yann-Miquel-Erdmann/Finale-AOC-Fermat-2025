@@ -172,6 +172,6 @@
     {
         "name": "Test ajoult liste de liste",
         "code": "Soit l La liste vide?.\nAjouter à La liste l? La liste vide?.\nAjouter à L'élément de La liste l? à l'indice L'entier zéro?? L'entier deux?.\nAfficher La liste l?.",
-        "output": "[[deux]]"
+        "output": "[[deux]]\n"
     }
 ]

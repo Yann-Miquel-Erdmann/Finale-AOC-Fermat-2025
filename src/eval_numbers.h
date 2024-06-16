@@ -6,18 +6,13 @@
 #include <string.h>
 #include <stdbool.h>
 
-/* renvoie une liste de deux entier sous la forme [x, y]
-   * x est un entier 0 ou 1 qui indique le succès ou non de la conversion
-   * y est l'entier renvoyé par la fonction si x = 1
-*/
-int* eval_number(char* str_num, int len);
+/* renvoie l'entier associé à la chaine str_num de longueur len
+   stocke si le nombre est valide dans valid */
+int eval_number(char* str_num, int len, bool* valid);
 
-/* renvoie une liste de deux entier sous la forme [x, y, z]
-   * x est un entier 0 ou 1 qui indique le succès ou non de la conversion
-   * y est l'entier renvoyé par la fonction si x = 1
-   * z est le nombre de zéros après la virgule et avant le chiffre
-*/
-int* eval_float(char* str_num, int len);
+/* renvoie le flottant associé à la chaine str_num de longueur len
+   stocke si le nombre est valide dans valid */
+float eval_float(char* str_num, int len, bool* valid);
 
 
 /* renvoie un entier du nombre num en lettre
