@@ -136,7 +136,7 @@
 #define ACCESSION_LISTE_S "L'élément de * à l'indice *?"                     // fait
 #define MODIFICATION_LISTE_S "Remplacer l'élément de * à l'indice * par *."  // fait
 #define AJOUT_LISTE_S "Ajouter à * *."                                       // fait
-#define SUPPRESSION_LISTE_S "Retirer de * l'élément d'indice *."             // fait
+#define SUPPRESSION_LISTE_S "Retirer l'élément de * à l'indice *."             // fait
 #define INSERTION_LISTE_S "Insérer * dans * à l'indice *."                   // fait
 #define EXPR_LISTE_S "La liste $?"                                           // fait
 #define EXPR_LISTE_ELEM_S "La liste des éléments *?"                         // fait
