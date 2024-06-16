@@ -32,7 +32,7 @@ phrase_t* parse_file(FILE* f) {
     bool in_string = false;
     int in_comment = 0;
     char c = '\0';
-    char prec_c;
+    char prec_c = '\0';
     while (fscanf(f, "%c", &c) != EOF) {
         if (in_string) {
             if (c == '"') {

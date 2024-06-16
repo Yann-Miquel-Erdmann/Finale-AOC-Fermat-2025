@@ -26,7 +26,7 @@ void free_environnement(environnement_t* env) {
     free(env);
 }
 
-environnement_t* new_environnement() {
+environnement_t* new_environnement(void) {
     environnement_t* env = malloc(sizeof(environnement_t));
 
     env->variable_list = malloc(sizeof(variable_t*) * DEFAULT_VARIABLES_LIST_SIZE);

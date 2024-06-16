@@ -822,21 +822,15 @@ void tokenise(phrase_t* phrase, function_t* function, function_list_t* func_list
             break;
         case DEFINIR_SEED:
             if (phrase->innerPhraseLen > 0 || phrase->argsLen != 1) {
-                custom_error("Syntaxe invalide, definition seed prend 1 arguments", phrase);
+                custom_error("Syntaxe invalide, definition seed prend 1 arguments", phrase, function->env);
             }
             phrase->phraseId = DEFINIR_SEED;
-            tokenise(phrase->args[0], function, func_list, func_call_list);
+            tokenise(phrase->args[0], function, func_list, func_call_list, uniqueId, parent_loop, false, NULL);
             break;
         case NOMBRE_ALEATOIRE:
             phrase->phraseId = NOMBRE_ALEATOIRE;
-            phrase->valeur->type = FLOAT;
+            getValeur(function->env, phrase->uniqueId)->type = FLOAT;
             break;
-        default:
-            if (test_expr_entier(phrase)) {
-            } else if (test_expr_flottant(phrase)) {
-            } else if (test_expr_booleen(phrase)) {
-            } else if (test_expr_chaine(phrase)) {
-
         default: {
 
             if (test_expr_entier(phrase, function->env)) {

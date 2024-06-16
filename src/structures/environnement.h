@@ -16,7 +16,7 @@ typedef struct environnement {
 void free_environnement(environnement_t* env);
 environnement_t* copy_environnement(environnement_t* env);
 
-environnement_t* new_environnement();
+environnement_t* new_environnement(void);
 
 void doubleValeurListSize(environnement_t* env);
 void linkValeur(environnement_t* env);
