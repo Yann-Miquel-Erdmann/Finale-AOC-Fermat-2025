@@ -69,7 +69,7 @@ phrase_t* parse_file(FILE* f) {
 
         } else {
             // check si l'écriture est valide i.e. pas directement dans la mainPhrase
-            if (!encountered_uppercase && c != '('){
+            if (!encountered_uppercase && c != '(' && c != '\n'){
                 char* error = malloc(100 * sizeof(char));
                 sprintf(error, "Syntax Error, ligne %d: \"%c\"%s", line, c, " n'est pas un début de phrase valide.");
                 custom_error(error, NULL, NULL);

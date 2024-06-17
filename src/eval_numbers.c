@@ -102,7 +102,11 @@ float eval_float(char* str_num, int len, bool* valid) {
     }
     str[index] = '\0';
     float result = (float)eval_number(str, len - start, valid);
-    exp *= pow(10,(int)(((log(len) - log(result))/log(10)) + 1));
+    exp *= pow(10,(int)(((log(result))/log(10)) + 1));
+    free(str);
+    if (exp == 0){
+        return 0;
+    }
     return result/exp;
 }
 
@@ -484,8 +488,11 @@ char* str_from_int(int n) {
             text = add_str(text, &text_size, "-mille");
         }
     }
-    if (e_9 != 0 || e_6 != 0 || e_3 != 0) {
+    if ((e_9 != 0 || e_6 != 0) && e_3 == 0) {
         text = add_str(text, &text_size, " ");
+    }
+    if (e_3 != 0){
+        text = add_str(text, &text_size, "-");
     }
     char* hundreds = str_from_chuck(e_0);
     text = add_str(text, &text_size, hundreds);
