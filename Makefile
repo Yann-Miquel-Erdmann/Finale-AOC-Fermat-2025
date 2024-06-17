@@ -11,7 +11,7 @@ build/%.o: src/%.c $(HEADERS)
 	gcc $(CFLAGS) -c $< -o $@
 
 fast:
-	make build CFLAGS='-Ofast'
+	make build CFLAGS='-Ofast -g'
 
 clean:
 	rm -f $(OBJECTS) 

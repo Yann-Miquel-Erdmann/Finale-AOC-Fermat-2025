@@ -101,10 +101,3 @@ int getVariableId(environnement_t* env, char* nom) {
     return -1;
 }
 
-variable_t* getVariable(environnement_t* env, int variableId) {
-    return env->variable_list[variableId];
-}
-
-val_t* getValeur(environnement_t* env, int indice) {
-    return env->phraseValeurs[indice];
-}

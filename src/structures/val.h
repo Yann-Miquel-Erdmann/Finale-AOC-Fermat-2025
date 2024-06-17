@@ -9,12 +9,16 @@ typedef struct liste liste_t;
 typedef struct phrase phrase_t;
 
 typedef struct val {
-    int type;
-    int value;
-    bool to_free_list;
-    bool to_free_chaine;
-    liste_t* liste;
-    chaine_t* chaine;
+    char type;
+    bool to_free;
+    union Value{
+        int entier;
+        float flottant;
+        bool booleen;
+        liste_t* liste;
+        chaine_t* chaine;
+    } value;
+
 } val_t;
 
 

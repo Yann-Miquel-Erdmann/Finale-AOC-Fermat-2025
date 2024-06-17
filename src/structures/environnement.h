@@ -25,6 +25,5 @@ void doubleVariableListSize(environnement_t* env);
 void addToVariableList(environnement_t* env, variable_t* var);
 
 int getVariableId(environnement_t* env, char* nom);
-variable_t* getVariable(environnement_t* env, int variableId);
 val_t* getValeur(environnement_t* env, int indice);
 #endif

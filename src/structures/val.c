@@ -12,32 +12,29 @@ val_t* new_val_t(char type) {
     val_t* val = malloc(sizeof(val_t));
     if (val == NULL) {
         custom_error("erreur d'allocation", NULL, NULL);
-        return val;
+        exit(1);
     }
+
     val->type = type;
 
-    val->to_free_list = false;
-    val->to_free_chaine = false;
+    val->to_free = false;
 
-    val->liste = NULL;
     if (type == LISTE) {
-        val->to_free_list = true;
-        val->liste = new_liste_t();
+        val->to_free = true;
+        val->value.liste = new_liste_t();
     }
 
-    val->chaine = NULL;
     return val;
 }
 
 void free_val_t(val_t* v, bool free_chaine, bool free_liste) {
     // printf("free_val_t %p\n", v);
-    if ((v->to_free_chaine || free_chaine) && v->chaine != NULL) {
-        free_chaine_t(v->chaine);
+    if (v->to_free && v->type == CHAINE_DE_CHAR) {
+        free_chaine_t(v->value.chaine);
     }
 
-    if (v->to_free_list && v->liste != NULL) {
-        free_liste_t(v->liste, free_chaine, free_liste);
-        v->liste = NULL;
+    if (v->to_free && v->type == LISTE) {
+        free_liste_t(v->value.liste, free_chaine, free_liste);
     }
 
     free(v);
@@ -49,71 +46,84 @@ void copy_val(val_t* dest, val_t* src, bool cp_chaine, bool cp_liste) {
         custom_error("copy_val: dest ou src est NULL", NULL, NULL);
         exit(1);
     }
+
+    if (dest->to_free && dest->type == LISTE) {
+        free_liste_t(dest->value.liste, true, true);
+    }
+    if (dest->to_free && dest->type == CHAINE_DE_CHAR) {
+        free_chaine_t(dest->value.chaine);
+    }
+
     dest->type = src->type;
-    dest->value = src->value;
+    dest->to_free = false;
+    switch (src->type) {
+        case INT:
+            dest->value.entier = src->value.entier;
+            break;
+        case FLOAT:
+            dest->value.flottant = src->value.flottant;
+            break;
+        case BOOL:
+            dest->value.booleen = src->value.booleen;
+            break;
+        case LISTE:
+            dest->value.entier = src->value.entier;
+            if (cp_liste) {
+                dest->value.liste = copy_liste(src->value.liste);
+                dest->to_free = true;
+            } else {
+                dest->value.liste = src->value.liste;
+            }
+            break;
+        case CHAINE_DE_CHAR:
+            if (cp_chaine) {
+                dest->value.chaine = copy_chaine(src->value.chaine);
+                dest->to_free = true;
+            } else {
+                dest->value.chaine = src->value.chaine;
+            }
+            break;
 
-    if (dest->liste != NULL) {
-        free_liste_t(dest->liste, true, true);
-        dest->liste = NULL;
-    }
-    if (dest->chaine != NULL) {
-        free_chaine_t(dest->chaine);
-        dest->chaine = NULL;
-    }
-
-    dest->to_free_chaine = false;
-    dest->to_free_list = false;
-
-    if (src->type == LISTE && cp_liste) {
-        dest->liste = copy_liste(src->liste);
-        // printf("hard copy %p %p\n", dest->liste, src->liste);
-        dest->to_free_list = true;
-    } else {
-        dest->liste = src->liste;
-    }
-
-    if (src->type == CHAINE_DE_CHAR && cp_chaine) {
-        if (src->chaine != NULL) {
-            dest->chaine = copy_chaine(src->chaine);
-            dest->to_free_chaine = true;
-        }
-    } else {
-        dest->chaine = src->chaine;
+        default:
+            custom_error("type de val_t non reconnu dans copy_val", NULL, NULL);
+            exit(1);
+            break;
     }
 }
+
 int get_int(val_t* v, phrase_t* p, environnement_t* env) {
     if (v->type != INT) {
         custom_error("le type de val_t ne correspond pas, un entier est attendu", p, env);
     }
-    return *((int*)&(v->value));
+    return v->value.entier;
 }
 
 float get_float(val_t* v, phrase_t* p, environnement_t* env) {
     if (v->type != FLOAT) {
         custom_error("le type de val_t ne correspond pas, un flottant est attendu", p, env);
     }
-    return *((float*)&(v->value));
+    return v->value.flottant;
 }
 
 bool get_bool(val_t* v, phrase_t* p, environnement_t* env) {
     if (v->type != BOOL) {
         custom_error("le type de val_t ne correspond pas, un booléen est attendu", p, env);
     }
-    return *((bool*)&(v->value));
+    return v->value.booleen;
 }
 
 liste_t* get_liste(val_t* v, phrase_t* p, environnement_t* env) {
     if (v->type != LISTE) {
         custom_error("le type de val_t ne correspond pas, une liste est attendue", p, env);
     }
-    return v->liste;
+    return v->value.liste;
 }
 
 chaine_t* get_char(val_t* v, phrase_t* p, environnement_t* env) {
     if (v->type != CHAINE_DE_CHAR) {
         custom_error("le type de val_t ne correspond pas, une chaîne de caractère est attendue", p, env);
     }
-    return v->chaine;
+    return v->value.chaine;
 }
 
 int get_as_int(val_t* v, phrase_t* p, environnement_t* env) {
@@ -189,25 +199,25 @@ bool get_as_bool(val_t* v, phrase_t* p, environnement_t* env) {
 
 void set_int(val_t* v, int valeur) {
     v->type = INT;
-    v->value = *((int*)&valeur);
+    v->value.entier = valeur;
 }
 void set_float(val_t* v, float valeur) {
     v->type = FLOAT;
-    v->value = *((int*)&valeur);
+    v->value.flottant = valeur;
 }
 void set_bool(val_t* v, bool valeur) {
     v->type = BOOL;
-    v->value = *((int*)&valeur);
+    v->value.booleen = valeur;
 }
 
 void set_liste(val_t* v, liste_t* l) {
     v->type = LISTE;
-    v->liste = l;
+    v->value.liste = l;
 }
 
 void set_char(val_t* v, chaine_t* chaine) {
     v->type = CHAINE_DE_CHAR;
-    v->chaine = chaine;
+    v->value.chaine = chaine;
 }
 
 void set_undefined(val_t* v) {
@@ -400,10 +410,10 @@ bool is_strict_greater(val_t* v1, val_t* v2, phrase_t* p, environnement_t* env) 
 }
 
 void taille(phrase_t* phrase, environnement_t* env) {
-    if (getValeur(env, phrase->args[0]->uniqueId)->type == LISTE) {
-        set_int(env->phraseValeurs[phrase->uniqueId], taille_liste(getValeur(env, phrase->args[0]->uniqueId)->liste));
-    } else if (getValeur(env, phrase->args[0]->uniqueId)->type == CHAINE_DE_CHAR) {
-        set_int(env->phraseValeurs[phrase->uniqueId], getValeur(env, phrase->args[0]->uniqueId)->chaine->chars_len);
+    if (env->phraseValeurs[phrase->args[0]->uniqueId]->type == LISTE) {
+        set_int(env->phraseValeurs[phrase->uniqueId], taille_liste(env->phraseValeurs[phrase->args[0]->uniqueId]->value.liste));
+    } else if (env->phraseValeurs[phrase->args[0]->uniqueId]->type == CHAINE_DE_CHAR) {
+        set_int(env->phraseValeurs[phrase->uniqueId], env->phraseValeurs[phrase->args[0]->uniqueId]->value.chaine->chars_len);
     } else {
         custom_error("taille ne peut être appliqué qu'à une liste ou une chaîne de caractères", phrase, env);
     }
@@ -436,16 +446,16 @@ void print_val(val_t* v, bool new_line, phrase_t* p, environnement_t* env) {
 
         case LISTE: {
             printf("[");
-            for (int i = 0; i < v->liste->valeursLen; i++) {
+            for (int i = 0; i < v->value.liste->valeursLen; i++) {
                 if (i != 0) {
                     printf(", ");
                 }
-                if (v->liste->valeurs[i]->type == CHAINE_DE_CHAR) {
+                if (v->value.liste->valeurs[i]->type == CHAINE_DE_CHAR) {
                     printf("\"");
-                    print_val(v->liste->valeurs[i], false, p, env);
+                    print_val(v->value.liste->valeurs[i], false, p, env);
                     printf("\"");
                 } else {
-                    print_val(v->liste->valeurs[i], false, p, env);
+                    print_val(v->value.liste->valeurs[i], false, p, env);
                 }
             }
             printf("]");
@@ -453,12 +463,12 @@ void print_val(val_t* v, bool new_line, phrase_t* p, environnement_t* env) {
         }
 
         case CHAINE_DE_CHAR:
-            for (int i = 0; i < v->chaine->chars_len; i++) {
-                if (i < v->chaine->chars_len - 1 && v->chaine->chars[i] == '\\' && v->chaine->chars[i + 1] == 'n') {
+            for (int i = 0; i < v->value.chaine->chars_len; i++) {
+                if (i < v->value.chaine->chars_len - 1 && v->value.chaine->chars[i] == '\\' && v->value.chaine->chars[i + 1] == 'n') {
                     printf("\n");
                     i++;
                 } else {
-                    printf("%c", v->chaine->chars[i]);
+                    printf("%c", v->value.chaine->chars[i]);
                 }
             }
             break;

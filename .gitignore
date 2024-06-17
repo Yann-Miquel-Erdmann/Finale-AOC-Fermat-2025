@@ -9,3 +9,4 @@ a.out
 *.FC
 perf.data
 perf.data.old
+callgrind.out.*

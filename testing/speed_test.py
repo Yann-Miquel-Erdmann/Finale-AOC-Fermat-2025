@@ -1,5 +1,6 @@
 
-to_find = 1000000
+# def main():
+to_find = 100000
 primes = [2]
 num = 3
 while len(primes) < to_find:
@@ -14,3 +15,7 @@ while len(primes) < to_find:
     num += 2
 
 print(primes[-1])
+
+
+# if __name__ == '__main__':
+#     main()
