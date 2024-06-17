@@ -84,7 +84,11 @@ void copy_val(val_t* dest, val_t* src, bool cp_chaine, bool cp_liste) {
             }
             break;
 
+        case UNDEFINED:
+            break;
+
         default:
+            print_val(src, true, NULL, NULL);
             custom_error("type de val_t non reconnu dans copy_val", NULL, NULL);
             exit(1);
             break;
