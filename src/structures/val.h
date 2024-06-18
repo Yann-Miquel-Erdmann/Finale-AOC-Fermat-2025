@@ -10,7 +10,6 @@ typedef struct phrase phrase_t;
 
 typedef struct val {
     char type;
-    bool to_free;
     union Value{
         int entier;
         float flottant;
@@ -18,7 +17,6 @@ typedef struct val {
         liste_t* liste;
         chaine_t* chaine;
     } value;
-
 } val_t;
 
 

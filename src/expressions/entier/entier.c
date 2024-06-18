@@ -24,6 +24,7 @@ bool test_expr_entier(phrase_t* phrase, environnement_t* env) {
         phrase->constant = true;
         // printf("%p\n", env->phraseValeurs[ phrase->uniqueId]);
         set_int(env->phraseValeurs[phrase->uniqueId], result_num);
+        
     } else {
         char* err = malloc((strlen(result[0]) + 32) * sizeof(char));
 

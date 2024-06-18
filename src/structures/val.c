@@ -17,11 +17,10 @@ val_t* new_val_t(char type) {
 
     val->type = type;
 
-    val->to_free = false;
-
     if (type == LISTE) {
-        val->to_free = true;
         val->value.liste = new_liste_t();
+    }else if (type == CHAINE_DE_CHAR) {
+        val->value.chaine = new_chaine_t("");
     }
 
     return val;
@@ -29,11 +28,9 @@ val_t* new_val_t(char type) {
 
 void free_val_t(val_t* v, bool free_chaine, bool free_liste) {
     // printf("free_val_t %p\n", v);
-    if (v->to_free && v->type == CHAINE_DE_CHAR) {
+    if (v->type == CHAINE_DE_CHAR) {
         free_chaine_t(v->value.chaine);
-    }
-
-    if (v->to_free && v->type == LISTE) {
+    }else if (v->type == LISTE) {
         free_liste_t(v->value.liste, free_chaine, free_liste);
     }
 
@@ -42,20 +39,18 @@ void free_val_t(val_t* v, bool free_chaine, bool free_liste) {
 
 void copy_val(val_t* dest, val_t* src, bool cp_chaine, bool cp_liste) {
     // printf("copy %p -> %p   %d %d\n", src, dest, cp_chaine, cp_liste);
-    if (dest == NULL || src == NULL) {
-        custom_error("copy_val: dest ou src est NULL", NULL, NULL);
-        exit(1);
-    }
+    // if (dest == NULL || src == NULL) {
+    //     custom_error("copy_val: dest ou src est NULL", NULL, NULL);
+    //     exit(1);
+    // }
 
-    if (dest->to_free && dest->type == LISTE) {
+    if (dest->type == LISTE) {
         free_liste_t(dest->value.liste, true, true);
-    }
-    if (dest->to_free && dest->type == CHAINE_DE_CHAR) {
+    }else if (dest->type == CHAINE_DE_CHAR) {
         free_chaine_t(dest->value.chaine);
     }
 
     dest->type = src->type;
-    dest->to_free = false;
     switch (src->type) {
         case INT:
             dest->value.entier = src->value.entier;
@@ -66,21 +61,40 @@ void copy_val(val_t* dest, val_t* src, bool cp_chaine, bool cp_liste) {
         case BOOL:
             dest->value.booleen = src->value.booleen;
             break;
+
         case LISTE:
-            dest->value.entier = src->value.entier;
             if (cp_liste) {
                 dest->value.liste = copy_liste(src->value.liste);
-                dest->to_free = true;
+            } else {
+                dest->value.liste = src->value.liste;
+                dest->type = LISTE_P;
+            }
+            break;
+
+        case LISTE_P:
+            if (cp_liste) {
+                dest->value.liste = copy_liste(src->value.liste);
+                dest->type = LISTE;
             } else {
                 dest->value.liste = src->value.liste;
             }
             break;
+
+        case CHAINE_DE_CHAR_P:
+            if (cp_chaine) {
+                dest->value.chaine = copy_chaine(src->value.chaine);
+                dest->type = CHAINE_DE_CHAR;
+            } else {
+                dest->value.chaine = src->value.chaine;
+            }
+            break;
+
         case CHAINE_DE_CHAR:
             if (cp_chaine) {
                 dest->value.chaine = copy_chaine(src->value.chaine);
-                dest->to_free = true;
             } else {
                 dest->value.chaine = src->value.chaine;
+                dest->type = CHAINE_DE_CHAR_P;
             }
             break;
 
@@ -117,14 +131,14 @@ bool get_bool(val_t* v, phrase_t* p, environnement_t* env) {
 }
 
 liste_t* get_liste(val_t* v, phrase_t* p, environnement_t* env) {
-    if (v->type != LISTE) {
+    if (v->type != LISTE && v->type != LISTE_P) {
         custom_error("le type de val_t ne correspond pas, une liste est attendue", p, env);
     }
     return v->value.liste;
 }
 
 chaine_t* get_char(val_t* v, phrase_t* p, environnement_t* env) {
-    if (v->type != CHAINE_DE_CHAR) {
+    if (v->type != CHAINE_DE_CHAR && v->type != CHAINE_DE_CHAR_P) {
         custom_error("le type de val_t ne correspond pas, une chaîne de caractère est attendue", p, env);
     }
     return v->value.chaine;
@@ -241,9 +255,11 @@ char* str_type(val_t* v) {
             strcpy(type, "bool");
             break;
         case LISTE:
+        case LISTE_P:
             strcpy(type, "liste");
             break;
         case CHAINE_DE_CHAR:
+        case CHAINE_DE_CHAR_P:
             strcpy(type, "chaîne de caractère");
             break;
         case UNDEFINED:
@@ -277,10 +293,16 @@ bool is_equal(val_t* v1, val_t* v2, phrase_t* p, environnement_t* env) {
             break;
 
         case CHAINE_DE_CHAR << 4 | CHAINE_DE_CHAR:
+        case CHAINE_DE_CHAR << 4 | CHAINE_DE_CHAR_P:
+        case CHAINE_DE_CHAR_P << 4 | CHAINE_DE_CHAR:
+        case CHAINE_DE_CHAR_P << 4 | CHAINE_DE_CHAR_P:
             return strcmp(get_char(v1, p, env)->chars, get_char(v2, p, env)->chars) == 0;
             break;
 
         case LISTE << 4 | LISTE:
+        case LISTE << 4 | LISTE_P:
+        case LISTE_P << 4 | LISTE:
+        case LISTE_P << 4 | LISTE_P:
             return is_equal_list(get_liste(v1, p, env), get_liste(v2, p, env), p, env);
             break;
 
@@ -302,7 +324,7 @@ bool is_equal(val_t* v1, val_t* v2, phrase_t* p, environnement_t* env) {
             break;
 
         default: {
-            char* error = malloc(100 * sizeof(char));
+            char* error = malloc(128 * sizeof(char));
             sprintf(error, "Impossible de comparer l'égalité d'un élément de type %s et d'un élément de type %s.", str_type(v1), str_type(v2));
             custom_error(error, p, env);
             return false;
@@ -328,10 +350,16 @@ bool is_greater(val_t* v1, val_t* v2, phrase_t* p, environnement_t* env) {
             break;
 
         case CHAINE_DE_CHAR << 4 | CHAINE_DE_CHAR:
+        case CHAINE_DE_CHAR << 4 | CHAINE_DE_CHAR_P:
+        case CHAINE_DE_CHAR_P << 4 | CHAINE_DE_CHAR:
+        case CHAINE_DE_CHAR_P << 4 | CHAINE_DE_CHAR_P:
             return strcmp(get_char(v1, p, env)->chars, get_char(v2, p, env)->chars) >= 0;
             break;
 
         case LISTE << 4 | LISTE:
+        case LISTE << 4 | LISTE_P:
+        case LISTE_P << 4 | LISTE:
+        case LISTE_P << 4 | LISTE_P:
             return is_greater_list(get_liste(v1, p, env), get_liste(v2, p, env), p, env);
             break;
 
@@ -379,10 +407,16 @@ bool is_strict_greater(val_t* v1, val_t* v2, phrase_t* p, environnement_t* env) 
             break;
 
         case CHAINE_DE_CHAR << 4 | CHAINE_DE_CHAR:
+        case CHAINE_DE_CHAR << 4 | CHAINE_DE_CHAR_P:
+        case CHAINE_DE_CHAR_P << 4 | CHAINE_DE_CHAR:
+        case CHAINE_DE_CHAR_P << 4 | CHAINE_DE_CHAR_P:
             return strcmp(get_char(v1, p, env)->chars, get_char(v2, p, env)->chars) > 0;
             break;
 
         case LISTE << 4 | LISTE:
+        case LISTE << 4 | LISTE_P:
+        case LISTE_P << 4 | LISTE:
+        case LISTE_P << 4 | LISTE_P:
             return is_strict_greater_list(get_liste(v1, p, env), get_liste(v2, p, env), p, env);
             break;
 
@@ -414,9 +448,9 @@ bool is_strict_greater(val_t* v1, val_t* v2, phrase_t* p, environnement_t* env) 
 }
 
 void taille(phrase_t* phrase, environnement_t* env) {
-    if (env->phraseValeurs[phrase->args[0]->uniqueId]->type == LISTE) {
+    if (env->phraseValeurs[phrase->args[0]->uniqueId]->type == LISTE || env->phraseValeurs[phrase->args[0]->uniqueId]->type == LISTE_P) {
         set_int(env->phraseValeurs[phrase->uniqueId], taille_liste(env->phraseValeurs[phrase->args[0]->uniqueId]->value.liste));
-    } else if (env->phraseValeurs[phrase->args[0]->uniqueId]->type == CHAINE_DE_CHAR) {
+    } else if (env->phraseValeurs[phrase->args[0]->uniqueId]->type == CHAINE_DE_CHAR || env->phraseValeurs[phrase->args[0]->uniqueId]->type == CHAINE_DE_CHAR_P) {
         set_int(env->phraseValeurs[phrase->uniqueId], env->phraseValeurs[phrase->args[0]->uniqueId]->value.chaine->chars_len);
     } else {
         custom_error("taille ne peut être appliqué qu'à une liste ou une chaîne de caractères", phrase, env);
@@ -448,7 +482,8 @@ void print_val(val_t* v, bool new_line, phrase_t* p, environnement_t* env) {
             break;
         }
 
-        case LISTE: {
+        case LISTE_P: 
+        case LISTE: 
             printf("[");
             for (int i = 0; i < v->value.liste->valeursLen; i++) {
                 if (i != 0) {
@@ -464,9 +499,10 @@ void print_val(val_t* v, bool new_line, phrase_t* p, environnement_t* env) {
             }
             printf("]");
             break;
-        }
+        
 
         case CHAINE_DE_CHAR:
+        case CHAINE_DE_CHAR_P:
             for (int i = 0; i < v->value.chaine->chars_len; i++) {
                 if (i < v->value.chaine->chars_len - 1 && v->value.chaine->chars[i] == '\\' && v->value.chaine->chars[i + 1] == 'n') {
                     printf("\n");

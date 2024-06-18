@@ -132,10 +132,10 @@ void interpreter(function_t* function, function_list_t* functions, val_t* result
             }
 
             case ACCESSION_VARIABLE: {
-                if (env->variable_list[phraseActuelle->variableId]->valeur->type == LISTE) {
+                if (env->variable_list[phraseActuelle->variableId]->valeur->type == LISTE || env->variable_list[phraseActuelle->variableId]->valeur->type == LISTE_P) {
                     env->phraseValeurs[phraseActuelle->uniqueId]->type = env->variable_list[phraseActuelle->variableId]->valeur->type;
                     env->phraseValeurs[phraseActuelle->uniqueId]->value.liste = env->variable_list[phraseActuelle->variableId]->valeur->value.liste;
-                    env->phraseValeurs[phraseActuelle->uniqueId]->to_free = false;
+                    env->phraseValeurs[phraseActuelle->uniqueId]->type = LISTE_P;
                 } else {
                     copy_val(env->phraseValeurs[phraseActuelle->uniqueId], env->variable_list[phraseActuelle->variableId]->valeur, true, true);
                 }
@@ -189,6 +189,7 @@ void interpreter(function_t* function, function_list_t* functions, val_t* result
             }
                 // comparateurs ----------------------------------------------------------
             case EGALITE: {
+                // printf("égalité %s %s\n", phraseActuelle->args[0]->text, phraseActuelle->args[1]->text);
                 egalite(phraseActuelle, env);
                 phraseActuelle = phraseActuelle->suivant;
                 break;
@@ -225,14 +226,14 @@ void interpreter(function_t* function, function_list_t* functions, val_t* result
 
             // liste -----------------------------------------------------------------
             case EXPR_LISTE: {
-                if (env->variable_list[phraseActuelle->variableId]->valeur->type != LISTE) {
+                if (env->variable_list[phraseActuelle->variableId]->valeur->type != LISTE && env->variable_list[phraseActuelle->variableId]->valeur->type != LISTE_P) {
                     custom_error("La variable n'est pas une liste", phraseActuelle, env);
                 }
 
                 // copy_val(env->phraseValeurs[phraseActuelle->uniqueId], env->variable_list[phraseActuelle->variableId]->valeur,true,true);
                 env->phraseValeurs[phraseActuelle->uniqueId]->type = env->variable_list[phraseActuelle->variableId]->valeur->type;
                 env->phraseValeurs[phraseActuelle->uniqueId]->value.liste = env->variable_list[phraseActuelle->variableId]->valeur->value.liste;
-                env->phraseValeurs[phraseActuelle->uniqueId]->to_free = false;
+                env->phraseValeurs[phraseActuelle->uniqueId]->type = LISTE_P;
 
                 phraseActuelle = phraseActuelle->suivant;
                 break;
@@ -246,15 +247,13 @@ void interpreter(function_t* function, function_list_t* functions, val_t* result
             }
 
             case EXPR_LISTE_ELEM: {
-                if (env->phraseValeurs[phraseActuelle->uniqueId]->to_free) {
+                if (env->phraseValeurs[phraseActuelle->uniqueId]->type == LISTE) {
                     vider_liste(env->phraseValeurs[phraseActuelle->uniqueId]->value.liste);
-                }
-                if (env->phraseValeurs[phraseActuelle->uniqueId]->type != LISTE) {
+                }else{
                     env->phraseValeurs[phraseActuelle->uniqueId]->type = LISTE;
                     env->phraseValeurs[phraseActuelle->uniqueId]->value.liste = new_liste_t();
                 }
 
-                env->phraseValeurs[phraseActuelle->uniqueId]->to_free = true;
                 for (int i = 0; i < phraseActuelle->argsLen; i++) {
                     ajout(env->phraseValeurs[phraseActuelle->uniqueId]->value.liste, env->phraseValeurs[phraseActuelle->args[i]->uniqueId]);
                 }
@@ -264,22 +263,23 @@ void interpreter(function_t* function, function_list_t* functions, val_t* result
             }
 
             case ACCESSION_LISTE: {
-                if (env->phraseValeurs[phraseActuelle->args[0]->uniqueId] == NULL || env->phraseValeurs[phraseActuelle->args[0]->uniqueId]->type != LISTE) {
+                if (env->phraseValeurs[phraseActuelle->args[0]->uniqueId] == NULL || (env->phraseValeurs[phraseActuelle->args[0]->uniqueId]->type != LISTE && env->phraseValeurs[phraseActuelle->args[0]->uniqueId]->type != LISTE_P)) {
                     custom_error("La variable n'est pas une liste", phraseActuelle, env);
                 }
 
                 // ne fait pas de deep copy pour les listes et les chaînes de caractères (pour pouvoir les modifier à l’intérieur d'une liste)
                 switch (accession(env->phraseValeurs[phraseActuelle->args[0]->uniqueId]->value.liste, get_int(env->phraseValeurs[phraseActuelle->args[1]->uniqueId], phraseActuelle, env), phraseActuelle, env)->type) {
                     case LISTE:
+                    case LISTE_P:
                         copy_val(env->phraseValeurs[phraseActuelle->uniqueId], accession(env->phraseValeurs[phraseActuelle->args[0]->uniqueId]->value.liste, get_int(env->phraseValeurs[phraseActuelle->args[1]->uniqueId], phraseActuelle, env), phraseActuelle, env), true, false);
 
                         break;
                     case CHAINE_DE_CHAR:
-                        copy_val(env->phraseValeurs[phraseActuelle->uniqueId], accession(env->phraseValeurs[phraseActuelle->args[0]->uniqueId]->value.liste, get_int(env->phraseValeurs[phraseActuelle->args[1]->uniqueId], phraseActuelle, env), phraseActuelle, env), false, true);
+                    case CHAINE_DE_CHAR_P:
+                        copy_val(env->phraseValeurs[phraseActuelle->uniqueId], accession(env->phraseValeurs[phraseActuelle->args[0]->uniqueId]->value.liste, get_int(env->phraseValeurs[phraseActuelle->args[1]->uniqueId], phraseActuelle, env), phraseActuelle, env), false, false);
                         break;
                     default:
                         copy_val(env->phraseValeurs[phraseActuelle->uniqueId], accession(env->phraseValeurs[phraseActuelle->args[0]->uniqueId]->value.liste, get_int(env->phraseValeurs[phraseActuelle->args[1]->uniqueId], phraseActuelle, env), phraseActuelle, env), true, true);
-
                         break;
                 }
 
@@ -287,7 +287,7 @@ void interpreter(function_t* function, function_list_t* functions, val_t* result
                 break;
             }
             case MODIFICATION_LISTE: {
-                if (env->phraseValeurs[phraseActuelle->args[0]->uniqueId] == NULL || env->phraseValeurs[phraseActuelle->args[0]->uniqueId]->type != LISTE) {
+                if (env->phraseValeurs[phraseActuelle->args[0]->uniqueId] == NULL || (env->phraseValeurs[phraseActuelle->args[0]->uniqueId]->type != LISTE && env->phraseValeurs[phraseActuelle->args[0]->uniqueId]->type != LISTE_P)) {
                     custom_error("La variable n'est pas une liste", phraseActuelle, env);
                 }
                 modification(env->phraseValeurs[phraseActuelle->args[0]->uniqueId]->value.liste, get_int(env->phraseValeurs[phraseActuelle->args[1]->uniqueId], phraseActuelle, env), env->phraseValeurs[phraseActuelle->args[2]->uniqueId], phraseActuelle, env);
@@ -296,7 +296,7 @@ void interpreter(function_t* function, function_list_t* functions, val_t* result
                 break;
             }
             case AJOUT_LISTE: {
-                if (env->phraseValeurs[phraseActuelle->args[0]->uniqueId] == NULL || env->phraseValeurs[phraseActuelle->args[0]->uniqueId]->type != LISTE) {
+                if (env->phraseValeurs[phraseActuelle->args[0]->uniqueId] == NULL || (env->phraseValeurs[phraseActuelle->args[0]->uniqueId]->type != LISTE && env->phraseValeurs[phraseActuelle->args[0]->uniqueId]->type != LISTE_P)) {
                     custom_error("La variable n'est pas une liste", phraseActuelle, env);
                 }
                 ajout(env->phraseValeurs[phraseActuelle->args[0]->uniqueId]->value.liste, env->phraseValeurs[phraseActuelle->args[1]->uniqueId]);
@@ -305,7 +305,7 @@ void interpreter(function_t* function, function_list_t* functions, val_t* result
                 break;
             }
             case SUPPRESSION_LISTE: {
-                if (env->phraseValeurs[phraseActuelle->args[0]->uniqueId] == NULL || env->phraseValeurs[phraseActuelle->args[0]->uniqueId]->type != LISTE) {
+                if (env->phraseValeurs[phraseActuelle->args[0]->uniqueId] == NULL || (env->phraseValeurs[phraseActuelle->args[0]->uniqueId]->type != LISTE && env->phraseValeurs[phraseActuelle->args[0]->uniqueId]->type != LISTE_P)) {
                     custom_error("La variable n'est pas une liste", phraseActuelle, env);
                 }
                 suppression(env->phraseValeurs[phraseActuelle->args[0]->uniqueId]->value.liste, get_int(env->phraseValeurs[phraseActuelle->args[1]->uniqueId], phraseActuelle, env), phraseActuelle, env);
@@ -314,7 +314,7 @@ void interpreter(function_t* function, function_list_t* functions, val_t* result
                 break;
             }
             case INSERTION_LISTE: {
-                if (env->phraseValeurs[phraseActuelle->args[1]->uniqueId] == NULL || env->phraseValeurs[phraseActuelle->args[1]->uniqueId]->type != LISTE) {
+                if (env->phraseValeurs[phraseActuelle->args[1]->uniqueId] == NULL || (env->phraseValeurs[phraseActuelle->args[1]->uniqueId]->type != LISTE && env->phraseValeurs[phraseActuelle->args[1]->uniqueId]->type != LISTE_P)) {
                     custom_error("La variable n'est pas une liste", phraseActuelle, env);
                 }
                 inserer(env->phraseValeurs[phraseActuelle->args[1]->uniqueId]->value.liste, get_int(env->phraseValeurs[phraseActuelle->args[2]->uniqueId], phraseActuelle, env), env->phraseValeurs[phraseActuelle->args[0]->uniqueId], phraseActuelle, env);

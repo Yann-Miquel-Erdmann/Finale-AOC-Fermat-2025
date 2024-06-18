@@ -23,6 +23,9 @@
 #define BOOL 3
 #define LISTE 4
 #define CHAINE_DE_CHAR 5
+// type pour une copie de pointeur
+#define LISTE_P 7
+#define CHAINE_DE_CHAR_P 8
 
 // constantes pour l'interpréteur
 #define MAX_RECUSION_DEPTH 10000

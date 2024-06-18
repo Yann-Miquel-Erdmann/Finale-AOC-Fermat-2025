@@ -665,7 +665,6 @@ void tokenise(phrase_t* phrase, function_t* function, function_list_t* func_list
 
             function->env->phraseValeurs[phrase->uniqueId]->type = LISTE;
             function->env->phraseValeurs[phrase->uniqueId]->value.liste = new_liste_t();
-            function->env->phraseValeurs[phrase->uniqueId]->to_free = true;
             phrase->constant = true;
             break;
         case EXPR_LISTE_ELEM:
@@ -764,7 +763,6 @@ void tokenise(phrase_t* phrase, function_t* function, function_list_t* func_list
             if (phrase->args[0]->constant) {
                 phrase->constant = true;
                 function->env->phraseValeurs[phrase->uniqueId]->type = CHAINE_DE_CHAR;
-                function->env->phraseValeurs[phrase->uniqueId]->to_free = true;
                 function->env->phraseValeurs[phrase->uniqueId]->value.chaine = new_chaine_t(str_type(function->env->phraseValeurs[phrase->args[0]->uniqueId]));
             }
 
