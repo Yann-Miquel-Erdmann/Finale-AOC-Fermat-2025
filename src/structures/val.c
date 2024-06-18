@@ -109,51 +109,16 @@ void copy_val(val_t* dest, val_t* src, bool cp_chaine, bool cp_liste) {
     }
 }
 
-int get_int(val_t* v, phrase_t* p, environnement_t* env) {
-    if (v->type != INT) {
-        custom_error("le type de val_t ne correspond pas, un entier est attendu", p, env);
-    }
-    return v->value.entier;
-}
-
-float get_float(val_t* v, phrase_t* p, environnement_t* env) {
-    if (v->type != FLOAT) {
-        custom_error("le type de val_t ne correspond pas, un flottant est attendu", p, env);
-    }
-    return v->value.flottant;
-}
-
-bool get_bool(val_t* v, phrase_t* p, environnement_t* env) {
-    if (v->type != BOOL) {
-        custom_error("le type de val_t ne correspond pas, un booléen est attendu", p, env);
-    }
-    return v->value.booleen;
-}
-
-liste_t* get_liste(val_t* v, phrase_t* p, environnement_t* env) {
-    if (v->type != LISTE && v->type != LISTE_P) {
-        custom_error("le type de val_t ne correspond pas, une liste est attendue", p, env);
-    }
-    return v->value.liste;
-}
-
-chaine_t* get_char(val_t* v, phrase_t* p, environnement_t* env) {
-    if (v->type != CHAINE_DE_CHAR && v->type != CHAINE_DE_CHAR_P) {
-        custom_error("le type de val_t ne correspond pas, une chaîne de caractère est attendue", p, env);
-    }
-    return v->value.chaine;
-}
-
 int get_as_int(val_t* v, phrase_t* p, environnement_t* env) {
     switch (v->type) {
         case INT:
-            return get_int(v, p, env);
+            return v->value.entier;
             break;
         case FLOAT:
-            return (int)get_float(v, p, env);
+            return (int)v->value.flottant;
             break;
         case BOOL:
-            if (get_bool(v, p, env)) {
+            if (v->value.booleen) {
                 return 1;
             } else {
                 return 0;
@@ -169,13 +134,13 @@ int get_as_int(val_t* v, phrase_t* p, environnement_t* env) {
 float get_as_float(val_t* v, phrase_t* p, environnement_t* env) {
     switch (v->type) {
         case INT:
-            return (float)get_int(v, p, env);
+            return (float)v->value.entier;
             break;
         case FLOAT:
-            return get_float(v, p, env);
+            return v->value.flottant;
             break;
         case BOOL:
-            if (get_bool(v, p, env)) {
+            if (v->value.booleen) {
                 return 1.0;
             } else {
                 return 0.0;
@@ -191,19 +156,21 @@ float get_as_float(val_t* v, phrase_t* p, environnement_t* env) {
 bool get_as_bool(val_t* v, phrase_t* p, environnement_t* env) {
     switch (v->type) {
         case INT:
-            return get_int(v, p, env) != 0;
+            return v->value.entier != 0;
             break;
         case FLOAT:
-            return get_float(v, p, env) != 0.0;
+            return v->value.flottant != 0.0;
             break;
         case BOOL:
-            return get_bool(v, p, env);
+            return v->value.booleen;
             break;
+        case CHAINE_DE_CHAR_P:
         case CHAINE_DE_CHAR:
-            return get_char(v, p, env)->chars_len != 0;
+            return v->value.chaine->chars_len != 0;
             break;
+        case LISTE_P:
         case LISTE:
-            return get_liste(v, p, env)->valeursLen != 0;
+            return v->value.liste->valeursLen != 0;
             break;
         case UNDEFINED:
             return false;
@@ -289,21 +256,21 @@ bool is_equal(val_t* v1, val_t* v2, phrase_t* p, environnement_t* env) {
             break;
 
         case BOOL << 4 | BOOL:
-            return get_bool(v1, p, env) == get_bool(v2, p, env);
+            return v1->value.booleen == v2->value.booleen;
             break;
 
         case CHAINE_DE_CHAR << 4 | CHAINE_DE_CHAR:
         case CHAINE_DE_CHAR << 4 | CHAINE_DE_CHAR_P:
         case CHAINE_DE_CHAR_P << 4 | CHAINE_DE_CHAR:
         case CHAINE_DE_CHAR_P << 4 | CHAINE_DE_CHAR_P:
-            return strcmp(get_char(v1, p, env)->chars, get_char(v2, p, env)->chars) == 0;
+            return strcmp(v1->value.chaine->chars, v2->value.chaine->chars) == 0;
             break;
 
         case LISTE << 4 | LISTE:
         case LISTE << 4 | LISTE_P:
         case LISTE_P << 4 | LISTE:
         case LISTE_P << 4 | LISTE_P:
-            return is_equal_list(get_liste(v1, p, env), get_liste(v2, p, env), p, env);
+            return is_equal_list(v1->value.liste, v2->value.liste, p, env);
             break;
 
         case UNDEFINED << 4 | INT:
@@ -353,14 +320,14 @@ bool is_greater(val_t* v1, val_t* v2, phrase_t* p, environnement_t* env) {
         case CHAINE_DE_CHAR << 4 | CHAINE_DE_CHAR_P:
         case CHAINE_DE_CHAR_P << 4 | CHAINE_DE_CHAR:
         case CHAINE_DE_CHAR_P << 4 | CHAINE_DE_CHAR_P:
-            return strcmp(get_char(v1, p, env)->chars, get_char(v2, p, env)->chars) >= 0;
+            return strcmp(v1->value.chaine->chars, v2->value.chaine->chars) >= 0;
             break;
 
         case LISTE << 4 | LISTE:
         case LISTE << 4 | LISTE_P:
         case LISTE_P << 4 | LISTE:
         case LISTE_P << 4 | LISTE_P:
-            return is_greater_list(get_liste(v1, p, env), get_liste(v2, p, env), p, env);
+            return is_greater_list(v1->value.liste, v1->value.liste, p, env);
             break;
 
         case UNDEFINED << 4 | INT:
@@ -410,14 +377,14 @@ bool is_strict_greater(val_t* v1, val_t* v2, phrase_t* p, environnement_t* env) 
         case CHAINE_DE_CHAR << 4 | CHAINE_DE_CHAR_P:
         case CHAINE_DE_CHAR_P << 4 | CHAINE_DE_CHAR:
         case CHAINE_DE_CHAR_P << 4 | CHAINE_DE_CHAR_P:
-            return strcmp(get_char(v1, p, env)->chars, get_char(v2, p, env)->chars) > 0;
+            return strcmp(v1->value.chaine->chars, v2->value.chaine->chars) > 0;
             break;
 
         case LISTE << 4 | LISTE:
         case LISTE << 4 | LISTE_P:
         case LISTE_P << 4 | LISTE:
         case LISTE_P << 4 | LISTE_P:
-            return is_strict_greater_list(get_liste(v1, p, env), get_liste(v2, p, env), p, env);
+            return is_strict_greater_list(v1->value.liste, v2->value.liste, p, env);
             break;
 
         case UNDEFINED << 4 | INT:
@@ -460,7 +427,7 @@ void taille(phrase_t* phrase, environnement_t* env) {
 void print_val(val_t* v, bool new_line, phrase_t* p, environnement_t* env) {
     switch (v->type) {
         case BOOL: {
-            if (get_bool(v, p, env)) {
+            if (v->value.booleen) {
                 printf("vrai");
             } else {
                 printf("faux");
@@ -469,14 +436,14 @@ void print_val(val_t* v, bool new_line, phrase_t* p, environnement_t* env) {
         }
 
         case INT: {
-            char* str = str_from_int(get_int(v, p, env));
+            char* str = str_from_int(v->value.entier);
             printf("%s", str);
             free(str);
             break;
         }
 
         case FLOAT: {
-            char* str = str_from_float(get_float(v, p, env));
+            char* str = str_from_float(v->value.flottant);
             printf("%s", str);
             free(str);
             break;

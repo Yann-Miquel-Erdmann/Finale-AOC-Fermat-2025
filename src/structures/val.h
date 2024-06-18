@@ -24,12 +24,6 @@ val_t* new_val_t(char type);
 void free_val_t(val_t* v, bool free_chaine, bool free_liste);
 void copy_val(val_t* dest, val_t* src, bool copy_chaine, bool copy_liste);
 
-int get_int(val_t* v, phrase_t* p, environnement_t* env);
-float get_float(val_t* v, phrase_t* p, environnement_t* env);
-bool get_bool(val_t* v, phrase_t* p, environnement_t* env);
-liste_t* get_liste(val_t* v, phrase_t* p, environnement_t* env);
-chaine_t* get_char(val_t* v, phrase_t* p, environnement_t* env);
-
 int get_as_int(val_t* v, phrase_t* p, environnement_t* env);
 float get_as_float(val_t* v, phrase_t* p, environnement_t* env);
 bool get_as_bool(val_t* v, phrase_t* p, environnement_t* env);

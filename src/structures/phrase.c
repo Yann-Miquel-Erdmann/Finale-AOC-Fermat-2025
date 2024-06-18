@@ -169,13 +169,13 @@ void _printPhrase(phrase_t* phrase, int decalage, int last_elem, environnement_t
     if (phrase->expr && env->phraseValeurs[phrase->uniqueId]->type != -1) {
         switch (env->phraseValeurs[phrase->uniqueId]->type) {
             case INT:
-                printf("  ->  %d", get_int(env->phraseValeurs[phrase->uniqueId], phrase, env));
+                printf("  ->  %d", env->phraseValeurs[phrase->uniqueId]->value.entier);
                 break;
             case FLOAT:
-                printf("  ->  %f", get_float(env->phraseValeurs[phrase->uniqueId], phrase, env));
+                printf("  ->  %f", env->phraseValeurs[phrase->uniqueId]->value.flottant);
                 break;
             case BOOL:
-                if (get_bool(env->phraseValeurs[phrase->uniqueId], phrase, env)) {
+                if (env->phraseValeurs[phrase->uniqueId]->value.booleen) {
                     printf("  ->  true");
                 } else {
                     printf("  ->  false");

@@ -268,18 +268,22 @@ void interpreter(function_t* function, function_list_t* functions, val_t* result
                 }
 
                 // ne fait pas de deep copy pour les listes et les chaînes de caractères (pour pouvoir les modifier à l’intérieur d'une liste)
-                switch (accession(env->phraseValeurs[phraseActuelle->args[0]->uniqueId]->value.liste, get_int(env->phraseValeurs[phraseActuelle->args[1]->uniqueId], phraseActuelle, env), phraseActuelle, env)->type) {
+                if (env->phraseValeurs[phraseActuelle->args[1]->uniqueId]->type != INT){
+                    custom_error("le type de val_t ne correspond pas, un entier est attendu", phraseActuelle, env);
+                }
+                
+                switch (accession(env->phraseValeurs[phraseActuelle->args[0]->uniqueId]->value.liste, env->phraseValeurs[phraseActuelle->args[1]->uniqueId]->value.entier, phraseActuelle, env)->type) {
                     case LISTE:
                     case LISTE_P:
-                        copy_val(env->phraseValeurs[phraseActuelle->uniqueId], accession(env->phraseValeurs[phraseActuelle->args[0]->uniqueId]->value.liste, get_int(env->phraseValeurs[phraseActuelle->args[1]->uniqueId], phraseActuelle, env), phraseActuelle, env), true, false);
+                        copy_val(env->phraseValeurs[phraseActuelle->uniqueId], accession(env->phraseValeurs[phraseActuelle->args[0]->uniqueId]->value.liste, env->phraseValeurs[phraseActuelle->args[1]->uniqueId]->value.entier, phraseActuelle, env), true, false);
 
                         break;
                     case CHAINE_DE_CHAR:
                     case CHAINE_DE_CHAR_P:
-                        copy_val(env->phraseValeurs[phraseActuelle->uniqueId], accession(env->phraseValeurs[phraseActuelle->args[0]->uniqueId]->value.liste, get_int(env->phraseValeurs[phraseActuelle->args[1]->uniqueId], phraseActuelle, env), phraseActuelle, env), false, false);
+                        copy_val(env->phraseValeurs[phraseActuelle->uniqueId], accession(env->phraseValeurs[phraseActuelle->args[0]->uniqueId]->value.liste, env->phraseValeurs[phraseActuelle->args[1]->uniqueId]->value.entier, phraseActuelle, env), false, false);
                         break;
                     default:
-                        copy_val(env->phraseValeurs[phraseActuelle->uniqueId], accession(env->phraseValeurs[phraseActuelle->args[0]->uniqueId]->value.liste, get_int(env->phraseValeurs[phraseActuelle->args[1]->uniqueId], phraseActuelle, env), phraseActuelle, env), true, true);
+                        copy_val(env->phraseValeurs[phraseActuelle->uniqueId], accession(env->phraseValeurs[phraseActuelle->args[0]->uniqueId]->value.liste, env->phraseValeurs[phraseActuelle->args[1]->uniqueId]->value.entier, phraseActuelle, env), true, true);
                         break;
                 }
 
@@ -290,7 +294,10 @@ void interpreter(function_t* function, function_list_t* functions, val_t* result
                 if (env->phraseValeurs[phraseActuelle->args[0]->uniqueId] == NULL || (env->phraseValeurs[phraseActuelle->args[0]->uniqueId]->type != LISTE && env->phraseValeurs[phraseActuelle->args[0]->uniqueId]->type != LISTE_P)) {
                     custom_error("La variable n'est pas une liste", phraseActuelle, env);
                 }
-                modification(env->phraseValeurs[phraseActuelle->args[0]->uniqueId]->value.liste, get_int(env->phraseValeurs[phraseActuelle->args[1]->uniqueId], phraseActuelle, env), env->phraseValeurs[phraseActuelle->args[2]->uniqueId], phraseActuelle, env);
+                if (env->phraseValeurs[phraseActuelle->args[1]->uniqueId]->type != INT){
+                    custom_error("le type de val_t ne correspond pas, un entier est attendu", phraseActuelle, env);
+                }
+                modification(env->phraseValeurs[phraseActuelle->args[0]->uniqueId]->value.liste, env->phraseValeurs[phraseActuelle->args[1]->uniqueId]->value.entier, env->phraseValeurs[phraseActuelle->args[2]->uniqueId], phraseActuelle, env);
 
                 phraseActuelle = phraseActuelle->suivant;
                 break;
@@ -308,7 +315,10 @@ void interpreter(function_t* function, function_list_t* functions, val_t* result
                 if (env->phraseValeurs[phraseActuelle->args[0]->uniqueId] == NULL || (env->phraseValeurs[phraseActuelle->args[0]->uniqueId]->type != LISTE && env->phraseValeurs[phraseActuelle->args[0]->uniqueId]->type != LISTE_P)) {
                     custom_error("La variable n'est pas une liste", phraseActuelle, env);
                 }
-                suppression(env->phraseValeurs[phraseActuelle->args[0]->uniqueId]->value.liste, get_int(env->phraseValeurs[phraseActuelle->args[1]->uniqueId], phraseActuelle, env), phraseActuelle, env);
+                if (env->phraseValeurs[phraseActuelle->args[1]->uniqueId]->type != INT){
+                    custom_error("le type de val_t ne correspond pas, un entier est attendu", phraseActuelle, env);
+                }
+                suppression(env->phraseValeurs[phraseActuelle->args[0]->uniqueId]->value.liste, env->phraseValeurs[phraseActuelle->args[1]->uniqueId]->value.entier, phraseActuelle, env);
 
                 phraseActuelle = phraseActuelle->suivant;
                 break;
@@ -317,13 +327,16 @@ void interpreter(function_t* function, function_list_t* functions, val_t* result
                 if (env->phraseValeurs[phraseActuelle->args[1]->uniqueId] == NULL || (env->phraseValeurs[phraseActuelle->args[1]->uniqueId]->type != LISTE && env->phraseValeurs[phraseActuelle->args[1]->uniqueId]->type != LISTE_P)) {
                     custom_error("La variable n'est pas une liste", phraseActuelle, env);
                 }
-                inserer(env->phraseValeurs[phraseActuelle->args[1]->uniqueId]->value.liste, get_int(env->phraseValeurs[phraseActuelle->args[2]->uniqueId], phraseActuelle, env), env->phraseValeurs[phraseActuelle->args[0]->uniqueId], phraseActuelle, env);
+                if (env->phraseValeurs[phraseActuelle->args[2]->uniqueId]->type != INT){
+                    custom_error("le type de val_t ne correspond pas, un entier est attendu", phraseActuelle, env);
+                }
+                inserer(env->phraseValeurs[phraseActuelle->args[1]->uniqueId]->value.liste, env->phraseValeurs[phraseActuelle->args[2]->uniqueId]->value.entier, env->phraseValeurs[phraseActuelle->args[0]->uniqueId], phraseActuelle, env);
 
                 phraseActuelle = phraseActuelle->suivant;
                 break;
             }
             case SI_ALORS: {
-                if (get_bool(env->phraseValeurs[phraseActuelle->args[0]->uniqueId], phraseActuelle, env)) {
+                if (get_as_bool(env->phraseValeurs[phraseActuelle->args[0]->uniqueId], phraseActuelle, env)) {
                     phraseActuelle = phraseActuelle->suivantInner1;
                 } else {
                     phraseActuelle = phraseActuelle->suivant;
@@ -332,7 +345,7 @@ void interpreter(function_t* function, function_list_t* functions, val_t* result
             }
 
             case SI_ALORS_SINON: {
-                if (get_bool(env->phraseValeurs[phraseActuelle->args[0]->uniqueId], phraseActuelle, env)) {
+                if (get_as_bool(env->phraseValeurs[phraseActuelle->args[0]->uniqueId], phraseActuelle, env)) {
                     phraseActuelle = phraseActuelle->suivantInner1;
                 } else {
                     phraseActuelle = phraseActuelle->suivantInner2;
@@ -342,7 +355,7 @@ void interpreter(function_t* function, function_list_t* functions, val_t* result
             }
 
             case TANT_QUE: {
-                if (get_bool(env->phraseValeurs[phraseActuelle->args[0]->uniqueId], phraseActuelle, env)) {
+                if (get_as_bool(env->phraseValeurs[phraseActuelle->args[0]->uniqueId], phraseActuelle, env)) {
                     phraseActuelle = phraseActuelle->suivantInner1;
                 } else {
                     phraseActuelle = phraseActuelle->suivant;
