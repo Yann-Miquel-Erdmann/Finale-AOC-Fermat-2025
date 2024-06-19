@@ -102,6 +102,9 @@
 #define DEFINIR_SEED 50
 #define NOMBRE_ALEATOIRE 51
 
+// fonctions mathématiques
+#define PARTIE_ENTIERE 52
+
 // fonctions
 #define DEFINITION_FONCTION 34
 #define EXECUTION_FONCTION 35
@@ -111,7 +114,7 @@
 #define EXECUTION_FONCTION_ARGUMENT 39
 #define APPEL_VALEUR_FONCTION_ARGUMENT 40
 
-// current next element: 52
+// current next element: 53
 
 #define DEFAULT_SEPARATOR "?,. "
 #define STRING_SEPARATOR  "\""
@@ -128,13 +131,13 @@
 #define EXPR_RIEN_S "Rien?"                         // fait
 
 // structures de données
-//  * variable (fait)
+//  * variable
 #define DEFINITION_VARIABLE_AVEC_INIT_S "Soit $ *."  // fait
 #define DEFINITION_VARIABLE_SANS_INIT_S "Soit $."    // fait
 #define ACCESSION_VARIABLE_S "La variable $?"        // fait
 #define MODIFICATION_VARIABLE_S "Que $ devienne *."  // fait
 
-//  * liste (fait)
+//  * liste
 #define EXPR_LISTE_VIDE_S "La liste vide?"                                   // fait
 #define ACCESSION_LISTE_S "L'élément de * à l'indice *?"                     // fait
 #define MODIFICATION_LISTE_S "Remplacer l'élément de * à l'indice * par *."  // fait
@@ -183,8 +186,11 @@
 #define TAILLE_S "La taille de *?"                                       // fait
 
 // aléatoire
-#define DEFINIR_SEED_S "Mettre la seed aléatoire à *."
-#define NOMBRE_ALEATOIRE_S "Un nombre aléatoire?"
+#define DEFINIR_SEED_S "Mettre la seed aléatoire à *."  // fait
+#define NOMBRE_ALEATOIRE_S "Un nombre aléatoire?"       // fait
+
+// fonctions mathématiques
+#define PARTIE_ENTIERE_S "La partie entière de *?"
 
 // fonctions
 #define DEFINITION_FONCTION_S "Soit $ une fonction qui lorsqu'elle est appelée exécute:*."    // fait

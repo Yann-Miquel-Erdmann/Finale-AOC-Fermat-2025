@@ -426,6 +426,20 @@ void interpreter(function_t* function, function_list_t* functions, val_t* result
                 phraseActuelle = phraseActuelle->suivant;
                 break;
             }
+            case DEFINIR_SEED: {
+                srand(get_as_int(env->phraseValeurs[phraseActuelle->args[0]->uniqueId], phraseActuelle, env));
+                phraseActuelle = phraseActuelle->suivant;
+                break;
+            }
+            case NOMBRE_ALEATOIRE: {
+                set_float(env->phraseValeurs[phraseActuelle->uniqueId], ((float)rand()/(float)2147483647));
+                phraseActuelle = phraseActuelle->suivant;
+                break;
+            }
+            case PARTIE_ENTIERE:
+                set_int(env->phraseValeurs[phraseActuelle->uniqueId], get_as_int(env->phraseValeurs[phraseActuelle->args[0]->uniqueId], phraseActuelle, env));
+                phraseActuelle = phraseActuelle->suivant;
+                break;
             default:
                 printf("erreur: %d, %d\n", phraseActuelle->phraseId, phraseActuelle->constant);
                 custom_error("erreur d'interprétation", phraseActuelle, env);

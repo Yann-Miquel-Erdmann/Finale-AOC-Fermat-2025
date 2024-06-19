@@ -172,6 +172,9 @@ int elem_liste(char* text) {
     if (!strcmp(text, NOMBRE_ALEATOIRE_S)) {
         return NOMBRE_ALEATOIRE;
     }
+    if (!strcmp(text, PARTIE_ENTIERE_S)){
+        return PARTIE_ENTIERE;
+    }
     return -1;
 }
 
@@ -841,6 +844,13 @@ void tokenise(phrase_t* phrase, function_t* function, function_list_t* func_list
         case NOMBRE_ALEATOIRE:
             phrase->phraseId = NOMBRE_ALEATOIRE;
             function->env->phraseValeurs[phrase->uniqueId]->type = FLOAT;
+            break;
+        case PARTIE_ENTIERE:
+            if (phrase->innerPhraseLen > 0 || phrase->argsLen != 1) {
+                custom_error("Syntaxe invalide, partie entière prend 1 arguments", phrase, function->env);
+            }
+            phrase->phraseId = PARTIE_ENTIERE;
+            tokenise(phrase->args[0], function, func_list, func_call_list, uniqueId, parent_loop, false, NULL);
             break;
         default: {
             if (test_expr_entier(phrase, function->env)) {

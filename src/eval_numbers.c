@@ -492,7 +492,7 @@ char* str_from_int(int n) {
     if ((e_9 != 0 || e_6 != 0) && e_3 == 0) {
         text = add_str(text, &text_size, " ");
     }
-    if (e_3 != 0){
+    if (e_3 != 0 && e_0 != 0){
         text = add_str(text, &text_size, "-");
     }
     char* hundreds = str_from_chuck(e_0);

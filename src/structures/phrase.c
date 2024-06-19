@@ -166,7 +166,7 @@ void _printPhrase(phrase_t* phrase, int decalage, int last_elem, environnement_t
         }
     }
     printf("%s", phrase->text);
-    if (phrase->expr && env->phraseValeurs[phrase->uniqueId]->type != -1) {
+    if (phrase->expr && phrase->uniqueId < env->phraseValeurs_len && phrase->uniqueId != -1 && env->phraseValeurs[phrase->uniqueId]->type != -1) {
         switch (env->phraseValeurs[phrase->uniqueId]->type) {
             case INT:
                 printf("  ->  %d", env->phraseValeurs[phrase->uniqueId]->value.entier);
