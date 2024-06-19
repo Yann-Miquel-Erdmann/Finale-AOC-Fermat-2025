@@ -6,7 +6,6 @@ a.out
 *.o
 
 *.code-workspace
-*.FC
 perf.data
 perf.data.old
 callgrind.out.*
