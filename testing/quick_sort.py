@@ -39,3 +39,5 @@ random.seed(12)
 for i in range(n-1, -1, -1):
     j = random.random()
     l = swap(i, j*n)
+
+l2 = quicksort(l, 0, n-1)
