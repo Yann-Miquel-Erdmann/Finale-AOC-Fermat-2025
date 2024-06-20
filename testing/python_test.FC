@@ -1,4 +1,3 @@
-Soit l La liste vide?.
-Ajouter à La liste l? La liste vide?.
-Ajouter à L'élément de La liste l? à l'indice L'entier zéro?? L'entier deux?.
-Afficher La liste l?.
+Pour i allant de L'entier cinq? jusqu'à L'entier zéro? en utilisant un pas de L'entier moins un? faire:
+    Afficher La variable i?.
+.

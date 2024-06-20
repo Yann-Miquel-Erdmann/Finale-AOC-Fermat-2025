@@ -17,7 +17,6 @@ bool test_inst_for_loop(phrase_t* phrase, function_t* function) {
     }
 
     phrase->phraseId = POUR_SANS_PAS;
-    phrase->inst = true;
 
     phrase->variableId = getVariableId(function->env, result[0]);
 

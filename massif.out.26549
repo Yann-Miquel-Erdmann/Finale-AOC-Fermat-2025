@@ -1,0 +1,812 @@
+desc: (none)
+cmd: build/interpreter testing/nombres_premiers.FC
+time_unit: i
+#-----------
+snapshot=0
+#-----------
+time=0
+mem_heap_B=0
+mem_heap_extra_B=0
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=1
+#-----------
+time=753799
+mem_heap_B=33157
+mem_heap_extra_B=2635
+mem_stacks_B=0
+heap_tree=detailed
+n12: 33157 (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+ n2: 8160 0x109FCC: new_phrase (phrase.c:23)
+  n1: 8000 0x110597: parse_file (parser.c:56)
+   n0: 8000 0x1093CD: main (main.c:30)
+  n0: 160 in 1 place, below massif's threshold (1.00%)
+ n2: 6528 0x109F74: new_phrase (phrase.c:8)
+  n1: 6400 0x110597: parse_file (parser.c:56)
+   n0: 6400 0x1093CD: main (main.c:30)
+  n0: 128 in 1 place, below massif's threshold (1.00%)
+ n2: 6120 0x109F67: new_phrase (phrase.c:6)
+  n1: 6000 0x110597: parse_file (parser.c:56)
+   n0: 6000 0x1093CD: main (main.c:30)
+  n0: 120 in 1 place, below massif's threshold (1.00%)
+ n1: 4096 0x49D0BA3: _IO_file_doallocate (filedoalloc.c:101)
+  n1: 4096 0x49DFCDF: _IO_doallocbuf (genops.c:347)
+   n1: 4096 0x49DECDB: _IO_file_underflow@@GLIBC_2.2.5 (fileops.c:485)
+    n1: 4096 0x49DFD95: _IO_default_uflow (genops.c:362)
+     n1: 4096 0x49B8F67: __vfscanf_internal (vfscanf-internal.c:740)
+      n1: 4096 0x49B421C: __isoc99_fscanf (isoc99_fscanf.c:30)
+       n1: 4096 0x110477: parse_file (parser.c:37)
+        n0: 4096 0x1093CD: main (main.c:30)
+ n2: 4080 0x109F91: new_phrase (phrase.c:13)
+  n1: 4000 0x110597: parse_file (parser.c:56)
+   n0: 4000 0x1093CD: main (main.c:30)
+  n0: 80 in 1 place, below massif's threshold (1.00%)
+ n2: 1024 0x109D8C: new_function_list (function.c:46)
+  n0: 512 0x1093F0: main (main.c:36)
+  n0: 512 0x1093F8: main (main.c:37)
+ n2: 800 0x10E52E: removeConstants (syntax_convert.c:951)
+  n1: 480 0x10E5FD: removeConstants (syntax_convert.c:1032)
+   n0: 480 in 2 places, all below massif's threshold (1.00%)
+  n0: 320 in 2 places, all below massif's threshold (1.00%)
+ n2: 672 0x10A8D6: new_val_t (val.c:12)
+  n1: 608 0x109907: linkValeur (environnement.c:91)
+   n1: 608 0x10E844: tokenise (syntax_convert.c:187)
+    n0: 608 in 17 places, all below massif's threshold (1.00%)
+  n0: 64 in 2 places, all below massif's threshold (1.00%)
+ n1: 512 0x1096B1: new_environnement (environnement.c:32)
+  n1: 512 0x109CD1: new_function (function.c:29)
+   n0: 512 0x1093E8: main (main.c:34)
+ n1: 512 0x1096CB: new_environnement (environnement.c:36)
+  n1: 512 0x109CD1: new_function (function.c:29)
+   n0: 512 0x1093E8: main (main.c:34)
+ n1: 472 0x49D164D: __fopen_internal (iofopen.c:65)
+  n1: 472 0x49D164D: fopen@@GLIBC_2.2.5 (iofopen.c:86)
+   n0: 472 0x1093B9: main (main.c:26)
+ n0: 181 in 15 places, all below massif's threshold (1.00%)
+#-----------
+snapshot=2
+#-----------
+time=19724580
+mem_heap_B=50101
+mem_heap_extra_B=7155
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=3
+#-----------
+time=35658992
+mem_heap_B=55013
+mem_heap_extra_B=9611
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=4
+#-----------
+time=49670762
+mem_heap_B=67029
+mem_heap_extra_B=11523
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=5
+#-----------
+time=67746525
+mem_heap_B=71541
+mem_heap_extra_B=13795
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=6
+#-----------
+time=79926040
+mem_heap_B=74389
+mem_heap_extra_B=15219
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=7
+#-----------
+time=98830711
+mem_heap_B=78565
+mem_heap_extra_B=17307
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=8
+#-----------
+time=119522327
+mem_heap_B=99317
+mem_heap_extra_B=19491
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=9
+#-----------
+time=132967166
+mem_heap_B=101941
+mem_heap_extra_B=20803
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=10
+#-----------
+time=150532848
+mem_heap_B=105477
+mem_heap_extra_B=22571
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=11
+#-----------
+time=165291131
+mem_heap_B=108277
+mem_heap_extra_B=23971
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=12
+#-----------
+time=187436998
+mem_heap_B=112277
+mem_heap_extra_B=25971
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=13
+#-----------
+time=216686383
+mem_heap_B=117413
+mem_heap_extra_B=28539
+mem_stacks_B=0
+heap_tree=detailed
+n8: 117413 (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+ n2: 52432 0x10A8D6: new_val_t (val.c:12)
+  n2: 51744 0x10BDD7: ajout (struct_liste.c:79)
+   n1: 51728 0x10CDD6: interpreter (interpreter.c:309)
+    n0: 51728 0x10943A: main (main.c:43)
+   n0: 16 in 1 place, below massif's threshold (1.00%)
+  n0: 688 in 4 places, all below massif's threshold (1.00%)
+ n1: 32768 0x10BE1C: doubleValeursSize (struct_liste.c:42)
+  n1: 32768 0x10BE1C: ajout (struct_liste.c:77)
+   n1: 32768 0x10CDD6: interpreter (interpreter.c:309)
+    n0: 32768 0x10943A: main (main.c:43)
+ n2: 8160 0x109FCC: new_phrase (phrase.c:23)
+  n1: 8000 0x110597: parse_file (parser.c:56)
+   n0: 8000 0x1093CD: main (main.c:30)
+  n0: 160 in 1 place, below massif's threshold (1.00%)
+ n2: 6528 0x109F74: new_phrase (phrase.c:8)
+  n1: 6400 0x110597: parse_file (parser.c:56)
+   n0: 6400 0x1093CD: main (main.c:30)
+  n0: 128 in 1 place, below massif's threshold (1.00%)
+ n2: 6120 0x109F67: new_phrase (phrase.c:6)
+  n1: 6000 0x110597: parse_file (parser.c:56)
+   n0: 6000 0x1093CD: main (main.c:30)
+  n0: 120 in 1 place, below massif's threshold (1.00%)
+ n1: 4096 0x49D0BA3: _IO_file_doallocate (filedoalloc.c:101)
+  n1: 4096 0x49DFCDF: _IO_doallocbuf (genops.c:347)
+   n1: 4096 0x49DECDB: _IO_file_underflow@@GLIBC_2.2.5 (fileops.c:485)
+    n1: 4096 0x49DFD95: _IO_default_uflow (genops.c:362)
+     n1: 4096 0x49B8F67: __vfscanf_internal (vfscanf-internal.c:740)
+      n1: 4096 0x49B421C: __isoc99_fscanf (isoc99_fscanf.c:30)
+       n1: 4096 0x110477: parse_file (parser.c:37)
+        n0: 4096 0x1093CD: main (main.c:30)
+ n2: 4080 0x109F91: new_phrase (phrase.c:13)
+  n1: 4000 0x110597: parse_file (parser.c:56)
+   n0: 4000 0x1093CD: main (main.c:30)
+  n0: 80 in 1 place, below massif's threshold (1.00%)
+ n0: 3229 in 24 places, all below massif's threshold (1.00%)
+#-----------
+snapshot=14
+#-----------
+time=233412172
+mem_heap_B=120245
+mem_heap_extra_B=29955
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=15
+#-----------
+time=253753025
+mem_heap_B=123733
+mem_heap_extra_B=31699
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=16
+#-----------
+time=280228644
+mem_heap_B=127989
+mem_heap_extra_B=33827
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=17
+#-----------
+time=309791568
+mem_heap_B=165381
+mem_heap_extra_B=36139
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=18
+#-----------
+time=330560459
+mem_heap_B=168549
+mem_heap_extra_B=37723
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=19
+#-----------
+time=345225030
+mem_heap_B=170805
+mem_heap_extra_B=38851
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=20
+#-----------
+time=365969855
+mem_heap_B=173877
+mem_heap_extra_B=40387
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=21
+#-----------
+time=386713226
+mem_heap_B=176901
+mem_heap_extra_B=41915
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=22
+#-----------
+time=402062687
+mem_heap_B=179173
+mem_heap_extra_B=43051
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=23
+#-----------
+time=417213783
+mem_heap_B=181445
+mem_heap_extra_B=44187
+mem_stacks_B=0
+heap_tree=detailed
+n8: 181445 (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+ n2: 83696 0x10A8D6: new_val_t (val.c:12)
+  n2: 83008 0x10BDD7: ajout (struct_liste.c:79)
+   n1: 82992 0x10CDD6: interpreter (interpreter.c:309)
+    n0: 82992 0x10943A: main (main.c:43)
+   n0: 16 in 1 place, below massif's threshold (1.00%)
+  n0: 688 in 4 places, all below massif's threshold (1.00%)
+ n1: 65536 0x10BE1C: doubleValeursSize (struct_liste.c:42)
+  n1: 65536 0x10BE1C: ajout (struct_liste.c:77)
+   n1: 65536 0x10CDD6: interpreter (interpreter.c:309)
+    n0: 65536 0x10943A: main (main.c:43)
+ n2: 8160 0x109FCC: new_phrase (phrase.c:23)
+  n1: 8000 0x110597: parse_file (parser.c:56)
+   n0: 8000 0x1093CD: main (main.c:30)
+  n0: 160 in 1 place, below massif's threshold (1.00%)
+ n2: 6528 0x109F74: new_phrase (phrase.c:8)
+  n1: 6400 0x110597: parse_file (parser.c:56)
+   n0: 6400 0x1093CD: main (main.c:30)
+  n0: 128 in 1 place, below massif's threshold (1.00%)
+ n2: 6120 0x109F67: new_phrase (phrase.c:6)
+  n1: 6000 0x110597: parse_file (parser.c:56)
+   n0: 6000 0x1093CD: main (main.c:30)
+  n0: 120 in 1 place, below massif's threshold (1.00%)
+ n1: 4096 0x49D0BA3: _IO_file_doallocate (filedoalloc.c:101)
+  n1: 4096 0x49DFCDF: _IO_doallocbuf (genops.c:347)
+   n1: 4096 0x49DECDB: _IO_file_underflow@@GLIBC_2.2.5 (fileops.c:485)
+    n1: 4096 0x49DFD95: _IO_default_uflow (genops.c:362)
+     n1: 4096 0x49B8F67: __vfscanf_internal (vfscanf-internal.c:740)
+      n1: 4096 0x49B421C: __isoc99_fscanf (isoc99_fscanf.c:30)
+       n1: 4096 0x110477: parse_file (parser.c:37)
+        n0: 4096 0x1093CD: main (main.c:30)
+ n2: 4080 0x109F91: new_phrase (phrase.c:13)
+  n1: 4000 0x110597: parse_file (parser.c:56)
+   n0: 4000 0x1093CD: main (main.c:30)
+  n0: 80 in 1 place, below massif's threshold (1.00%)
+ n0: 3229 in 24 places, all below massif's threshold (1.00%)
+#-----------
+snapshot=24
+#-----------
+time=436325435
+mem_heap_B=184149
+mem_heap_extra_B=45539
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=25
+#-----------
+time=455495765
+mem_heap_B=186805
+mem_heap_extra_B=46867
+mem_stacks_B=0
+heap_tree=detailed
+n8: 186805 (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+ n2: 89056 0x10A8D6: new_val_t (val.c:12)
+  n2: 88368 0x10BDD7: ajout (struct_liste.c:79)
+   n1: 88352 0x10CDD6: interpreter (interpreter.c:309)
+    n0: 88352 0x10943A: main (main.c:43)
+   n0: 16 in 1 place, below massif's threshold (1.00%)
+  n0: 688 in 4 places, all below massif's threshold (1.00%)
+ n1: 65536 0x10BE1C: doubleValeursSize (struct_liste.c:42)
+  n1: 65536 0x10BE1C: ajout (struct_liste.c:77)
+   n1: 65536 0x10CDD6: interpreter (interpreter.c:309)
+    n0: 65536 0x10943A: main (main.c:43)
+ n2: 8160 0x109FCC: new_phrase (phrase.c:23)
+  n1: 8000 0x110597: parse_file (parser.c:56)
+   n0: 8000 0x1093CD: main (main.c:30)
+  n0: 160 in 1 place, below massif's threshold (1.00%)
+ n2: 6528 0x109F74: new_phrase (phrase.c:8)
+  n1: 6400 0x110597: parse_file (parser.c:56)
+   n0: 6400 0x1093CD: main (main.c:30)
+  n0: 128 in 1 place, below massif's threshold (1.00%)
+ n2: 6120 0x109F67: new_phrase (phrase.c:6)
+  n1: 6000 0x110597: parse_file (parser.c:56)
+   n0: 6000 0x1093CD: main (main.c:30)
+  n0: 120 in 1 place, below massif's threshold (1.00%)
+ n1: 4096 0x49D0BA3: _IO_file_doallocate (filedoalloc.c:101)
+  n1: 4096 0x49DFCDF: _IO_doallocbuf (genops.c:347)
+   n1: 4096 0x49DECDB: _IO_file_underflow@@GLIBC_2.2.5 (fileops.c:485)
+    n1: 4096 0x49DFD95: _IO_default_uflow (genops.c:362)
+     n1: 4096 0x49B8F67: __vfscanf_internal (vfscanf-internal.c:740)
+      n1: 4096 0x49B421C: __isoc99_fscanf (isoc99_fscanf.c:30)
+       n1: 4096 0x110477: parse_file (parser.c:37)
+        n0: 4096 0x1093CD: main (main.c:30)
+ n2: 4080 0x109F91: new_phrase (phrase.c:13)
+  n1: 4000 0x110597: parse_file (parser.c:56)
+   n0: 4000 0x1093CD: main (main.c:30)
+  n0: 80 in 1 place, below massif's threshold (1.00%)
+ n0: 3229 in 24 places, all below massif's threshold (1.00%)
+#-----------
+snapshot=26
+#-----------
+time=470740791
+mem_heap_B=188949
+mem_heap_extra_B=47939
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=27
+#-----------
+time=486078186
+mem_heap_B=191157
+mem_heap_extra_B=49043
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=28
+#-----------
+time=508733036
+mem_heap_B=194277
+mem_heap_extra_B=50603
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=29
+#-----------
+time=523930804
+mem_heap_B=196261
+mem_heap_extra_B=51595
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=30
+#-----------
+time=543208805
+mem_heap_B=198757
+mem_heap_extra_B=52843
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=31
+#-----------
+time=558582800
+mem_heap_B=200853
+mem_heap_extra_B=53891
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=32
+#-----------
+time=583688711
+mem_heap_B=204085
+mem_heap_extra_B=55507
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=33
+#-----------
+time=595604208
+mem_heap_B=205605
+mem_heap_extra_B=56267
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=34
+#-----------
+time=619311969
+mem_heap_B=208613
+mem_heap_extra_B=57771
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=35
+#-----------
+time=631270757
+mem_heap_B=210133
+mem_heap_extra_B=58531
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=36
+#-----------
+time=649129659
+mem_heap_B=212469
+mem_heap_extra_B=59699
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=37
+#-----------
+time=673002841
+mem_heap_B=215413
+mem_heap_extra_B=61171
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=38
+#-----------
+time=685031324
+mem_heap_B=216901
+mem_heap_extra_B=61915
+mem_stacks_B=0
+heap_tree=detailed
+n8: 216901 (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+ n2: 119152 0x10A8D6: new_val_t (val.c:12)
+  n2: 118464 0x10BDD7: ajout (struct_liste.c:79)
+   n1: 118448 0x10CDD6: interpreter (interpreter.c:309)
+    n0: 118448 0x10943A: main (main.c:43)
+   n0: 16 in 1 place, below massif's threshold (1.00%)
+  n0: 688 in 4 places, all below massif's threshold (1.00%)
+ n1: 65536 0x10BE1C: doubleValeursSize (struct_liste.c:42)
+  n1: 65536 0x10BE1C: ajout (struct_liste.c:77)
+   n1: 65536 0x10CDD6: interpreter (interpreter.c:309)
+    n0: 65536 0x10943A: main (main.c:43)
+ n2: 8160 0x109FCC: new_phrase (phrase.c:23)
+  n1: 8000 0x110597: parse_file (parser.c:56)
+   n0: 8000 0x1093CD: main (main.c:30)
+  n0: 160 in 1 place, below massif's threshold (1.00%)
+ n2: 6528 0x109F74: new_phrase (phrase.c:8)
+  n1: 6400 0x110597: parse_file (parser.c:56)
+   n0: 6400 0x1093CD: main (main.c:30)
+  n0: 128 in 1 place, below massif's threshold (1.00%)
+ n2: 6120 0x109F67: new_phrase (phrase.c:6)
+  n1: 6000 0x110597: parse_file (parser.c:56)
+   n0: 6000 0x1093CD: main (main.c:30)
+  n0: 120 in 1 place, below massif's threshold (1.00%)
+ n1: 4096 0x49D0BA3: _IO_file_doallocate (filedoalloc.c:101)
+  n1: 4096 0x49DFCDF: _IO_doallocbuf (genops.c:347)
+   n1: 4096 0x49DECDB: _IO_file_underflow@@GLIBC_2.2.5 (fileops.c:485)
+    n1: 4096 0x49DFD95: _IO_default_uflow (genops.c:362)
+     n1: 4096 0x49B8F67: __vfscanf_internal (vfscanf-internal.c:740)
+      n1: 4096 0x49B421C: __isoc99_fscanf (isoc99_fscanf.c:30)
+       n1: 4096 0x110477: parse_file (parser.c:37)
+        n0: 4096 0x1093CD: main (main.c:30)
+ n2: 4080 0x109F91: new_phrase (phrase.c:13)
+  n1: 4000 0x110597: parse_file (parser.c:56)
+   n0: 4000 0x1093CD: main (main.c:30)
+  n0: 80 in 1 place, below massif's threshold (1.00%)
+ n0: 3229 in 24 places, all below massif's threshold (1.00%)
+#-----------
+snapshot=39
+#-----------
+time=709014730
+mem_heap_B=219829
+mem_heap_extra_B=63379
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=40
+#-----------
+time=726982322
+mem_heap_B=222037
+mem_heap_extra_B=64483
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=41
+#-----------
+time=738900056
+mem_heap_B=223461
+mem_heap_extra_B=65195
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=42
+#-----------
+time=756986957
+mem_heap_B=225685
+mem_heap_extra_B=66307
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=43
+#-----------
+time=780948718
+mem_heap_B=228565
+mem_heap_extra_B=67747
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=44
+#-----------
+time=798903523
+mem_heap_B=296181
+mem_heap_extra_B=68787
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=45
+#-----------
+time=810840286
+mem_heap_B=297573
+mem_heap_extra_B=69483
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=46
+#-----------
+time=834596201
+mem_heap_B=300373
+mem_heap_extra_B=70883
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=47
+#-----------
+time=846458766
+mem_heap_B=301653
+mem_heap_extra_B=71523
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=48
+#-----------
+time=864286945
+mem_heap_B=303813
+mem_heap_extra_B=72603
+mem_stacks_B=0
+heap_tree=detailed
+n8: 303813 (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+ n2: 140528 0x10A8D6: new_val_t (val.c:12)
+  n2: 139840 0x10BDD7: ajout (struct_liste.c:79)
+   n1: 139824 0x10CDD6: interpreter (interpreter.c:309)
+    n0: 139824 0x10943A: main (main.c:43)
+   n0: 16 in 1 place, below massif's threshold (1.00%)
+  n0: 688 in 4 places, all below massif's threshold (1.00%)
+ n1: 131072 0x10BE1C: doubleValeursSize (struct_liste.c:42)
+  n1: 131072 0x10BE1C: ajout (struct_liste.c:77)
+   n1: 131072 0x10CDD6: interpreter (interpreter.c:309)
+    n0: 131072 0x10943A: main (main.c:43)
+ n2: 8160 0x109FCC: new_phrase (phrase.c:23)
+  n1: 8000 0x110597: parse_file (parser.c:56)
+   n0: 8000 0x1093CD: main (main.c:30)
+  n0: 160 in 1 place, below massif's threshold (1.00%)
+ n2: 6528 0x109F74: new_phrase (phrase.c:8)
+  n1: 6400 0x110597: parse_file (parser.c:56)
+   n0: 6400 0x1093CD: main (main.c:30)
+  n0: 128 in 1 place, below massif's threshold (1.00%)
+ n2: 6120 0x109F67: new_phrase (phrase.c:6)
+  n1: 6000 0x110597: parse_file (parser.c:56)
+   n0: 6000 0x1093CD: main (main.c:30)
+  n0: 120 in 1 place, below massif's threshold (1.00%)
+ n1: 4096 0x49D0BA3: _IO_file_doallocate (filedoalloc.c:101)
+  n1: 4096 0x49DFCDF: _IO_doallocbuf (genops.c:347)
+   n1: 4096 0x49DECDB: _IO_file_underflow@@GLIBC_2.2.5 (fileops.c:485)
+    n1: 4096 0x49DFD95: _IO_default_uflow (genops.c:362)
+     n1: 4096 0x49B8F67: __vfscanf_internal (vfscanf-internal.c:740)
+      n1: 4096 0x49B421C: __isoc99_fscanf (isoc99_fscanf.c:30)
+       n1: 4096 0x110477: parse_file (parser.c:37)
+        n0: 4096 0x1093CD: main (main.c:30)
+ n2: 4080 0x109F91: new_phrase (phrase.c:13)
+  n1: 4000 0x110597: parse_file (parser.c:56)
+   n0: 4000 0x1093CD: main (main.c:30)
+  n0: 80 in 1 place, below massif's threshold (1.00%)
+ n0: 3229 in 24 places, all below massif's threshold (1.00%)
+#-----------
+snapshot=49
+#-----------
+time=876499048
+mem_heap_B=305205
+mem_heap_extra_B=73299
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=50
+#-----------
+time=888374936
+mem_heap_B=306565
+mem_heap_extra_B=73979
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=51
+#-----------
+time=900272821
+mem_heap_B=308037
+mem_heap_extra_B=74715
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=52
+#-----------
+time=912241695
+mem_heap_B=309397
+mem_heap_extra_B=75395
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=53
+#-----------
+time=924139498
+mem_heap_B=310805
+mem_heap_extra_B=76099
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=54
+#-----------
+time=936070109
+mem_heap_B=312181
+mem_heap_extra_B=76787
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=55
+#-----------
+time=948005694
+mem_heap_B=313525
+mem_heap_extra_B=77459
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=56
+#-----------
+time=959969452
+mem_heap_B=314805
+mem_heap_extra_B=78099
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=57
+#-----------
+time=971843646
+mem_heap_B=316149
+mem_heap_extra_B=78771
+mem_stacks_B=0
+heap_tree=detailed
+n8: 316149 (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+ n2: 152864 0x10A8D6: new_val_t (val.c:12)
+  n2: 152176 0x10BDD7: ajout (struct_liste.c:79)
+   n1: 152160 0x10CDD6: interpreter (interpreter.c:309)
+    n0: 152160 0x10943A: main (main.c:43)
+   n0: 16 in 1 place, below massif's threshold (1.00%)
+  n0: 688 in 4 places, all below massif's threshold (1.00%)
+ n1: 131072 0x10BE1C: doubleValeursSize (struct_liste.c:42)
+  n1: 131072 0x10BE1C: ajout (struct_liste.c:77)
+   n1: 131072 0x10CDD6: interpreter (interpreter.c:309)
+    n0: 131072 0x10943A: main (main.c:43)
+ n2: 8160 0x109FCC: new_phrase (phrase.c:23)
+  n1: 8000 0x110597: parse_file (parser.c:56)
+   n0: 8000 0x1093CD: main (main.c:30)
+  n0: 160 in 1 place, below massif's threshold (1.00%)
+ n2: 6528 0x109F74: new_phrase (phrase.c:8)
+  n1: 6400 0x110597: parse_file (parser.c:56)
+   n0: 6400 0x1093CD: main (main.c:30)
+  n0: 128 in 1 place, below massif's threshold (1.00%)
+ n2: 6120 0x109F67: new_phrase (phrase.c:6)
+  n1: 6000 0x110597: parse_file (parser.c:56)
+   n0: 6000 0x1093CD: main (main.c:30)
+  n0: 120 in 1 place, below massif's threshold (1.00%)
+ n1: 4096 0x49D0BA3: _IO_file_doallocate (filedoalloc.c:101)
+  n1: 4096 0x49DFCDF: _IO_doallocbuf (genops.c:347)
+   n1: 4096 0x49DECDB: _IO_file_underflow@@GLIBC_2.2.5 (fileops.c:485)
+    n1: 4096 0x49DFD95: _IO_default_uflow (genops.c:362)
+     n1: 4096 0x49B8F67: __vfscanf_internal (vfscanf-internal.c:740)
+      n1: 4096 0x49B421C: __isoc99_fscanf (isoc99_fscanf.c:30)
+       n1: 4096 0x110477: parse_file (parser.c:37)
+        n0: 4096 0x1093CD: main (main.c:30)
+ n2: 4080 0x109F91: new_phrase (phrase.c:13)
+  n1: 4000 0x110597: parse_file (parser.c:56)
+   n0: 4000 0x1093CD: main (main.c:30)
+  n0: 80 in 1 place, below massif's threshold (1.00%)
+ n0: 3229 in 24 places, all below massif's threshold (1.00%)
+#-----------
+snapshot=58
+#-----------
+time=983884324
+mem_heap_B=317493
+mem_heap_extra_B=79443
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=59
+#-----------
+time=995775281
+mem_heap_B=318773
+mem_heap_extra_B=80083
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=60
+#-----------
+time=1007665242
+mem_heap_B=320149
+mem_heap_extra_B=80771
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=61
+#-----------
+time=1019735194
+mem_heap_B=321525
+mem_heap_extra_B=81459
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=62
+#-----------
+time=1031646629
+mem_heap_B=322709
+mem_heap_extra_B=82051
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=63
+#-----------
+time=1042423295
+mem_heap_B=324005
+mem_heap_extra_B=82699
+mem_stacks_B=0
+heap_tree=peak
+n8: 324005 (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+ n2: 160688 0x10A8D6: new_val_t (val.c:12)
+  n2: 160000 0x10BDD7: ajout (struct_liste.c:79)
+   n1: 159984 0x10CDD6: interpreter (interpreter.c:309)
+    n0: 159984 0x10943A: main (main.c:43)
+   n0: 16 in 1 place, below massif's threshold (1.00%)
+  n0: 688 in 4 places, all below massif's threshold (1.00%)
+ n1: 131072 0x10BE1C: doubleValeursSize (struct_liste.c:42)
+  n1: 131072 0x10BE1C: ajout (struct_liste.c:77)
+   n1: 131072 0x10CDD6: interpreter (interpreter.c:309)
+    n0: 131072 0x10943A: main (main.c:43)
+ n2: 8160 0x109FCC: new_phrase (phrase.c:23)
+  n1: 8000 0x110597: parse_file (parser.c:56)
+   n0: 8000 0x1093CD: main (main.c:30)
+  n0: 160 in 1 place, below massif's threshold (1.00%)
+ n2: 6528 0x109F74: new_phrase (phrase.c:8)
+  n1: 6400 0x110597: parse_file (parser.c:56)
+   n0: 6400 0x1093CD: main (main.c:30)
+  n0: 128 in 1 place, below massif's threshold (1.00%)
+ n2: 6120 0x109F67: new_phrase (phrase.c:6)
+  n1: 6000 0x110597: parse_file (parser.c:56)
+   n0: 6000 0x1093CD: main (main.c:30)
+  n0: 120 in 1 place, below massif's threshold (1.00%)
+ n1: 4096 0x49D0BA3: _IO_file_doallocate (filedoalloc.c:101)
+  n1: 4096 0x49DFCDF: _IO_doallocbuf (genops.c:347)
+   n1: 4096 0x49DECDB: _IO_file_underflow@@GLIBC_2.2.5 (fileops.c:485)
+    n1: 4096 0x49DFD95: _IO_default_uflow (genops.c:362)
+     n1: 4096 0x49B8F67: __vfscanf_internal (vfscanf-internal.c:740)
+      n1: 4096 0x49B421C: __isoc99_fscanf (isoc99_fscanf.c:30)
+       n1: 4096 0x110477: parse_file (parser.c:37)
+        n0: 4096 0x1093CD: main (main.c:30)
+ n1: 4080 0x109F91: new_phrase (phrase.c:13)
+  n0: 4080 in 2 places, all below massif's threshold (1.00%)
+ n0: 3261 in 29 places, all below massif's threshold (1.00%)

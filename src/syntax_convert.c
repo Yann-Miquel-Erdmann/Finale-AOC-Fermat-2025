@@ -5,7 +5,7 @@
 #include "custom_error.h"
 #include "eval_numbers.h"
 #include "expressions/comparateurs.h"
-#include "expressions/operateurs.h"
+#include "expressions/operateurs/operateurs.h"
 #include "structures/function.h"
 
 char** split_word(char* str, char* separator) {
@@ -384,6 +384,7 @@ void tokenise(phrase_t* phrase, function_t* function, function_list_t* func_list
                 custom_error("Syntaxe invalide, l'égalité prend 2 arguments", phrase, function->env);
             }
             phrase->phraseId = EGALITE;
+            function->env->phraseValeurs[phrase->uniqueId]->type = BOOL;
 
             if (inLoopSuivant) {
                 phrase->suivant = inLoopSuivantPointer;
@@ -406,6 +407,7 @@ void tokenise(phrase_t* phrase, function_t* function, function_list_t* func_list
                 custom_error("Syntaxe invalide, l'égalité prend 2 arguments", phrase, function->env);
             }
             phrase->phraseId = INEGALITE;
+            function->env->phraseValeurs[phrase->uniqueId]->type = BOOL;
 
             if (inLoopSuivant) {
                 phrase->suivant = inLoopSuivantPointer;
@@ -428,6 +430,7 @@ void tokenise(phrase_t* phrase, function_t* function, function_list_t* func_list
                 custom_error("Syntaxe invalide, la comparaison prend 2 arguments", phrase, function->env);
             }
             phrase->phraseId = PLUS_GRAND;
+            function->env->phraseValeurs[phrase->uniqueId]->type = BOOL;
 
             if (inLoopSuivant) {
                 phrase->suivant = inLoopSuivantPointer;
@@ -449,6 +452,7 @@ void tokenise(phrase_t* phrase, function_t* function, function_list_t* func_list
                 custom_error("Syntaxe invalide, la comparaison prend 2 arguments", phrase, function->env);
             }
             phrase->phraseId = PLUS_PETIT;
+            function->env->phraseValeurs[phrase->uniqueId]->type = BOOL;
 
             if (inLoopSuivant) {
                 phrase->suivant = inLoopSuivantPointer;
@@ -470,6 +474,7 @@ void tokenise(phrase_t* phrase, function_t* function, function_list_t* func_list
                 custom_error("Syntaxe invalide, la comparaison prend 2 arguments", phrase, function->env);
             }
             phrase->phraseId = STRICT_PLUS_GRAND;
+            function->env->phraseValeurs[phrase->uniqueId]->type = BOOL;
 
             if (inLoopSuivant) {
                 phrase->suivant = inLoopSuivantPointer;
@@ -491,6 +496,7 @@ void tokenise(phrase_t* phrase, function_t* function, function_list_t* func_list
                 custom_error("Syntaxe invalide, la comparaison prend 2 arguments", phrase, function->env);
             }
             phrase->phraseId = STRICT_PLUS_PETIT;
+            function->env->phraseValeurs[phrase->uniqueId]->type = BOOL;
 
             if (inLoopSuivant) {
                 phrase->suivant = inLoopSuivantPointer;

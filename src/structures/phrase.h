@@ -31,22 +31,20 @@ typedef struct phrase {
     struct phrase* suivantInner2;  // phrase à interpreter dans le cas du sinon
 
     int phraseId;  // identificateur de l'instruction ou de l'expression
- 
+
     // informations relatives à une expression
     bool expr;
-    int uniqueId; // indice de la valeur dans l'environnement
+    int uniqueId;  // indice de la valeur dans l'environnement
 
     // informations relatives à une instruction
-    bool inst;
     struct phrase** innerPhrase;  // les instructions dans les if, for, while
     int innerPhraseLen;           // nombre taille de la liste
     int innerPhraseSize;          // nombre inst_t alloués en mémoire
     int innerSeparator;           // séparateur entre les instructions du si et du sinon
 
-
     // variables et fonction appelées dans la phrase actuelle (ne peut y en avoir qu'un par expression)
     function_t* function;
-    int variableId; // indice de la variable associée dans l'environnement
+    int variableId;  // indice de la variable associée dans l'environnement
 
     bool constant_removed;
     bool constant;

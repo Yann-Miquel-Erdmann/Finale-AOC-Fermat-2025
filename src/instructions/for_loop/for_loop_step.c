@@ -17,7 +17,6 @@ bool test_inst_for_loop_step(phrase_t* phrase, function_t* function) {
     }
 
     phrase->phraseId = POUR_AVEC_PAS;
-    phrase->inst = true;
 
     phrase->variableId = getVariableId(function->env, result[0]);
     if (phrase->variableId == -1) {

@@ -83,7 +83,6 @@ phrase_t* parse_file(FILE* f) {
                         addToText(phraseActuelle, c);
                     }
                     addToText(phraseActuelle, '\0');
-                    phraseActuelle->inst = true;
                     phraseActuelle->expr = false;
                     
                     Inst1->suivant = Prec;
@@ -116,7 +115,6 @@ phrase_t* parse_file(FILE* f) {
                     }
                     addToText(phraseActuelle, '\0');
                     phraseActuelle->expr = true;
-                    phraseActuelle->inst = false;
 
                     phraseActuelle = phraseActuelle->parentPhrase;
                     buffer = c;

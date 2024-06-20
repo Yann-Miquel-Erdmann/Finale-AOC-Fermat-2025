@@ -1,4 +1,4 @@
-#include "../structures/phrase.h"
+#include "../../structures/phrase.h"
 #include <stdbool.h>
 
 void somme(phrase_t* phrase, environnement_t* env);

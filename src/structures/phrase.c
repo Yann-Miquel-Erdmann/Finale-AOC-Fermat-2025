@@ -28,7 +28,6 @@ phrase_t* new_phrase(phrase_t* parent) {
     phrase->phraseId = -1;
     phrase->uniqueId = -1;
 
-    phrase->inst = false;
     phrase->expr = false;
 
     phrase->function = NULL;
@@ -83,7 +82,6 @@ phrase_t* copy_phrase(phrase_t* phrase, phrase_t* parent, environnement_t* new_e
         new->innerPhrase[i] = copy_phrase(phrase->innerPhrase[i], new, new_env);
     }
 
-    new->inst = phrase->inst;
     new->expr = phrase->expr;
     new->constant = phrase->constant;
 
@@ -149,7 +147,7 @@ void addToText(phrase_t* phrase, char c) {
 }
 
 void _printPhrase(phrase_t* phrase, int decalage, int last_elem, environnement_t* env) {
-    if (phrase->inst) {
+    if (!phrase->expr) {
         for (int i = 0; i < decalage; i++) {
             printf("|\t");
         }

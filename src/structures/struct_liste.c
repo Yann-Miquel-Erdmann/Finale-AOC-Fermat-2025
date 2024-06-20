@@ -57,9 +57,9 @@ void vider_liste(liste_t* liste) {
 }
 
 val_t* accession(liste_t* liste, int indice, phrase_t* p, environnement_t* env) {
-    if (indice < 0 || indice >= liste->valeursLen) {
-        custom_error("indice hors de la liste", p, env);
-    }
+    // if (indice < 0 || indice >= liste->valeursLen) {
+    //     custom_error("indice hors de la liste", p, env);
+    // }
     return liste->valeurs[indice];
 }
 
