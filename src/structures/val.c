@@ -372,6 +372,7 @@ bool is_greater(val_t* v1, val_t* v2, phrase_t* p, environnement_t* env) {
             break;
         }
     }
+    return false;
 }
 
 bool is_strict_greater(val_t* v1, val_t* v2, phrase_t* p, environnement_t* env) {

@@ -58,13 +58,14 @@ void interpreter(function_t* function, function_list_t* functions, val_t* result
             case EXECUTION_FONCTION:
             case APPEL_VALEUR_FONCTION_ARGUMENT:
             case EXECUTION_FONCTION_ARGUMENT:
+            {
                 function_t* new_func = malloc(sizeof(function_t));
                 new_func->nom = phraseActuelle->function->nom;
                 new_func->ast = phraseActuelle->function->ast;
                 new_func->function_arg_count = phraseActuelle->function->function_arg_count;
                 new_func->env = copy_environnement(phraseActuelle->function->env);
                 new_func->ast->phraseId = 0;
-
+                
                 if (phraseActuelle->phraseId == APPEL_VALEUR_FONCTION_ARGUMENT || phraseActuelle->phraseId == EXECUTION_FONCTION_ARGUMENT) {
                     if (phraseActuelle->argsLen != new_func->function_arg_count) {
                         custom_error("Le nombre d'arguments données ne correspond pase ou nombre d'arguments voulus", phraseActuelle, env);
@@ -74,7 +75,7 @@ void interpreter(function_t* function, function_list_t* functions, val_t* result
                                  env->phraseValeurs[phraseActuelle->args[i]->uniqueId], true, true);
                     }
                 }
-
+                
                 if (phraseActuelle->phraseId == EXECUTION_FONCTION_ARGUMENT || phraseActuelle->phraseId == EXECUTION_FONCTION) {
                     if (phraseActuelle->argsLen != new_func->function_arg_count) {
                         custom_error("Le nombre d'arguments données ne correspond pase ou nombre d'arguments voulus", phraseActuelle, env);
@@ -86,13 +87,13 @@ void interpreter(function_t* function, function_list_t* functions, val_t* result
                     }
                     interpreter(new_func, functions, env->phraseValeurs[phraseActuelle->uniqueId], layer + 1);
                 }
-
+                
                 free_environnement(new_func->env);
                 free(new_func);
-
+                
                 phraseActuelle = phraseActuelle->suivant;
                 break;
-
+            }
             case RENVOI_FONCTION:
                 if (result != NULL) {
                     copy_val(result, env->phraseValeurs[phraseActuelle->args[0]->uniqueId], true, true);
