@@ -175,6 +175,9 @@ int elem_liste(char* text) {
     if (!strcmp(text, PARTIE_ENTIERE_S)){
         return PARTIE_ENTIERE;
     }
+    if(!strcmp(text, POINTEUR_VARIABLE_S)){
+        return POINTEUR_VARIABLE;
+    }
     return -1;
 }
 
@@ -857,6 +860,16 @@ void tokenise(phrase_t* phrase, function_t* function, function_list_t* func_list
             }
             phrase->phraseId = PARTIE_ENTIERE;
             tokenise(phrase->args[0], function, func_list, func_call_list, uniqueId, parent_loop, false, NULL);
+            break;
+        case POINTEUR_VARIABLE:
+            if (phrase->innerPhraseLen > 0 || phrase->argsLen != 1) {
+                custom_error("Syntaxe invalide, pointeur prend 1 arguments", phrase, function->env);
+            }
+            phrase->phraseId = POINTEUR_VARIABLE;
+            tokenise(phrase->args[0], function, func_list, func_call_list, uniqueId, parent_loop, false, NULL);
+            /*if (phrase->args[0]->constant){
+                custom_error("Un pointeur ne peut pas pointer vers une constante", phrase, function->env);
+            }*/
             break;
         default: {
             if (test_expr_entier(phrase, function->env)) {

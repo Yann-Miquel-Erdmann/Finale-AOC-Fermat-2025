@@ -10,3 +10,5 @@ perf.data
 perf.data.old
 callgrind.out.*
 testing/nombres_premiers_valgrind.FC
+
+*.FC

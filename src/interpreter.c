@@ -68,7 +68,7 @@ void interpreter(function_t* function, function_list_t* functions, val_t* result
                 
                 if (phraseActuelle->phraseId == APPEL_VALEUR_FONCTION_ARGUMENT || phraseActuelle->phraseId == EXECUTION_FONCTION_ARGUMENT) {
                     if (phraseActuelle->argsLen != new_func->function_arg_count) {
-                        custom_error("Le nombre d'arguments données ne correspond pase ou nombre d'arguments voulus", phraseActuelle, env);
+                        custom_error("Le nombre d'arguments données ne correspond pas ou nombre d'arguments voulus", phraseActuelle, env);
                     }
                     for (int i = 0; i < phraseActuelle->argsLen; i++) {
                         copy_val(new_func->env->variable_list[i]->valeur,
@@ -78,12 +78,12 @@ void interpreter(function_t* function, function_list_t* functions, val_t* result
                 
                 if (phraseActuelle->phraseId == EXECUTION_FONCTION_ARGUMENT || phraseActuelle->phraseId == EXECUTION_FONCTION) {
                     if (phraseActuelle->argsLen != new_func->function_arg_count) {
-                        custom_error("Le nombre d'arguments données ne correspond pase ou nombre d'arguments voulus", phraseActuelle, env);
+                        custom_error("Le nombre d'arguments données ne correspond pas ou nombre d'arguments voulus", phraseActuelle, env);
                     }
                     interpreter(new_func, functions, NULL, layer + 1);
                 } else {
                     if (phraseActuelle->argsLen != new_func->function_arg_count) {
-                        custom_error("Le nombre d'arguments données ne correspond pase ou nombre d'arguments voulus", phraseActuelle, env);
+                        custom_error("Le nombre d'arguments données ne correspond pas ou nombre d'arguments voulus", phraseActuelle, env);
                     }
                     interpreter(new_func, functions, env->phraseValeurs[phraseActuelle->uniqueId], layer + 1);
                 }
@@ -119,14 +119,30 @@ void interpreter(function_t* function, function_list_t* functions, val_t* result
                 break;
 
             // variable ------------------------------------------------------
-            case MODIFICATION_VARIABLE:
             case DEFINITION_VARIABLE_AVEC_INIT:
                 // printf("modif variable %s\n", phraseActuelle->text);
-                copy_val(env->variable_list[phraseActuelle->variableId]->valeur, env->phraseValeurs[phraseActuelle->args[0]->uniqueId], true, true);
-
+                if (env->phraseValeurs[phraseActuelle->args[0]->uniqueId]->type == POINTEUR){
+                    if (env->phraseValeurs[phraseActuelle->args[0]->uniqueId]->value.ptr == env->variable_list[phraseActuelle->variableId]->valeur){
+                        custom_error("Il n'est pas possible de faire pointer une variable sur elle même", phraseActuelle, env);
+                    }
+                    set_pointer(env->phraseValeurs[phraseActuelle->args[0]->uniqueId]->value.ptr, env->variable_list[phraseActuelle->variableId]->valeur);
+                }else{
+                    copy_val(env->variable_list[phraseActuelle->variableId]->valeur, env->phraseValeurs[phraseActuelle->args[0]->uniqueId], true, true);
+                }
                 phraseActuelle = phraseActuelle->suivant;
                 break;
 
+            case MODIFICATION_VARIABLE:
+                if (env->variable_list[phraseActuelle->variableId]->valeur->type == POINTEUR){
+                    copy_val(env->variable_list[phraseActuelle->variableId]->valeur->value.ptr, env->phraseValeurs[phraseActuelle->args[0]->uniqueId], true, true);
+                }
+                else{
+                    copy_val(env->variable_list[phraseActuelle->variableId]->valeur, env->phraseValeurs[phraseActuelle->args[0]->uniqueId], true, true);
+                }
+                
+                phraseActuelle = phraseActuelle->suivant;
+                break;
+                
             case ACCESSION_VARIABLE:
                 if (env->variable_list[phraseActuelle->variableId]->valeur->type == LISTE || env->variable_list[phraseActuelle->variableId]->valeur->type == LISTE_P) {
                     env->phraseValeurs[phraseActuelle->uniqueId]->type = env->variable_list[phraseActuelle->variableId]->valeur->type;
@@ -138,7 +154,26 @@ void interpreter(function_t* function, function_list_t* functions, val_t* result
 
                 phraseActuelle = phraseActuelle->suivant;
                 break;
-
+                
+            case POINTEUR_VARIABLE:
+                //printf("got here\n");
+                if (phraseActuelle->args[0]->variableId != -1){
+                    set_pointer(env->variable_list[phraseActuelle->args[0]->variableId]->valeur, env->phraseValeurs[phraseActuelle->uniqueId]);
+                }else{
+                    if (env->phraseValeurs[phraseActuelle->args[0]->uniqueId]->type == LISTE_P){ // phrase en argument est un index de liste
+                        val_t* temp = env->variable_list[phraseActuelle->args[0]->args[0]->variableId]->valeur->value.liste->valeurs[
+                            env->phraseValeurs[phraseActuelle->args[0]->args[1]->uniqueId]->value.entier];
+                        
+                        set_pointer(temp, env->phraseValeurs[phraseActuelle->uniqueId]);
+                    }
+                    else {
+                        set_pointer(env->phraseValeurs[phraseActuelle->args[0]->uniqueId], env->phraseValeurs[phraseActuelle->uniqueId]);
+                    }
+                }
+                
+                phraseActuelle = phraseActuelle->suivant;
+                break;
+            
                 // opérateur ---------------------------------------------------
             case SOMME:
                 somme(phraseActuelle, env);
@@ -220,14 +255,23 @@ void interpreter(function_t* function, function_list_t* functions, val_t* result
 
             // list -----------------------------------------------------------------
             case EXPR_LISTE:
-                if (env->variable_list[phraseActuelle->variableId]->valeur->type != LISTE && env->variable_list[phraseActuelle->variableId]->valeur->type != LISTE_P) {
-                    custom_error("La variable n'est pase une liste", phraseActuelle, env);
+                if (env->variable_list[phraseActuelle->variableId]->valeur->type == POINTEUR){
+                    if (*env->variable_list[phraseActuelle->variableId]->valeur->ptrType != LISTE && *env->variable_list[phraseActuelle->variableId]->valeur->ptrType != LISTE_P){
+                        custom_error("La variable n'est pas une liste", phraseActuelle, env);
+                    }
+                    
+                    env->phraseValeurs[phraseActuelle->uniqueId]->value.liste = env->variable_list[phraseActuelle->variableId]->valeur->value.ptr->value.liste;
+                    env->phraseValeurs[phraseActuelle->uniqueId]->type = LISTE_P;
+                }else{
+                    if (env->variable_list[phraseActuelle->variableId]->valeur->type != LISTE && env->variable_list[phraseActuelle->variableId]->valeur->type != LISTE_P){
+                        custom_error("La variable n'est pas une liste", phraseActuelle, env);
+                    }
+                    
+                    // copy_val(env->phraseValeurs[phraseActuelle->uniqueId], env->variable_list[phraseActuelle->variableId]->valeur,true,true);
+                    env->phraseValeurs[phraseActuelle->uniqueId]->value.liste = env->variable_list[phraseActuelle->variableId]->valeur->value.liste;
+                    env->phraseValeurs[phraseActuelle->uniqueId]->type = LISTE_P;
                 }
-
-                // copy_val(env->phraseValeurs[phraseActuelle->uniqueId], env->variable_list[phraseActuelle->variableId]->valeur,true,true);
-                env->phraseValeurs[phraseActuelle->uniqueId]->type = env->variable_list[phraseActuelle->variableId]->valeur->type;
-                env->phraseValeurs[phraseActuelle->uniqueId]->value.liste = env->variable_list[phraseActuelle->variableId]->valeur->value.liste;
-                env->phraseValeurs[phraseActuelle->uniqueId]->type = LISTE_P;
+               
 
                 phraseActuelle = phraseActuelle->suivant;
                 break;
@@ -255,10 +299,10 @@ void interpreter(function_t* function, function_list_t* functions, val_t* result
 
             case ACCESSION_LISTE:
                 if (env->phraseValeurs[phraseActuelle->args[0]->uniqueId]->type != LISTE && env->phraseValeurs[phraseActuelle->args[0]->uniqueId]->type != LISTE_P) {
-                    custom_error("La variable n'est pase une liste", phraseActuelle, env);
+                    custom_error("La variable n'est pas une liste", phraseActuelle, env);
                 }
 
-                // ne fait pase de deep copy pour les listes et les chaînes de caractères (pour pouvoir les modifier à l’intérieur d'une liste)
+                // ne fait pas de deep copy pour les listes et les chaînes de caractères (pour pouvoir les modifier à l’intérieur d'une liste)
                 if (env->phraseValeurs[phraseActuelle->args[1]->uniqueId]->type != INT) {
                     custom_error("le type de val_t ne correspond pas, un entier est attendu", phraseActuelle, env);
                 }
@@ -310,7 +354,7 @@ void interpreter(function_t* function, function_list_t* functions, val_t* result
 
             case MODIFICATION_LISTE:
                 if (env->phraseValeurs[phraseActuelle->args[0]->uniqueId] == NULL || (env->phraseValeurs[phraseActuelle->args[0]->uniqueId]->type != LISTE && env->phraseValeurs[phraseActuelle->args[0]->uniqueId]->type != LISTE_P)) {
-                    custom_error("La variable n'est pase une liste", phraseActuelle, env);
+                    custom_error("La variable n'est pas une liste", phraseActuelle, env);
                 }
                 if (env->phraseValeurs[phraseActuelle->args[1]->uniqueId]->type != INT) {
                     custom_error("le type de val_t ne correspond pas, un entier est attendu", phraseActuelle, env);
@@ -322,16 +366,16 @@ void interpreter(function_t* function, function_list_t* functions, val_t* result
 
             case AJOUT_LISTE:
                 if (env->phraseValeurs[phraseActuelle->args[0]->uniqueId] == NULL || (env->phraseValeurs[phraseActuelle->args[0]->uniqueId]->type != LISTE && env->phraseValeurs[phraseActuelle->args[0]->uniqueId]->type != LISTE_P)) {
-                    custom_error("La variable n'est pase une liste", phraseActuelle, env);
+                    custom_error("La variable n'est pas une liste", phraseActuelle, env);
                 }
                 ajout(env->phraseValeurs[phraseActuelle->args[0]->uniqueId]->value.liste, env->phraseValeurs[phraseActuelle->args[1]->uniqueId]);
-
+                
                 phraseActuelle = phraseActuelle->suivant;
                 break;
 
             case SUPPRESSION_LISTE:
                 if (env->phraseValeurs[phraseActuelle->args[0]->uniqueId] == NULL || (env->phraseValeurs[phraseActuelle->args[0]->uniqueId]->type != LISTE && env->phraseValeurs[phraseActuelle->args[0]->uniqueId]->type != LISTE_P)) {
-                    custom_error("La variable n'est pase une liste", phraseActuelle, env);
+                    custom_error("La variable n'est pas une liste", phraseActuelle, env);
                 }
                 if (env->phraseValeurs[phraseActuelle->args[1]->uniqueId]->type != INT) {
                     custom_error("le type de val_t ne correspond pas, un entier est attendu", phraseActuelle, env);
@@ -343,7 +387,7 @@ void interpreter(function_t* function, function_list_t* functions, val_t* result
 
             case INSERTION_LISTE:
                 if (env->phraseValeurs[phraseActuelle->args[1]->uniqueId] == NULL || (env->phraseValeurs[phraseActuelle->args[1]->uniqueId]->type != LISTE && env->phraseValeurs[phraseActuelle->args[1]->uniqueId]->type != LISTE_P)) {
-                    custom_error("La variable n'est pase une liste", phraseActuelle, env);
+                    custom_error("La variable n'est pas une liste", phraseActuelle, env);
                 }
                 if (env->phraseValeurs[phraseActuelle->args[2]->uniqueId]->type != INT) {
                     custom_error("le type de val_t ne correspond pas, un entier est attendu", phraseActuelle, env);

@@ -7,7 +7,7 @@
 #include "../custom_error.h"
 
 void free_environnement(environnement_t* env) {
-    for (int i = 0; i < env->variableListLen; i++) {
+    for (int i = 0; i < env->variable_list_len; i++) {
         if (env->variable_list[i] != NULL) {
             free_variable_t(env->variable_list[i]);
         }
@@ -30,7 +30,7 @@ environnement_t* new_environnement(void) {
     environnement_t* env = malloc(sizeof(environnement_t));
 
     env->variable_list = malloc(sizeof(variable_t*) * DEFAULT_VARIABLES_LIST_SIZE);
-    env->variableListLen = 0;
+    env->variable_list_len = 0;
     env->variable_list_size = DEFAULT_VARIABLES_LIST_SIZE;
 
     env->phraseValeurs = malloc(sizeof(val_t*) * DEFAULT_VARIABLES_LIST_SIZE);
@@ -43,9 +43,9 @@ environnement_t* new_environnement(void) {
 environnement_t* copy_environnement(environnement_t* env) {
     environnement_t* new_env = malloc(sizeof(environnement_t));
     new_env->variable_list = malloc(sizeof(variable_t*) * env->variable_list_size);
-    new_env->variableListLen = env->variableListLen;
+    new_env->variable_list_len = env->variable_list_len;
     new_env->variable_list_size = env->variable_list_size;
-    for (int i = 0; i < env->variableListLen; i++) {
+    for (int i = 0; i < env->variable_list_len; i++) {
         new_env->variable_list[i] = copy_variable(env->variable_list[i]);
     }
 
@@ -68,11 +68,11 @@ void doubleVariableListSize(environnement_t* env) {
 }
 
 void addToVariableList(environnement_t* env, variable_t* var) {
-    if (env->variableListLen == env->variable_list_size) {
+    if (env->variable_list_len == env->variable_list_size) {
         doubleVariableListSize(env);
     }
-    env->variable_list[env->variableListLen] = var;
-    env->variableListLen++;
+    env->variable_list[env->variable_list_len] = var;
+    env->variable_list_len++;
 }
 
 void doubleValeurListSize(environnement_t* env) {
@@ -93,7 +93,7 @@ void linkValeur(environnement_t* env) {
 }
 
 int getVariableId(environnement_t* env, char* nom) {
-    for (int i = 0; i < env->variableListLen; i++) {
+    for (int i = 0; i < env->variable_list_len; i++) {
         if (strcmp(env->variable_list[i]->nom, nom) == 0) {
             return i;
         }

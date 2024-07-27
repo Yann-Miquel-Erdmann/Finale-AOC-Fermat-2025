@@ -26,6 +26,8 @@
 // type pour une copie de pointeur
 #define LISTE_P 7
 #define CHAINE_DE_CHAR_P 8
+// type pour les pointeurs
+#define POINTEUR 9
 
 // constantes pour l'interpréteur
 #define MAX_RECUSION_DEPTH 10000
@@ -49,6 +51,7 @@
 #define DEFINITION_VARIABLE_SANS_INIT 6
 #define ACCESSION_VARIABLE 7
 #define MODIFICATION_VARIABLE 8
+#define POINTEUR_VARIABLE 53
 
 //  * liste
 #define EXPR_LISTE_VIDE 9
@@ -114,7 +117,7 @@
 #define EXECUTION_FONCTION_ARGUMENT 39
 #define APPEL_VALEUR_FONCTION_ARGUMENT 40
 
-// current next element: 53
+// current next element: 54
 
 #define DEFAULT_SEPARATOR "?,. "
 #define STRING_SEPARATOR  "\""
@@ -136,6 +139,7 @@
 #define DEFINITION_VARIABLE_SANS_INIT_S "Soit $."    // fait
 #define ACCESSION_VARIABLE_S "La variable $?"        // fait
 #define MODIFICATION_VARIABLE_S "Que $ devienne *."  // fait
+#define POINTEUR_VARIABLE_S "Un pointeur vers *?"
 
 //  * liste
 #define EXPR_LISTE_VIDE_S "La liste vide?"                                   // fait
@@ -190,7 +194,7 @@
 #define NOMBRE_ALEATOIRE_S "Un nombre aléatoire?"       // fait
 
 // fonctions mathématiques
-#define PARTIE_ENTIERE_S "La partie entière de *?"
+#define PARTIE_ENTIERE_S "La partie entière de *?"  // fait
 
 // fonctions
 #define DEFINITION_FONCTION_S "Soit $ une fonction qui lorsqu'elle est appelée exécute:*."    // fait

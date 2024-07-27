@@ -5,7 +5,7 @@
 
 typedef struct environnement {
     variable_t** variable_list;
-    int variableListLen;
+    int variable_list_len;
     int variable_list_size;
 
     val_t** phraseValeurs;

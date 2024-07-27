@@ -21,7 +21,7 @@ bool test_inst_for_loop_step(phrase_t* phrase, function_t* function) {
     phrase->variableId = getVariableId(function->env, result[0]);
     if (phrase->variableId == -1) {
         variable_t* var = new_variable(result[0], new_val_t(UNDEFINED));
-        phrase->variableId = function->env->variableListLen;
+        phrase->variableId = function->env->variable_list_len;
         addToVariableList(function->env, var);
     } else {
         free(result[0]);

@@ -16,6 +16,7 @@ val_t* new_val_t(char type) {
     }
 
     val->type = type;
+    val->ptrType = NULL;
 
     if (type == LISTE) {
         val->value.liste = new_liste_t();
@@ -46,6 +47,7 @@ void __attribute__((hot)) copy_val(val_t* dest, val_t* src, bool cp_chaine, bool
     }
 
     dest->type = src->type;
+    dest->ptrType = src->ptrType;
     switch (src->type) {
         case INT:
             dest->value.entier = src->value.entier;
@@ -93,6 +95,10 @@ void __attribute__((hot)) copy_val(val_t* dest, val_t* src, bool cp_chaine, bool
             }
             break;
 
+        case POINTEUR:
+            dest->value.ptr = src;
+            break;
+
         case UNDEFINED:
             break;
 
@@ -119,6 +125,9 @@ int get_as_int(val_t* v, phrase_t* p, environnement_t* env) {
                 return 0;
             }
             break;
+        case POINTEUR:
+            return get_as_int(v->value.ptr, p, env);
+            break;
         default:
             custom_error("le type de val_t n'est pas reconnu dans get_as_int", p, env);
             return 0;
@@ -140,6 +149,9 @@ float get_as_float(val_t* v, phrase_t* p, environnement_t* env) {
             } else {
                 return 0.0;
             }
+            break;
+        case POINTEUR:
+            return get_as_float(v->value.ptr, p, env);
             break;
         default:
             custom_error("le type de val_t n'est pas reconnu dans get_as_float", p, env);
@@ -170,6 +182,9 @@ bool get_as_bool(val_t* v, phrase_t* p, environnement_t* env) {
         case UNDEFINED:
             return false;
             break;
+        case POINTEUR:
+            return get_as_bool(v->value.ptr, p, env);
+            break;
         default:
             custom_error("le type de val_t n'est pas reconnu dans get_as_bool", p, env);
             return false;
@@ -180,28 +195,45 @@ bool get_as_bool(val_t* v, phrase_t* p, environnement_t* env) {
 void set_int(val_t* v, int valeur) {
     v->type = INT;
     v->value.entier = valeur;
+    v->ptrType = NULL;
 }
 void set_float(val_t* v, float valeur) {
     v->type = FLOAT;
     v->value.flottant = valeur;
+    v->ptrType = NULL;
 }
 void set_bool(val_t* v, bool valeur) {
     v->type = BOOL;
     v->value.booleen = valeur;
+    v->ptrType = NULL;
 }
 
 void set_liste(val_t* v, liste_t* l) {
     v->type = LISTE;
     v->value.liste = l;
+    v->ptrType = NULL;
 }
 
 void set_char(val_t* v, chaine_t* chaine) {
     v->type = CHAINE_DE_CHAR;  // pas super, on pourrait avoir un pointeur sur une chaîne de caractères
     v->value.chaine = chaine;
+    v->ptrType = NULL;
 }
 
 void set_undefined(val_t* v) {
     v->type = UNDEFINED;
+    v->ptrType = NULL;
+}
+
+void set_pointer(val_t* src, val_t* dest){
+    if (dest->type == LISTE) {
+        free_liste_t(dest->value.liste, true, true);
+    } else if (dest->type == CHAINE_DE_CHAR) {
+        free_chaine_t(dest->value.chaine);
+    }
+    dest->ptrType = &src->type;
+    dest->type = POINTEUR;
+    dest->value.ptr = src;
 }
 
 char* str_type(val_t* v) {
@@ -227,6 +259,9 @@ char* str_type(val_t* v) {
         case UNDEFINED:
             strcpy(type, "rien");
             break;
+        case POINTEUR:
+            strcpy(type, "pointeur");
+            break;
         default:
             strcpy(type, "undefined");
             break;
@@ -235,6 +270,7 @@ char* str_type(val_t* v) {
 }
 
 bool is_equal(val_t* v1, val_t* v2, phrase_t* p, environnement_t* env) {
+    
     switch (v1->type << 4 | v2->type) {
         case INT << 4 | INT:
             return v1->value.entier == v2->value.entier;
@@ -290,11 +326,37 @@ bool is_equal(val_t* v1, val_t* v2, phrase_t* p, environnement_t* env) {
         case LISTE_P << 4 | UNDEFINED:
             return false;
             break;
-
+            
         case UNDEFINED << 4 | UNDEFINED:
             return true;
             break;
+        
+        case POINTEUR << 4 | INT:
+        case POINTEUR << 4 | FLOAT:
+        case POINTEUR << 4 | BOOL:
+        case POINTEUR << 4 | CHAINE_DE_CHAR:
+        case POINTEUR << 4 | CHAINE_DE_CHAR_P:
+        case POINTEUR << 4 | LISTE:
+        case POINTEUR << 4 | LISTE_P:
+        case POINTEUR << 4 | UNDEFINED:
+            return is_equal(v1->value.ptr, v2, p, env);
+            break;
+            
+        case INT << 4 | POINTEUR:
+        case FLOAT << 4 | POINTEUR:
+        case BOOL << 4 | POINTEUR:
+        case CHAINE_DE_CHAR << 4 | POINTEUR:
+        case CHAINE_DE_CHAR_P << 4 | POINTEUR:
+        case LISTE << 4 | POINTEUR:
+        case LISTE_P << 4 | POINTEUR:
+        case UNDEFINED << 4 | POINTEUR:
+            return is_equal(v1, v2->value.ptr, p, env);
+            break;
 
+        case POINTEUR << 4 | POINTEUR:
+            return is_equal(v1->value.ptr, v2->value.ptr, p, env);
+            break;
+        
         default: {
             char* error = malloc(128 * sizeof(char));
             sprintf(error, "Impossible de comparer l'égalité d'un élément de type %s et d'un élément de type %s.", str_type(v1), str_type(v2));
@@ -305,7 +367,7 @@ bool is_equal(val_t* v1, val_t* v2, phrase_t* p, environnement_t* env) {
     }
 }
 
-bool is_greater(val_t* v1, val_t* v2, phrase_t* p, environnement_t* env) {
+bool is_greater(val_t* v1, val_t* v2, phrase_t* p, environnement_t* env) { // not strict greater
     switch (v1->type << 4 | v2->type) {
         case INT << 4 | INT:
             return v1->value.entier >= v2->value.entier;
@@ -363,6 +425,32 @@ bool is_greater(val_t* v1, val_t* v2, phrase_t* p, environnement_t* env) {
         case LISTE_P << 4 | UNDEFINED:
         case UNDEFINED << 4 | UNDEFINED:
             return true;
+            break;
+        
+        case POINTEUR << 4 | INT:
+        case POINTEUR << 4 | FLOAT:
+        case POINTEUR << 4 | BOOL:
+        case POINTEUR << 4 | CHAINE_DE_CHAR:
+        case POINTEUR << 4 | CHAINE_DE_CHAR_P:
+        case POINTEUR << 4 | LISTE:
+        case POINTEUR << 4 | LISTE_P:
+        case POINTEUR << 4 | UNDEFINED:
+            return is_greater(v1->value.ptr, v2, p, env);
+            break;
+            
+        case INT << 4 | POINTEUR:
+        case FLOAT << 4 | POINTEUR:
+        case BOOL << 4 | POINTEUR:
+        case CHAINE_DE_CHAR << 4 | POINTEUR:
+        case CHAINE_DE_CHAR_P << 4 | POINTEUR:
+        case LISTE << 4 | POINTEUR:
+        case LISTE_P << 4 | POINTEUR:
+        case UNDEFINED << 4 | POINTEUR:
+            return is_greater(v1, v2->value.ptr, p, env);
+            break;
+
+        case POINTEUR << 4 | POINTEUR:
+            return is_greater(v1->value.ptr, v2->value.ptr, p, env);
             break;
 
         default: {
@@ -434,6 +522,32 @@ bool is_strict_greater(val_t* v1, val_t* v2, phrase_t* p, environnement_t* env) 
         case LISTE << 4 | UNDEFINED:
         case LISTE_P << 4 | UNDEFINED:
             return true;
+            break;
+            
+        case POINTEUR << 4 | INT:
+        case POINTEUR << 4 | FLOAT:
+        case POINTEUR << 4 | BOOL:
+        case POINTEUR << 4 | CHAINE_DE_CHAR:
+        case POINTEUR << 4 | CHAINE_DE_CHAR_P:
+        case POINTEUR << 4 | LISTE:
+        case POINTEUR << 4 | LISTE_P:
+        case POINTEUR << 4 | UNDEFINED:
+            return is_strict_greater(v1->value.ptr, v2, p, env);
+            break;
+            
+        case INT << 4 | POINTEUR:
+        case FLOAT << 4 | POINTEUR:
+        case BOOL << 4 | POINTEUR:
+        case CHAINE_DE_CHAR << 4 | POINTEUR:
+        case CHAINE_DE_CHAR_P << 4 | POINTEUR:
+        case LISTE << 4 | POINTEUR:
+        case LISTE_P << 4 | POINTEUR:
+        case UNDEFINED << 4 | POINTEUR:
+            return is_strict_greater(v1, v2->value.ptr, p, env);
+            break;
+
+        case POINTEUR << 4 | POINTEUR:
+            return is_strict_greater(v1->value.ptr, v2->value.ptr, p, env);
             break;
 
         default: {
@@ -513,6 +627,10 @@ void print_val(val_t* v, bool new_line, phrase_t* p, environnement_t* env) {
 
         case UNDEFINED:
             printf("Rien");
+            break;
+
+        case POINTEUR:
+            print_val(v->value.ptr, false, p, env);
             break;
 
         default:

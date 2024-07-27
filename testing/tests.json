@@ -178,5 +178,15 @@
         "name": "boucle for avec pas négatif",
         "code": "Pour i allant de L'entier cinq? jusqu'à L'entier zéro? en utilisant un pas de L'entier moins un? faire:\n    Afficher La variable i?.\n.",
         "output": "cinq\nquatre\ntrois\ndeux\nun\n"
+    },
+    {
+        "name": "pointeur entier et sous liste",
+        "code": "Soit x La liste vide?.\nAjouter à La liste x? La liste des éléments L'entier un??.\nAfficher La liste x?.\nSoit y Un pointeur vers L'élément de La liste x? à l'indice L'entier zéro???.\nAjouter à La liste y? L'entier trois?.\nAfficher La liste y?.\nAfficher La liste x?.\n\nSoit x L'entier un?.\nSoit y Un pointeur vers La variable x??.\nQue x devienne L'entier deux?.\nAfficher La variable y?.\nQue y devienne L'entier trois?.\nAfficher La variable x?.\nAfficher La variable y?.\n",
+        "output": "[[un]]\n[un, trois]\n[[un, trois]]\ndeux\ntrois\ntrois\n"
+    },
+    {
+        "name": "pointeur test général",
+        "code": "Soit var1 L'entier un?.\nSoit var2 Le flottant un virgule zéro?.\nSoit var3 Le booléen vrai?.\nSoit var4 La chaîne de caractères \"Test\"?.\nSoit var5 La liste des éléments L'entier un?, L'entier deux?, L'entier trois??.\n\nSoit ptr Un pointeur vers La variable var1??.\nQue ptr devienne L'entier quatre?.\n\nSoit ptr Un pointeur vers La variable var2??.\nQue ptr devienne Le flottant un virgule deux?.\n\nSoit ptr Un pointeur vers La variable var3??.\nQue ptr devienne Le booléen faux?.\n\nSoit ptr Un pointeur vers La variable var4??.\nQue ptr devienne La chaîne de caractères \"Passé\"?.\n\nSoit ptr Un pointeur vers La variable var5??.\nQue ptr devienne La liste vide?.\n\nSoit ptr L'entier soixante-neuf?.\n\nAfficher La variable var1?.\nAfficher La variable var2?.\nAfficher La variable var3?.\nAfficher La variable var4?.\nAfficher La variable var5?.\nAfficher La variable ptr?.\n",
+        "output": "quatre\nun virgule vingt millions deux\nfaux\nPassé\n[]\nsoixante-neuf\n"
     }
 ]

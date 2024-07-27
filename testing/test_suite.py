@@ -8,7 +8,7 @@ json_file = 'testing/tests.json'
 # build the executable if erwan
 if platform.system() == "Darwin":
     print("Building interpreter...")
-    subprocess.run("""gcc -g -o build/interpreter src/*.c src/*/*/*.c src/*/*.c""", shell=True, capture_output=True, text=True)
+    subprocess.run("""make""", shell=True, capture_output=True, text=True)
     print("Interpreter built, starting tests...")
 
 # Read the contents of the JSON file
