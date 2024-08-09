@@ -172,10 +172,10 @@ int elem_liste(char* text) {
     if (!strcmp(text, NOMBRE_ALEATOIRE_S)) {
         return NOMBRE_ALEATOIRE;
     }
-    if (!strcmp(text, PARTIE_ENTIERE_S)){
+    if (!strcmp(text, PARTIE_ENTIERE_S)) {
         return PARTIE_ENTIERE;
     }
-    if(!strcmp(text, POINTEUR_VARIABLE_S)){
+    if (!strcmp(text, POINTEUR_VARIABLE_S)) {
         return POINTEUR_VARIABLE;
     }
     return -1;
@@ -982,8 +982,12 @@ void removeConstants(phrase_t* phrase) {
     int phrasesWithInnerSize = DEFAULT_PHRASE_INNER;
     phrase_t* phraseActuelle = phrase;
 
+    // printf("remove constants %s %d\n", phrase->text, phrase->innerPhraseLen);
+
     while (phraseActuelle != NULL) {
+        // printf("phrase actuelle %s\n", phraseActuelle->text);
         if (phraseActuelle->innerPhraseLen > 0) {
+            // printf("inner phrase %d\n", phraseActuelle->innerPhraseLen);
             if (phrasesWithInnerLen == phrasesWithInnerSize) {
                 phrasesWithInnerSize *= 2;
                 phrasesWithInner = realloc(phrasesWithInner, sizeof(phrase_t*) * phrasesWithInnerSize);
@@ -997,6 +1001,7 @@ void removeConstants(phrase_t* phrase) {
         }
 
         if (phraseActuelle->phraseId == QUITTER_BOUCLE) {
+            phraseActuelle->constant_removed = true;
             // printf("quitter boucle  %s\n", phraseActuelle->suivant->text);
             break;
         }
@@ -1016,9 +1021,17 @@ void removeConstants(phrase_t* phrase) {
             phraseActuelle = phraseActuelle->suivant;
         }
     }
+    phraseActuelle->constant_removed = true;
 
     // printf("phrases with inner len: %d\n", phrasesWithInnerLen);
-
+    // if (phrasesWithInnerLen > 0) {
+    //     if (phrasesWithInner[0]->text[0] != '*') {
+    //         printf("'%s'\n",phrasesWithInner[0]->text);
+    //         exit(1);
+    //     } else {
+    //         printf("'%s'\n",phrasesWithInner[0]->text);
+    //     }
+    // }
     int i = 0;
     while (i < phrasesWithInnerLen) {
         while (phrasesWithInner[i]->suivantInner1 != NULL && (phrasesWithInner[i]->suivantInner1->constant || phrasesWithInner[i]->suivantInner1->phraseId == DEFINITION_FONCTION || phrasesWithInner[i]->suivantInner1->phraseId == DEFINITION_FONCTION_ARGUMENT)) {
