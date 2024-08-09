@@ -16,7 +16,15 @@ data = json.loads(json_contents)
 with open('testing/test.FC', 'r', encoding="utf-8") as file:
     code = file.read()
 
-# code.replace('\n', ' ')
+# code.replace('\n', ' ')   
+
+# build the executable if erwan
+if platform.system() == "Darwin":
+    print("Building interpreter...")
+    subprocess.run("""make clean""", shell=True, capture_output=True, text=True)
+    subprocess.run("""make""", shell=True, capture_output=True, text=True)
+    print("Interpreter built, starting tests...")
+
 
 res = subprocess.run(f"""build/interpreter testing/test.FC""",
                      shell=True, capture_output=True, text=True)

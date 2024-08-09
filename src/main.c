@@ -14,7 +14,7 @@ int main(int argc, char const* argv[]) {
     if (argc == 2) {
         // help
         if (strcmp(argv[1], "-h") == 0) {
-            // printf("Usage: %s <file>\n", argv[0]);
+            printf("Usage: %s <file>\n", argv[0]);
             return 0;
         }
 
@@ -28,7 +28,6 @@ int main(int argc, char const* argv[]) {
             custom_error("Impossible d'ouvrir le fichier", NULL, NULL);
         }
         phrase_t* p = parse_file(f);
-
         char* nom = malloc(sizeof(char));
         nom[0] = '\0';
         function_t* function = new_function(nom, p);
@@ -38,7 +37,9 @@ int main(int argc, char const* argv[]) {
         addToFunctionList(function_list, function);
         
         int i = 0;
+                
         tokenise(p, function, function_list, function_call_list, &i, NULL,false, NULL);
+        
         // exit(1);
         interpreter(function, function_list, NULL, 0);
 

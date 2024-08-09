@@ -10,7 +10,6 @@ typedef struct phrase phrase_t;
 
 typedef struct val {
     char type;
-    char* ptrType;
     union Value{
         int entier;
         float flottant;
@@ -19,6 +18,7 @@ typedef struct val {
         chaine_t* chaine;
         struct val* ptr;
     } value;
+    liste_t* parent_liste;
 } val_t;
 
 
@@ -36,7 +36,7 @@ void set_bool(val_t* v, bool valeur);
 void set_liste(val_t*, liste_t* l);
 void set_char(val_t* v, chaine_t* chaine);
 void set_undefined(val_t* v);
-void set_pointer(val_t* dest, val_t* src);
+void set_pointer(val_t* src, val_t* dest, phrase_t* p, environnement_t* env);
 
 char* str_type(val_t* v);
 

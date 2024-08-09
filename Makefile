@@ -3,7 +3,7 @@ HEADERS = $(shell find src -type f -name '*.h')
 OBJECTS = $(patsubst %.c,%.o,$(SOURCES))
 CFLAGS = -g -Wall -Wextra -O0 
 
-build: $(OBJECTS)
+build_: $(OBJECTS)
 	gcc -o build/interpreter $^ -lm
 
 build/%.o: src/%.c $(HEADERS)

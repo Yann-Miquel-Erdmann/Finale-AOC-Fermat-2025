@@ -3,10 +3,12 @@
 #include <math.h>
 #include <stdlib.h>
 #include <string.h>
+#include <stdio.h>
 
 #include "../constants.h"
 
 void free_chaine_t(chaine_t* c) {
+    // printf("free chaine %p\n", c);
     free(c->chars);
     free(c);
 }

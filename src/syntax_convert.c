@@ -224,7 +224,6 @@ void tokenise(phrase_t* phrase, function_t* function, function_list_t* func_list
             // exit(1);
             removeConstants(phrase);
             // exit(1);
-
             // links the function calls to their respective functions
             link_function_to_call(func_list, func_call_list, function->env);
 
@@ -943,7 +942,6 @@ void tokenise(phrase_t* phrase, function_t* function, function_list_t* func_list
             if (phrase->phraseId == EXECUTION_FONCTION || phrase->phraseId == EXECUTION_FONCTION_ARGUMENT || phrase->phraseId == APPEL_VALEUR_FONCTION || phrase->phraseId == APPEL_VALEUR_FONCTION_ARGUMENT) {
                 addToFunctionList(func_call_list, phrase->function);
             }
-
             break;
         }
     }

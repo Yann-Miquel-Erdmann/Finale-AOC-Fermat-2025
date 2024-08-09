@@ -12,6 +12,7 @@ typedef struct liste {
     val_t** valeurs;
     int valeursLen;
     int valeursSize;
+    struct liste* parent_list;
 } liste_t;
 
 void free_liste_t(liste_t* l, bool free_chaine, bool free_liste);
@@ -32,7 +33,7 @@ bool is_strict_greater_list(liste_t* l1, liste_t* l2, phrase_t* p, environnement
 
 val_t* accession(liste_t* l, int indice, phrase_t* p, environnement_t* env);
 void modification(liste_t* l, int indice, val_t* v, phrase_t* p, environnement_t* env);
-void ajout(liste_t* l, val_t* v);
+void ajout(liste_t* liste, val_t* valeur, phrase_t* p, environnement_t* env);
 void inserer(liste_t* l, int indice, val_t* v, phrase_t* p, environnement_t* env);
 void suppression(liste_t* l, int indice, phrase_t* p, environnement_t* env);
 

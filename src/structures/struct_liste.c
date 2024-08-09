@@ -10,6 +10,7 @@ void free_liste_t(liste_t* liste, bool free_chaine, bool free_liste) {
     // printf("free liste %p\n", liste);
     for (int i = 0; i < liste->valeursLen; i++) {
         if (liste->valeurs[i] != NULL) {
+            // printf("%d. ", i);
             free_val_t(liste->valeurs[i], free_chaine, free_liste);
         }
     }
@@ -22,6 +23,7 @@ liste_t* new_liste_t(void) {
     liste->valeurs = malloc(sizeof(val_t*) * DEFAULT_VALEURS_LIST_SIZE);
     liste->valeursLen = 0;
     liste->valeursSize = DEFAULT_VALEURS_LIST_SIZE;
+    liste->parent_list = NULL;
     return liste;
 }
 
@@ -33,6 +35,10 @@ liste_t* copy_liste(liste_t* liste) {
     for (int i = 0; i < liste->valeursLen; i++) {
         new_liste->valeurs[i] = new_val_t(UNDEFINED);
         copy_val(new_liste->valeurs[i], liste->valeurs[i], true, true);
+        new_liste->valeurs[i]->parent_liste = new_liste;
+        if (new_liste->valeurs[i]->type == LISTE){
+            new_liste->valeurs[i]->value.liste->parent_list = new_liste;
+        }
     }
     return new_liste;
 }
@@ -71,13 +77,31 @@ void modification(liste_t* liste, int indice, val_t* valeur, phrase_t* p, enviro
     copy_val(liste->valeurs[indice], valeur, true, true);
 }
 
-void ajout(liste_t* liste, val_t* valeur) {
+void ajout(liste_t* liste, val_t* valeur, phrase_t* p, environnement_t* env) {
+    if (valeur->type == POINTEUR){
+        val_t* val = valeur;
+        while(val->type == POINTEUR){
+            val = val->value.ptr;
+        }
+        liste_t* liste_val = liste;
+        while (liste_val != NULL){
+            if (liste_val == val->value.liste){
+                custom_error("Le pointeur ne peux référencer un de ses parents", p, env);
+            }
+            liste_val = liste_val->parent_list;
+        }
+    }
+    
     if (liste->valeursLen ==
         liste->valeursSize) {
         doubleValeursSize(liste);
     }
     liste->valeurs[liste->valeursLen] = new_val_t(UNDEFINED);
     copy_val(liste->valeurs[liste->valeursLen], valeur, true, true);
+    liste->valeurs[liste->valeursLen]->parent_liste = liste;
+    if (liste->valeurs[liste->valeursLen]->type == LISTE){
+        liste->valeurs[liste->valeursLen]->value.liste->parent_list = liste;
+    }
     liste->valeursLen++;
 }
 
@@ -93,6 +117,10 @@ void inserer(liste_t* liste, int indice, val_t* valeur, phrase_t* p, environneme
     }
     liste->valeurs[indice] = new_val_t(UNDEFINED);
     copy_val(liste->valeurs[indice], valeur, true, true);
+    liste->valeurs[indice]->parent_liste = liste;
+    if (liste->valeurs[indice]->type == LISTE){
+        liste->valeurs[indice]->value.liste->parent_list = liste;
+    }
     liste->valeursLen++;
 }
 

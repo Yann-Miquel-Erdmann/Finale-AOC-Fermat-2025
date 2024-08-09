@@ -147,6 +147,7 @@ void addToText(phrase_t* phrase, char c) {
 }
 
 void _printPhrase(phrase_t* phrase, int decalage, int last_elem, environnement_t* env) {
+    // printf("%p : ", env->phraseValeurs[phrase->uniqueId]);
     if (!phrase->expr) {
         for (int i = 0; i < decalage; i++) {
             printf("|\t");

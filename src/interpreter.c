@@ -122,10 +122,7 @@ void interpreter(function_t* function, function_list_t* functions, val_t* result
             case DEFINITION_VARIABLE_AVEC_INIT:
                 // printf("modif variable %s\n", phraseActuelle->text);
                 if (env->phraseValeurs[phraseActuelle->args[0]->uniqueId]->type == POINTEUR){
-                    if (env->phraseValeurs[phraseActuelle->args[0]->uniqueId]->value.ptr == env->variable_list[phraseActuelle->variableId]->valeur){
-                        custom_error("Il n'est pas possible de faire pointer une variable sur elle même", phraseActuelle, env);
-                    }
-                    set_pointer(env->phraseValeurs[phraseActuelle->args[0]->uniqueId]->value.ptr, env->variable_list[phraseActuelle->variableId]->valeur);
+                    set_pointer(env->phraseValeurs[phraseActuelle->args[0]->uniqueId]->value.ptr, env->variable_list[phraseActuelle->variableId]->valeur, phraseActuelle, env);
                 }else{
                     copy_val(env->variable_list[phraseActuelle->variableId]->valeur, env->phraseValeurs[phraseActuelle->args[0]->uniqueId], true, true);
                 }
@@ -156,18 +153,17 @@ void interpreter(function_t* function, function_list_t* functions, val_t* result
                 break;
                 
             case POINTEUR_VARIABLE:
-                //printf("got here\n");
                 if (phraseActuelle->args[0]->variableId != -1){
-                    set_pointer(env->variable_list[phraseActuelle->args[0]->variableId]->valeur, env->phraseValeurs[phraseActuelle->uniqueId]);
+                    set_pointer(env->variable_list[phraseActuelle->args[0]->variableId]->valeur, env->phraseValeurs[phraseActuelle->uniqueId], phraseActuelle, env);
                 }else{
-                    if (env->phraseValeurs[phraseActuelle->args[0]->uniqueId]->type == LISTE_P){ // phrase en argument est un index de liste
+                    if (phraseActuelle->args[0]->phraseId == ACCESSION_LISTE){ // phrase en argument est un index de liste
                         val_t* temp = env->variable_list[phraseActuelle->args[0]->args[0]->variableId]->valeur->value.liste->valeurs[
                             env->phraseValeurs[phraseActuelle->args[0]->args[1]->uniqueId]->value.entier];
                         
-                        set_pointer(temp, env->phraseValeurs[phraseActuelle->uniqueId]);
+                        set_pointer(temp, env->phraseValeurs[phraseActuelle->uniqueId], phraseActuelle, env);
                     }
                     else {
-                        set_pointer(env->phraseValeurs[phraseActuelle->args[0]->uniqueId], env->phraseValeurs[phraseActuelle->uniqueId]);
+                        set_pointer(env->phraseValeurs[phraseActuelle->args[0]->uniqueId], env->phraseValeurs[phraseActuelle->uniqueId], phraseActuelle, env);
                     }
                 }
                 
@@ -255,27 +251,22 @@ void interpreter(function_t* function, function_list_t* functions, val_t* result
 
             // list -----------------------------------------------------------------
             case EXPR_LISTE:
-                if (env->variable_list[phraseActuelle->variableId]->valeur->type == POINTEUR){
-                    if (*env->variable_list[phraseActuelle->variableId]->valeur->ptrType != LISTE && *env->variable_list[phraseActuelle->variableId]->valeur->ptrType != LISTE_P){
-                        custom_error("La variable n'est pas une liste", phraseActuelle, env);
-                    }
-                    
-                    env->phraseValeurs[phraseActuelle->uniqueId]->value.liste = env->variable_list[phraseActuelle->variableId]->valeur->value.ptr->value.liste;
-                    env->phraseValeurs[phraseActuelle->uniqueId]->type = LISTE_P;
-                }else{
-                    if (env->variable_list[phraseActuelle->variableId]->valeur->type != LISTE && env->variable_list[phraseActuelle->variableId]->valeur->type != LISTE_P){
-                        custom_error("La variable n'est pas une liste", phraseActuelle, env);
-                    }
-                    
-                    // copy_val(env->phraseValeurs[phraseActuelle->uniqueId], env->variable_list[phraseActuelle->variableId]->valeur,true,true);
-                    env->phraseValeurs[phraseActuelle->uniqueId]->value.liste = env->variable_list[phraseActuelle->variableId]->valeur->value.liste;
-                    env->phraseValeurs[phraseActuelle->uniqueId]->type = LISTE_P;
+            {
+                val_t* variable = env->variable_list[phraseActuelle->variableId]->valeur;
+                while (variable->type == POINTEUR){
+                    variable = variable->value.ptr;
                 }
-               
+                
+                if (variable->type != LISTE && variable->type != LISTE_P){
+                    custom_error("La variable n'est pas une liste", phraseActuelle, env);
+                }
 
+                env->phraseValeurs[phraseActuelle->uniqueId]->value.liste = variable->value.liste;
+                env->phraseValeurs[phraseActuelle->uniqueId]->type = LISTE_P;
+                
                 phraseActuelle = phraseActuelle->suivant;
                 break;
-
+            }
             case EXPR_LISTE_VIDE:
                 vider_liste(env->phraseValeurs[phraseActuelle->uniqueId]->value.liste);
 
@@ -291,7 +282,7 @@ void interpreter(function_t* function, function_list_t* functions, val_t* result
                 }
 
                 for (int i = 0; i < phraseActuelle->argsLen; i++) {
-                    ajout(env->phraseValeurs[phraseActuelle->uniqueId]->value.liste, env->phraseValeurs[phraseActuelle->args[i]->uniqueId]);
+                    ajout(env->phraseValeurs[phraseActuelle->uniqueId]->value.liste, env->phraseValeurs[phraseActuelle->args[i]->uniqueId], phraseActuelle, env);
                 }
 
                 phraseActuelle = phraseActuelle->suivant;
@@ -368,7 +359,7 @@ void interpreter(function_t* function, function_list_t* functions, val_t* result
                 if (env->phraseValeurs[phraseActuelle->args[0]->uniqueId] == NULL || (env->phraseValeurs[phraseActuelle->args[0]->uniqueId]->type != LISTE && env->phraseValeurs[phraseActuelle->args[0]->uniqueId]->type != LISTE_P)) {
                     custom_error("La variable n'est pas une liste", phraseActuelle, env);
                 }
-                ajout(env->phraseValeurs[phraseActuelle->args[0]->uniqueId]->value.liste, env->phraseValeurs[phraseActuelle->args[1]->uniqueId]);
+                ajout(env->phraseValeurs[phraseActuelle->args[0]->uniqueId]->value.liste, env->phraseValeurs[phraseActuelle->args[1]->uniqueId], phraseActuelle, env);
                 
                 phraseActuelle = phraseActuelle->suivant;
                 break;

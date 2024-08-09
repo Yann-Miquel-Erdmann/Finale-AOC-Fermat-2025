@@ -1,3 +1,29 @@
-Pour i allant de L'entier cinq? jusqu'à L'entier zéro? en utilisant un pas de L'entier moins un? faire:
-    Afficher La variable i?.
-.
+Soit var1 L'entier un?.
+Soit var2 Le flottant un virgule zéro?.
+Soit var3 Le booléen vrai?.
+Soit var4 La chaîne de caractères "Test"?.
+Soit var5 La liste des éléments L'entier un?, L'entier deux?, L'entier trois??.
+
+Soit ptr Un pointeur vers La variable var1??.
+Que ptr devienne L'entier quatre?.
+
+Soit ptr Un pointeur vers La variable var2??.
+Que ptr devienne Le flottant un virgule deux?.
+
+Soit ptr Un pointeur vers La variable var3??.
+Que ptr devienne Le booléen faux?.
+
+Soit ptr Un pointeur vers La variable var4??.
+Que ptr devienne La chaîne de caractères "Passé"?.
+
+Soit ptr Un pointeur vers La variable var5??.
+Que ptr devienne La liste vide?.
+
+Soit ptr L'entier soixante-neuf?.
+
+Afficher La variable var1?.
+Afficher La variable var2?.
+Afficher La variable var3?.
+Afficher La variable var4?.
+Afficher La variable var5?.
+Afficher La variable ptr?.

@@ -27,6 +27,5 @@ bool test_expr_chaine(phrase_t* phrase, environnement_t* env) {
     set_char(env->phraseValeurs[phrase->uniqueId], c);
 
     free(result);
-
     return true;
 }

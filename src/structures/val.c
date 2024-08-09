@@ -16,14 +16,13 @@ val_t* new_val_t(char type) {
     }
 
     val->type = type;
-    val->ptrType = NULL;
 
     if (type == LISTE) {
         val->value.liste = new_liste_t();
     } else if (type == CHAINE_DE_CHAR) {
         val->value.chaine = new_chaine_t("");
     }
-
+    val->parent_liste = NULL;
     return val;
 }
 
@@ -34,7 +33,7 @@ void free_val_t(val_t* v, bool free_chaine, bool free_liste) {
     } else if (v->type == LISTE) {
         free_liste_t(v->value.liste, free_chaine, free_liste);
     }
-
+    v->type = -1;
     free(v);
 }
 
@@ -45,9 +44,8 @@ void __attribute__((hot)) copy_val(val_t* dest, val_t* src, bool cp_chaine, bool
     } else if (dest->type == CHAINE_DE_CHAR) {
         free_chaine_t(dest->value.chaine);
     }
-
+    dest->parent_liste = NULL;
     dest->type = src->type;
-    dest->ptrType = src->ptrType;
     switch (src->type) {
         case INT:
             dest->value.entier = src->value.entier;
@@ -195,43 +193,62 @@ bool get_as_bool(val_t* v, phrase_t* p, environnement_t* env) {
 void set_int(val_t* v, int valeur) {
     v->type = INT;
     v->value.entier = valeur;
-    v->ptrType = NULL;
 }
 void set_float(val_t* v, float valeur) {
     v->type = FLOAT;
     v->value.flottant = valeur;
-    v->ptrType = NULL;
 }
 void set_bool(val_t* v, bool valeur) {
     v->type = BOOL;
     v->value.booleen = valeur;
-    v->ptrType = NULL;
 }
 
 void set_liste(val_t* v, liste_t* l) {
     v->type = LISTE;
     v->value.liste = l;
-    v->ptrType = NULL;
 }
 
 void set_char(val_t* v, chaine_t* chaine) {
     v->type = CHAINE_DE_CHAR;  // pas super, on pourrait avoir un pointeur sur une chaîne de caractères
     v->value.chaine = chaine;
-    v->ptrType = NULL;
 }
 
 void set_undefined(val_t* v) {
     v->type = UNDEFINED;
-    v->ptrType = NULL;
 }
 
-void set_pointer(val_t* src, val_t* dest){
+void set_pointer(val_t* src, val_t* dest, phrase_t* p, environnement_t* env){
+    // printf("pointer set to %p\n", src);
+    
+    val_t* variable = src;
+    while (variable->type == POINTEUR){
+        variable = variable->value.ptr;
+        if (variable == src){
+            custom_error("La création du pointeur entraine une boucle de référencement", p, env);
+        }
+    }
+    
+    liste_t* liste = dest->parent_liste;
+    while (liste != NULL){
+        if (liste == src->value.liste){
+            custom_error("Le pointeur ne peux référencer un de ses parents", p, env);
+        }
+        liste = liste->parent_list;
+    }
+    
     if (dest->type == LISTE) {
+        liste = src->parent_liste;
+        while (liste != NULL){
+            if (liste == dest->value.liste){
+                custom_error("La création du pointeur entraine la référence d'un élément inexistant", p, env);
+            }
+            liste = liste->parent_list;
+        }
+        
         free_liste_t(dest->value.liste, true, true);
     } else if (dest->type == CHAINE_DE_CHAR) {
         free_chaine_t(dest->value.chaine);
     }
-    dest->ptrType = &src->type;
     dest->type = POINTEUR;
     dest->value.ptr = src;
 }
