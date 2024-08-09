@@ -1,40 +1,35 @@
+(On suppose que a est un pointeur vers la liste)
 Soit swap une fonction qui lorsqu'elle est appelée avec a, i0, i1 exécute:
     Soit c L'élément de La liste a? à l'indice La variable i1??.
     Remplacer l'élément de La liste a? à l'indice La variable i1? par L'élément de La liste a? à l'indice La variable i0??.
     Remplacer l'élément de La liste a? à l'indice La variable i0? par La variable c?.
-    Renvoyer La liste a?.
 .
 
+(On suppose que a est un pointeur vers la liste)
 Soit quicksort une fonction qui lorsqu'elle est appelée avec a, l0, hi exécute:
     Si On a La valeur de La variable l0? est plus grande que la valeur de La variable hi?? ou La valeur de La variable l0? est strictement plus petite que la valeur de L'entier zéro??? alors faire:
-        Renvoyer La liste a?.
+        Renvoyer Rien?.
     .
-    Soit result Le résultat de la fonction partition avec les arguments La variable a?, La variable l0?, La variable hi??.
-    Soit p L'élément de La liste result? à l'indice L'entier zéro??.
-    Soit a L'élément de La liste result? à l'indice L'entier un??.
-    Que a devienne Le résultat de la fonction quicksort avec les arguments La variable a?, La somme de La variable p? et de L'entier un??, La variable hi??.
-    Que a devienne Le résultat de la fonction quicksort avec les arguments La variable a?, La variable l0?, La différence de La variable p? et de L'entier un???.
-    Renvoyer La liste a?.
+    Soit p Le résultat de la fonction partition avec les arguments La variable a?, La variable l0?, La variable hi??.
+    Exécuter la fonction quicksort avec les arguments La variable a?, La somme de La variable p? et de L'entier un??, La variable hi?.
+    Exécuter la fonction quicksort avec les arguments La variable a?, La variable l0?, La différence de La variable p? et de L'entier un??.
 .
 
+(On suppose que a est un pointeur vers la liste)
 Soit partition une fonction qui lorsqu'elle est appelée avec a, l0, hi exécute:
     Soit pivot L'élément de La liste a? à l'indice La variable hi??.
     Soit i La variable l0?.
     Pour j allant de La variable l0? jusqu'à La variable hi? faire:
         Si La valeur de L'élément de La liste a? à l'indice La variable j?? est plus petite que la valeur de La variable pivot?? alors faire:
-            Que a devienne Le résultat de la fonction swap avec les arguments La variable a?, La variable i?, La variable j??.
+            Exécuter la fonction swap avec les arguments La variable a?, La variable i?, La variable j?.
             Que i devienne La somme de La variable i? et de L'entier un??.
         .
     .
-    Que a devienne Le résultat de la fonction swap avec les arguments La variable a?, La variable i?, La variable hi??.
-    Soit b La liste vide?.
-    Ajouter à La liste b? La variable i?.
-    Ajouter à La liste b? La variable a?.
-    Renvoyer La variable b?.
+    Exécuter la fonction swap avec les arguments La variable a?, La variable i?, La variable hi?.
+    Renvoyer La variable i?.
 .
 
-Soit n L'entier cent?.
-
+Soit n L'entier dix?.
 Soit l La liste vide?.
 
 Pour i allant de L'entier un? jusqu'à La somme de La variable n? et de L'entier un?? faire:
@@ -44,11 +39,8 @@ Pour i allant de L'entier un? jusqu'à La somme de La variable n? et de L'entier
 Mettre la seed aléatoire à L'entier douze?.
 Pour i allant de La différence de La variable n? et de L'entier un?? jusqu'à L'entier moins un? en utilisant un pas de L'entier moins un? faire:
     Soit j Un nombre aléatoire?.
-    Soit l Le résultat de la fonction swap avec les arguments La liste l?, La variable i?, La partie entière de Le produit de La variable j? et de La variable n????.
+    Exécuter la fonction swap avec les arguments La liste l?, La variable i?, La partie entière de Le produit de La variable j? et de La variable n???.
 .
 
-(Afficher L'élément de La liste l? à l'indice L'entier trois??.
-Afficher La liste l?.)
-
-Soit l2 Le résultat de la fonction quicksort avec les arguments La liste l?, L'entier zéro?, La différence de La variable n? et de L'entier un???.
-(Afficher La variable l2?.)
+Exécuter la fonction quicksort avec les arguments Un pointeur vers La liste l??, L'entier zéro?, La différence de La variable n? et de L'entier un??.
+(Afficher La variable l?.)

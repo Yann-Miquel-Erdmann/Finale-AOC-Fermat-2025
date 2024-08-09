@@ -94,7 +94,7 @@ void __attribute__((hot)) copy_val(val_t* dest, val_t* src, bool cp_chaine, bool
             break;
 
         case POINTEUR:
-            dest->value.ptr = src;
+            dest->value.ptr = src->value.ptr;
             break;
 
         case UNDEFINED:
