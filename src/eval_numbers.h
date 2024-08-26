@@ -6,14 +6,13 @@
 #include <string.h>
 #include <stdbool.h>
 
-/* renvoie l'entier associé à la chaine str_num de longueur len
-   stocke si le nombre est valide dans valid */
-int eval_number(char* str_num, int len, bool* valid);
+/* stocke l'entier associé à la chaine str_num de longueur len dans result
+   renvoie le succès de l'opération */
+bool eval_number(char* str_num, int len, int* result);
 
-/* renvoie le flottant associé à la chaine str_num de longueur len
-   stocke si le nombre est valide dans valid */
-float eval_float(char* str_num, int len, bool* valid);
-
+/* stocke le flottant associé à la chaine str_num de longueur len dans result
+   renvoie le succès de l'opération */
+bool eval_float(char* str_num, int len, float* result);
 
 /* renvoie un entier du nombre num en lettre
    par nombre simple, con considère tout nombre inférieur à un million

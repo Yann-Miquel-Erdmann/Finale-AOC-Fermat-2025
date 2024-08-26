@@ -25,14 +25,9 @@ bool test_expr_flottant(phrase_t* phrase, environnement_t* env) {
     } else if (len < 1) {
         custom_error("not enough arguments", phrase, env);
     }
-
-    char** res = split_word(result[0], "virgule");
-    bool valid_entier;
-    int partie_entiere = eval_number(res[0], (int)strlen(res[0]), &valid_entier);
-    bool valid_flotant;
-    float partie_decimale = eval_float(res[1], (int)strlen(res[1]), &valid_flotant);
-    if (valid_entier && valid_flotant) {
-        float num = (float)partie_entiere + partie_decimale;
+    
+    float num;
+    if (eval_float(result[0], (int)strlen(result[0]), &num)) {
         phrase->phraseId = EXPR_FLOTTANT;
 
         phrase->constant = true;
@@ -41,9 +36,6 @@ bool test_expr_flottant(phrase_t* phrase, environnement_t* env) {
         custom_error("Flottant invalide", phrase, env);
     }
 
-    free(res[0]);
-    free(res[1]);
-    free(res);
 
     free_l(result, len);
 

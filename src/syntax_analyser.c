@@ -15,7 +15,6 @@ char** analyse(phrase_t* phrase, char* syntax, int* list_len, char* separator) {
     char* variable = malloc(sizeof(char));
     int var_len = 0;
     int var_size = 1;
-
     while (phrase->text[index] != '\0' && syntax[index_const] != '\0') {
         if (syntax[index_const] == '$') {
             mode = 1;
@@ -24,7 +23,12 @@ char** analyse(phrase_t* phrase, char* syntax, int* list_len, char* separator) {
         if (mode > 0) {
             for (int i = 0; i<sep_len; i++){
                 if (phrase->text[index] == separator[i]){
-                    mode = 0;
+                    if (phrase->text[index-1] == '\\'){
+                        variable[var_len-1] = phrase->text[index];
+                        var_len--;
+                    }else{
+                        mode = 0;
+                    }
                 }
             }
             if (mode == 0) {

@@ -8,59 +8,6 @@
 #include "expressions/operateurs/operateurs.h"
 #include "structures/function.h"
 
-char** split_word(char* str, char* separator) {
-    int len = (int)strlen(str);
-    char** l = malloc(2 * sizeof(char*));
-
-    int sep_len = (int)strlen(separator);
-
-    char* str1 = malloc((len + 1) * sizeof(char));
-    char* str2 = malloc((len + 1) * sizeof(char));
-    int num = 1;
-    int index = 0;
-
-    for (int i = 0; i < len; i++) {
-        bool broken = false;
-        if (i < len - sep_len && str[i] == ' ' && str[i + sep_len + 1] == ' ') {
-            for (int j = 0; j < sep_len; j++) {
-                if (str[i + 1 + j] != separator[j]) {
-                    broken = true;
-                    break;
-                }
-            }
-            if (!broken) {
-                str1[index] = '\0';
-                num = 2;
-                i += sep_len + 1;
-                index = 0;
-            } else {
-                if (num == 1) {
-                    str1[index] = str[i];
-                    index++;
-                } else {
-                    str2[index] = str[i];
-                    index++;
-                }
-            }
-        } else {
-            if (num == 1) {
-                str1[index] = str[i];
-                index++;
-            } else {
-                str2[index] = str[i];
-                index++;
-            }
-        }
-    }
-    str2[index] = '\0';
-    if (num == 1) {
-        str2[0] = '\0';
-    }
-    l[0] = str1;
-    l[1] = str2;
-    return l;
-}
-
 int elem_liste(char* text) {
     // printf("%s\n", text);
     if (!strcmp(text, SOMME_S)) {
@@ -177,6 +124,21 @@ int elem_liste(char* text) {
     }
     if (!strcmp(text, POINTEUR_VARIABLE_S)) {
         return POINTEUR_VARIABLE;
+    }
+    if (!strcmp(text, INPUT_S)){
+        return INPUT;
+    }
+    if (!strcmp(text, CONVERT_TO_INT_S)){
+        return CONVERT_TO_INT;
+    }
+    if (!strcmp(text, CONVERT_TO_FLOAT_S)){
+        return CONVERT_TO_FLOAT;
+    }
+    if (!strcmp(text, CONVERT_TO_BOOL_S)){
+        return INPUT;
+    }
+    if (!strcmp(text, CONVERT_TO_CHAR_S)){
+        return CONVERT_TO_CHAR;
     }
     return -1;
 }
@@ -841,6 +803,11 @@ void tokenise(phrase_t* phrase, function_t* function, function_list_t* func_list
                 taille(phrase, function->env);
                 phrase->constant = true;
             }
+            
+            if (inLoopSuivant) {
+                phrase->suivant = inLoopSuivantPointer;
+            }
+            
             break;
         case DEFINIR_SEED:
             if (phrase->innerPhraseLen > 0 || phrase->argsLen != 1) {
@@ -848,10 +815,20 @@ void tokenise(phrase_t* phrase, function_t* function, function_list_t* func_list
             }
             phrase->phraseId = DEFINIR_SEED;
             tokenise(phrase->args[0], function, func_list, func_call_list, uniqueId, parent_loop, false, NULL);
+            
+            if (inLoopSuivant) {
+                phrase->suivant = inLoopSuivantPointer;
+            }
+            
             break;
         case NOMBRE_ALEATOIRE:
             phrase->phraseId = NOMBRE_ALEATOIRE;
             function->env->phraseValeurs[phrase->uniqueId]->type = FLOAT;
+            
+            if (inLoopSuivant) {
+                phrase->suivant = inLoopSuivantPointer;
+            }
+            
             break;
         case PARTIE_ENTIERE:
             if (phrase->innerPhraseLen > 0 || phrase->argsLen != 1) {
@@ -859,6 +836,11 @@ void tokenise(phrase_t* phrase, function_t* function, function_list_t* func_list
             }
             phrase->phraseId = PARTIE_ENTIERE;
             tokenise(phrase->args[0], function, func_list, func_call_list, uniqueId, parent_loop, false, NULL);
+            
+            if (inLoopSuivant) {
+                phrase->suivant = inLoopSuivantPointer;
+            }
+            
             break;
         case POINTEUR_VARIABLE:
             if (phrase->innerPhraseLen > 0 || phrase->argsLen != 1) {
@@ -869,6 +851,62 @@ void tokenise(phrase_t* phrase, function_t* function, function_list_t* func_list
             /*if (phrase->args[0]->constant){
                 custom_error("Un pointeur ne peut pas pointer vers une constante", phrase, function->env);
             }*/
+            
+            if (inLoopSuivant) {
+                phrase->suivant = inLoopSuivantPointer;
+            }
+            
+            break;
+        case INPUT:
+            phrase->phraseId = INPUT;
+            if (inLoopSuivant) {
+                phrase->suivant = inLoopSuivantPointer;
+            }
+            function->env->phraseValeurs[phrase->uniqueId]->type = CHAINE_DE_CHAR;
+            break;
+        case CONVERT_TO_INT:
+            if (phrase->innerPhraseLen > 0 || phrase->argsLen != 1) {
+                custom_error("Syntaxe invalide, convertir en entier prend 1 arguments", phrase, function->env);
+            }
+            phrase->phraseId = CONVERT_TO_INT;
+            if (inLoopSuivant) {
+                phrase->suivant = inLoopSuivantPointer;
+            }
+            tokenise(phrase->args[0], function, func_list, func_call_list, uniqueId, parent_loop, false, NULL);
+            function->env->phraseValeurs[phrase->uniqueId]->type = INT;
+            break;
+        case CONVERT_TO_FLOAT:
+            if (phrase->innerPhraseLen > 0 || phrase->argsLen != 1) {
+                custom_error("Syntaxe invalide, convertir en flottant prend 1 arguments", phrase, function->env);
+            }
+            phrase->phraseId = CONVERT_TO_FLOAT;
+            if (inLoopSuivant) {
+                phrase->suivant = inLoopSuivantPointer;
+            }
+            tokenise(phrase->args[0], function, func_list, func_call_list, uniqueId, parent_loop, false, NULL);
+            function->env->phraseValeurs[phrase->uniqueId]->type = FLOAT;
+            break;
+        case CONVERT_TO_BOOL:
+            if (phrase->innerPhraseLen > 0 || phrase->argsLen != 1) {
+                custom_error("Syntaxe invalide, convertir en booléen prend 1 arguments", phrase, function->env);
+            }
+            phrase->phraseId = CONVERT_TO_BOOL;
+            if (inLoopSuivant) {
+                phrase->suivant = inLoopSuivantPointer;
+            }
+            tokenise(phrase->args[0], function, func_list, func_call_list, uniqueId, parent_loop, false, NULL);
+            function->env->phraseValeurs[phrase->uniqueId]->type = BOOL;
+            break;
+        case CONVERT_TO_CHAR:
+            if (phrase->innerPhraseLen > 0 || phrase->argsLen != 1) {
+                custom_error("Syntaxe invalide, convertir en chaîne de caractères prend 1 arguments", phrase, function->env);
+            }
+            phrase->phraseId = CONVERT_TO_CHAR;
+            if (inLoopSuivant) {
+                phrase->suivant = inLoopSuivantPointer;
+            }
+            tokenise(phrase->args[0], function, func_list, func_call_list, uniqueId, parent_loop, false, NULL);
+            function->env->phraseValeurs[phrase->uniqueId]->type = CHAINE_DE_CHAR;
             break;
         default: {
             if (test_expr_entier(phrase, function->env)) {

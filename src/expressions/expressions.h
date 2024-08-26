@@ -22,5 +22,6 @@ bool test_expr_access_var(phrase_t* phrase, function_t* func);
 bool test_expr_access_list(phrase_t* phrase, function_t* func);
 bool test_expr_func_call(phrase_t* phrase, function_list_t* func_list, environnement_t* env);
 bool test_expr_func_call_args(phrase_t* phrase, function_list_t* func_list, environnement_t* env);
+void get_input(val_t* dest);
 
 #endif

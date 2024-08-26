@@ -32,7 +32,7 @@ for line in data:
         res = subprocess.run(f"""valgrind --error-exitcode=1 --leak-check=full build/interpreter testing/python_test.FC """,
                          shell=True, capture_output=True, text=True)
     if res.returncode != 0:
-        print("\033[91mMemory errors detected by Valgrind\033[0m")
+        print(f"\033[91mMemory errors detected by Valgrind on test {line['name']}\033[0m")
         print(f"err:\n{res.stderr}")
         print(f"err:\n{res.stdout}")
     else:

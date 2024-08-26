@@ -9,6 +9,7 @@
 #include "expressions/comparateurs.h"
 #include "expressions/operateurs/operateurs.h"
 #include "syntax_convert.h"
+#include "eval_numbers.h"
 
 void interpreter(function_t* function, function_list_t* functions, val_t* result, int layer) {
     if (layer > MAX_RECUSION_DEPTH) {
@@ -500,6 +501,47 @@ void interpreter(function_t* function, function_list_t* functions, val_t* result
 
             case PARTIE_ENTIERE:
                 set_int(env->phraseValeurs[phraseActuelle->uniqueId], get_as_int(env->phraseValeurs[phraseActuelle->args[0]->uniqueId], phraseActuelle, env));
+                phraseActuelle = phraseActuelle->suivant;
+                break;
+            case INPUT:
+                get_input(env->phraseValeurs[phraseActuelle->uniqueId]);
+                phraseActuelle = phraseActuelle->suivant;
+                break;
+            case CONVERT_TO_INT:
+                if(env->phraseValeurs[phraseActuelle->args[0]->uniqueId]->type == CHAINE_DE_CHAR){
+                    int value;
+                    int lenght = env->phraseValeurs[phraseActuelle->args[0]->uniqueId]->value.chaine->chars_len;
+                    if (!eval_number(env->phraseValeurs[phraseActuelle->args[0]->uniqueId]->value.chaine->chars, lenght, &value)){
+                        custom_error("La chaine donnée ne correspond pas à un entier", phraseActuelle, env);
+                    }
+                    set_int(env->phraseValeurs[phraseActuelle->uniqueId], value);
+                    
+                }else{
+                    set_int(env->phraseValeurs[phraseActuelle->uniqueId], get_as_int(env->phraseValeurs[phraseActuelle->args[0]->uniqueId], phraseActuelle, env));
+                }
+                phraseActuelle = phraseActuelle->suivant;
+                break;
+            case CONVERT_TO_FLOAT:
+                if(env->phraseValeurs[phraseActuelle->args[0]->uniqueId]->type == CHAINE_DE_CHAR){
+                    float value;
+                    int lenght = env->phraseValeurs[phraseActuelle->args[0]->uniqueId]->value.chaine->chars_len;
+                    if (!eval_float(env->phraseValeurs[phraseActuelle->args[0]->uniqueId]->value.chaine->chars, lenght, &value)){
+                        custom_error("La chaine donnée ne correspond pas à un flottant", phraseActuelle, env);
+                    }
+                    set_float(env->phraseValeurs[phraseActuelle->uniqueId], value);
+                    
+                }else{
+                    set_float(env->phraseValeurs[phraseActuelle->uniqueId], get_as_float(env->phraseValeurs[phraseActuelle->args[0]->uniqueId], phraseActuelle, env));
+                }
+                phraseActuelle = phraseActuelle->suivant;
+                break;
+            case CONVERT_TO_BOOL:
+                if(env->phraseValeurs[phraseActuelle->args[0]->uniqueId]->type == CHAINE_DE_CHAR){
+                    int lenght = env->phraseValeurs[phraseActuelle->args[0]->uniqueId]->value.chaine->chars_len;
+                    set_bool(env->phraseValeurs[phraseActuelle->uniqueId], (lenght != 0 && strcmp(env->phraseValeurs[phraseActuelle->args[0]->uniqueId]->value.chaine->chars, "faux")));
+                }else{
+                    set_bool(env->phraseValeurs[phraseActuelle->uniqueId], get_as_bool(env->phraseValeurs[phraseActuelle->args[0]->uniqueId], phraseActuelle, env));
+                }
                 phraseActuelle = phraseActuelle->suivant;
                 break;
                 // default:

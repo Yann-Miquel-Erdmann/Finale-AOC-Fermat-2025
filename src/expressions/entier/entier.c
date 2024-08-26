@@ -16,10 +16,8 @@ bool test_expr_entier(phrase_t* phrase, environnement_t* env) {
         custom_error("too many arguments given", phrase, env);
     }
 
-    bool valid;
-    int result_num = eval_number(result[0], (int)strlen(result[0]), &valid);
-
-    if (valid) {
+    int result_num;
+    if (eval_number(result[0], (int)strlen(result[0]), &result_num)) {
         phrase->phraseId = EXPR_ENTIER;
         phrase->constant = true;
         // printf("%p\n", env->phraseValeurs[ phrase->uniqueId]);

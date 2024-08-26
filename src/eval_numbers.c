@@ -3,20 +3,66 @@
 #include "custom_error.h"
 #include <math.h>
 
-char* add_str(char* str, int* taille, char* added) {
-    if (str == NULL) {
-        custom_error("str est NULL", NULL, NULL);
+char** split_word(char* str, char* separator) {
+    int len = (int)strlen(str);
+    char** l = malloc(2 * sizeof(char*));
+
+    int sep_len = (int)strlen(separator);
+
+    char* str1 = malloc((len + 1) * sizeof(char));
+    char* str2 = malloc((len + 1) * sizeof(char));
+    int num = 1;
+    int index = 0;
+
+    for (int i = 0; i < len; i++) {
+        bool broken = false;
+        if (i < len - sep_len && str[i] == ' ' && str[i + sep_len + 1] == ' ') {
+            for (int j = 0; j < sep_len; j++) {
+                if (str[i + 1 + j] != separator[j]) {
+                    broken = true;
+                    break;
+                }
+            }
+            if (!broken) {
+                str1[index] = '\0';
+                num = 2;
+                i += sep_len + 1;
+                index = 0;
+            } else {
+                if (num == 1) {
+                    str1[index] = str[i];
+                    index++;
+                } else {
+                    str2[index] = str[i];
+                    index++;
+                }
+            }
+        } else {
+            if (num == 1) {
+                str1[index] = str[i];
+                index++;
+            } else {
+                str2[index] = str[i];
+                index++;
+            }
+        }
     }
+    str2[index] = '\0';
+    if (num == 1) {
+        str2[0] = '\0';
+    }
+    l[0] = str1;
+    l[1] = str2;
+    return l;
+}
+
+char* add_str(char* str, int* taille, char* added) {
 
     int len = (int)strlen(added);
     int len_str = (int)strlen(str);
     while (*(taille) <= len_str + len) {
         *(taille) *= 2;
         str = realloc(str, (*(taille)) * sizeof(char));
-        if (str == NULL) {
-            custom_error("", NULL, NULL);
-            exit(1);
-        }
     }
     strcat(str, added);
     strcat(str, "");
@@ -75,7 +121,7 @@ int match_num(char* num, bool with_s) {
     }
 }
 
-float eval_float(char* str_num, int len, bool* valid) {
+bool eval_float_part(char* str_num, int len, float* result) {
     char* str = malloc((len + 1) * sizeof(char));
     int index = 0;
     int start = 0;
@@ -101,31 +147,53 @@ float eval_float(char* str_num, int len, bool* valid) {
         index++;
     }
     str[index] = '\0';
-    float result = (float)eval_number(str, len - start, valid);
-    exp *= pow(10,(int)(((log(result))/log(10)) + 1));
+    int integer_res;
+    if (!eval_number(str, len - start, &integer_res)){
+        return false;
+    }
+    *result = (float)integer_res;
+    exp *= pow(10,(int)(((log(*result))/log(10)) + 1));
     free(str);
     if (exp == 0){
-        return 0;
+        *result = 0;
+        return true;
     }
-    return result/exp;
+    *result = *result/exp;
+    return true;
 }
 
-int eval_number(char* str_num, int len, bool* valid) {
+bool eval_float(char* str_num, int len, float* result){
+    char** res = split_word(str_num, "virgule");
+    int partie_entiere;
+    float partie_decimale;
+    
+    if (res[1][0] == '\0'){
+        return false;
+    }
+    
+    if (eval_float_part(res[1], (int)strlen(res[1]), &partie_decimale) && eval_number(res[0], (int)strlen(res[0]), &partie_entiere)){
+        *result = (float)partie_entiere + partie_decimale;
+        return true;
+    }
+    
+    return false;
+}
+
+bool eval_number(char* str_num, int len, int* result) {
     int n = 0;
     int tmp = 0;
     int str_len = 2;
     char* str = malloc(str_len * sizeof(char));
     int index = 0;
     int sign = 1;
-    *valid = true;
     char last_separator = ' ';
     int ten_power = 99;  // dernière puissance de dix placée pour savoir si les nombres donnés sont bien dans un bon ordre
     for (int i = 0; i <= len; i++) {
         if (str_num[i] == ' ' || i == len) {  // espace ou fin du nombre
             if (!strcmp(str, "zéro")) {
                 if (i != len || tmp != 0) {
-                    *valid = false;
-                    break;
+                    free(str);
+                    return false;
                 }
             }
             if ((!strcmp(str, "mille") && last_separator == '-' && ten_power > 3 && i == len) || (!strcmp(str, "mille") && last_separator == ' ' && tmp == 0)) {
@@ -169,9 +237,8 @@ int eval_number(char* str_num, int len, bool* valid) {
             } else {
                 int result = match_num(str, true);
                 if (result == -1 || last_separator == '*') {
-                    *valid = false;
-                    // printf("error %d, '%s', %d\n", tmp, str, ten_power)
-                    break;
+                    free(str);
+                    return false;
                 } else {
                     if (result == 1 && tmp == 0) {
                         tmp++;
@@ -182,8 +249,8 @@ int eval_number(char* str_num, int len, bool* valid) {
                     } else if (result > 9 && result < 20 && (tmp % 100 == 60 || tmp % 100 == 80)) {
                         tmp += result;
                     } else {
-                        *valid = false;
-                        break;
+                        free(str);
+                        return false;
                     }
                 }
             }
@@ -202,8 +269,8 @@ int eval_number(char* str_num, int len, bool* valid) {
             if (result != -1) {
                 if (result == 0) {
                     if (i != len || tmp != 0) {
-                        *valid = false;
-                        break;
+                        free(str);
+                        return false;
                     }
                 } else if (result == 100 && tmp < 100) {
                     if (tmp == 0) {
@@ -217,8 +284,8 @@ int eval_number(char* str_num, int len, bool* valid) {
                 } else if (result > 9 && result < 20 && (tmp % 100 == 60 || tmp % 100 == 80)) {
                     tmp += result;
                 } else {
-                    *valid = false;
-                    break;
+                    free(str);
+                    return false;
                 }
             } else {
                 if (!strcmp(str, "et") && last_separator == '-' && tmp % 10 == 0 && tmp / 10 % 10 > 1 && tmp / 10 % 10 < 7) {
@@ -230,10 +297,8 @@ int eval_number(char* str_num, int len, bool* valid) {
                     n += 1000 * tmp;
                     tmp = 0;
                 } else {
-                    *valid = false;
-                    // printf("error 0, %s\n", str);
-
-                    break;
+                    free(str);
+                    return false;
                 }
             }
             str_len = 2;
@@ -255,7 +320,8 @@ int eval_number(char* str_num, int len, bool* valid) {
         }
     }
     free(str);
-    return n*sign;
+    *result = n*sign;
+    return true;
 }
 
 char* str_from_chuck(int n) {

@@ -34,13 +34,47 @@ phrase_t* parse_file(FILE* f) {
     int in_comment = 0;
     char c = '\0';
     char prec_c = '\0';
+    bool escape = false;
     while (fscanf(f, "%c", &c) != EOF) {
         if (in_string) {
-            if (c == '"') {
+            if (c == '"' && !escape) {
                 in_string = !in_string;
             }
+            if (c == '\\' && !escape){
+                escape = true;
+                continue;
+            }
+            if (escape){
+                switch (c) {
+                    case 'n':
+                        addToText(phraseActuelle, '\n');
+                        break;
+                    case 't':
+                        for (int i = 0; i< 4; i++){
+                            addToText(phraseActuelle, ' ');
+                        }
+                        break;
+                    case '"':
+                        addToText(phraseActuelle, '\\');
+                        addToText(phraseActuelle, '"');
+                        break;
+                    case '\\':
+                        addToText(phraseActuelle,  '\\');
+                        break;
+                    default:{
+                        char* errorphrase = malloc(100*sizeof(char));
+                        sprintf(errorphrase, "\\%c is not a valid character", c);
+                        custom_error(errorphrase, phraseActuelle, NULL);
+                        break;
+                    }
+                }
+            }
             // ajoute le caractère au texte
-            addToText(phraseActuelle, c);
+            if (escape){
+                escape = false;
+            }else{
+                addToText(phraseActuelle, c);
+            }
         } else if (in_comment) {
             if (c == ')') {
                 in_comment -= 1;

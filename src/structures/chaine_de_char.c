@@ -18,8 +18,8 @@ chaine_t* new_chaine_t(char* c) {
     
     int len = (int)strlen(c);
     int size = DEFAULT_CHAINE_CHARS_SIZE * pow(2,(int)(((log(len) - log(DEFAULT_CHAINE_CHARS_SIZE))/log(2)) + 1));
-    c = realloc(c, size * sizeof(char));
-    chaine->chars = c;
+    chaine->chars = malloc(size * sizeof(char));
+    strcpy(chaine->chars, c);
     
     chaine->chars_len = len;
     chaine->chars_size = size;

@@ -29,7 +29,7 @@ Soit partition une fonction qui lorsqu'elle est appelée avec a, l0, hi exécute
     Renvoyer La variable i?.
 .
 
-Soit n L'entier dix?.
+Soit n L'entier deux-mille?.
 Soit l La liste vide?.
 
 Pour i allant de L'entier un? jusqu'à La somme de La variable n? et de L'entier un?? faire:
