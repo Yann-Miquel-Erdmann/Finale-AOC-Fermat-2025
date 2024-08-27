@@ -10,7 +10,6 @@ typedef struct timeout {
 
 void* thread_timeout(void* arg){
     int max_time = ((timeout_t*)arg)->value;
-    free(arg);
     int time_used = 0;
     while (time_used < max_time){
         if (!timeout_stopped){
@@ -18,8 +17,9 @@ void* thread_timeout(void* arg){
         }
         usleep(10000);
     }
-    custom_error("Timeout atteint, boucle infinie / réccursion infinie?", NULL, NULL);
+    custom_error("Timeout atteint, boucle infinie / récursion infinie?", NULL, NULL);
     pthread_exit(NULL);
+    free(arg);
     return NULL;
 }
 
