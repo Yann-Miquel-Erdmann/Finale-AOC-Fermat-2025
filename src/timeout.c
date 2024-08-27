@@ -1,6 +1,7 @@
 #include "timeout.h"
+#include <stdatomic.h>
 
-bool timeout_stopped = false;
+atomic_bool timeout_stopped = false;
 
 typedef struct timeout {
     int value;

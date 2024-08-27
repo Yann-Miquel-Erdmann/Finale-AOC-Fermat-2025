@@ -87,6 +87,7 @@ void ajout(liste_t* liste, val_t* valeur, phrase_t* p, environnement_t* env) {
         while (liste_val != NULL){
             if (liste_val == val->value.liste){
                 custom_error("Le pointeur ne peux référencer un de ses parents", p, env);
+                exit(1);
             }
             liste_val = liste_val->parent_list;
         }
