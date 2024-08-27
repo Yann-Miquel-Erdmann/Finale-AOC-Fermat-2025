@@ -173,9 +173,15 @@ bool eval_float(char* str_num, int len, float* result){
     
     if (eval_float_part(res[1], (int)strlen(res[1]), &partie_decimale) && eval_number(res[0], (int)strlen(res[0]), &partie_entiere)){
         *result = (float)partie_entiere + partie_decimale;
+        free(res[0]);
+        free(res[1]);
+        free(res);
         return true;
     }
     
+    free(res[0]);
+    free(res[1]);
+    free(res);
     return false;
 }
 
