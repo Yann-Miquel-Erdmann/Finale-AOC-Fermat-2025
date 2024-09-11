@@ -28,7 +28,7 @@ phrase_t* parse_file(FILE* f) {
     bool encountered_uppercase = false;
 
     char buffer = '.';
-    int line = 0;
+    int line = 1;
 
     bool in_string = false;
     int in_comment = 0;
@@ -76,6 +76,9 @@ phrase_t* parse_file(FILE* f) {
                 addToText(phraseActuelle, c);
             }
         } else if (in_comment) {
+            if (c == '\n'){
+                line++;
+            }
             if (c == ')') {
                 in_comment -= 1;
             }
@@ -88,6 +91,7 @@ phrase_t* parse_file(FILE* f) {
                 addToText(phraseActuelle, '*');
             }
             phrase_t* n = new_phrase(phraseActuelle);
+            n->line_number = line;
             addToArg(phraseActuelle, n);
 
             n->suivant = Prec;
@@ -204,12 +208,13 @@ phrase_t* parse_file(FILE* f) {
                     // ignore les sauts de lignes et les tabulations
                     if ((c == '\n' && (buffer == '.' || buffer == ':' || prec_c == ')' || in_comment))) {
                         break;
-                    } else if (c == '\n' && !in_comment) {
-                        char* err_mess = malloc(100 * sizeof(char));
-                        sprintf(err_mess, "Syntax Error: Il manque un point à la fin de la ligne %d", line);
-                        custom_error(err_mess, NULL, NULL);
-                        break;
-                    }
+                    } 
+//                    else if (c == '\n' && !in_comment) {
+//                        char* err_mess = malloc(100 * sizeof(char));
+//                        sprintf(err_mess, "Syntax Error: Il manque un point à la fin de la ligne %d", line);
+//                        custom_error(err_mess, NULL, NULL);
+//                        break;
+//                    }
 
                     // n'ajoute pas les espaces en debut de ligne ou après un espace
                     if (c == ' ' && (phraseActuelle->textLen == 0 || phraseActuelle->text[phraseActuelle->textLen - 1] == ' ')) {
@@ -229,16 +234,15 @@ phrase_t* parse_file(FILE* f) {
         custom_error("Une parenthèse n'a pas été fermée", NULL, NULL);
     }
     if (mainPhrase != phraseActuelle) {
-        // probablement à changer + essayer de trouver où est-ce qu'il manque un point
-        char* err_mess = malloc((strlen(phraseActuelle->text) * 2 + 31) * sizeof(char));
-        strcat(err_mess, "Syntax error on instruction: \"");
-        strcat(err_mess, phraseActuelle->text);
-        strcat(err_mess, "\"\n\t* \tMissing point here :  ");
+        char* err_mess = malloc((strlen(phraseActuelle->text) + 1) * sizeof(char));
         for (int i = 0; i < (int)strlen(phraseActuelle->text); i++) {
             strcat(err_mess, "~");
         }
-        strcat(err_mess, "^");
-        custom_error(err_mess, NULL, NULL);
+        
+        char* error = malloc(256 * sizeof(char));
+        sprintf(error, "Erreur de syntaxe à la ligne %d : \"%s\" \n\t*\t Il manque un point ici :  %s^", phraseActuelle->line_number, phraseActuelle->text, err_mess);
+        
+        custom_error(error, NULL, NULL);
     }
 
     Inst2->suivant = NULL;

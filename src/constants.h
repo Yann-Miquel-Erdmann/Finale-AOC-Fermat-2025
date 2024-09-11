@@ -36,6 +36,7 @@
 #define DEFAULT_RES_SIZE 10
 #define DEFAULT_CURR_SIZE 20
 
+#define NO_ID -1
 #define MAIN_PHRASE 0
 
 // expressions
@@ -51,7 +52,11 @@
 #define DEFINITION_VARIABLE_SANS_INIT 6
 #define ACCESSION_VARIABLE 7
 #define MODIFICATION_VARIABLE 8
+
+//  * pointeurs
 #define POINTEUR_VARIABLE 53
+#define VALEUR_POINTEE 57
+#define VALEUR_FINALE_POINTEE 58
 
 //  * liste
 #define EXPR_LISTE_VIDE 9
@@ -63,12 +68,6 @@
 #define INSERTION_LISTE 41
 #define EXPR_LISTE 42
 #define EXPR_LISTE_ELEM 47
-
-// conversions de types
-#define CONVERT_TO_INT 55
-#define CONVERT_TO_FLOAT 56
-#define CONVERT_TO_BOOL 57
-#define CONVERT_TO_CHAR 58
 
 // opérateurs
 #define SOMME 15
@@ -106,7 +105,9 @@
 #define AFFICHER_EXPR 32
 #define AFFICHER_EXPR_NO_RETURN 33
 #define TYPE_EXPR 43
-#define INPUT 54
+#define INPUT_INT 54
+#define INPUT_FLOAT 55
+#define INPUT_BOOL 56
 
 // aléatoire
 #define DEFINIR_SEED 50
@@ -124,15 +125,8 @@
 #define EXECUTION_FONCTION_ARGUMENT 39
 #define APPEL_VALEUR_FONCTION_ARGUMENT 40
 
-// exceptions handling
-#define TRY_EXCEPT 59
-#define TYPE_ERROR 60
-#define DIVISION_BY_0_ERROR 61
-#define VALUE_ERROR 62
-#define INVALID_INDEX_ERROR 63
-#define POINTER_LOOP_ERROR 64
 
-// current next element: 65
+// current next element: 59
 
 #define DEFAULT_SEPARATOR "?,. "
 #define STRING_SEPARATOR  "\""
@@ -153,8 +147,12 @@
 #define DEFINITION_VARIABLE_AVEC_INIT_S "Soit $ *."  // fait
 #define DEFINITION_VARIABLE_SANS_INIT_S "Soit $."    // fait
 #define ACCESSION_VARIABLE_S "La variable $?"        // fait
-#define MODIFICATION_VARIABLE_S "Que $ devienne *."  // fait
-#define POINTEUR_VARIABLE_S "Un pointeur vers *?"
+#define MODIFICATION_VARIABLE_S "Que * devienne *."  // fait
+
+//  * pointeur
+#define POINTEUR_VARIABLE_S "Un pointeur vers *?"    // fait
+#define VALEUR_POINTEE_S "La valeur pointée par *?"
+#define VALEUR_FINALE_POINTEE_S "La valeur finale pointée par *?"
 
 //  * liste
 #define EXPR_LISTE_VIDE_S "La liste vide?"                                      // fait
@@ -209,7 +207,9 @@
 #define AFFICHER_EXPR_NO_RETURN_S "Afficher * sans retour à la ligne."          // fait
 #define TYPE_EXPR_S "Le type de *?"                                             // fait
 #define TAILLE_S "La taille de *?"                                              // fait
-#define INPUT_S "Une entrée de l'utilisateur?"                                  // fait
+#define INPUT_INT_S "Une entrée entière?"
+#define INPUT_FLOAT_S "Une entrée flottante?"
+#define INPUT_BOOL_S "Une entrée booléenne?"
 
 // aléatoire
 #define DEFINIR_SEED_S "Mettre la seed aléatoire à *."  // fait

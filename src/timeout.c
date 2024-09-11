@@ -18,8 +18,8 @@ void* thread_timeout(void* arg){
         usleep(10000);
     }
     custom_error("Timeout atteint, boucle infinie / récursion infinie?", NULL, NULL);
-    pthread_exit(NULL);
     free(arg);
+    pthread_exit(NULL);
     return NULL;
 }
 

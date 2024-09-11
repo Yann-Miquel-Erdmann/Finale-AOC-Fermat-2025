@@ -10,6 +10,9 @@
 
 int elem_liste(char* text) {
     // printf("%s\n", text);
+    if (!strcmp(text, MODIFICATION_VARIABLE_S)){
+        return MODIFICATION_VARIABLE;
+    }
     if (!strcmp(text, SOMME_S)) {
         return SOMME;
     }
@@ -125,20 +128,20 @@ int elem_liste(char* text) {
     if (!strcmp(text, POINTEUR_VARIABLE_S)) {
         return POINTEUR_VARIABLE;
     }
-    if (!strcmp(text, INPUT_S)){
-        return INPUT;
+    if (!strcmp(text, INPUT_INT_S)){
+        return INPUT_INT;
     }
-    if (!strcmp(text, CONVERT_TO_INT_S)){
-        return CONVERT_TO_INT;
+    if(!strcmp(text, INPUT_FLOAT_S)){
+        return INPUT_FLOAT;
     }
-    if (!strcmp(text, CONVERT_TO_FLOAT_S)){
-        return CONVERT_TO_FLOAT;
+    if (!strcmp(text, INPUT_BOOL_S)){
+        return INPUT_BOOL;
     }
-    if (!strcmp(text, CONVERT_TO_BOOL_S)){
-        return INPUT;
+    if (!strcmp(text, VALEUR_POINTEE_S)){
+        return VALEUR_POINTEE;
     }
-    if (!strcmp(text, CONVERT_TO_CHAR_S)){
-        return CONVERT_TO_CHAR;
+    if (!strcmp(text, VALEUR_FINALE_POINTEE_S)){
+        return VALEUR_FINALE_POINTEE;
     }
     return -1;
 }
@@ -193,6 +196,22 @@ void tokenise(phrase_t* phrase, function_t* function, function_list_t* func_list
                 func_list->function_list[i]->ast->phraseId = MAIN_PHRASE;
                 addToText(func_list->function_list[i]->ast, '#');
             }
+            break;
+        case MODIFICATION_VARIABLE:
+            if (phrase->innerPhraseLen > 0 || phrase->argsLen != 2){
+                custom_error("Syntaxe invalide, modification variable prend 2 argments", phrase, function->env);
+            }
+            
+            phrase->phraseId = MODIFICATION_VARIABLE;
+            
+            if (inLoopSuivant) {
+                phrase->suivant = inLoopSuivantPointer;
+            }
+
+            for (int i = 0; i < 2; i++) {
+                tokenise(phrase->args[i], function, func_list, func_call_list, uniqueId, parent_loop, false, NULL);
+            }
+            
             break;
         case SOMME:
             if (phrase->innerPhraseLen > 0 || phrase->argsLen != 2) {
@@ -857,56 +876,46 @@ void tokenise(phrase_t* phrase, function_t* function, function_list_t* func_list
             }
             
             break;
-        case INPUT:
-            phrase->phraseId = INPUT;
+        case INPUT_INT:
+            phrase->phraseId = INPUT_INT;
             if (inLoopSuivant) {
                 phrase->suivant = inLoopSuivantPointer;
             }
-            function->env->phraseValeurs[phrase->uniqueId]->type = CHAINE_DE_CHAR;
-            break;
-        case CONVERT_TO_INT:
-            if (phrase->innerPhraseLen > 0 || phrase->argsLen != 1) {
-                custom_error("Syntaxe invalide, convertir en entier prend 1 arguments", phrase, function->env);
-            }
-            phrase->phraseId = CONVERT_TO_INT;
-            if (inLoopSuivant) {
-                phrase->suivant = inLoopSuivantPointer;
-            }
-            tokenise(phrase->args[0], function, func_list, func_call_list, uniqueId, parent_loop, false, NULL);
             function->env->phraseValeurs[phrase->uniqueId]->type = INT;
             break;
-        case CONVERT_TO_FLOAT:
-            if (phrase->innerPhraseLen > 0 || phrase->argsLen != 1) {
-                custom_error("Syntaxe invalide, convertir en flottant prend 1 arguments", phrase, function->env);
-            }
-            phrase->phraseId = CONVERT_TO_FLOAT;
+        case INPUT_FLOAT:
+            phrase->phraseId = INPUT_FLOAT;
             if (inLoopSuivant) {
                 phrase->suivant = inLoopSuivantPointer;
             }
-            tokenise(phrase->args[0], function, func_list, func_call_list, uniqueId, parent_loop, false, NULL);
             function->env->phraseValeurs[phrase->uniqueId]->type = FLOAT;
             break;
-        case CONVERT_TO_BOOL:
-            if (phrase->innerPhraseLen > 0 || phrase->argsLen != 1) {
-                custom_error("Syntaxe invalide, convertir en booléen prend 1 arguments", phrase, function->env);
-            }
-            phrase->phraseId = CONVERT_TO_BOOL;
+        case INPUT_BOOL:
+            phrase->phraseId = INPUT_BOOL;
             if (inLoopSuivant) {
                 phrase->suivant = inLoopSuivantPointer;
             }
-            tokenise(phrase->args[0], function, func_list, func_call_list, uniqueId, parent_loop, false, NULL);
             function->env->phraseValeurs[phrase->uniqueId]->type = BOOL;
             break;
-        case CONVERT_TO_CHAR:
+        case VALEUR_POINTEE:
             if (phrase->innerPhraseLen > 0 || phrase->argsLen != 1) {
-                custom_error("Syntaxe invalide, convertir en chaîne de caractères prend 1 arguments", phrase, function->env);
+                custom_error("Syntaxe invalide, valeur pointée prend 1 arguments", phrase, function->env);
             }
-            phrase->phraseId = CONVERT_TO_CHAR;
+            phrase->phraseId = VALEUR_POINTEE;
+            tokenise(phrase->args[0], function, func_list, func_call_list, uniqueId, parent_loop, false, NULL);
             if (inLoopSuivant) {
                 phrase->suivant = inLoopSuivantPointer;
             }
+            break;
+        case VALEUR_FINALE_POINTEE:
+            if (phrase->innerPhraseLen > 0 || phrase->argsLen != 1) {
+                custom_error("Syntaxe invalide, valeur finale pointée prend 1 arguments", phrase, function->env);
+            }
+            phrase->phraseId = VALEUR_FINALE_POINTEE;
             tokenise(phrase->args[0], function, func_list, func_call_list, uniqueId, parent_loop, false, NULL);
-            function->env->phraseValeurs[phrase->uniqueId]->type = CHAINE_DE_CHAR;
+            if (inLoopSuivant) {
+                phrase->suivant = inLoopSuivantPointer;
+            }
             break;
         default: {
             if (test_expr_entier(phrase, function->env)) {
@@ -917,7 +926,6 @@ void tokenise(phrase_t* phrase, function_t* function, function_list_t* func_list
             } else if (test_inst_var_init(phrase, function)) {
             } else if (test_inst_create_var(phrase, function)) {
             } else if (test_expr_access_var(phrase, function)) {
-            } else if (test_inst_modif_var(phrase, function)) {
                 // liste
             } else if (test_expr_list(phrase, function)) {
                 // fonction

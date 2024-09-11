@@ -3,6 +3,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+bool ignore_errors = false;
+
+void set_ignore(void){
+    ignore_errors = true;
+}
+
 void custom_error(char* err_message, phrase_t* phrase, environnement_t* env) {
     fprintf(stderr, "\n\n========== ERROR ===========\n\n");
     fprintf(stderr, "Une erreur est survenue avec le message suivant:\n%s\n\n", err_message);
@@ -15,5 +21,7 @@ void custom_error(char* err_message, phrase_t* phrase, environnement_t* env) {
         fprintf(stderr, "Dans le code suivant: \n");
         printPhrase(phrase, env);
     }
-    exit(1);
+    if (!ignore_errors){
+        exit(1);
+    }
 }

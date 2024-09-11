@@ -131,11 +131,31 @@ void interpreter(function_t* function, function_list_t* functions, val_t* result
                 break;
 
             case MODIFICATION_VARIABLE:
-                if (env->variable_list[phraseActuelle->variableId]->valeur->type == POINTEUR){
-                    copy_val(env->variable_list[phraseActuelle->variableId]->valeur->value.ptr, env->phraseValeurs[phraseActuelle->args[0]->uniqueId], true, true);
-                }
-                else{
-                    copy_val(env->variable_list[phraseActuelle->variableId]->valeur, env->phraseValeurs[phraseActuelle->args[0]->uniqueId], true, true);
+                if (phraseActuelle->args[0]->variableId != -1){
+                    copy_val(env->variable_list[phraseActuelle->args[0]->variableId]->valeur, env->phraseValeurs[phraseActuelle->args[1]->uniqueId], true, true);
+                } else if (phraseActuelle->args[0]->phraseId == ACCESSION_LISTE){
+                    modification(env->phraseValeurs[phraseActuelle->args[0]->args[0]->uniqueId]->value.liste, env->phraseValeurs[phraseActuelle->args[0]->args[1]->uniqueId]->value.entier, env->phraseValeurs[phraseActuelle->args[1]->uniqueId], phraseActuelle, env);
+                } else if (phraseActuelle->args[0]->phraseId == VALEUR_POINTEE){
+                    if (phraseActuelle->args[0]->args[0]->variableId != -1){
+                        copy_val(env->variable_list[phraseActuelle->args[0]->args[0]->variableId]->valeur->value.ptr, env->phraseValeurs[phraseActuelle->args[1]->uniqueId], true, true);
+                    } else {
+                        copy_val(env->phraseValeurs[phraseActuelle->args[0]->args[0]->uniqueId]->value.ptr, env->phraseValeurs[phraseActuelle->args[1]->uniqueId], true, true);
+                    }
+                } else if (phraseActuelle->args[0]->phraseId == VALEUR_FINALE_POINTEE){
+                    val_t* val;
+                    if (phraseActuelle->args[0]->args[0]->variableId != -1){
+                        val = env->variable_list[phraseActuelle->args[0]->args[0]->variableId]->valeur;
+                    }else{
+                        val = env->phraseValeurs[phraseActuelle->args[0]->uniqueId];
+                    }
+                    while (val->type == POINTEUR){
+                        val = val->value.ptr;
+                    }
+                    copy_val(val, env->phraseValeurs[phraseActuelle->args[1]->uniqueId], true, true);
+                } else if (env->phraseValeurs[phraseActuelle->args[0]->uniqueId]->type == POINTEUR){
+                    copy_val(env->phraseValeurs[phraseActuelle->args[0]->uniqueId], env->phraseValeurs[phraseActuelle->args[1]->uniqueId], true, true);
+                } else {
+                    custom_error("La valeur d'entrée n'est pas modififiable", phraseActuelle, env);
                 }
                 
                 phraseActuelle = phraseActuelle->suivant;
@@ -254,9 +274,6 @@ void interpreter(function_t* function, function_list_t* functions, val_t* result
             case EXPR_LISTE:
             {
                 val_t* variable = env->variable_list[phraseActuelle->variableId]->valeur;
-                while (variable->type == POINTEUR){
-                    variable = variable->value.ptr;
-                }
                 
                 if (variable->type != LISTE && variable->type != LISTE_P){
                     custom_error("La variable n'est pas une liste", phraseActuelle, env);
@@ -503,51 +520,75 @@ void interpreter(function_t* function, function_list_t* functions, val_t* result
                 set_int(env->phraseValeurs[phraseActuelle->uniqueId], get_as_int(env->phraseValeurs[phraseActuelle->args[0]->uniqueId], phraseActuelle, env));
                 phraseActuelle = phraseActuelle->suivant;
                 break;
-            case INPUT:
+            case INPUT_INT:
                 get_input(env->phraseValeurs[phraseActuelle->uniqueId]);
+                
+                int value_i;
+                int lenght = env->phraseValeurs[phraseActuelle->uniqueId]->value.chaine->chars_len;
+                if (eval_number(env->phraseValeurs[phraseActuelle->uniqueId]->value.chaine->chars, lenght, &value_i)){
+                    set_int(env->phraseValeurs[phraseActuelle->uniqueId], value_i);
+                    phraseActuelle = phraseActuelle->suivant;
+                }else{
+                    printf("La chaine donnée ne correspond pas à un entier.\nVeuillez enter un entier.\n");
+                }
+                
+                break;
+            case INPUT_FLOAT:
+                get_input(env->phraseValeurs[phraseActuelle->uniqueId]);
+                
+                float value_f;
+                lenght = env->phraseValeurs[phraseActuelle->uniqueId]->value.chaine->chars_len;
+                if (eval_float(env->phraseValeurs[phraseActuelle->uniqueId]->value.chaine->chars, lenght, &value_f)){
+                    set_float(env->phraseValeurs[phraseActuelle->uniqueId], value_f);
+                    phraseActuelle = phraseActuelle->suivant;
+                }else{
+                    printf("La chaine donnée ne correspond pas à un flottant.\nVeuillez entrer un flottant.\n");
+                }
+                
+                break;
+            case INPUT_BOOL:
+                get_input(env->phraseValeurs[phraseActuelle->uniqueId]);
+                lenght = env->phraseValeurs[phraseActuelle->uniqueId]->value.chaine->chars_len;
+                char* str = env->phraseValeurs[phraseActuelle->uniqueId]->value.chaine->chars;
+                if (!strcmp(str, "faux") || !strcmp(str, "vrai")){
+                    set_bool(env->phraseValeurs[phraseActuelle->uniqueId], (lenght != 0 && strcmp(env->phraseValeurs[phraseActuelle->uniqueId]->value.chaine->chars, "faux")));
+                    phraseActuelle = phraseActuelle->suivant;
+                }else{
+                    printf("La chaine donnée ne correspond pas à un booléen.\nVeuillez enter un booléen.\n");
+                }
+                
+                break;
+            case VALEUR_POINTEE:
+                if (env->phraseValeurs[phraseActuelle->args[0]->uniqueId]->type != POINTEUR){
+                    custom_error("La valeur donnée n'est pas un pointeur", phraseActuelle, env);
+                }
+                
+                copy_val(env->phraseValeurs[phraseActuelle->uniqueId], env->phraseValeurs[phraseActuelle->args[0]->uniqueId]->value.ptr, true, true);
                 phraseActuelle = phraseActuelle->suivant;
                 break;
-            case CONVERT_TO_INT:
-                if(env->phraseValeurs[phraseActuelle->args[0]->uniqueId]->type == CHAINE_DE_CHAR){
-                    int value;
-                    int lenght = env->phraseValeurs[phraseActuelle->args[0]->uniqueId]->value.chaine->chars_len;
-                    if (!eval_number(env->phraseValeurs[phraseActuelle->args[0]->uniqueId]->value.chaine->chars, lenght, &value)){
-                        custom_error("La chaine donnée ne correspond pas à un entier", phraseActuelle, env);
+            case VALEUR_FINALE_POINTEE:
+                if (env->phraseValeurs[phraseActuelle->args[0]->uniqueId]->type != POINTEUR){
+                    custom_error("La valeur donnée n'est pas un pointeur", phraseActuelle, env);
+                }
+                val_t* var = env->phraseValeurs[phraseActuelle->args[0]->uniqueId];
+                liste_t* l = new_liste_t();
+                ajout(l, var, phraseActuelle, env);
+                while (var->type == POINTEUR){
+                    var = var->value.ptr;
+                    for (int i = 0; i< l->valeursLen; i++){
+                        if (var == l->valeurs[i]){
+                            custom_error("Impossible de déterminer une valeur finale : Boucle de référencement", phraseActuelle, env);
+                        }
                     }
-                    set_int(env->phraseValeurs[phraseActuelle->uniqueId], value);
-                    
-                }else{
-                    set_int(env->phraseValeurs[phraseActuelle->uniqueId], get_as_int(env->phraseValeurs[phraseActuelle->args[0]->uniqueId], phraseActuelle, env));
+                    ajout(l, var, phraseActuelle, env);
                 }
+                
+                copy_val(env->phraseValeurs[phraseActuelle->uniqueId], var, true, true);
                 phraseActuelle = phraseActuelle->suivant;
                 break;
-            case CONVERT_TO_FLOAT:
-                if(env->phraseValeurs[phraseActuelle->args[0]->uniqueId]->type == CHAINE_DE_CHAR){
-                    float value;
-                    int lenght = env->phraseValeurs[phraseActuelle->args[0]->uniqueId]->value.chaine->chars_len;
-                    if (!eval_float(env->phraseValeurs[phraseActuelle->args[0]->uniqueId]->value.chaine->chars, lenght, &value)){
-                        custom_error("La chaine donnée ne correspond pas à un flottant", phraseActuelle, env);
-                    }
-                    set_float(env->phraseValeurs[phraseActuelle->uniqueId], value);
-                    
-                }else{
-                    set_float(env->phraseValeurs[phraseActuelle->uniqueId], get_as_float(env->phraseValeurs[phraseActuelle->args[0]->uniqueId], phraseActuelle, env));
-                }
-                phraseActuelle = phraseActuelle->suivant;
+            case NO_ID:
+                custom_error("Erreur d'interprétation", phraseActuelle, env);
                 break;
-            case CONVERT_TO_BOOL:
-                if(env->phraseValeurs[phraseActuelle->args[0]->uniqueId]->type == CHAINE_DE_CHAR){
-                    int lenght = env->phraseValeurs[phraseActuelle->args[0]->uniqueId]->value.chaine->chars_len;
-                    set_bool(env->phraseValeurs[phraseActuelle->uniqueId], (lenght != 0 && strcmp(env->phraseValeurs[phraseActuelle->args[0]->uniqueId]->value.chaine->chars, "faux")));
-                }else{
-                    set_bool(env->phraseValeurs[phraseActuelle->uniqueId], get_as_bool(env->phraseValeurs[phraseActuelle->args[0]->uniqueId], phraseActuelle, env));
-                }
-                phraseActuelle = phraseActuelle->suivant;
-                break;
-                // default:
-                //     printf("erreur: %d, %d\n", phraseActuelle->phraseId, phraseActuelle->constant);
-                //     custom_error("erreur d'interprétation", phraseActuelle, env);
-                //     break;
         }
     }
 }

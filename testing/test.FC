@@ -1,6 +1,35 @@
-Soit y L'entier deux?.
+(Soit x L'entier un?.
+Afficher La variable x?.
+Que La variable x? devienne L'entier deux?.
+Afficher La variable x?.
 
-Que y devienne La somme de La variable y? et de La conversion en entier de Une entrée de l'utilisateur???.
+Soit l La liste des éléments L'entier un?, L'entier deux?, L'entier trois??.
+Que L'élément de La liste l? à l'indice L'entier zéro?? devienne L'entier cinq?.
+Afficher La liste l?.
+
+Soit z L'entier cinq?.
+Soit x Un pointeur vers La variable z??.
+Soit y Un pointeur vers La variable x??.
+Que La valeur pointée par La valeur pointée par La variable y??? devienne L'entier deux?.
+Afficher La variable z?.
+
+Soit z L'entier trois?.
+Soit x Un pointeur vers La variable z??.
+Soit y Un pointeur vers La variable x??.
+Soit t Un pointeur vers La variable y??.
+Que La valeur finale pointée par La variable t?? devienne L'entier cinq?.
+Afficher La variable z?.
+
+Soit l La liste vide?.
+Soit x Un pointeur vers La liste l??.
+Ajouter à La liste l? La variable x?.
+Afficher La liste l?.
+
+Soit x.
+Soit y Un pointeur vers La variable x??.
+Que La variable x? devienne Un pointeur vers La variable y??.
+Afficher La valeur finale pointée par La variable x??.
+)
 
 Tant que Le booléen vrai? faire:
     Soit x L'entier un?.

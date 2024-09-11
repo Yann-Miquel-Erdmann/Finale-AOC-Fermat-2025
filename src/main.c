@@ -16,14 +16,28 @@ int main(int argc, char const* argv[]) {
     if (argc == 2) {
         // help
         if (strcmp(argv[1], "-h") == 0) {
-            printf("Usage: %s <file> [timeout]\n", argv[0]);
+            printf("Usage: %s <file> [--timeout timeout] [--input inputFile] [--ignore_errors]\n", argv[0]);
             return 0;
         }
-    } else if (argc == 3){
+    }
+    for(int i = 0; i<argc; i++){
+        if(argv[i]){
+            
+        }
+    }
+    /*} else if (){
         timeout = true;
     } else {
-        custom_error("Usage: ./interpreter <file> [timeout]", NULL, NULL);
+        custom_error("Usage: ./interpreter <file> [--timeout timeout] [--input inputFile] [--ignore_errors]", NULL, NULL);
         return 1;
+    }*/
+    
+    if (argc == 4){
+        if (!strcmp(argv[3], "--ignore-errors")){
+            set_ignore();
+        }else{
+            custom_error("Usage: ./interpreter <file> [--timeout timeout] [--input inputFile] [--ignore_errors]", NULL, NULL);
+        }
     }
     
     // check if file exists
