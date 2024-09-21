@@ -5,6 +5,7 @@
 #include "../custom_error.h"
 // #include "phrase.h"
 #include "struct_liste.h"
+#include "../safe_alloc.h"
 
 void free_liste_t(liste_t* liste, bool free_chaine, bool free_liste) {
     // printf("free liste %p\n", liste);
@@ -19,8 +20,8 @@ void free_liste_t(liste_t* liste, bool free_chaine, bool free_liste) {
 }
 
 liste_t* new_liste_t(void) {
-    liste_t* liste = malloc(sizeof(liste_t));
-    liste->valeurs = malloc(sizeof(val_t*) * DEFAULT_VALEURS_LIST_SIZE);
+    liste_t* liste = safe_alloc(NULL, sizeof(liste_t));
+    liste->valeurs = safe_alloc(NULL, sizeof(val_t*) * DEFAULT_VALEURS_LIST_SIZE);
     liste->valeursLen = 0;
     liste->valeursSize = DEFAULT_VALEURS_LIST_SIZE;
     liste->parent_list = NULL;
@@ -28,8 +29,8 @@ liste_t* new_liste_t(void) {
 }
 
 liste_t* copy_liste(liste_t* liste) {
-    liste_t* new_liste = malloc(sizeof(liste_t));
-    new_liste->valeurs = malloc(sizeof(val_t*) * liste->valeursSize);
+    liste_t* new_liste = safe_alloc(NULL, sizeof(liste_t));
+    new_liste->valeurs = safe_alloc(NULL, sizeof(val_t*) * liste->valeursSize);
     new_liste->valeursLen = liste->valeursLen;
     new_liste->valeursSize = liste->valeursSize;
     for (int i = 0; i < liste->valeursLen; i++) {
@@ -45,10 +46,7 @@ liste_t* copy_liste(liste_t* liste) {
 
 void doubleValeursSize(liste_t* liste) {
     liste->valeursSize *= 2;
-    liste->valeurs = realloc(liste->valeurs, sizeof(val_t*) * liste->valeursSize);
-    if (liste->valeurs == NULL) {
-        custom_error("manque de mémoire pour liste valeurs size", NULL, NULL);
-    }
+    liste->valeurs = safe_alloc(liste->valeurs, sizeof(val_t*) * liste->valeursSize);
 }
 
 int taille_liste(liste_t* liste) {

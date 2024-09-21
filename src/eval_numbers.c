@@ -1,16 +1,16 @@
 #include "eval_numbers.h"
 
 #include "custom_error.h"
+#include "safe_alloc.h"
 #include <math.h>
 
 char** split_word(char* str, char* separator) {
     int len = (int)strlen(str);
-    char** l = malloc(2 * sizeof(char*));
-
+    char** l = safe_alloc(NULL, 2 * sizeof(char*));
     int sep_len = (int)strlen(separator);
 
-    char* str1 = malloc((len + 1) * sizeof(char));
-    char* str2 = malloc((len + 1) * sizeof(char));
+    char* str1 = safe_alloc(NULL, (len + 1) * sizeof(char));
+    char* str2 = safe_alloc(NULL, (len + 1) * sizeof(char));
     int num = 1;
     int index = 0;
 
@@ -62,7 +62,7 @@ char* add_str(char* str, int* taille, char* added) {
     int len_str = (int)strlen(str);
     while (*(taille) <= len_str + len) {
         *(taille) *= 2;
-        str = realloc(str, (*(taille)) * sizeof(char));
+        str = safe_alloc(str, (*(taille)) * sizeof(char));
     }
     strcat(str, added);
     strcat(str, "");
@@ -122,7 +122,7 @@ int match_num(char* num, bool with_s) {
 }
 
 bool eval_float_part(char* str_num, int len, float* result) {
-    char* str = malloc((len + 1) * sizeof(char));
+    char* str = safe_alloc(NULL, (len + 1) * sizeof(char));
     int index = 0;
     int start = 0;
     float exp = 1;
@@ -192,7 +192,7 @@ bool eval_number(char* str_num, int len, int* result) {
     int n = 0;
     int tmp = 0;
     int str_len = 2;
-    char* str = malloc(str_len * sizeof(char));
+    char* str = safe_alloc(NULL, str_len * sizeof(char));
     int index = 0;
     int sign = 1;
     char last_separator = ' ';
@@ -214,19 +214,19 @@ bool eval_number(char* str_num, int len, int* result) {
                 }
                 ten_power = 3;
             } else if (!strcmp(str, "million") && last_separator == ' ' && tmp == 1 && ten_power > 6) {
-                n += 1000000;
+                n += (int) 1e6;
                 tmp = 0;
                 ten_power = 6;
             } else if (!strcmp(str, "millions") && last_separator == ' ' && tmp > 1 && ten_power > 6) {
-                n += tmp * 1000000;
+                n += tmp * (int) 1e6;
                 tmp = 0;
                 ten_power = 6;
             } else if (!strcmp(str, "milliard") && last_separator == ' ' && tmp == 1 && ten_power > 9) {
-                n += 1000000000;
+                n += (int) 1e9;
                 tmp = 0;
                 ten_power = 9;
             } else if (!strcmp(str, "milliards") && last_separator == ' ' && tmp > 1 && ten_power > 9) {
-                n += tmp * 1000000000;
+                n += tmp * (int) 1e9;
                 tmp = 0;
                 ten_power = 9;
             } else if (!strcmp(str, "moins") && n == 0 && tmp == 0) {
@@ -267,7 +267,7 @@ bool eval_number(char* str_num, int len, int* result) {
                 n += tmp;
             }
             str_len = 2;
-            str = realloc(str, str_len * sizeof(char));
+            str = safe_alloc(str, str_len * sizeof(char));
             index = 0;
             if (last_separator != '*') {
                 last_separator = ' ';
@@ -311,7 +311,7 @@ bool eval_number(char* str_num, int len, int* result) {
                 }
             }
             str_len = 2;
-            str = realloc(str, str_len * sizeof(char));
+            str = safe_alloc(str, str_len * sizeof(char));
             index = 0;
             if (last_separator != '*') {
                 last_separator = '-';
@@ -320,7 +320,7 @@ bool eval_number(char* str_num, int len, int* result) {
             if (i < len) {
                 if (index + 1 == str_len) {
                     str_len *= 2;
-                    str = realloc(str, str_len * sizeof(char));
+                    str = safe_alloc(str, str_len * sizeof(char));
                 }
                 str[index] = str_num[i];
                 str[index + 1] = '\0';
@@ -335,7 +335,7 @@ bool eval_number(char* str_num, int len, int* result) {
 
 char* str_from_chuck(int n) {
     int text_size = 1;
-    char* text = malloc(text_size * sizeof(char));
+    char* text = safe_alloc(NULL, text_size * sizeof(char));
     text[0] = '\0';
 
     int units = n % 10;
@@ -511,7 +511,7 @@ char* str_from_chuck(int n) {
 
 char* str_from_int(int n) {
     int text_size = 1;
-    char* text = malloc(text_size * sizeof(char));
+    char* text = safe_alloc(NULL, text_size * sizeof(char));
     text[0] = '\0';
     if (n < 0) {
         text = add_str(text, &text_size, "moins ");
@@ -580,7 +580,7 @@ char* str_from_int(int n) {
 char* str_from_float(float n) {
     int text_size = 1;
     // printf("%f, %d\n", n, (int)n);
-    char* text = malloc(text_size*sizeof(char));
+    char* text = safe_alloc(NULL, text_size*sizeof(char));
     text[0] = '\0';
     if (n < 0){
         text = add_str(text, &text_size, "moins ");

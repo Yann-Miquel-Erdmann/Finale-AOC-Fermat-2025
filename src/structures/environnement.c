@@ -5,6 +5,7 @@
 
 #include "../constants.h"
 #include "../custom_error.h"
+#include "../safe_alloc.h"
 
 void free_environnement(environnement_t* env) {
     for (int i = 0; i < env->variable_list_len; i++) {
@@ -27,13 +28,13 @@ void free_environnement(environnement_t* env) {
 }
 
 environnement_t* new_environnement(void) {
-    environnement_t* env = malloc(sizeof(environnement_t));
-
-    env->variable_list = malloc(sizeof(variable_t*) * DEFAULT_VARIABLES_LIST_SIZE);
+    environnement_t* env = safe_alloc(NULL, sizeof(environnement_t));
+    
+    env->variable_list = safe_alloc(NULL, sizeof(variable_t*) * DEFAULT_VARIABLES_LIST_SIZE);
     env->variable_list_len = 0;
     env->variable_list_size = DEFAULT_VARIABLES_LIST_SIZE;
 
-    env->phraseValeurs = malloc(sizeof(val_t*) * DEFAULT_VARIABLES_LIST_SIZE);
+    env->phraseValeurs = safe_alloc(NULL, sizeof(val_t*) * DEFAULT_VARIABLES_LIST_SIZE);
     env->phraseValeurs_len = 0;
     env->phraseValeurs_size = DEFAULT_VARIABLES_LIST_SIZE;
 
@@ -41,15 +42,15 @@ environnement_t* new_environnement(void) {
 }
 
 environnement_t* copy_environnement(environnement_t* env) {
-    environnement_t* new_env = malloc(sizeof(environnement_t));
-    new_env->variable_list = malloc(sizeof(variable_t*) * env->variable_list_size);
+    environnement_t* new_env = safe_alloc(NULL, sizeof(environnement_t));
+    new_env->variable_list = safe_alloc(NULL, sizeof(variable_t*) * env->variable_list_size);
     new_env->variable_list_len = env->variable_list_len;
     new_env->variable_list_size = env->variable_list_size;
     for (int i = 0; i < env->variable_list_len; i++) {
         new_env->variable_list[i] = copy_variable(env->variable_list[i]);
     }
 
-    new_env->phraseValeurs = malloc(sizeof(val_t*) * env->phraseValeurs_size);
+    new_env->phraseValeurs = safe_alloc(NULL, sizeof(val_t*) * env->phraseValeurs_size);
     new_env->phraseValeurs_len = env->phraseValeurs_len;
     new_env->phraseValeurs_size = env->phraseValeurs_size;
     for (int i = 0; i < env->phraseValeurs_len; i++) {
@@ -61,10 +62,7 @@ environnement_t* copy_environnement(environnement_t* env) {
 
 void doubleVariableListSize(environnement_t* env) {
     env->variable_list_size *= 2;
-    env->variable_list = realloc(env->variable_list, sizeof(variable_t*) * env->variable_list_size);
-    if (env->variable_list == NULL) {
-        custom_error("manque de mémoire pour environnement variables_list size", NULL, NULL);
-    }
+    env->variable_list = safe_alloc(env->variable_list, sizeof(variable_t*) * env->variable_list_size);
 }
 
 void addToVariableList(environnement_t* env, variable_t* var) {
@@ -77,10 +75,7 @@ void addToVariableList(environnement_t* env, variable_t* var) {
 
 void doubleValeurListSize(environnement_t* env) {
     env->phraseValeurs_size *= 2;
-    env->phraseValeurs = realloc(env->phraseValeurs, sizeof(val_t*) * env->phraseValeurs_size);
-    if (env->phraseValeurs == NULL) {
-        custom_error("manque de mémoire pour environnement phraseValeurs size", NULL, NULL);
-    }
+    env->phraseValeurs = safe_alloc(env->phraseValeurs, sizeof(val_t*) * env->phraseValeurs_size);
 }
 
 void linkValeur(environnement_t* env) {

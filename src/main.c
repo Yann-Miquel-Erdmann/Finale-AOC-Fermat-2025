@@ -1,6 +1,7 @@
 #include <assert.h>
 #include <stdio.h>
 #include <unistd.h>
+#include <string.h>
 
 #include "eval_numbers.h"
 #include "interpreter.h"
@@ -10,20 +11,72 @@
 #include "structures/val.h"
 #include "syntax_convert.h"
 #include "timeout.h"
+#include "custom_error.h"
+#include "safe_alloc.h"
 
 int main(int argc, char const* argv[]) {
-    bool timeout = false;
     if (argc == 2) {
         // help
         if (strcmp(argv[1], "-h") == 0) {
-            printf("Usage: %s <file> [timeout]\n", argv[0]);
+            printf("Usage: %s <file> [--timeout timeout] [--input input_file] [--ignore_errors]\n", argv[0]);
             return 0;
         }
-    } else if (argc == 3){
-        timeout = true;
-    } else {
-        custom_error("Usage: ./interpreter <file> [timeout]", NULL, NULL);
-        return 1;
+    }
+    if (argc == 1){
+        custom_error("Usage: ./interpreter <file> [--timeout timeout] [--input input_file] [--ignore_errors]1", NULL, NULL);
+    }else{
+        if (access(argv[1], F_OK) != 0) {
+            custom_error("Le fichier source n'existe pas", NULL, NULL);
+        }
+    }
+    
+    int require_argument = 0;
+    for (int i = 2; i< argc; i++){
+        if (argv[i][0] == '-' && argv[i][1] == '-'){
+            if (require_argument){
+                char error[64]; // argument de taille au plus 15, par de buffer overflow possible
+                sprintf(error, "Le paramètre \"%s\" requiert un argument", argv[i-1]);
+                custom_error(error, NULL, NULL);
+            }
+            if (!strcmp(argv[i], "--ignore_errors")){
+                set_ignore();
+            }else if (!strcmp(argv[i], "--input")){
+                require_argument = 1;
+            }else if (!strcmp(argv[i], "--timeout")){
+                require_argument = 2;
+            }else{
+                char* error = safe_alloc(NULL, (40+sizeof(argv[i]))*sizeof(char)); // besoin du safe_alloc car taille de l'entrée utilisateur n'est pas définie
+                sprintf(error, "Le paramètre \"%s\" n'est pas reconnu.", argv[i]);
+                custom_error(error, NULL, NULL);
+            }
+        }else{
+            switch (require_argument) {
+                case 0:{
+                    char error[64]; // argument de taille au plus 15, par de buffer overflow possible
+                    sprintf(error, "Le paramètre \"%s\" ne prend par d'argument", argv[i-1]);
+                    custom_error(error, NULL, NULL);
+                    break;
+                }
+                case 1:
+                    if (access(argv[i], F_OK) != 0) {
+                        custom_error("Le fichier d'input n'existe pas.", NULL, NULL);
+                    }
+                    fclose(stdin);
+                    stdin = fopen(argv[i], "r");
+                    require_argument = false;
+                    break;
+                case 2:
+                    setTimeout(atoi(argv[i]));
+                    require_argument = false;
+                    break;
+            }
+            
+        }
+    }
+    if (require_argument){
+        char error[64]; // argument de taille au plus 15, par de buffer overflow possible
+        sprintf(error, "Le paramètre \"%s\" requiert un argument", argv[argc-1]);
+        custom_error(error, NULL, NULL);
     }
     
     // check if file exists
@@ -37,7 +90,7 @@ int main(int argc, char const* argv[]) {
     }
     
     phrase_t* p = parse_file(f);
-    char* nom = malloc(sizeof(char));
+    char* nom = safe_alloc(NULL, sizeof(char));
     nom[0] = '\0';
     function_t* function = new_function(nom, p);
 
@@ -48,11 +101,7 @@ int main(int argc, char const* argv[]) {
     int i = 0;
             
     tokenise(p, function, function_list, function_call_list, &i, NULL,false, NULL);
-    
-    // exit(1);
-    if (timeout){
-        setTimeout(atoi(argv[2]));
-    }
+
     interpreter(function, function_list, NULL, 0);
 
     free_phrase(p);

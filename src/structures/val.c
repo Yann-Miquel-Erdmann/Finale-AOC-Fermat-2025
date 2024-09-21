@@ -7,13 +7,10 @@
 #include "../custom_error.h"
 #include "../eval_numbers.h"
 #include "struct_liste.h"
+#include "../safe_alloc.h"
 
 val_t* new_val_t(char type) {
-    val_t* val = malloc(sizeof(val_t));
-    if (val == NULL) {
-        custom_error("erreur d'allocation", NULL, NULL);
-        exit(1);
-    }
+    val_t* val = safe_alloc(NULL, sizeof(val_t));
 
     val->type = type;
 
@@ -103,7 +100,6 @@ void __attribute__((hot)) copy_val(val_t* dest, val_t* src, bool cp_chaine, bool
         default:
             print_val(src, true, NULL, NULL);
             custom_error("type de val_t non reconnu dans copy_val", NULL, NULL);
-            exit(1);
             break;
     }
 }
@@ -247,7 +243,8 @@ void set_pointer(val_t* src, val_t* dest, phrase_t* p, environnement_t* env){
 }
 
 char* str_type(val_t* v) {
-    char* type = malloc(30 * sizeof(char));
+    char* type = safe_alloc(NULL, 30 * sizeof(char));
+
     switch (v->type) {
         case INT:
             strcpy(type, "int");
@@ -342,7 +339,7 @@ bool is_equal(val_t* v1, val_t* v2, phrase_t* p, environnement_t* env) {
             break;
         
         default: {
-            char* error = malloc(128 * sizeof(char));
+            char* error = safe_alloc(NULL, 128 * sizeof(char));
             sprintf(error, "Impossible de comparer l'égalité d'un élément de type %s et d'un élément de type %s.", str_type(v1), str_type(v2));
             custom_error(error, p, env);
             return false;
@@ -412,7 +409,7 @@ bool is_greater(val_t* v1, val_t* v2, phrase_t* p, environnement_t* env) { // no
             break;
 
         default: {
-            char* error = malloc(100 * sizeof(char));
+            char* error = safe_alloc(NULL, 100 * sizeof(char));
             sprintf(error, "Impossible de comparer un élément de type %s et un élément de type %s.", str_type(v1), str_type(v2));
             custom_error(error, p, env);
             break;
@@ -483,7 +480,7 @@ bool is_strict_greater(val_t* v1, val_t* v2, phrase_t* p, environnement_t* env) 
             break;
 
         default: {
-            char* error = malloc(100 * sizeof(char));
+            char* error = safe_alloc(NULL, 100 * sizeof(char));
             sprintf(error, "Impossible de comparer un élément de type %s et un élément de type %s.", str_type(v1), str_type(v2));
             custom_error(error, p, env);
             return false;

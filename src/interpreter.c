@@ -10,6 +10,7 @@
 #include "expressions/operateurs/operateurs.h"
 #include "syntax_convert.h"
 #include "eval_numbers.h"
+#include "safe_alloc.h"
 
 void interpreter(function_t* function, function_list_t* functions, val_t* result, int layer) {
     if (layer > MAX_RECUSION_DEPTH) {
@@ -60,7 +61,7 @@ void interpreter(function_t* function, function_list_t* functions, val_t* result
             case APPEL_VALEUR_FONCTION_ARGUMENT:
             case EXECUTION_FONCTION_ARGUMENT:
             {
-                function_t* new_func = malloc(sizeof(function_t));
+                function_t* new_func = safe_alloc(NULL, sizeof(function_t));
                 new_func->nom = phraseActuelle->function->nom;
                 new_func->ast = phraseActuelle->function->ast;
                 new_func->function_arg_count = phraseActuelle->function->function_arg_count;

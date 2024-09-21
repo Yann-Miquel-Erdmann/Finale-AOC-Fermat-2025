@@ -1,8 +1,9 @@
 #include "syntax_analyser.h"
-
+#include "custom_error.h"
+#include "safe_alloc.h"
 
 char** analyse(phrase_t* phrase, char* syntax, int* list_len, char* separator) {
-    char** arg_list = malloc(sizeof(char*));
+    char** arg_list = safe_alloc(NULL, sizeof(char*));
     int sep_len = (int)strlen(separator);
     int list_size = 1;
     *list_len = 0;
@@ -12,7 +13,7 @@ char** analyse(phrase_t* phrase, char* syntax, int* list_len, char* separator) {
     
     int mode = 0;
     
-    char* variable = malloc(sizeof(char));
+    char* variable = safe_alloc(NULL, sizeof(char));
     int var_len = 0;
     int var_size = 1;
     while (phrase->text[index] != '\0' && syntax[index_const] != '\0') {
@@ -48,16 +49,16 @@ char** analyse(phrase_t* phrase, char* syntax, int* list_len, char* separator) {
                 }
                 if (var_size == var_len + 1) {
                     var_size *= 2;
-                    variable = realloc(variable, var_size * sizeof(char));
+                    variable = safe_alloc(variable, var_size * sizeof(char));
                 }
                 variable[var_len] = '\0';
 
                 if (*list_len == list_size) {
                     list_size *= 2;
-                    arg_list = realloc(arg_list, list_size * sizeof(char*));
+                    arg_list = safe_alloc(arg_list, list_size * sizeof(char*));
                 }
                 arg_list[*list_len] = variable;
-                variable = malloc(sizeof(char));
+                variable = safe_alloc(NULL, sizeof(char));
                 var_len = 0;
                 var_size = 1;
                 (*list_len)++;
@@ -65,7 +66,7 @@ char** analyse(phrase_t* phrase, char* syntax, int* list_len, char* separator) {
             }else {
                 if (var_size == var_len + 1) {
                     var_size *= 2;
-                    variable = realloc(variable, var_size * sizeof(char));
+                    variable = safe_alloc(variable, var_size * sizeof(char));
                 }
                 variable[var_len] = phrase->text[index];
                 index++;

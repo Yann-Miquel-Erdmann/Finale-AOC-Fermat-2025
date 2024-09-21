@@ -10,18 +10,25 @@ void set_ignore(void){
 }
 
 void custom_error(char* err_message, phrase_t* phrase, environnement_t* env) {
-    fprintf(stderr, "\n\n========== ERROR ===========\n\n");
-    fprintf(stderr, "Une erreur est survenue avec le message suivant:\n%s\n\n", err_message);
+    if (ignore_errors){
+        printf("\n\n========== ERROR ===========\n\n");
+        printf("Une erreur est survenue avec le message suivant:\n%s\n\n", err_message);
+    }else{
+        fprintf(stderr, "\n\n========== ERROR ===========\n\n");
+        fprintf(stderr, "Une erreur est survenue avec le message suivant:\n%s\n\n", err_message);
+    }
 
     if (phrase != NULL) {
         phrase->error = true;
         while (phrase->parentPhrase != NULL) {
             phrase = phrase->parentPhrase;
         }
-        fprintf(stderr, "Dans le code suivant: \n");
+        if (ignore_errors){
+            printf("Dans le code suivant: \n");
+        }else{
+            fprintf(stderr, "Dans le code suivant: \n");
+        }
         printPhrase(phrase, env);
     }
-    if (!ignore_errors){
-        exit(1);
-    }
+    exit((int)!ignore_errors);
 }

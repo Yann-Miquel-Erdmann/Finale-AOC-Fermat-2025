@@ -7,6 +7,7 @@
 #include "custom_error.h"
 #include "structures/val.h"
 #include "syntax_convert.h"
+#include "safe_alloc.h"
 
 // renvoie vrai si c est majuscule
 bool is_uppercase(char c) {
@@ -62,7 +63,7 @@ phrase_t* parse_file(FILE* f) {
                         addToText(phraseActuelle,  '\\');
                         break;
                     default:{
-                        char* errorphrase = malloc(100*sizeof(char));
+                        char* errorphrase = safe_alloc(NULL, 100*sizeof(char));
                         sprintf(errorphrase, "\\%c is not a valid character", c);
                         custom_error(errorphrase, phraseActuelle, NULL);
                         break;
@@ -108,10 +109,9 @@ phrase_t* parse_file(FILE* f) {
         } else {
             // check si l'écriture est valide i.e. pas directement dans la mainPhrase
             if (!encountered_uppercase && c != '(' && c != '\n'){
-                char* error = malloc(100 * sizeof(char));
+                char* error = safe_alloc(NULL, 100 * sizeof(char));
                 sprintf(error, "Syntax Error, ligne %d: \"%c\"%s", line, c, " n'est pas un début de phrase valide.");
                 custom_error(error, NULL, NULL);
-                exit(1);
             }
             switch (c) {
                 case '.':
@@ -128,10 +128,9 @@ phrase_t* parse_file(FILE* f) {
                     phraseActuelle = phraseActuelle->parentPhrase;
 
                     if (phraseActuelle == NULL) {
-                        char* err_mess = malloc(100 * sizeof(char));
+                        char* err_mess = safe_alloc(NULL, 100 * sizeof(char));
                         sprintf(err_mess, "Syntax Error: Il y a un point de trop à la ligne %d", line + 1);
                         custom_error(err_mess, NULL, NULL);
-                        exit(1);
                     }
 
                     // la phrase est une instruction et on l'ajoute
@@ -210,7 +209,7 @@ phrase_t* parse_file(FILE* f) {
                         break;
                     } 
 //                    else if (c == '\n' && !in_comment) {
-//                        char* err_mess = malloc(100 * sizeof(char));
+//                        char* err_mess = safe_alloc(NULL, 100 * sizeof(char));
 //                        sprintf(err_mess, "Syntax Error: Il manque un point à la fin de la ligne %d", line);
 //                        custom_error(err_mess, NULL, NULL);
 //                        break;
@@ -234,12 +233,12 @@ phrase_t* parse_file(FILE* f) {
         custom_error("Une parenthèse n'a pas été fermée", NULL, NULL);
     }
     if (mainPhrase != phraseActuelle) {
-        char* err_mess = malloc((strlen(phraseActuelle->text) + 1) * sizeof(char));
+        char* err_mess = safe_alloc(NULL, (strlen(phraseActuelle->text) + 1) * sizeof(char));
         for (int i = 0; i < (int)strlen(phraseActuelle->text); i++) {
             strcat(err_mess, "~");
         }
         
-        char* error = malloc(256 * sizeof(char));
+        char* error = safe_alloc(NULL, 256 * sizeof(char));
         sprintf(error, "Erreur de syntaxe à la ligne %d : \"%s\" \n\t*\t Il manque un point ici :  %s^", phraseActuelle->line_number, phraseActuelle->text, err_mess);
         
         custom_error(error, NULL, NULL);

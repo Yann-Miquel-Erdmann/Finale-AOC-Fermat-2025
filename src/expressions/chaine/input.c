@@ -1,10 +1,11 @@
 #include "../../structures/val.h"
 #include "../expressions.h"
 #include "../../timeout.h"
+#include "../../safe_alloc.h"
 
 void get_input(val_t* dest){
     pause_timeout();
-    char* chaine = malloc(2 * sizeof(char));
+    char* chaine = safe_alloc(NULL, 2 * sizeof(char));
     int len = 2;
     int index = 0;
     char c;
@@ -14,7 +15,7 @@ void get_input(val_t* dest){
         index++;
         if (index+1 == len){
             len *= 2;
-            chaine = realloc(chaine, len);
+            chaine = safe_alloc(chaine, len);
         }
         scanf("%c", &c);
     }

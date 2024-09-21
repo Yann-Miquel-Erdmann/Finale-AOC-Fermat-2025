@@ -1,16 +1,17 @@
 #include "phrase.h"
 
 #include "../custom_error.h"
+#include "../safe_alloc.h"
 
 phrase_t* new_phrase(phrase_t* parent) {
-    phrase_t* phrase = malloc(sizeof(phrase_t));
+    phrase_t* phrase = safe_alloc(NULL, sizeof(phrase_t));
 
-    phrase->text = malloc(DEFAULT_PHRASE_TEXT_SIZE * sizeof(char));
+    phrase->text = safe_alloc(NULL, DEFAULT_PHRASE_TEXT_SIZE * sizeof(char));
     phrase->textLen = 0;
     phrase->textSize = DEFAULT_PHRASE_TEXT_SIZE;
     phrase->text[0] = '\0';
 
-    phrase->args = malloc(DEFAULT_PHRASE_ARGS * sizeof(phrase_t*));
+    phrase->args = safe_alloc(NULL, DEFAULT_PHRASE_ARGS * sizeof(phrase_t*));
     phrase->argsLen = 0;
     phrase->argsSize = DEFAULT_PHRASE_ARGS;
     phrase->constant_removed = false;
@@ -20,7 +21,7 @@ phrase_t* new_phrase(phrase_t* parent) {
     phrase->suivantInner1 = NULL;
     phrase->suivantInner2 = NULL;
 
-    phrase->innerPhrase = malloc(DEFAULT_PHRASE_INNER * sizeof(phrase_t*));
+    phrase->innerPhrase = safe_alloc(NULL, DEFAULT_PHRASE_INNER * sizeof(phrase_t*));
     phrase->innerPhraseLen = 0;
     phrase->innerPhraseSize = DEFAULT_PHRASE_INNER;
     phrase->innerSeparator = 0;
@@ -99,26 +100,17 @@ phrase_t* copy_phrase(phrase_t* phrase, phrase_t* parent, environnement_t* new_e
 
 // double la taille du tableau de pointeurs vers les innerPhrase
 void doubleInnerSize(phrase_t* phrase) {
-    phrase->innerPhrase = realloc(phrase->innerPhrase, phrase->innerPhraseSize * 2 * sizeof(phrase_t*));
-    if (phrase->innerPhrase == NULL) {
-        custom_error("manque de mémoire pour phrase innerPhrase", NULL, NULL);
-    }
+    phrase->innerPhrase = safe_alloc(phrase->innerPhrase, phrase->innerPhraseSize * 2 * sizeof(phrase_t*));
     phrase->innerPhraseSize *= 2;
 }
 
 void doubleTextSize(phrase_t* phrase) {
-    phrase->text = realloc(phrase->text, phrase->textSize * 2 * sizeof(char));
-    if (phrase->text == NULL) {
-        custom_error("manque de mémoire pour phrase text", NULL, NULL);
-    }
+    phrase->text = safe_alloc(phrase->text, phrase->textSize * 2 * sizeof(char));
     phrase->textSize *= 2;
 }
 
 void doubleArgsSize(phrase_t* phrase) {
-    phrase->args = realloc(phrase->args, phrase->argsSize * 2 * sizeof(phrase_t*));
-    if (phrase->args == NULL) {
-        custom_error("manque de mémoire pour phrase args", NULL, NULL);
-    }
+    phrase->args = safe_alloc(phrase->args, phrase->argsSize * 2 * sizeof(phrase_t*));
     phrase->argsSize *= 2;
 }
 
@@ -234,7 +226,6 @@ phrase_t* parent_loop(phrase_t* phrase, environnement_t* env) {
     while (p->phraseId != TANT_QUE && p->phraseId != POUR_SANS_PAS && p->phraseId != POUR_AVEC_PAS) {
         if (p->parentPhrase == NULL) {
             custom_error("Syntaxe invalide, quitter boucle doit être dans une boucle", phrase, env);
-            exit(1);
         }
         p = p->parentPhrase;
     }

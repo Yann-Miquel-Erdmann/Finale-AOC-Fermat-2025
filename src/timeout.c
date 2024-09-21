@@ -1,5 +1,6 @@
 #include "timeout.h"
 #include <stdatomic.h>
+#include "safe_alloc.h"
 
 atomic_bool timeout_stopped = false;
 
@@ -18,9 +19,6 @@ void* thread_timeout(void* arg){
         usleep(10000);
     }
     custom_error("Timeout atteint, boucle infinie / récursion infinie?", NULL, NULL);
-    free(arg);
-    pthread_exit(NULL);
-    return NULL;
 }
 
 void pause_timeout(void){
@@ -33,8 +31,9 @@ void unpause_timeout(void){
 
 // timeout in miliseconds
 void setTimeout(int time){
+    printf("timeout set for %d ms\n", time);
     pthread_t thread;
-    timeout_t* t = malloc(sizeof(timeout_t));
+    timeout_t* t = safe_alloc(NULL, sizeof(timeout_t));
     t->value = time;
     pthread_create(&thread, NULL, thread_timeout, t);
 }

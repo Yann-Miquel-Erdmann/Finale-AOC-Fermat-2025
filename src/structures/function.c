@@ -7,6 +7,7 @@
 #include "../custom_error.h"
 #include "environnement.h"
 #include "phrase.h"
+#include "../safe_alloc.h"
 
 void free_function_t(function_t* func) {
     if (func->ast == NULL) {
@@ -23,7 +24,7 @@ void free_function_t(function_t* func) {
 }
 
 function_t* new_function(char* nom, phrase_t* ast) {
-    function_t* func = malloc(sizeof(function_t));
+    function_t* func = safe_alloc(NULL, sizeof(function_t));
     func->nom = nom;
     func->ast = ast;
     func->env = new_environnement();
@@ -31,8 +32,8 @@ function_t* new_function(char* nom, phrase_t* ast) {
 }
 
 function_t* copy_function(function_t* func) {
-    function_t* new_func = malloc(sizeof(function_t));
-    new_func->nom = malloc((int)strlen(func->nom) + 1);
+    function_t* new_func = safe_alloc(NULL, sizeof(function_t));
+    new_func->nom = safe_alloc(NULL, (int)strlen(func->nom) + 1);
     new_func->function_arg_count = func->function_arg_count;
     strcpy(new_func->nom, func->nom);
     new_func->env = copy_environnement(func->env);
@@ -42,8 +43,8 @@ function_t* copy_function(function_t* func) {
 }
 
 function_list_t* new_function_list(void) {
-    function_list_t* func_list = malloc(sizeof(function_list_t));
-    func_list->function_list = malloc(sizeof(function_t*) * DEFAULT_FUNCTION_LIST_SIZE);
+    function_list_t* func_list = safe_alloc(NULL, sizeof(function_list_t));
+    func_list->function_list = safe_alloc(NULL, sizeof(function_t*) * DEFAULT_FUNCTION_LIST_SIZE);
     func_list->function_list_len = 0;
     func_list->function_list_size = DEFAULT_FUNCTION_LIST_SIZE;
     return func_list;
@@ -51,10 +52,7 @@ function_list_t* new_function_list(void) {
 
 void doubleFunctionListSize(function_list_t* func_list) {
     func_list->function_list_size *= 2;
-    func_list->function_list = realloc(func_list->function_list, sizeof(function_t*) * func_list->function_list_size);
-    if (func_list->function_list == NULL) {
-        custom_error("manque de mémoire pour function list size", NULL, NULL);
-    }
+    func_list->function_list = safe_alloc(func_list->function_list, sizeof(function_t*) * func_list->function_list_size);
 }
 
 void addToFunctionList(function_list_t* func_list, function_t* func) {

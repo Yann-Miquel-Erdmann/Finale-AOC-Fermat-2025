@@ -7,6 +7,7 @@
 #include "expressions/comparateurs.h"
 #include "expressions/operateurs/operateurs.h"
 #include "structures/function.h"
+#include "safe_alloc.h"
 
 int elem_liste(char* text) {
     // printf("%s\n", text);
@@ -1021,7 +1022,7 @@ void isolate_func_envs(function_list_t* func_list) {
 }
 
 void removeConstants(phrase_t* phrase) {
-    phrase_t** phrasesWithInner = malloc(sizeof(phrase_t*) * DEFAULT_PHRASE_INNER);
+    phrase_t** phrasesWithInner = safe_alloc(NULL, sizeof(phrase_t*) * DEFAULT_PHRASE_INNER);
     int phrasesWithInnerLen = 0;
     int phrasesWithInnerSize = DEFAULT_PHRASE_INNER;
     phrase_t* phraseActuelle = phrase;
@@ -1034,7 +1035,7 @@ void removeConstants(phrase_t* phrase) {
             // printf("inner phrase %d\n", phraseActuelle->innerPhraseLen);
             if (phrasesWithInnerLen == phrasesWithInnerSize) {
                 phrasesWithInnerSize *= 2;
-                phrasesWithInner = realloc(phrasesWithInner, sizeof(phrase_t*) * phrasesWithInnerSize);
+                phrasesWithInner = safe_alloc(phrasesWithInner, sizeof(phrase_t*) * phrasesWithInnerSize);
             }
             phrasesWithInner[phrasesWithInnerLen] = phraseActuelle;
             phrasesWithInnerLen++;
@@ -1082,7 +1083,7 @@ void removeConstants(phrase_t* phrase) {
             if (phrasesWithInner[i]->suivantInner1->phraseId == DEFINITION_FONCTION || phrasesWithInner[i]->suivantInner1->phraseId == DEFINITION_FONCTION_ARGUMENT) {
                 if (phrasesWithInnerLen == phrasesWithInnerSize) {
                     phrasesWithInnerSize *= 2;
-                    phrasesWithInner = realloc(phrasesWithInner, sizeof(phrase_t*) * phrasesWithInnerSize);
+                    phrasesWithInner = safe_alloc(phrasesWithInner, sizeof(phrase_t*) * phrasesWithInnerSize);
                 }
                 phrasesWithInner[phrasesWithInnerLen] = phrasesWithInner[i]->suivantInner1;
                 phrasesWithInnerLen++;
@@ -1105,7 +1106,7 @@ void removeConstants(phrase_t* phrase) {
                 if (phrasesWithInner[i]->suivantInner2->phraseId == DEFINITION_FONCTION || phrasesWithInner[i]->suivantInner2->phraseId == DEFINITION_FONCTION_ARGUMENT) {
                     if (phrasesWithInnerLen == phrasesWithInnerSize) {
                         phrasesWithInnerSize *= 2;
-                        phrasesWithInner = realloc(phrasesWithInner, sizeof(phrase_t*) * phrasesWithInnerSize);
+                        phrasesWithInner = safe_alloc(phrasesWithInner, sizeof(phrase_t*) * phrasesWithInnerSize);
                     }
                     phrasesWithInner[phrasesWithInnerLen] = phrasesWithInner[i]->suivantInner2;
                     phrasesWithInnerLen++;
