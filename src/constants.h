@@ -1,3 +1,6 @@
+#ifndef const
+#define const
+
 // constantes structures phrase_t
 #define DEFAULT_PHRASE_TEXT_SIZE 128
 #define DEFAULT_PHRASE_ARGS 10
@@ -231,3 +234,14 @@
 #define TRY_EXCEPT_S ""
 
 // current next error : 6
+
+#ifdef __clang__
+#else
+#define _Nullable
+#define _Nonnull __attribute__((returns_nonnull))
+#define __dead2 __attribute__((noreturn))
+#define __result_use_check __attribute__((warn_unused_result))
+#define __alloc_size(m) __attribute__((alloc_size(m)))
+#endif
+
+#endif
