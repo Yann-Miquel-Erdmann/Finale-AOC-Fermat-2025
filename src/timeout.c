@@ -1,5 +1,6 @@
 #include "timeout.h"
 #include <stdatomic.h>
+#include <unistd.h>
 #include "safe_alloc.h"
 
 atomic_bool timeout_stopped = false;
@@ -31,7 +32,6 @@ void unpause_timeout(void){
 
 // timeout in miliseconds
 void setTimeout(int time){
-    printf("timeout set for %d ms\n", time);
     pthread_t thread;
     timeout_t* t = safe_alloc(NULL, sizeof(timeout_t));
     t->value = time;

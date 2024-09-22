@@ -212,6 +212,7 @@ void _printPhrase(phrase_t* phrase, int decalage, int last_elem, environnement_t
         }
         _printPhrase(phrase->innerPhrase[phrase->innerPhraseLen - 1], decalage + 1, last_elem + 1, env);
     }
+    fflush(stdout);
 }
 
 void printPhrase(phrase_t* phrase, environnement_t* env) {

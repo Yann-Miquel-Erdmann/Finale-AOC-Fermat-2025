@@ -36,7 +36,6 @@ liste_t* copy_liste(liste_t* liste) {
     for (int i = 0; i < liste->valeursLen; i++) {
         new_liste->valeurs[i] = new_val_t(UNDEFINED);
         copy_val(new_liste->valeurs[i], liste->valeurs[i], true, true);
-        new_liste->valeurs[i]->parent_liste = new_liste;
         if (new_liste->valeurs[i]->type == LISTE){
             new_liste->valeurs[i]->value.liste->parent_list = new_liste;
         }
@@ -81,7 +80,6 @@ void ajout(liste_t* liste, val_t* valeur, phrase_t* p, environnement_t* env) {
     }
     liste->valeurs[liste->valeursLen] = new_val_t(UNDEFINED);
     copy_val(liste->valeurs[liste->valeursLen], valeur, true, true);
-    liste->valeurs[liste->valeursLen]->parent_liste = liste;
     if (liste->valeurs[liste->valeursLen]->type == LISTE){
         liste->valeurs[liste->valeursLen]->value.liste->parent_list = liste;
     }
@@ -100,7 +98,6 @@ void inserer(liste_t* liste, int indice, val_t* valeur, phrase_t* p, environneme
     }
     liste->valeurs[indice] = new_val_t(UNDEFINED);
     copy_val(liste->valeurs[indice], valeur, true, true);
-    liste->valeurs[indice]->parent_liste = liste;
     if (liste->valeurs[indice]->type == LISTE){
         liste->valeurs[indice]->value.liste->parent_list = liste;
     }

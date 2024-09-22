@@ -3,12 +3,15 @@ import sys
 import time
 import os
 
-if len(sys.argv) != 2:
+if len(sys.argv) != 2 and len(sys.argv) != 3:
     print("Argument required\n")
     print(sys.argv)
-    exit(0)
+    exit(1)
 
 s = os.getcwd().replace(" ", "\\ ")
 
-print(os.getcwd())
-appscript.app('Terminal').do_script(f'cd {s} && python3 {sys.argv[1]}').activate()
+if len(sys.argv) == 3 and sys.argv[2] == "exit":
+    appscript.app('Terminal').do_script(f'cd {s} && python3 {sys.argv[1]} && osascript -e \'tell app "Xcode" to activate\' && exit').activate()
+else:
+        appscript.app('Terminal').do_script(f'cd {s} && python3 {sys.argv[1]} && osascript -e \'tell app "Xcode" to activate\'').activate()
+

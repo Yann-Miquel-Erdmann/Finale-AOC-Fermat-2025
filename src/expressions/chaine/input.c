@@ -20,7 +20,9 @@ void get_input(val_t* dest){
         scanf("%c", &c);
     }
     chaine[index] = '\0';
-    set_char(dest, new_chaine_t(chaine));
+    val_t* val = new_chaine_val_t(chaine);
+    copy_val(dest, val, true, true);
     free(chaine);
+    free_val_t(val, true, true);
     unpause_timeout();
 }

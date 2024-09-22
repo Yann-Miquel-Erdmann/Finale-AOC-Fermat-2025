@@ -43,7 +43,7 @@ void interpreter(function_t* function, function_list_t* functions, val_t* result
         // }
         // printf("\n");
 
-        // printf("'%s' %d %d %d\n", phraseActuelle->text, phraseActuelle->phraseId, phraseActuelle->interpreterInnerIndex, (int)phraseActuelle->constant);
+        // printf("'%s' %d %d\n", phraseActuelle->text, phraseActuelle->phraseId, (int)phraseActuelle->constant);
         switch (phraseActuelle->phraseId) {
             case DEFINITION_FONCTION_ARGUMENT:
             case DEFINITION_FONCTION:
@@ -522,49 +522,68 @@ void interpreter(function_t* function, function_list_t* functions, val_t* result
                 phraseActuelle = phraseActuelle->suivant;
                 break;
             case INPUT_INT:
-                get_input(env->phraseValeurs[phraseActuelle->uniqueId]);
+            {
+                val_t* val = new_val_t(CHAINE_DE_CHAR);
+                get_input(val);
                 
                 int value_i;
-                int lenght = env->phraseValeurs[phraseActuelle->uniqueId]->value.chaine->chars_len;
-                if (eval_number(env->phraseValeurs[phraseActuelle->uniqueId]->value.chaine->chars, lenght, &value_i)){
+                int lenght = val->value.chaine->chars_len;
+                if (eval_number(val->value.chaine->chars, lenght, &value_i)){
                     set_int(env->phraseValeurs[phraseActuelle->uniqueId], value_i);
+                    free_val_t(val, true, true);
                     phraseActuelle = phraseActuelle->suivant;
                 }else{
+                    free_val_t(val, true, true);
                     printf("La chaine donnée ne correspond pas à un entier.\nVeuillez enter un entier.\n");
+                    fflush(stdout);
                 }
                 
                 break;
+            }
             case INPUT_FLOAT:
-                get_input(env->phraseValeurs[phraseActuelle->uniqueId]);
+            {
+                val_t* val = new_val_t(CHAINE_DE_CHAR);
+                get_input(val);
                 
                 float value_f;
-                lenght = env->phraseValeurs[phraseActuelle->uniqueId]->value.chaine->chars_len;
-                if (eval_float(env->phraseValeurs[phraseActuelle->uniqueId]->value.chaine->chars, lenght, &value_f)){
+                int lenght = val->value.chaine->chars_len;
+                if (eval_float(val->value.chaine->chars, lenght, &value_f)){
                     set_float(env->phraseValeurs[phraseActuelle->uniqueId], value_f);
                     phraseActuelle = phraseActuelle->suivant;
+                    free_val_t(val, true, true);
                 }else{
+                    free_val_t(val, true, true);
                     printf("La chaine donnée ne correspond pas à un flottant.\nVeuillez entrer un flottant.\n");
+                    fflush(stdout);
                 }
                 
                 break;
+            }
             case INPUT_BOOL:
-                get_input(env->phraseValeurs[phraseActuelle->uniqueId]);
-                lenght = env->phraseValeurs[phraseActuelle->uniqueId]->value.chaine->chars_len;
-                char* str = env->phraseValeurs[phraseActuelle->uniqueId]->value.chaine->chars;
+            {
+                val_t* val = new_val_t(CHAINE_DE_CHAR);
+                get_input(val);
+                
+                int lenght = val->value.chaine->chars_len;
+                char* str = val->value.chaine->chars;
                 if (!strcmp(str, "faux") || !strcmp(str, "vrai")){
-                    set_bool(env->phraseValeurs[phraseActuelle->uniqueId], (lenght != 0 && strcmp(env->phraseValeurs[phraseActuelle->uniqueId]->value.chaine->chars, "faux")));
+                    set_bool(env->phraseValeurs[phraseActuelle->uniqueId], (lenght != 0 && strcmp(val->value.chaine->chars, "faux")));
+                    free_val_t(val, true, true);
                     phraseActuelle = phraseActuelle->suivant;
                 }else{
+                    free_val_t(val, true, true);
                     printf("La chaine donnée ne correspond pas à un booléen.\nVeuillez enter un booléen.\n");
+                    fflush(stdout);
                 }
                 
                 break;
+            }
             case VALEUR_POINTEE:
                 if (env->phraseValeurs[phraseActuelle->args[0]->uniqueId]->type != POINTEUR){
                     custom_error("La valeur donnée n'est pas un pointeur", phraseActuelle, env);
                 }
                 
-                copy_val(env->phraseValeurs[phraseActuelle->uniqueId], env->phraseValeurs[phraseActuelle->args[0]->uniqueId]->value.ptr, true, true);
+                copy_val(env->phraseValeurs[phraseActuelle->uniqueId], env->phraseValeurs[phraseActuelle->args[0]->uniqueId]->value.ptr, false, false);
                 phraseActuelle = phraseActuelle->suivant;
                 break;
             case VALEUR_FINALE_POINTEE:
@@ -583,9 +602,9 @@ void interpreter(function_t* function, function_list_t* functions, val_t* result
                     }
                     ajout(l, var, phraseActuelle, env);
                 }
-                
-                copy_val(env->phraseValeurs[phraseActuelle->uniqueId], var, true, true);
+                copy_val(env->phraseValeurs[phraseActuelle->uniqueId], var, false, false);
                 phraseActuelle = phraseActuelle->suivant;
+                free_liste_t(l, true, true);
                 break;
             case NO_ID:
                 custom_error("Erreur d'interprétation", phraseActuelle, env);

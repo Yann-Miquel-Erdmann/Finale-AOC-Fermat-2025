@@ -8,6 +8,7 @@
 #include "../constants.h"
 #include "../custom_error.h"
 #include "../safe_alloc.h"
+#include "val.h"
 
 void free_chaine_t(chaine_t* c) {
     // printf("free chaine %p\n", c);
@@ -19,12 +20,33 @@ chaine_t* new_chaine_t(char* c) {
     chaine_t* chaine = safe_alloc(NULL, sizeof(chaine_t));
     int len = (int)strlen(c);
     int size = DEFAULT_CHAINE_CHARS_SIZE * pow(2,(int)(((log(len) - log(DEFAULT_CHAINE_CHARS_SIZE))/log(2)) + 1));
+    if (size == 0){
+        size = DEFAULT_CHAINE_CHARS_SIZE;
+    }
     chaine->chars = safe_alloc(NULL, size * sizeof(char));
     strcpy(chaine->chars, c);
     
     chaine->chars_len = len;
     chaine->chars_size = size;
     return chaine;
+}
+
+val_t* new_chaine_val_t(char* c){
+    val_t* val = safe_alloc(NULL, sizeof(val_t));
+    chaine_t* chaine = safe_alloc(NULL, sizeof(chaine_t));
+    int len = (int)strlen(c);
+    int size = DEFAULT_CHAINE_CHARS_SIZE * pow(2,(int)(((log(len) - log(DEFAULT_CHAINE_CHARS_SIZE))/log(2)) + 1));
+    if (size == 0){
+        size = DEFAULT_CHAINE_CHARS_SIZE;
+    }
+    chaine->chars = safe_alloc(NULL, size * sizeof(char));
+    strcpy(chaine->chars, c);
+    
+    chaine->chars_len = len;
+    chaine->chars_size = size;
+    val->value.chaine = chaine;
+    val->type = CHAINE_DE_CHAR;
+    return val;
 }
 
 chaine_t* copy_chaine(chaine_t* src) {

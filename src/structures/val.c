@@ -19,7 +19,6 @@ val_t* new_val_t(char type) {
     } else if (type == CHAINE_DE_CHAR) {
         val->value.chaine = new_chaine_t("");
     }
-    val->parent_liste = NULL;
     return val;
 }
 
@@ -35,13 +34,11 @@ void free_val_t(val_t* v, bool free_chaine, bool free_liste) {
 }
 
 void __attribute__((hot)) copy_val(val_t* dest, val_t* src, bool cp_chaine, bool cp_liste) {
-
     if (dest->type == LISTE) {
         free_liste_t(dest->value.liste, true, true);
     } else if (dest->type == CHAINE_DE_CHAR) {
         free_chaine_t(dest->value.chaine);
     }
-    dest->parent_liste = NULL;
     dest->type = src->type;
     switch (src->type) {
         case INT:
@@ -570,4 +567,5 @@ void print_val(val_t* v, bool new_line, phrase_t* p, environnement_t* env) {
     if (new_line) {
         printf("\n");
     }
+    fflush(stdout);
 };

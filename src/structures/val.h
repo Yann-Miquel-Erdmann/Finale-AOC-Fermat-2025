@@ -18,7 +18,6 @@ typedef struct val {
         chaine_t* chaine;
         struct val* ptr;
     } value;
-    liste_t* parent_liste;
 } val_t;
 
 

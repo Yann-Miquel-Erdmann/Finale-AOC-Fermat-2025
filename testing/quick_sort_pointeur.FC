@@ -22,7 +22,7 @@ Soit partition une fonction qui lorsqu'elle est appelée avec a, l0, hi exécute
     Pour j allant de La variable l0? jusqu'à La variable hi? faire:
         Si La valeur de L'élément de La liste a? à l'indice La variable j?? est plus petite que la valeur de La variable pivot?? alors faire:
             Exécuter la fonction swap avec les arguments La variable a?, La variable i?, La variable j?.
-            Que i devienne La somme de La variable i? et de L'entier un??.
+            Que La variable i? devienne La somme de La variable i? et de L'entier un??.
         .
     .
     Exécuter la fonction swap avec les arguments La variable a?, La variable i?, La variable hi?.
