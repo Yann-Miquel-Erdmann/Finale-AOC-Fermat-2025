@@ -10,3 +10,10 @@ perf.data
 perf.data.old
 callgrind.out.*
 testing/nombres_premiers_valgrind.FC
+testing/input.txt
+testing/launcher.py
+testing/test.FC
+testing/python_test.FC
+massif.out.*
+testing/input_capture.txt
+testing/output_capture.txt
