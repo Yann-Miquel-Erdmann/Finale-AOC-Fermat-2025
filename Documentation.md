@@ -1,7 +1,7 @@
 # Documentation du language
 
 ## Disclamer
-Le language n'a pas encore été totalement testé, il reste surement des bugs et de petits contournements de syntaxe.
+Le language a été beacoup testé mais il reste surement des bugs et de petits contournements de syntaxe.
 
 ## Présentation générale et aspects spécifiques
 
@@ -11,7 +11,7 @@ Pro tip: Comme en français, si vous ne voulez pas avoir une phrase trop compliq
 
 Le language à d'abord une spécificité: toutes les phrases commencent une majuscule et se terminent par un point.
 Si vous voulez récupérer une valeur, à la place d'un point à la fin, il faudra mettre un point d'interrogation comme si vous posiez une question.
-/!\ toute majuscule sera considérée comme le début d'une nouvelle phrase, elles ne doivent donc avoir que cet usage. Même avertissement pour le point et le point d'interrogation.
+***/!\ ***toute majuscule sera considérée comme le début d'une nouvelle phrase, elles ne doivent donc avoir que cet usage. Même avertissement pour le point et le point d'interrogation.
 Malheureusement la ponctuation parfaite avec de telles règles n'existe pas, il est donc possible que vous vous retrouviez avec plusieurs points ou points d'interrogation d'affilés
 ou des majuscules au milieu de phrases.
 
@@ -22,18 +22,19 @@ Il sera précisé plus tard lorsq'une phrase est une instruction où une express
 
 Vous aurez certainement à écrire des nombres dans votre programme.
 Les plus perspicaces l'auront peut-être deviné, il faudra les écrire en lettre, selon la règle de 1990:
-* tirets entre tous les nombres sauf autour de millions et de milliards
+* tirets entre tous les nombres sauf autour de million et de milliard
 * cent et vingt ne prennent de "s" au pluriel que s'ils ne sont pas suivi d'un nombre autre que million et milliard
+* million et milliard prennent un "s" au pluriel
 * mille est invariable
 
-Les nombres à virgule devront être écrits par exemple 2.005: "deux virgule zéro zéro cinq"
+Les nombres à virgule devront être écrits evac tous les zéro et la virgule par exemple 2.00512: "deux virgule zéro zéro cinq-cent-douze"
 
 ## Fonctionnement de la documentation
 Le syntaxes seront décrites de la manière:
 ```
-Ceci est du code avec {expression} puis parfois {instruction}.
+Ceci est du code avec une {expression} puis parfois une {instruction}.
 ```
-{expression} signifie que la syntaxe requiert une expression et {instruction} requiert une instruction.
+`{expression}` signifie que la syntaxe requiert une expression (sans les `{}`) et `{instruction}` requiert une instruction.
 Si un type de base est présent aux côtés du mot expression, cela signifie que le type est à respecter.
 
 Si 
@@ -52,30 +53,38 @@ Dans le cas de
 il faut mettre au moins une expression mais il est à nouveau possible d'en mettre autant que l'on veut.
 Il est à noter la présence des virgules entre les différentes expressions qui est obligatoire.
 
-Finalement si aucun des cas suivants n'est entre les {}, il suffit de suivre ce qui est écrit à l'intérieur.
+Lorsque `<mettre un truc ici>` apparait, il faut mettre un élément (également sans les `<>`), souvent un nom de variable, de fonction ou un nombre,
+en suivant ce qui est écrit à l'intérieur.
+
+Les structures données pourrons vous parraître incompréhensible au premmier abord mais des exemples seront donnés à la fin de la documentation.
 
 ## Les expression de base
 Les expressions base sont les expressions que vous utiliserez probablement le plus souvent\
 Il peut s'agir:
 
-* d'un entier
+* d'un entier\
+_instruction_
 ```
-L'entier {nombre en toutes lettres}?
+L'entier <nombre en toutes lettres>?
 ```
-* d'un nombre à virgule (ou flottant)
+* d'un nombre à virgule (ou flottant)\
+_instruction_
 ```
-Le flottant {flottant en toutes lettre avec virgule}?
+Le flottant <flottant en toutes lettre avec virgule>?
 ```
-* d'un booléen
+* d'un booléen\
+_instruction_
 ```
-Le booléen {vrai/faux}?
+Le booléen <vrai ou faux>?
 ```
-* d'une chaîne de carractères
+* d'une chaîne de carractères\
+_instruction_
 ```
-La chaîne de caractères "{ce que vous voulez sauf "}"?
+La chaîne de caractères "<ce que vous voulez sauf " >"?
 ```
-* du rien (ou non définit)
-le rien peut être utile dans certaine situation que vous pourrez trouver
+* du rien (ou non définit)\
+le rien peut être utile dans certaine situation que vous pourrez trouver\
+_instruction_
 ```
 Rien?
 ```
@@ -83,28 +92,33 @@ Rien?
 ## Les variables
 Les variables sont indispensables pour stocker de l'information à réutiliser plus tard.
 
-On peut définir une variable sans lui donner de valeur:
+On peut définir une variable sans lui donner de valeur:\
 _instruction_
 ```
-Soit {nom de la variable sans espace}.
+Soit <nom de la variable sans espace>.
 ```
 
-Ou avec une valeur
+Ou lui en assigner à sa création:\
 _instruction_
 ```
-Soit {nom de la variable} {expression}.
+Soit <nom de la variable> {expression}.
 ```
 
-Pour lui assigner une valeur,
+Pour lui assigner une valeur, on utilisae la syntaxe suivante.
+Elle est plus générale car elle est également utilisée pour d'autres structures de données décrites plus tard.\
 _instruction_
 ```
-Que {nom de la variable} devienne {expression}.
+Que {expression: variable / liste / pointeur} devienne {expression}.
+```
+exemple:
+```
+Que La variable x? devienne L'entier un?.
 ```
 
-Pour accéder au contenu de la variable il suffit de faire
+Pour accéder au contenu de la variable il suffit de faire\
 _expression_
 ```
-La variable {nom de la variable}?
+La variable <nom de la variable>?
 ```
 
 ## Les liste
@@ -123,12 +137,33 @@ _expression_
 La liste des éléments {expression 1}, {expression 2}, ..., {expression n}.
 ```
 
+Une fois stockée dans une variable, on peut y accéder avec\
+_expression_
+```
+La liste <nom de la liste>?
+```
+
+On peut accéder à un élément de la liste avec\
+_expression_
+```
+L'élément de {expression: liste} à l'indice {expression: entier}?
+```
+où `{expression: liste}` est souvent `La liste <nom de la liste>`.
+
 Plusieurs opérations sont possibles sur les listes:
 * Ajouter des éléments à la fin de la liste:\
 _instruction_
 ```
 Ajouter à {expression: liste} {expression}.
 ```
+utile a savoir, ici, `{expression: liste}` comme toutes celles des instructions précédentes et suivantes
+peuvent être remplacés par `La liste <nom de la liste>` ou `L'élément de {expression: liste} à l'indice {expression: entier}?`
+si celui-ci est une liste
+exemple:
+```
+Ajouter à L'élément de La liste l? à l'indice L'entier un?? L'entier quatre.
+```
+ajoute 4 au premier élément de la liste l.
 
 * Insérer des éléments au milieu de la liste:\
 _instruction_
@@ -148,21 +183,10 @@ _instruction_
 Remplacer l'élément de {expression: liste} à l'indice {expression: entier} par {expression}.
 ```
 
-On peut également accéder à un élément de la liste avec\
-_expression_
-```
-L'élément de {expression: liste} à l'indice {expression: entier}?
-```
-
-Finalement, on peut accéder à la liste en entier avec\
-_expression_
-```
-La liste {nom de la liste}?
-```
-
 ## Les opérateurs
 Il a a différents opérateurs qui vous permetterons d'effectuer toute sorte de calculs sur les types de bases
 La plupart d'entre eux ne fonctionnent que sur les types numériques de base i.e. les entiers, les flottants et les booléens.
+`{expression numérique}` désigne `{expression : entier / flottant / booléen}`
 
 Parmis ces opérateurs, on retrouve
 * la somme:\
@@ -195,6 +219,13 @@ _expression_
 ```
 Le reste de {expression numérique} par {expression numérique}?
 ```
+
+Il pourra vous être utile de pouvoir utiliser la partie entière pour arrondir des flottants:
+_expression_
+```
+La partie entière de {expression numérique}?
+```
+
 Il y a également quelques opérateurs booléens simples:
 * La négation booléenne:\
 _expression_
@@ -225,8 +256,9 @@ Si {expression} alors faire:
     {instruction n}.
 .
 ```
-/!\ ne pas oublier le point à la fin de la condition.
+***/!\ ***ne pas oublier le point à la fin de la condition.
 Note: La tabulation n'est pas obligatoire mais permet d'augmenter la lisibilité.
+
 * Si alors sinon:\
 _instruction_
 ```
@@ -245,18 +277,23 @@ sinon faire:
 Note: vous porterez une attention particulière au sinon qui n'a pas de majuscule.
 
 Les comparateurs vous seront utile, vous l'aurez deviné, pour comparer.
-Pour comparer, vous aurez à votre disposition:
+Pour comparer, vous aurez à votre disposition:\
 * L'égalité:\
 _expression_
 ```
 La valeur de {expression} est égale à la valeur de {expression}?
+```
+* La non égalité:\
+_expression_
+```
+La valeur de {expression} est différente de la valeur de {expression}?
 ```
 * L'inégalité inférieur:\
 _expression_
 ```
 La valeur de {expression} est plus petite que la valeur de {expression}?
 ```
-* L'ingalité stricte inférieur:\
+* L'ingalité strict inférieur:\
 _expression_
 ```
 La valeur de {expression} est strictement plus petite que la valeur de {expression}?
@@ -266,7 +303,7 @@ _expression_
 ```
 La valeur de {expression} est plus grande que la valeur de {expression}?
 ```
-* L'inégalité stricte supérieur:
+* L'inégalité strict supérieur:
 _expression_
 ```
 La valeur de {expression} est strictement plus grande que la valeur de {expression}?
@@ -274,7 +311,7 @@ La valeur de {expression} est strictement plus grande que la valeur de {expressi
 
 ## Boucles
 Écrire peut être rapidement fatiguant, surtout s'il sagit de lignes plutôt répétitives.
-Pour régler ce problème, vous aurez plusieurs boucles à votre disposition:
+Pour régler ce problème, vous aurez plusieurs boucles à votre disposition:\
 * Tant que:\
 _instruction_
 ```
@@ -305,24 +342,109 @@ Pour {nom de la variable} alland de {expression numérique} jusqu'à {expression
     {instruction n}.
 .
 ```
+Avec ces boucles, vous pourrez également en sortir à tout moment avec l'instruction
+Quitter boucle:\
+_instruction_
+```
+Quitter la boucle
+```
 
-## Affichages et debug
+## Interractions avec la console
 Il pourra en cas d'erreur dans votre code être pratique de pouvoir afficher les éléments qui pourraient poser problème.
 
 On peut tout d'abord afficher toute expression dans la console:\
 _instruction_
 ```
-Afficher {expression}.
+Afficher {expression1}, {expression2}, ... {expression n}.
 ```
+Mais aussi sans retours à la ligne:\
+_instruction_
+```
+Afficher {expression1}, {expression2}, ... {expression n} sans retour à la ligne.
+```
+
 On peut également récupérer la taille d'une liste ou d'une chaine de caractère:\
 _expression_
 ```
-La taille de {chaîne de caractère/liste}?
+La taille de {expression : chaîne de caractère/liste}?
 ```
-Enfin, on peut récupérer le type de d'une expression sous forme de chaine de caractère:\
+On peut également récupérer le type de d'une expression sous forme de chaine de caractère:\
 _expression_
 ```
 Le type de {expression}?
+```
+
+On peut également récuperer des entrées de l'utilisateur sous différents types:
+* Entier:\
+_expression_
+```
+Une entrée entière?
+```
+* Flottant:\
+_expression_
+```
+Une entrée flottante?
+```
+
+* Booléen:\
+_expression_
+```
+Une entrée booléenne?
+```
+
+* Chaîne de caractères:\
+_expression_
+```
+Une entrée?
+```
+
+## Aléatoire
+Quoi de mieux que d'un peu d'aléatoire pour pimenter votre code?
+Vous avez accès à deux fonction pour manipuler l'aléatoire:
+
+* Nombre aléatoire:\
+_expression_
+```
+Un nombre aléatoire?
+```
+
+* Seed:\
+Vous pouvez mettre la seed a la valeur que vous voulez pour obtenir un résultat différent (seed unitiale est a 0)
+_instruction_
+```
+Mettre la seed aléatoire à {expression : entier}.
+```
+
+## Conversion de types
+La partie entière vous a déjà été introduite précédemment, ici vous pourrez convertir non seulement les types numériques mais également
+les chaînes de caractères en nombre ou les nombres en chaînes de caractères.
+En cas d'échec de conversion, l'expression renvoyée est `Rien ?` de type `undefined`.
+
+* Conversion en entier:\
+Si l'entrée est une chaîne, renvoie l'entier associé au nombre en lettres
+_expression_
+```
+La conversion en entier de {expression}?
+```
+
+* Conversion en flottant:\
+Si l'entrée est une chaîne, renvoie le flottant associé au nombre en lettres
+_expression_
+```
+La conversion en flottant de {expression}?
+```
+
+* Conversion en booléen:\
+Si l'entrée est une chaine, renvoie faux si la chaîne est "faux" ou si la chaîne est vide, vrai sinon
+_expression_
+```
+La conversion en booléen de {expression}?
+```
+
+* Conversion en chaîne de caractères:\
+_expression_
+```
+La conversion en chaîne de caractères de {expression}?
 ```
 
 ## Fonctions
