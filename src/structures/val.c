@@ -203,39 +203,6 @@ void set_undefined(val_t* v) {
 }
 
 void set_pointer(val_t* src, val_t* dest, phrase_t* p, environnement_t* env){
-    // printf("pointer set to %p\n", src);
-    
-    // TODO à mettre autre part
-//    val_t* variable = src;
-//    while (variable->type == POINTEUR){
-//        variable = variable->value.ptr;
-//        if (variable == src){
-//            custom_error("La création du pointeur entraine une boucle de référencement", p, env);
-//        }
-//    }
-
-//    liste_t* liste = dest->parent_liste;
-//    while (liste != NULL){
-//        if (liste == src->value.liste){
-//            custom_error("Le pointeur ne peux référencer un de ses parents", p, env);
-//        }
-//        liste = liste->parent_list;
-//    }
-    
-    // TODO replace this later when val_t* implemented for lists
-//    if (dest->type == LISTE) {
-//        liste = src->parent_liste;
-//        while (liste != NULL){
-//            if (liste == dest->value.liste){
-//                custom_error("La création du pointeur entraine la référence d'un élément inexistant", p, env);
-//            }
-//            liste = liste->parent_list;
-//        }
-//        
-//        free_liste_t(dest->value.liste, true, true);
-//    } else if (dest->type == CHAINE_DE_CHAR) {
-//        free_chaine_t(dest->value.chaine);
-//    }
     dest->type = POINTEUR;
     dest->value.ptr = src;
 }
@@ -322,6 +289,7 @@ bool is_equal(val_t* v1, val_t* v2, phrase_t* p, environnement_t* env) {
         case UNDEFINED << 4 | CHAINE_DE_CHAR_P:
         case UNDEFINED << 4 | LISTE:
         case UNDEFINED << 4 | LISTE_P:
+        case UNDEFINED << 4 | POINTEUR:
         case INT << 4 | UNDEFINED:
         case FLOAT << 4 | UNDEFINED:
         case BOOL << 4 | UNDEFINED:
@@ -329,6 +297,7 @@ bool is_equal(val_t* v1, val_t* v2, phrase_t* p, environnement_t* env) {
         case CHAINE_DE_CHAR_P << 4 | UNDEFINED:
         case LISTE << 4 | UNDEFINED:
         case LISTE_P << 4 | UNDEFINED:
+        case POINTEUR << 4 | UNDEFINED:
             return false;
             break;
             
@@ -558,6 +527,7 @@ void print_val(val_t* v, bool new_line, phrase_t* p, environnement_t* env) {
 
         case POINTEUR:
             printf("ptr");
+            printf(" -> %p", v->value.ptr);
             break;
 
         default:

@@ -176,8 +176,9 @@ void _printPhrase(phrase_t* phrase, int decalage, int last_elem, environnement_t
                     break;
                 case CHAINE_DE_CHAR:
                 case CHAINE_DE_CHAR_P:
-                    printf("  ->  %s", env->phraseValeurs[phrase->uniqueId]->value.chaine->chars);
-                    
+                    if (env->phraseValeurs[phrase->uniqueId]->value.chaine != NULL){
+                        printf("  ->  %s", env->phraseValeurs[phrase->uniqueId]->value.chaine->chars);
+                    }
                 default:
                     break;
             }

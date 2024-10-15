@@ -320,15 +320,16 @@ void interpreter(function_t* function, function_list_t* functions, val_t* result
                 if (env->phraseValeurs[phraseActuelle->args[1]->uniqueId]->value.entier < 0 || env->phraseValeurs[phraseActuelle->args[1]->uniqueId]->value.entier >= env->phraseValeurs[phraseActuelle->args[0]->uniqueId]->value.liste->valeursLen) {
                     custom_error("indice hors de la liste", phraseActuelle, env);
                 }
-                switch (env->phraseValeurs[phraseActuelle->args[0]->uniqueId]->value.liste->valeurs[env->phraseValeurs[phraseActuelle->args[1]->uniqueId]->value.entier]->type) {
+                val_t* val = env->phraseValeurs[phraseActuelle->args[0]->uniqueId]->value.liste->valeurs[env->phraseValeurs[phraseActuelle->args[1]->uniqueId]->value.entier];
+                copy_val(env->phraseValeurs[phraseActuelle->uniqueId], val, false, false);
+                /*switch (val->type) {
                     case LISTE:
                     case LISTE_P:
-                        copy_val(env->phraseValeurs[phraseActuelle->uniqueId], env->phraseValeurs[phraseActuelle->args[0]->uniqueId]->value.liste->valeurs[env->phraseValeurs[phraseActuelle->args[1]->uniqueId]->value.entier], true, false);
-
+                        copy_val(env->phraseValeurs[phraseActuelle->uniqueId], val, true, false);
                         break;
                     case CHAINE_DE_CHAR:
                     case CHAINE_DE_CHAR_P:
-                        copy_val(env->phraseValeurs[phraseActuelle->uniqueId], env->phraseValeurs[phraseActuelle->args[0]->uniqueId]->value.liste->valeurs[env->phraseValeurs[phraseActuelle->args[1]->uniqueId]->value.entier], false, false);
+                        copy_val(env->phraseValeurs[phraseActuelle->uniqueId], val, false, false);
                         break;
                     case INT:
                         if (env->phraseValeurs[phraseActuelle->uniqueId]->type == LISTE) {
@@ -336,8 +337,8 @@ void interpreter(function_t* function, function_list_t* functions, val_t* result
                         } else if (env->phraseValeurs[phraseActuelle->uniqueId]->type == CHAINE_DE_CHAR) {
                             free_chaine_t(env->phraseValeurs[phraseActuelle->uniqueId]->value.chaine);
                         }
-                        env->phraseValeurs[phraseActuelle->uniqueId]->type = env->phraseValeurs[phraseActuelle->args[0]->uniqueId]->value.liste->valeurs[env->phraseValeurs[phraseActuelle->args[1]->uniqueId]->value.entier]->type;
-                        env->phraseValeurs[phraseActuelle->uniqueId]->value.entier = env->phraseValeurs[phraseActuelle->args[0]->uniqueId]->value.liste->valeurs[env->phraseValeurs[phraseActuelle->args[1]->uniqueId]->value.entier]->value.entier;
+                        env->phraseValeurs[phraseActuelle->uniqueId]->type = INT;
+                        env->phraseValeurs[phraseActuelle->uniqueId]->value.entier = val->value.entier;
                         break;
                     case FLOAT:
                         if (env->phraseValeurs[phraseActuelle->uniqueId]->type == LISTE) {
@@ -345,8 +346,8 @@ void interpreter(function_t* function, function_list_t* functions, val_t* result
                         } else if (env->phraseValeurs[phraseActuelle->uniqueId]->type == CHAINE_DE_CHAR) {
                             free_chaine_t(env->phraseValeurs[phraseActuelle->uniqueId]->value.chaine);
                         }
-                        env->phraseValeurs[phraseActuelle->uniqueId]->type = env->phraseValeurs[phraseActuelle->args[0]->uniqueId]->value.liste->valeurs[env->phraseValeurs[phraseActuelle->args[1]->uniqueId]->value.entier]->type;
-                        env->phraseValeurs[phraseActuelle->uniqueId]->value.flottant = env->phraseValeurs[phraseActuelle->args[0]->uniqueId]->value.liste->valeurs[env->phraseValeurs[phraseActuelle->args[1]->uniqueId]->value.entier]->value.flottant;
+                        env->phraseValeurs[phraseActuelle->uniqueId]->type = FLOAT;
+                        env->phraseValeurs[phraseActuelle->uniqueId]->value.flottant = val->value.flottant;
                         break;
                     case BOOL:
                         if (env->phraseValeurs[phraseActuelle->uniqueId]->type == LISTE) {
@@ -355,10 +356,17 @@ void interpreter(function_t* function, function_list_t* functions, val_t* result
                             free_chaine_t(env->phraseValeurs[phraseActuelle->uniqueId]->value.chaine);
                         }
 
-                        env->phraseValeurs[phraseActuelle->uniqueId]->type = env->phraseValeurs[phraseActuelle->args[0]->uniqueId]->value.liste->valeurs[env->phraseValeurs[phraseActuelle->args[1]->uniqueId]->value.entier]->type;
-                        env->phraseValeurs[phraseActuelle->uniqueId]->value.booleen = env->phraseValeurs[phraseActuelle->args[0]->uniqueId]->value.liste->valeurs[env->phraseValeurs[phraseActuelle->args[1]->uniqueId]->value.entier]->value.booleen;
+                        env->phraseValeurs[phraseActuelle->uniqueId]->type = BOOL;
+                        env->phraseValeurs[phraseActuelle->uniqueId]->value.booleen = val->value.booleen;
                         break;
-                }
+                    case POINTEUR:
+                        if (env->phraseValeurs[phraseActuelle->uniqueId]->type == LISTE) {
+                            free_liste_t(env->phraseValeurs[phraseActuelle->uniqueId]->value.liste, true, true);
+                        } else if (env->phraseValeurs[phraseActuelle->uniqueId]->type == CHAINE_DE_CHAR) {
+                            free_chaine_t(env->phraseValeurs[phraseActuelle->uniqueId]->value.chaine);
+                        }
+                        break;
+                }*/
                 phraseActuelle = phraseActuelle->suivant;
                 break;
 

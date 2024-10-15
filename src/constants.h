@@ -154,9 +154,9 @@
 #define MODIFICATION_VARIABLE_S "Que * devienne *."  // fait + doc
 
 //  * pointeur
-#define POINTEUR_VARIABLE_S "Un pointeur vers *?"                   // fait
-#define VALEUR_POINTEE_S "La valeur pointée par *?"                 // fait
-#define VALEUR_FINALE_POINTEE_S "La valeur finale pointée par *?"   // fait
+#define POINTEUR_VARIABLE_S "Un pointeur vers *?"                   // fait + doc
+#define VALEUR_POINTEE_S "La valeur pointée par *?"                 // fait + doc
+#define VALEUR_FINALE_POINTEE_S "La valeur finale pointée par *?"   // fait + doc
 
 //  * liste
 #define EXPR_LISTE_VIDE_S "La liste vide?"                                      // fait + doc

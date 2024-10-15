@@ -446,6 +446,40 @@ _expression_
 La conversion en chaîne de caractères de {expression}?
 ```
 
+## Pointeurs
+Pour ceux qui voudraient optimiser leur programme, vous pourrez utiliser des pointeurs.
+(du moins lors du passage d'arguments volumineux dans des fonction comme des grosses liste ou juste pour le fun)
+
+Pour créer un pointeur:
+_expression_
+```
+Un pointeur vers {expression}?
+```
+
+Créer un pointeur c'est bien mais pouvoir accéder à sa valeur c'est mieux.
+On peut accéder à la valeur d'un pointeur de deux manières différentes:
+* la valeur pointée:
+_expression_
+```
+La valeur pointée par {expression : pointeur}?
+```
+* la valeur finale pointée:
+_expression_
+```
+La valeur finale pointée par {expression : pointeur}?
+```
+Si a->b->c avec c = 2, la valeur pointée par a est un pointeur alors que la valeur finale pointée par a est 2.
+
+Si vous vous souvenez, les pointeurs ont été abordés lors de la modification de valeur.
+En effet, la manière de modifier la valeur pointée par le pointeur se fait avec la modification.
+Exemple:
+```
+Soit x L'entier un?.
+Soit y Un pointeur vers La variable x??.
+Que La valeur pointée par La variable y?? devienne L'entier deux?.
+```
+Permet de stocker la valeur 2 dans la variable x sans avoir à passer par son nom. 
+
 ## Fonctions
 Les fonctions sont très utiles pour exécuter un morceau de programme souvent réutilisé à différents endroits du votre code.
 Une focntion se définit de la manière suivante:
