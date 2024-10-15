@@ -94,10 +94,11 @@ void __attribute__((hot)) copy_val(val_t* dest, val_t* src, bool cp_chaine, bool
         case UNDEFINED:
             break;
 
-        default:
+        /*default:
             print_val(src, true, NULL, NULL);
             custom_error("type de val_t non reconnu dans copy_val", NULL, NULL);
             break;
+         */
     }
 }
 

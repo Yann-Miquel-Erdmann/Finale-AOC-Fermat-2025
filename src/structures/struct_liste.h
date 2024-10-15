@@ -37,4 +37,6 @@ void ajout(liste_t* liste, val_t* valeur, phrase_t* p, environnement_t* env);
 void inserer(liste_t* l, int indice, val_t* v, phrase_t* p, environnement_t* env);
 void suppression(liste_t* l, int indice, phrase_t* p, environnement_t* env);
 
+chaine_t* list_to_chaine(liste_t* l);
+
 #endif

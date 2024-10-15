@@ -144,6 +144,21 @@ int elem_liste(char* text) {
     if (!strcmp(text, VALEUR_FINALE_POINTEE_S)){
         return VALEUR_FINALE_POINTEE;
     }
+    if(!strcmp(text, INPUT_S)){
+        return INPUT;
+    }
+    if (!strcmp(text, CONVERT_TO_INT_S)){
+        return CONVERT_TO_INT;
+    }
+    if (!strcmp(text, CONVERT_TO_FLOAT_S)){
+        return CONVERT_TO_FLOAT;
+    }
+    if (!strcmp(text, CONVERT_TO_BOOL_S)){
+        return INPUT;
+    }
+    if (!strcmp(text, CONVERT_TO_CHAR_S)){
+        return CONVERT_TO_CHAR;
+    }
     return -1;
 }
 
@@ -898,6 +913,55 @@ void tokenise(phrase_t* phrase, function_t* function, function_list_t* func_list
             }
             function->env->phraseValeurs[phrase->uniqueId]->type = BOOL;
             break;
+        case INPUT:
+            phrase->phraseId = INPUT;
+            if (inLoopSuivant) {
+                phrase->suivant = inLoopSuivantPointer;
+            }
+            break;
+        case CONVERT_TO_INT:
+            if (phrase->innerPhraseLen > 0 || phrase->argsLen != 1) {
+                custom_error("Syntaxe invalide, convertir en entier prend 1 arguments", phrase, function->env);
+            }
+            phrase->phraseId = CONVERT_TO_INT;
+            if (inLoopSuivant) {
+                phrase->suivant = inLoopSuivantPointer;
+            }
+            tokenise(phrase->args[0], function, func_list, func_call_list, uniqueId, parent_loop, false, NULL);
+            function->env->phraseValeurs[phrase->uniqueId]->type = INT;
+            break;
+        case CONVERT_TO_FLOAT:
+            if (phrase->innerPhraseLen > 0 || phrase->argsLen != 1) {
+                custom_error("Syntaxe invalide, convertir en flottant prend 1 arguments", phrase, function->env);
+            }
+            phrase->phraseId = CONVERT_TO_FLOAT;
+            if (inLoopSuivant) {
+                phrase->suivant = inLoopSuivantPointer;
+            }
+            tokenise(phrase->args[0], function, func_list, func_call_list, uniqueId, parent_loop, false, NULL);
+            function->env->phraseValeurs[phrase->uniqueId]->type = FLOAT;
+            break;
+        case CONVERT_TO_BOOL:
+            if (phrase->innerPhraseLen > 0 || phrase->argsLen != 1) {
+                custom_error("Syntaxe invalide, convertir en booléen prend 1 arguments", phrase, function->env);
+            }
+            phrase->phraseId = CONVERT_TO_BOOL;
+            if (inLoopSuivant) {
+                phrase->suivant = inLoopSuivantPointer;
+            }
+            tokenise(phrase->args[0], function, func_list, func_call_list, uniqueId, parent_loop, false, NULL);
+            function->env->phraseValeurs[phrase->uniqueId]->type = BOOL;
+            break;
+        case CONVERT_TO_CHAR:
+            if (phrase->innerPhraseLen > 0 || phrase->argsLen != 1) {
+                custom_error("Syntaxe invalide, convertir en chaîne de caractères prend 1 arguments", phrase, function->env);
+            }
+            phrase->phraseId = CONVERT_TO_CHAR;
+            if (inLoopSuivant) {
+                phrase->suivant = inLoopSuivantPointer;
+            }
+            tokenise(phrase->args[0], function, func_list, func_call_list, uniqueId, parent_loop, false, NULL);
+            function->env->phraseValeurs[phrase->uniqueId]->type = CHAINE_DE_CHAR;
         case VALEUR_POINTEE:
             if (phrase->innerPhraseLen > 0 || phrase->argsLen != 1) {
                 custom_error("Syntaxe invalide, valeur pointée prend 1 arguments", phrase, function->env);

@@ -207,5 +207,19 @@
         "output": "Entrez un entier\nLa chaine donnée ne correspond pas à un entier.\nVeuillez enter un entier.\nun\nEntrez un flottant\nLa chaine donnée ne correspond pas à un flottant.\nVeuillez entrer un flottant.\nun virgule vingt-neuf millions neuf-cent-quatre-vingt-dix-neuf-mille-neuf-cent-quatre-vingt-dix-huit\nEntrez un booléen\nLa chaine donnée ne correspond pas à un booléen.\nVeuillez enter un booléen.\nvrai\n",
         "input": "a\nun\na\nun virgule trois\na\nvrai\n",
         "errors": true
+    },
+    {
+        "name": "Modification liste avec que devienne",
+        "code": "Soit l La liste des éléments L'entier un??.\nQue L'élément de La liste l? à l'indice L'entier zéro?? devienne L'entier quatre?.\nAfficher La liste l?.\n",
+        "output": "[quatre]\n",
+        "input": "",
+        "errors": true
+    },
+    {
+        "name": "entrée classique",
+        "code": "Soit x Une entrée?.\nAfficher La variable x?.\n",
+        "output": "La chaîne donnée ne correspond pas à une chaîne de caractères, des guillemets sont requis.\nVeuillez recommencer avec des guillemets.\n\"test\"\n",
+        "input": "z\n\"test\"\n",
+        "errors": true
     }
 ]

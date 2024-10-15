@@ -70,6 +70,19 @@ void ajouter_char(chaine_t* c, char e) {
     c->chars_len++;
 }
 
+void ajouter_chaine(chaine_t* c, char* e){
+    int len = (int)sizeof(e);
+    if (c->chars_size > c->chars_len + len) {
+        c->chars_size *= pow(2, (int)(((log(c->chars_len + len) - log(c->chars_size)) / log(2)) + 1));
+    }
+    c->chars = safe_alloc(c->chars, c->chars_size * sizeof(char));
+
+    for (int i = 0; i < len; i++) {
+        c->chars[c->chars_len] = e[i];
+        c->chars_len++;
+    }
+}
+
 void concat_chaines(chaine_t* c1, chaine_t* c2) {
     if (c1->chars_size > c1->chars_len + c2->chars_len) {
         c1->chars_size *= pow(2, (int)(((log(c1->chars_len + c2->chars_len) - log(c1->chars_size)) / log(2)) + 1));

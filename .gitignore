@@ -1,9 +1,10 @@
 build/*
 # Ignore all hidden files
-.*          
+.*
 test
 a.out
 *.o
+*.FC
 
 *.code-workspace
 perf.data

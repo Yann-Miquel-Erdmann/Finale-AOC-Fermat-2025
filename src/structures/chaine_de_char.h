@@ -15,6 +15,7 @@ struct val * new_chaine_val_t(char* c);
 chaine_t* copy_chaine(chaine_t* src);
 
 void ajouter_char(chaine_t* c, char e);
+void ajouter_chaine(chaine_t* c, char* e);
 void concat_chaines(chaine_t* c1, chaine_t* c2);
 
 #endif

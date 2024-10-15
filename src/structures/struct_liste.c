@@ -6,6 +6,7 @@
 // #include "phrase.h"
 #include "struct_liste.h"
 #include "../safe_alloc.h"
+#include "../eval_numbers.h"
 
 void free_liste_t(liste_t* liste, bool free_chaine, bool free_liste) {
     // printf("free liste %p\n", liste);
@@ -179,4 +180,54 @@ bool is_strict_greater_list(liste_t* l1, liste_t* l2, phrase_t* p, environnement
         return true;
     }
     return false;
+}
+
+chaine_t* list_to_chaine(liste_t* l){
+    chaine_t* c = safe_alloc(NULL, sizeof(chaine_t));
+    char* str;
+    for (int i = 0; i< l->valeursLen; i++){
+        switch (l->valeurs[i]->type) {
+            case INT:
+                str = str_from_int(l->valeurs[i]->value.entier);
+                ajouter_chaine(c, str);
+                free(str);
+                break;
+            case FLOAT:
+                str = str_from_float(l->valeurs[i]->value.flottant);
+                ajouter_chaine(c, str);
+                free(str);
+                break;
+            case POINTEUR:
+                ajouter_chaine(c, "ptr");
+                break;
+            case CHAINE_DE_CHAR:
+            case CHAINE_DE_CHAR_P:
+                ajouter_char(c, '"');
+                concat_chaines(c, l->valeurs[i]->value.chaine);
+                ajouter_char(c, '"');
+                break;
+            case LISTE:
+            case LISTE_P:
+                ajouter_char(c, '[');
+                chaine_t* c2 = list_to_chaine(l->valeurs[i]->value.liste);
+                concat_chaines(c, c2);
+                free_chaine_t(c2);
+                ajouter_char(c, ']');
+                break;
+            case BOOL:
+                if (l->valeurs[i]->value.booleen){
+                    ajouter_chaine(c, "vrai");
+                }else{
+                    ajouter_chaine(c, "faux");
+                }
+                break;
+            case UNDEFINED:
+                ajouter_chaine(c, "rien");
+                
+        }
+        if (i != l->valeursLen-1){
+            ajouter_chaine(c, ", ");
+        }
+    }
+    return c;
 }
