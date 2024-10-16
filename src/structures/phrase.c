@@ -36,6 +36,7 @@ phrase_t* new_phrase(phrase_t* parent) {
 
     phrase->error = false;
     phrase->constant = false;
+    phrase->first_exec = true;
 
     return phrase;
 }

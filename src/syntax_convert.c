@@ -962,6 +962,7 @@ void tokenise(phrase_t* phrase, function_t* function, function_list_t* func_list
             }
             tokenise(phrase->args[0], function, func_list, func_call_list, uniqueId, parent_loop, false, NULL);
             function->env->phraseValeurs[phrase->uniqueId]->type = CHAINE_DE_CHAR;
+            break;
         case VALEUR_POINTEE:
             if (phrase->innerPhraseLen > 0 || phrase->argsLen != 1) {
                 custom_error("Syntaxe invalide, valeur pointée prend 1 arguments", phrase, function->env);
@@ -1004,7 +1005,7 @@ void tokenise(phrase_t* phrase, function_t* function, function_list_t* func_list
             } else if (test_inst_for_loop(phrase, function)) {
             } else if (test_inst_for_loop_step(phrase, function)) {
             } else {
-                custom_error("Syntaxe Invalide", phrase, function->env);
+                custom_error("Syntaxe Invalide", phrase, NULL);
             }
 
             if (phrase->phraseId == DEFINITION_FONCTION || phrase->phraseId == DEFINITION_FONCTION_ARGUMENT) {

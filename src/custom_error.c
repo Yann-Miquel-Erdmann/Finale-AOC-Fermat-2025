@@ -28,7 +28,11 @@ void custom_error(char* err_message, phrase_t* phrase, environnement_t* env) {
         }else{
             fprintf(stderr, "Dans le code suivant: \n");
         }
-        printPhrase(phrase, env);
+        if (env != NULL){
+            printPhrase(phrase, env);
+        }else{
+            printPhrase(phrase, NULL);
+        }
     }
     exit((int)!ignore_errors);
 }

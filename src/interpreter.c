@@ -441,8 +441,9 @@ void interpreter(function_t* function, function_list_t* functions, val_t* result
                 break;
 
             case POUR_AVEC_PAS:
-                if (env->variable_list[phraseActuelle->variableId]->valeur->type == UNDEFINED) {  //  initialisation de l’itérateur
+                if (phraseActuelle->first_exec) {  //  initialisation de l’itérateur
                     copy_val(env->variable_list[phraseActuelle->variableId]->valeur, env->phraseValeurs[phraseActuelle->args[0]->uniqueId], true, true);
+                    phraseActuelle->first_exec = false;
                 } else {  // incrémentation de l'itérateur
                     if (phraseActuelle->phraseId == POUR_AVEC_PAS) {
                         if (env->variable_list[phraseActuelle->variableId]->valeur->type == FLOAT || env->phraseValeurs[phraseActuelle->args[2]->uniqueId]->type == FLOAT) {
@@ -457,15 +458,16 @@ void interpreter(function_t* function, function_list_t* functions, val_t* result
                     (get_as_float(env->variable_list[phraseActuelle->variableId]->valeur, phraseActuelle, env) > get_as_float(env->phraseValeurs[phraseActuelle->args[1]->uniqueId], phraseActuelle, env) && get_as_int(env->phraseValeurs[phraseActuelle->args[2]->uniqueId], phraseActuelle, env) < 0)) {
                     phraseActuelle = phraseActuelle->suivantInner1;
                 } else {
-                    env->variable_list[phraseActuelle->variableId]->valeur->type = UNDEFINED;
+                    phraseActuelle->first_exec = true;
                     phraseActuelle = phraseActuelle->suivant;
                 }
 
                 break;
 
             case POUR_SANS_PAS:
-                if (env->variable_list[phraseActuelle->variableId]->valeur->type == UNDEFINED) {  //  initialisation de l’itérateur
+                if (phraseActuelle->first_exec) {  //  initialisation de l’itérateur
                     copy_val(env->variable_list[phraseActuelle->variableId]->valeur, env->phraseValeurs[phraseActuelle->args[0]->uniqueId], true, true);
+                    phraseActuelle->first_exec = false;
                 } else {  // incrémentation de l'itérateur
 
                     if (env->variable_list[phraseActuelle->variableId]->valeur->type == FLOAT) {
@@ -477,7 +479,7 @@ void interpreter(function_t* function, function_list_t* functions, val_t* result
                 if (get_as_float(env->variable_list[phraseActuelle->variableId]->valeur, phraseActuelle, env) < get_as_float(env->phraseValeurs[phraseActuelle->args[1]->uniqueId], phraseActuelle, env)) {
                     phraseActuelle = phraseActuelle->suivantInner1;
                 } else {
-                    env->variable_list[phraseActuelle->variableId]->valeur->type = UNDEFINED;
+                    phraseActuelle->first_exec = true;
                     phraseActuelle = phraseActuelle->suivant;
                 }
                 break;
