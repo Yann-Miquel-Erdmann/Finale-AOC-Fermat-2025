@@ -205,6 +205,23 @@ void tokenise(phrase_t* phrase, function_t* function, function_list_t* func_list
             // printf("remove consts\n");
             // exit(1);
             removeConstants(phrase);
+            
+            /*printf("\n");
+            
+            for (int i = 0; i < phrase->innerPhraseLen; i++) {
+                phrase_t* p = phrase->innerPhrase[i];
+                if (p->phraseId == DEFINITION_FONCTION || p->phraseId == DEFINITION_FONCTION_ARGUMENT){
+                    printf("fonction: %s\n", p->text);
+                    p = p->innerPhrase[0];
+                }
+                while (p != NULL){
+                    printf("%s ->\n", p->text);
+                    p = p->suivant;
+                }
+                printf("=======\n\n");
+            }*/
+            
+            
             // exit(1);
             // links the function calls to their respective functions
             link_function_to_call(func_list, func_call_list, function->env);

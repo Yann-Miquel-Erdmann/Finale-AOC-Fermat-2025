@@ -21,16 +21,16 @@ phrase_t* parse_file(FILE* f) {
     phrase_t* mainPhrase = new_phrase(NULL);
     addToText(mainPhrase, '*');
     addToText(mainPhrase, '\0');
-
+    
     phrase_t* phraseActuelle = mainPhrase;
     phrase_t* Prec = NULL;
     phrase_t* Inst1 = NULL;
     phrase_t* Inst2 = phraseActuelle;
     bool encountered_uppercase = false;
-
+    
     char buffer = '.';
     int line = 1;
-
+    
     bool in_string = false;
     int in_comment = 0;
     char c = '\0';
@@ -94,7 +94,7 @@ phrase_t* parse_file(FILE* f) {
             phrase_t* n = new_phrase(phraseActuelle);
             n->line_number = line;
             addToArg(phraseActuelle, n);
-
+            
             n->suivant = Prec;
             if (buffer == '.' || buffer == ':') {
                 Inst1 = Inst2;
@@ -102,10 +102,10 @@ phrase_t* parse_file(FILE* f) {
                 // printf("switch  char: '%c' inst1:%s\n",c, Inst1->text);
             }
             Prec = n;
-
+            
             phraseActuelle = phraseActuelle->args[phraseActuelle->argsLen - 1];
             addToText(phraseActuelle, c);
-
+            
         } else {
             // check si l'écriture est valide i.e. pas directement dans la mainPhrase
             if (!encountered_uppercase && c != '(' && c != '\n'){
@@ -124,26 +124,26 @@ phrase_t* parse_file(FILE* f) {
                     phraseActuelle->expr = false;
                     
                     Inst1->suivant = Prec;
-
+                    
                     phraseActuelle = phraseActuelle->parentPhrase;
-
+                    
                     if (phraseActuelle == NULL) {
                         char* err_mess = safe_alloc(NULL, 100 * sizeof(char));
                         sprintf(err_mess, "Syntax Error: Il y a un point de trop à la ligne %d", line + 1);
                         custom_error(err_mess, NULL, NULL);
                     }
-
+                    
                     // la phrase est une instruction et on l'ajoute
                     addToInner(phraseActuelle, phraseActuelle->args[phraseActuelle->argsLen - 1]);
-
+                    
                     phraseActuelle->args[phraseActuelle->argsLen - 1] = NULL;
                     phraseActuelle->argsLen--;
-
+                    
                     buffer = c;
                     break;
-
+                    
                 case '?':
-
+                    
                     // ajoute le caractère au texte
                     if (buffer == ' ') {  // pour enlever les espaces avant les points d’interrogation (éviter quelques erreurs difficiles à trouver)
                         phraseActuelle->text[phraseActuelle->textLen - 1] = c;
@@ -152,7 +152,7 @@ phrase_t* parse_file(FILE* f) {
                     }
                     addToText(phraseActuelle, '\0');
                     phraseActuelle->expr = true;
-
+                    
                     phraseActuelle = phraseActuelle->parentPhrase;
                     buffer = c;
                     break;
@@ -164,13 +164,13 @@ phrase_t* parse_file(FILE* f) {
                         addToText(phraseActuelle, c);
                     }
                     buffer = c;
-
+                    
                     // printf("inst1->suivant  '%s'  -->  ", Inst1->text);
                     // fflush(stdout);
                     // printf("'%s'\n", Prec->text);
-
+                    
                     Inst1->suivant = Prec;
-
+                    
                     phraseActuelle->innerSeparator = phraseActuelle->innerPhraseLen - 1;
                     break;
                 default:
@@ -199,31 +199,31 @@ phrase_t* parse_file(FILE* f) {
                     if (c == ' ' && (buffer == '.' || buffer == ':')) {
                         break;
                     }
-
+                    
                     if (c == '\t') {
                         break;
                     }
-
+                    
                     // ignore les sauts de lignes et les tabulations
                     if ((c == '\n' && (buffer == '.' || buffer == ':' || prec_c == ')' || in_comment))) {
                         break;
-                    } 
-//                    else if (c == '\n' && !in_comment) {
-//                        char* err_mess = safe_alloc(NULL, 100 * sizeof(char));
-//                        sprintf(err_mess, "Syntax Error: Il manque un point à la fin de la ligne %d", line);
-//                        custom_error(err_mess, NULL, NULL);
-//                        break;
-//                    }
-
+                    }
+                    //                    else if (c == '\n' && !in_comment) {
+                    //                        char* err_mess = safe_alloc(NULL, 100 * sizeof(char));
+                    //                        sprintf(err_mess, "Syntax Error: Il manque un point à la fin de la ligne %d", line);
+                    //                        custom_error(err_mess, NULL, NULL);
+                    //                        break;
+                    //                    }
+                    
                     // n'ajoute pas les espaces en debut de ligne ou après un espace
                     if (c == ' ' && (phraseActuelle->textLen == 0 || phraseActuelle->text[phraseActuelle->textLen - 1] == ' ')) {
                         break;
                     }
-
+                    
                     // ajoute le caractère au texte
                     addToText(phraseActuelle, c);
                     buffer = c;
-
+                    
                     break;
             }
         }
@@ -243,9 +243,17 @@ phrase_t* parse_file(FILE* f) {
         
         custom_error(error, NULL, NULL);
     }
-
+    
     Inst2->suivant = NULL;
-
+    
     addToText(mainPhrase, '\0');
+    
+    /*phrase_t* p = mainPhrase;
+    while (p != NULL){
+        printf("%s ->\n", p->text);
+        p = p->suivant;
+    }
+    printf("================\n\n");*/
+    
     return mainPhrase;
 }

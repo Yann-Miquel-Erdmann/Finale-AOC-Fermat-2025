@@ -27,22 +27,22 @@ void interpreter(function_t* function, function_list_t* functions, val_t* result
     // free_phrase(ptemp);
 
     while (phraseActuelle != NULL) {
-        // printf("'%s' %d %d %d %p\n", phraseActuelle->text, phraseActuelle->phraseId, phraseActuelle->argsLen, (int)phraseActuelle->constant, phraseActuelle);
+         /*printf("'%s' %d %d %d %p\n", phraseActuelle->text, phraseActuelle->phraseId, phraseActuelle->argsLen, (int)phraseActuelle->constant, phraseActuelle);
 
-        // if (phraseActuelle->suivant != NULL) {
-        //     printf("%s  --->   %s\n", phraseActuelle->text, phraseActuelle->suivant->text);
-        // } else {
-        //     printf("%s  --->   NULL\n", phraseActuelle->text);
-        // }
-        // if (phraseActuelle->suivantInner1 != NULL) {
-        //     printf("suivantInner1 %s  --->   %s\n", phraseActuelle->text, phraseActuelle->suivantInner1->text);
-        // }
-        // if (phraseActuelle->suivantInner2 != NULL) {
-        //     printf("suivantInner2 %s  --->   %s\n", phraseActuelle->text, phraseActuelle->suivantInner2->text);
-        // }
-        // printf("\n");
+         if (phraseActuelle->suivant != NULL) {
+             printf("%s  --->   %s\n", phraseActuelle->text, phraseActuelle->suivant->text);
+         } else {
+             printf("%s  --->   NULL\n", phraseActuelle->text);
+         }
+         if (phraseActuelle->suivantInner1 != NULL) {
+             printf("suivantInner1 %s  --->   %s\n", phraseActuelle->text, phraseActuelle->suivantInner1->text);
+         }
+         if (phraseActuelle->suivantInner2 != NULL) {
+             printf("suivantInner2 %s  --->   %s\n", phraseActuelle->text, phraseActuelle->suivantInner2->text);
+         }
+         printf("\n");*/
 
-        // printf("'%s' %d %d\n", phraseActuelle->text, phraseActuelle->phraseId, (int)phraseActuelle->constant);
+//         printf("'%s' %d %d\n", phraseActuelle->text, phraseActuelle->phraseId, (int)phraseActuelle->constant);
         switch (phraseActuelle->phraseId) {
             case DEFINITION_FONCTION_ARGUMENT:
             case DEFINITION_FONCTION:
@@ -61,6 +61,7 @@ void interpreter(function_t* function, function_list_t* functions, val_t* result
             case EXECUTION_FONCTION_ARGUMENT:
             {
                 function_t* new_func = safe_alloc(NULL, sizeof(function_t));
+                //printf("'%s' exec function\n", phraseActuelle->function->nom);
                 new_func->nom = phraseActuelle->function->nom;
                 new_func->ast = phraseActuelle->function->ast;
                 new_func->function_arg_count = phraseActuelle->function->function_arg_count;
@@ -486,7 +487,7 @@ void interpreter(function_t* function, function_list_t* functions, val_t* result
             case QUITTER_BOUCLE:
                 // réinitialise l'itérateur de la boucle pour
                 if (phraseActuelle->suivant->phraseId == POUR_AVEC_PAS || phraseActuelle->suivant->phraseId == POUR_SANS_PAS) {
-                    env->variable_list[phraseActuelle->suivant->variableId]->valeur->type = UNDEFINED;
+                    phraseActuelle->suivant->first_exec = true;
                 }
 
                 phraseActuelle = phraseActuelle->suivant->suivant;
