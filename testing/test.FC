@@ -1,4 +1,4 @@
-Afficher La chaîne de caractères "Hello World !"?.
+(Afficher La chaîne de caractères "Hello World !"?.
 
 ( Implémentation des listes chainées d'entiers )
 Soit init une fonction qui lorsqu'elle est appelée avec v exécute:
@@ -17,6 +17,7 @@ Soit ajouter une fonction qui lorsqu'elle est appelée avec p, m exécute:
         Soit maillon La liste l?.
         Tant que La valeur de La variable ptr? est différente de la valeur de Rien?? faire:
             Que La variable maillon? devienne La valeur pointée par La variable ptr??.
+            Afficher La variable maillon?, L'entier un?.
             Que La variable ptr? devienne L'élément de La liste maillon? à l'indice L'entier un??.
         .
         Remplacer l'élément de La liste maillon? à l'indice L'entier un? par Un pointeur vers La variable m??.
@@ -42,4 +43,16 @@ Soit deuxième_maillon Le résultat de la fonction init avec les arguments L'ent
 Exécuter la fonction ajouter avec les arguments Un pointeur vers La variable premier_maillon??, La variable deuxième_maillon?.
 Afficher L'élément de La liste premier_maillon? à l'indice L'entier zéro??.
 Afficher L'élément de La liste premier_maillon? à l'indice L'entier un??.
-Exécuter la fonction afficher_liste avec les arguments La variable premier_maillon?.
+Exécuter la fonction afficher_liste avec les arguments La variable premier_maillon?.)
+
+Soit f une fonction qui lorsqu'elle est appelée avec i, x, n exécute:
+    Afficher La chaîne de caractères " -> "?, La variable x?.
+    Si La valeur de La variable x? est plus petite que la valeur de La variable n?? alors faire:
+        Pour i allant de L'entier un? jusqu'à L'entier dix? faire:
+            Afficher La variable i?.
+            Exécuter la fonction f avec les arguments La variable i?, La somme de La variable x? et de L'entier un??, La variable n?.
+        .
+    .
+.
+
+Exécuter la fonction f avec les arguments L'entier moins un?, L'entier zéro?, L'entier neuf?.
