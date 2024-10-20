@@ -233,7 +233,7 @@ void tokenise(phrase_t* phrase, function_t* function, function_list_t* func_list
             break;
         case MODIFICATION_VARIABLE:
             if (phrase->innerPhraseLen > 0 || phrase->argsLen != 2){
-                custom_error("Syntaxe invalide, modification variable prend 2 argments", phrase, function->env);
+                custom_error("Syntaxe invalide, modification variable prend 2 arguments", phrase, function->env);
             }
             
             phrase->phraseId = MODIFICATION_VARIABLE;
@@ -1048,6 +1048,18 @@ void tokenise(phrase_t* phrase, function_t* function, function_list_t* func_list
                 // printf("suivant inner1: %s\n", phrase->suivantInner1->text);
                 // printf("suivant: %s\n", phrase->suivant->text);
                 // exit(1);
+
+                // réserve un espace pour la val_t qui dit si la boucle est commencée
+                
+
+                phrase->uniqueId = *uniqueId;
+                (*uniqueId)++;
+                linkValeur(function->env);
+
+
+                function->env->phraseValeurs[phrase->uniqueId]->type = BOOL;
+                function->env->phraseValeurs[phrase->uniqueId]->value.booleen = false;
+
                 for (int i = 0; i < phrase->argsLen; i++) {
                     tokenise(phrase->args[i], function, func_list, func_call_list, uniqueId, parent_loop, false, NULL);
                 }

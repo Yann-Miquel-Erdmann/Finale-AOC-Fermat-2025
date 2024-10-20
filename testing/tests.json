@@ -249,5 +249,19 @@
         "output": "un\n",
         "input": "",
         "errors": false
+    },
+    {
+        "name": "2024-10-13_14-34-45_MammaMia",
+        "code": "Soit i L'entier moins douze?.\n\nPour i allant de L'entier zéro? jusqu'à L'entier dix? faire:\n    Afficher La variable i?.\n.\n",
+        "output": "zéro\nun\ndeux\ntrois\nquatre\ncinq\nsix\nsept\nhuit\nneuf\n",
+        "input": "",
+        "errors": false
+    },
+    {
+        "name": "Quitter boucle dans une double boucle",
+        "code": "Pour i allant de L'entier zéro? jusqu'à L'entier dix? faire:\n    Pour j allant de L'entier zéro? jusqu'à L'entier dix? faire:\n        Afficher La variable j?.\n        Si La valeur de La variable i? est égale à la valeur de La variable j?? alors faire:\n            Quitter la boucle.\n        .\n    .\n.\n",
+        "output": "zéro\nzéro\nun\nzéro\nun\ndeux\nzéro\nun\ndeux\ntrois\nzéro\nun\ndeux\ntrois\nquatre\nzéro\nun\ndeux\ntrois\nquatre\ncinq\nzéro\nun\ndeux\ntrois\nquatre\ncinq\nsix\nzéro\nun\ndeux\ntrois\nquatre\ncinq\nsix\nsept\nzéro\nun\ndeux\ntrois\nquatre\ncinq\nsix\nsept\nhuit\nzéro\nun\ndeux\ntrois\nquatre\ncinq\nsix\nsept\nhuit\nneuf\n",
+        "input": "",
+        "errors": false
     }
 ]
