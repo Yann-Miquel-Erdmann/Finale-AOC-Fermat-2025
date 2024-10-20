@@ -19,4 +19,4 @@ test_suite:
 	python3 ./testing/test_suite.py
 
 test:
-	valgrind ./build/interpreter ./testing/test.FC
+	valgrind ./build/interpreter ./testing/test.COCS

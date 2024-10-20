@@ -19,7 +19,6 @@ void interpreter(function_t* function, function_list_t* functions, val_t* result
     if (function->ast->innerPhraseLen == 0) {
         return;
     }
-
     environnement_t* env = function->env;
 
     // phrase_t* ptemp = new_phrase(NULL);

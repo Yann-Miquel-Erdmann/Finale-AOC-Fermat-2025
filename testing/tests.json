@@ -235,5 +235,12 @@
         "output": "un\ndeux\ntrois\nquatre\ncinq\nsix\nsept\nhuit\nneuf\ndix\n",
         "input": "",
         "errors": true
+    },
+    {
+        "name": "2024-10-20_11-15-53_Erwan",
+        "code": "Pour i allant de L'entier un? jusqu'à L'entier deux? faire:\n    Soit x.\n.",
+        "output": "",
+        "input": "",
+        "errors": false
     }
 ]

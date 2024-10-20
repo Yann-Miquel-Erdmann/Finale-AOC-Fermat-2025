@@ -50,12 +50,12 @@ with open(json_file, 'r', encoding="utf-8") as file:
 # Parse the JSON contents
 data = json.loads(json_contents, strict=False)
 
-# make data the contents of testing/test.FC
-with open('testing/test.FC', 'r', encoding="utf-8") as file:
+# make data the contents of testing/test.COCS
+with open('testing/test.COCS', 'r', encoding="utf-8") as file:
     code = file.read()
 
 proc = subprocess.Popen(
-    ['build/interpreter', 'testing/test.FC'],
+    ['build/interpreter', 'testing/test.COCS'],
     stdin=subprocess.PIPE,
     stdout=subprocess.PIPE,
     stderr=subprocess.STDOUT,
