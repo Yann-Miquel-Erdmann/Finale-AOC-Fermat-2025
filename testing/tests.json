@@ -242,5 +242,12 @@
         "output": "",
         "input": "",
         "errors": false
+    },
+    {
+        "name": "2024-10-13_14-01-54_MammaMia",
+        "code": "Soit x L'entier zéro?.\n\n( fun x -> print_int (x + 1) )\nSoit f une fonction qui lorsqu'elle est appelée avec y exécute: \n    Afficher La somme de L'entier un? et de La variable y??.\n.\n\n\nExécuter la fonction f avec les arguments La variable x?. \n\n(Afficher Le résultat de la fonction f avec les arguments La variable x??.)\n",
+        "output": "un\n",
+        "input": "",
+        "errors": false
     }
 ]

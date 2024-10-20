@@ -10,9 +10,9 @@ void removeConstants(phrase_t* phrase) {
 
     // printf("remove constants %s %d\n", phrase->text, phrase->innerPhraseLen);
 
-    // if (phraseActuelle->constant_removed) {
-    //     return;
-    // }
+    if (phraseActuelle->constant_removed) {
+        return;
+    }
 
     while (phraseActuelle != NULL) {
         // printf("phrase actuelle %s\n", phraseActuelle->text);
@@ -30,6 +30,7 @@ void removeConstants(phrase_t* phrase) {
         if (phraseActuelle->suivant == NULL) {
             break;
         }
+        // printf("phrase actuelle %s -->  %s\n", phraseActuelle->text, phraseActuelle->suivant->text);
 
         if (phraseActuelle->phraseId == QUITTER_BOUCLE) {
             break;
@@ -40,8 +41,21 @@ void removeConstants(phrase_t* phrase) {
             break;
         }
 
-        if (phraseActuelle->suivant->constant || phraseActuelle->suivant->phraseId == DEFINITION_FONCTION || phraseActuelle->suivant->phraseId == DEFINITION_FONCTION_ARGUMENT) {
+        if (phraseActuelle->suivant->constant) {
             phraseActuelle->suivant = phraseActuelle->suivant->suivant;
+            continue;
+        }
+
+        if (phraseActuelle->suivant->phraseId == DEFINITION_FONCTION || phraseActuelle->suivant->phraseId == DEFINITION_FONCTION_ARGUMENT) {
+            if (phrasesWithInnerLen == phrasesWithInnerSize) {
+                phrasesWithInnerSize *= 2;
+                phrasesWithInner = safe_alloc(phrasesWithInner, sizeof(phrase_t*) * phrasesWithInnerSize);
+            }
+            phrasesWithInner[phrasesWithInnerLen] = phraseActuelle->suivant;
+            phrasesWithInnerLen++;
+
+            phraseActuelle->suivant = phraseActuelle->suivant->suivant;
+            continue;
         }
 
         // printf("%s -> %s\n", phraseActuelle->text, phraseActuelle->suivant->text);
@@ -50,21 +64,28 @@ void removeConstants(phrase_t* phrase) {
             phraseActuelle = phraseActuelle->suivant;
         }
 
+
     }
     phraseActuelle->constant_removed = true;
 
     // printf("phrases with inner len: %d\n", phrasesWithInnerLen);
     // if (phrasesWithInnerLen > 0) {
     //     if (phrasesWithInner[0]->text[0] != '*') {
-    //         printf("'%s'\n",phrasesWithInner[0]->text);
+            // printf("'%s'\n",phrasesWithInner[0]->text);
     //         exit(1);
     //     } else {
-    //         printf("'%s'\n",phrasesWithInner[0]->text);
+            // printf("'%s'\n",phrasesWithInner[0]->text);
     //     }
     // }
     int i = 0;
     while (i < phrasesWithInnerLen) {
-        while (phrasesWithInner[i]->suivantInner1 != NULL && !phrasesWithInner[i]->suivantInner1->constant_removed && (phrasesWithInner[i]->suivantInner1->constant || phrasesWithInner[i]->suivantInner1->phraseId == DEFINITION_FONCTION || phrasesWithInner[i]->suivantInner1->phraseId == DEFINITION_FONCTION_ARGUMENT)) {
+        // printf("phrase with inner %s\n", phrasesWithInner[i]->text);
+        while (phrasesWithInner[i]->suivantInner1 != NULL && 
+        !phrasesWithInner[i]->suivantInner1->constant_removed && 
+        (phrasesWithInner[i]->suivantInner1->constant || 
+        phrasesWithInner[i]->suivantInner1->phraseId == DEFINITION_FONCTION || 
+        phrasesWithInner[i]->suivantInner1->phraseId == DEFINITION_FONCTION_ARGUMENT)) {
+            
             if (phrasesWithInner[i]->suivantInner1->phraseId == DEFINITION_FONCTION || phrasesWithInner[i]->suivantInner1->phraseId == DEFINITION_FONCTION_ARGUMENT) {
                 if (phrasesWithInnerLen == phrasesWithInnerSize) {
                     phrasesWithInnerSize *= 2;
@@ -75,6 +96,11 @@ void removeConstants(phrase_t* phrase) {
             }
 
             phrasesWithInner[i]->suivantInner1 = phrasesWithInner[i]->suivantInner1->suivant;
+        }
+
+        if (phrasesWithInner[i]->suivantInner1 == NULL) {
+            i++;
+            continue;
         }
 
         if (phrasesWithInner[i]->suivantInner1->constant_removed) {

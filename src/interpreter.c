@@ -21,28 +21,30 @@ void interpreter(function_t* function, function_list_t* functions, val_t* result
     }
     environnement_t* env = function->env;
 
+    // printf("new func");
+
     // phrase_t* ptemp = new_phrase(NULL);
     // ptemp->suivant = function->ast;
     phrase_t* phraseActuelle = function->ast;
     // free_phrase(ptemp);
 
     while (phraseActuelle != NULL) {
-         /*printf("'%s' %d %d %d %p\n", phraseActuelle->text, phraseActuelle->phraseId, phraseActuelle->argsLen, (int)phraseActuelle->constant, phraseActuelle);
+        // printf("'%s' %d %d %d %p\n", phraseActuelle->text, phraseActuelle->phraseId, phraseActuelle->argsLen, (int)phraseActuelle->constant, phraseActuelle);
 
-         if (phraseActuelle->suivant != NULL) {
-             printf("%s  --->   %s\n", phraseActuelle->text, phraseActuelle->suivant->text);
-         } else {
-             printf("%s  --->   NULL\n", phraseActuelle->text);
-         }
-         if (phraseActuelle->suivantInner1 != NULL) {
-             printf("suivantInner1 %s  --->   %s\n", phraseActuelle->text, phraseActuelle->suivantInner1->text);
-         }
-         if (phraseActuelle->suivantInner2 != NULL) {
-             printf("suivantInner2 %s  --->   %s\n", phraseActuelle->text, phraseActuelle->suivantInner2->text);
-         }
-         printf("\n");*/
+        // if (phraseActuelle->suivant != NULL) {
+        //     printf("%s  --->   %s\n", phraseActuelle->text, phraseActuelle->suivant->text);
+        // } else {
+        //     printf("%s  --->   NULL\n", phraseActuelle->text);
+        // }
+        // if (phraseActuelle->suivantInner1 != NULL) {
+        //     printf("suivantInner1 %s  --->   %s\n", phraseActuelle->text, phraseActuelle->suivantInner1->text);
+        // }
+        // if (phraseActuelle->suivantInner2 != NULL) {
+        //     printf("suivantInner2 %s  --->   %s\n", phraseActuelle->text, phraseActuelle->suivantInner2->text);
+        // }
+        // printf("\n");
 
-//         printf("'%s' %d %d\n", phraseActuelle->text, phraseActuelle->phraseId, (int)phraseActuelle->constant);
+        // printf("'%s' %d %d\n", phraseActuelle->text, phraseActuelle->phraseId, (int)phraseActuelle->constant);
         switch (phraseActuelle->phraseId) {
             case DEFINITION_FONCTION_ARGUMENT:
             case DEFINITION_FONCTION:
