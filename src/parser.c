@@ -64,7 +64,7 @@ phrase_t* parse_file(FILE* f) {
                         break;
                     default:{
                         char* errorphrase = safe_alloc(NULL, 100*sizeof(char));
-                        sprintf(errorphrase, "\\%c is not a valid character", c);
+                        sprintf(errorphrase, "\\%c n'est pas un caractère valide", c);
                         custom_error(errorphrase, phraseActuelle, NULL);
                         break;
                     }
@@ -110,7 +110,7 @@ phrase_t* parse_file(FILE* f) {
             // check si l'écriture est valide i.e. pas directement dans la mainPhrase
             if (!encountered_uppercase && c != '(' && c != '\n'){
                 char* error = safe_alloc(NULL, 100 * sizeof(char));
-                sprintf(error, "Syntax Error, ligne %d: \"%c\"%s", line, c, " n'est pas un début de phrase valide.");
+                sprintf(error, "Erreur de syntaxe ligne %d: \"%c\"%s", line, c, " n'est pas un début de phrase valide.");
                 custom_error(error, NULL, NULL);
             }
             switch (c) {
@@ -129,7 +129,7 @@ phrase_t* parse_file(FILE* f) {
                     
                     if (phraseActuelle == NULL) {
                         char* err_mess = safe_alloc(NULL, 100 * sizeof(char));
-                        sprintf(err_mess, "Syntax Error: Il y a un point de trop à la ligne %d", line + 1);
+                        sprintf(err_mess, "Erreur de syntaxe: Il y a un point de trop à la ligne %d", line + 1);
                         custom_error(err_mess, NULL, NULL);
                     }
                     

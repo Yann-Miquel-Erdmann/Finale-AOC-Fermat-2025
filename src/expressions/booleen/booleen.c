@@ -13,7 +13,7 @@ bool test_expr_booleen(phrase_t* phrase, environnement_t* env) {
         return false;
     }
     if (len > 1) {
-        custom_error("too many arguments given", phrase, env);
+        custom_error("L'expression booléene ne prend pas d'arguments", phrase, env);
     }
 
     if (!strcmp(result[0], "vrai")) {

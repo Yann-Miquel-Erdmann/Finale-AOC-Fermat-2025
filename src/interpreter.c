@@ -14,7 +14,7 @@
 
 void interpreter(function_t* function, function_list_t* functions, val_t* result, int layer) {
     if (layer > MAX_RECUSION_DEPTH) {
-        custom_error("limite de récursion atteinte", NULL, NULL);
+        custom_error("Limite de récursion atteinte", NULL, NULL);
     }
     if (function->ast->innerPhraseLen == 0) {
         return;
@@ -71,7 +71,7 @@ void interpreter(function_t* function, function_list_t* functions, val_t* result
                 
                 if (phraseActuelle->phraseId == APPEL_VALEUR_FONCTION_ARGUMENT || phraseActuelle->phraseId == EXECUTION_FONCTION_ARGUMENT) {
                     if (phraseActuelle->argsLen != new_func->function_arg_count) {
-                        custom_error("Le nombre d'arguments données ne correspond pas ou nombre d'arguments voulus", phraseActuelle, env);
+                        custom_error("Le nombre d'arguments données ne correspond pas au nombre d'arguments attendus", phraseActuelle, env);
                     }
                     for (int i = 0; i < phraseActuelle->argsLen; i++) {
                         copy_val(new_func->env->variable_list[i]->valeur,
@@ -81,12 +81,12 @@ void interpreter(function_t* function, function_list_t* functions, val_t* result
                 
                 if (phraseActuelle->phraseId == EXECUTION_FONCTION_ARGUMENT || phraseActuelle->phraseId == EXECUTION_FONCTION) {
                     if (phraseActuelle->argsLen != new_func->function_arg_count) {
-                        custom_error("Le nombre d'arguments données ne correspond pas ou nombre d'arguments voulus", phraseActuelle, env);
+                        custom_error("Le nombre d'arguments données ne correspond pas au nombre d'arguments attendus", phraseActuelle, env);
                     }
                     interpreter(new_func, functions, NULL, layer + 1);
                 } else {
                     if (phraseActuelle->argsLen != new_func->function_arg_count) {
-                        custom_error("Le nombre d'arguments données ne correspond pas ou nombre d'arguments voulus", phraseActuelle, env);
+                        custom_error("Le nombre d'arguments données ne correspond pas au nombre d'arguments attendus", phraseActuelle, env);
                     }
                     interpreter(new_func, functions, env->phraseValeurs[phraseActuelle->uniqueId], layer + 1);
                 }
@@ -315,11 +315,11 @@ void interpreter(function_t* function, function_list_t* functions, val_t* result
 
                 // ne fait pas de deep copy pour les listes et les chaînes de caractères (pour pouvoir les modifier à l’intérieur d'une liste)
                 if (env->phraseValeurs[phraseActuelle->args[1]->uniqueId]->type != INT) {
-                    custom_error("le type de val_t ne correspond pas, un entier est attendu", phraseActuelle, env);
+                    custom_error("Le type de l'argument ne correspond pas, un entier est attendu", phraseActuelle, env);
                 }
 
                 if (env->phraseValeurs[phraseActuelle->args[1]->uniqueId]->value.entier < 0 || env->phraseValeurs[phraseActuelle->args[1]->uniqueId]->value.entier >= env->phraseValeurs[phraseActuelle->args[0]->uniqueId]->value.liste->valeursLen) {
-                    custom_error("indice hors de la liste", phraseActuelle, env);
+                    custom_error("Indice hors de la liste", phraseActuelle, env);
                 }
                 val_t* val = env->phraseValeurs[phraseActuelle->args[0]->uniqueId]->value.liste->valeurs[env->phraseValeurs[phraseActuelle->args[1]->uniqueId]->value.entier];
                 copy_val(env->phraseValeurs[phraseActuelle->uniqueId], val, false, false);
@@ -376,7 +376,7 @@ void interpreter(function_t* function, function_list_t* functions, val_t* result
                     custom_error("La variable n'est pas une liste", phraseActuelle, env);
                 }
                 if (env->phraseValeurs[phraseActuelle->args[1]->uniqueId]->type != INT) {
-                    custom_error("le type de val_t ne correspond pas, un entier est attendu", phraseActuelle, env);
+                    custom_error("Le type de l'argument ne correspond pas, un entier est attendu", phraseActuelle, env);
                 }
                 modification(env->phraseValeurs[phraseActuelle->args[0]->uniqueId]->value.liste, env->phraseValeurs[phraseActuelle->args[1]->uniqueId]->value.entier, env->phraseValeurs[phraseActuelle->args[2]->uniqueId], phraseActuelle, env);
 
@@ -397,7 +397,7 @@ void interpreter(function_t* function, function_list_t* functions, val_t* result
                     custom_error("La variable n'est pas une liste", phraseActuelle, env);
                 }
                 if (env->phraseValeurs[phraseActuelle->args[1]->uniqueId]->type != INT) {
-                    custom_error("le type de val_t ne correspond pas, un entier est attendu", phraseActuelle, env);
+                    custom_error("Le type de l'argument ne correspond pas, un entier est attendu", phraseActuelle, env);
                 }
                 suppression(env->phraseValeurs[phraseActuelle->args[0]->uniqueId]->value.liste, env->phraseValeurs[phraseActuelle->args[1]->uniqueId]->value.entier, phraseActuelle, env);
 
@@ -409,7 +409,7 @@ void interpreter(function_t* function, function_list_t* functions, val_t* result
                     custom_error("La variable n'est pas une liste", phraseActuelle, env);
                 }
                 if (env->phraseValeurs[phraseActuelle->args[2]->uniqueId]->type != INT) {
-                    custom_error("le type de val_t ne correspond pas, un entier est attendu", phraseActuelle, env);
+                    custom_error("Le type de l'argument ne correspond pas, un entier est attendu", phraseActuelle, env);
                 }
                 inserer(env->phraseValeurs[phraseActuelle->args[1]->uniqueId]->value.liste, env->phraseValeurs[phraseActuelle->args[2]->uniqueId]->value.entier, env->phraseValeurs[phraseActuelle->args[0]->uniqueId], phraseActuelle, env);
 

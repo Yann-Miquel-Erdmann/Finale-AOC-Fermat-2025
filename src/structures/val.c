@@ -235,7 +235,7 @@ char* str_type(val_t* v) {
             strcpy(type, "pointeur");
             break;
         default:
-            strcpy(type, "undefined");
+            strcpy(type, "non défini");
             break;
     }
     return type;
@@ -307,7 +307,7 @@ bool is_equal(val_t* v1, val_t* v2, phrase_t* p, environnement_t* env) {
         
         default: {
             char* error = safe_alloc(NULL, 128 * sizeof(char));
-            sprintf(error, "Impossible de comparer l'égalité d'un élément de type %s et d'un élément de type %s.", str_type(v1), str_type(v2));
+            sprintf(error, "Impossible de tester l'égalité entre un élément de type %s et un élément de type %s.", str_type(v1), str_type(v2));
             custom_error(error, p, env);
             return false;
             break;

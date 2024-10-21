@@ -12,17 +12,15 @@ bool test_expr_access_list(phrase_t* phrase, function_t* function) {
     if (result == NULL) {
         return false;
     }
-    if (len > 1) {
-        custom_error("too many arguments given", phrase, function->env);
-    } else if (len < 1) {
-        custom_error("not enough arguments given", phrase, function->env);
+    if (len != 1) {
+        custom_error("Accession liste prend 1 argument", phrase, function->env);
     }
 
     phrase->phraseId = ACCESSION_LISTE;
 
     phrase->variableId = getVariableId(function->env, result[0]);
     if (phrase->variableId == -1) {
-        custom_error("variable not found", phrase, function->env);
+        custom_error("La variable entrée n'existe pas", phrase, function->env);
     }
 
 

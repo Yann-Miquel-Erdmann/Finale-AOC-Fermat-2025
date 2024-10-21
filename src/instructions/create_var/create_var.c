@@ -12,7 +12,7 @@ bool test_inst_create_var(phrase_t* phrase, function_t* function) {
         return false;
     }
     if (len > 1) {
-        custom_error("too many arguments given", phrase, function->env);
+        custom_error("Un seul nom de variable attendu", phrase, function->env);
     }
 
     phrase->phraseId = DEFINITION_VARIABLE_SANS_INIT;

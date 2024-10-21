@@ -12,10 +12,13 @@ bool test_inst_exec_func_args(phrase_t* phrase, function_list_t* function_list, 
         return false;
     }
     if (len > 1) {
-        custom_error("too many arguments given", phrase, env);
+        custom_error("Un seul nom de fonction attendu", phrase, env);
     }
-    if (phrase->argsLen == 0 || phrase->innerPhraseLen > 0){
+    if (phrase->argsLen == 0){
         custom_error("Exécution de fonction prend au moins un argument", phrase, env);
+    }
+    if(phrase->innerPhraseLen > 0){
+        custom_error("Exécution de fonction ne doit pas contenir d'instructions", phrase, env);
     }
     
     phrase->phraseId = EXECUTION_FONCTION_ARGUMENT;

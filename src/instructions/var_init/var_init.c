@@ -14,10 +14,13 @@ bool test_inst_var_init(phrase_t* phrase, function_t* function) {
         return false;
     }
     if (len > 1) {
-        custom_error("too many arguments given", phrase, function->env);
+        custom_error("Une seule variable peut être donnée", phrase, function->env);
     }
-    if (phrase->argsLen != 1 || phrase->innerPhraseLen > 0){
+    if (phrase->argsLen != 1){
         custom_error("Initialisation de variable prend un seul argument", phrase, function->env);
+    }
+    if (phrase->innerPhraseLen > 0){
+        custom_error("Initialisation de variable ne peut pas prendre d'instructions", phrase, function->env);
     }
 
     phrase->phraseId = DEFINITION_VARIABLE_AVEC_INIT;

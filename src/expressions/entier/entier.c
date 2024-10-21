@@ -14,7 +14,7 @@ bool test_expr_entier(phrase_t* phrase, environnement_t* env) {
         return false;
     }
     if (len > 1) {
-        custom_error("too many arguments given", phrase, env);
+        custom_error("Expression entière ne prend pas d'arguments", phrase, env);
     }
 
     int result_num;
@@ -28,7 +28,7 @@ bool test_expr_entier(phrase_t* phrase, environnement_t* env) {
         char* err = safe_alloc(NULL, (strlen(result[0]) + 32) * sizeof(char));
 
         strcpy(err, result[0]);
-        strcat(err, " isn't recognized as an integer.");
+        strcat(err, " n'est pas un entier valide");
 
         custom_error(err, phrase, env);
     }

@@ -13,10 +13,13 @@ bool test_expr_func_call_args(phrase_t* phrase, function_list_t* func_list, envi
         return false;
     }
     if (len > 1) {
-        custom_error("too many arguments given", phrase, env);
+        custom_error("Un seul nom de fonction attendu", phrase, env);
     }
-    if (phrase->argsLen == 0 || phrase->innerPhraseLen > 0){
+    if (phrase->argsLen == 0){
         custom_error("Appel de fonction prend au moins un argument", phrase, env);
+    }
+    if (phrase->innerPhraseLen > 0){
+        custom_error("Appel de fonction ne doit pas contenir d'instructions", phrase, env);
     }
     
     phrase->phraseId = APPEL_VALEUR_FONCTION_ARGUMENT;

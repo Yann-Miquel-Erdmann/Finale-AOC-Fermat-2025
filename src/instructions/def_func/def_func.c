@@ -12,7 +12,7 @@ bool test_inst_def_func(phrase_t* phrase, function_list_t* function_list, enviro
         return false;
     }
     if (len > 1) {
-        custom_error("too many arguments given", phrase, env);
+        custom_error("Un seul nom de fonction attendu", phrase, env);
     }
 
     phrase->phraseId = DEFINITION_FONCTION;

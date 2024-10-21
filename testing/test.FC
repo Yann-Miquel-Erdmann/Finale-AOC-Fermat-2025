@@ -38,21 +38,65 @@ Soit afficher_liste une fonction qui lorsqu'elle est appelée avec l exécute:
     .
 .
 
-Soit premier_maillon Le résultat de la fonction init avec les arguments L'entier zéro??.
+(Soit premier_maillon Le résultat de la fonction init avec les arguments L'entier zéro??.
 Soit deuxième_maillon Le résultat de la fonction init avec les arguments L'entier un??.
 Exécuter la fonction ajouter avec les arguments Un pointeur vers La variable premier_maillon??, La variable deuxième_maillon?.
 Afficher L'élément de La liste premier_maillon? à l'indice L'entier zéro??.
 Afficher L'élément de La liste premier_maillon? à l'indice L'entier un??.
 Exécuter la fonction afficher_liste avec les arguments La variable premier_maillon?.)
 
-Soit f une fonction qui lorsqu'elle est appelée avec i, x, n exécute:
-    Afficher La chaîne de caractères " -> "?, La variable x?.
-    Si La valeur de La variable x? est plus petite que la valeur de La variable n?? alors faire:
-        Pour i allant de L'entier un? jusqu'à L'entier dix? faire:
-            Afficher La variable i?.
-            Exécuter la fonction f avec les arguments La variable i?, La somme de La variable x? et de L'entier un??, La variable n?.
-        .
-    .
+Soit x L'entier zéro?.
+Soit f une fonction qui lorsqu'elle est appelée avec x exécute:
+    Que La variable x? devienne La somme de La variable x? et de L'entier un??.
 .
 
-Exécuter la fonction f avec les arguments L'entier moins un?, L'entier zéro?, L'entier neuf?.
+Exécuter la fonction f avec les arguments La variable x?.
+Afficher La variable x?.
+)
+
+(On suppose que a est un pointeur vers la liste)
+Soit swap une fonction qui lorsqu'elle est appelée avec a, i0, i1 exécute:
+    Soit c L'élément de La liste a? à l'indice La variable i1??.
+    Remplacer l'élément de La liste a? à l'indice La variable i1? par L'élément de La liste a? à l'indice La variable i0??.
+    Remplacer l'élément de La liste a? à l'indice La variable i0? par La variable c?.
+.
+
+(On suppose que a est un pointeur vers la liste)
+Soit quicksort une fonction qui lorsqu'elle est appelée avec a, l0, hi exécute:
+    Si On a La valeur de La variable l0? est plus grande que la valeur de La variable hi?? ou La valeur de La variable l0? est strictement plus petite que la valeur de L'entier zéro??? alors faire:
+        Renvoyer Rien?.
+    .
+    Soit p Le résultat de la fonction partition avec les arguments La variable a?, La variable l0?, La variable hi??.
+    Exécuter la fonction quicksort avec les arguments La variable a?, La somme de La variable p? et de L'entier un??, La variable hi?.
+    Exécuter la fonction quicksort avec les arguments La variable a?, La variable l0?, La différence de La variable p? et de L'entier un??.
+.
+
+(On suppose que a est un pointeur vers la liste)
+Soit partition une fonction qui lorsqu'elle est appelée avec a, l0, hi exécute:
+    Afficher Le type de La variable a??.
+    Soit pivot L'élément de La liste a? à l'indice La variable hi??.
+    Soit i La variable l0?.
+    Pour j allant de La variable l0? jusqu'à La variable hi? faire:
+        Si La valeur de L'élément de La liste a? à l'indice La variable j?? est plus petite que la valeur de La variable pivot?? alors faire:
+            Exécuter la fonction swap avec les arguments La variable a?, La variable i?, La variable j?.
+            Que La variable i? devienne La somme de La variable i? et de L'entier un??.
+        .
+    .
+    Exécuter la fonction swap avec les arguments La variable a?, La variable i?, La variable hi?.
+    Renvoyer La variable i?.
+.
+
+Soit n L'entier cent?.
+Soit l La liste vide?.
+Pour i allant de L'entier un? jusqu'à La somme de La variable n? et de L'entier un?? faire:
+    Ajouter à La liste l? La variable i?.
+.
+
+Mettre la seed aléatoire à L'entier douze?.
+Pour i allant de La différence de La variable n? et de L'entier un?? jusqu'à L'entier moins un? en utilisant un pas de L'entier moins un? faire:
+    Soit j Un nombre aléatoire?.
+    Exécuter la fonction swap avec les arguments La liste l?, La variable i?, La partie entière de Le produit de La variable j? et de La variable n???.
+.
+
+Exécuter la fonction quicksort avec les arguments Un pointeur vers La liste l??, L'entier zéro?, La différence de La variable n? et de L'entier un??.
+Afficher La variable l?.
