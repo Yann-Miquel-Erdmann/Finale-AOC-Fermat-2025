@@ -32,7 +32,7 @@ int test_number(void) {
 }
 
 void test_parse(void) {
-    FILE* f = fopen("testing/test.FC", "r");
+    FILE* f = fopen("testing/test.COCS", "r");
     assert(f != NULL);
 
     phrase_t* p = parse_file(f);
@@ -70,7 +70,7 @@ int main(int argc, char const* argv[]) {
 
     // test_val();
 
-    FILE* f = fopen("testing/test.FC", "r");
+    FILE* f = fopen("testing/test.COCS", "r");
     assert(f != NULL);
 
     phrase_t* p = parse_file(f);

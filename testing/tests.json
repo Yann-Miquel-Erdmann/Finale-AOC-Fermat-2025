@@ -235,5 +235,33 @@
         "output": "un\ndeux\ntrois\nquatre\ncinq\nsix\nsept\nhuit\nneuf\ndix\n",
         "input": "",
         "errors": true
+    },
+    {
+        "name": "2024-10-20_11-15-53_Erwan",
+        "code": "Pour i allant de L'entier un? jusqu'à L'entier deux? faire:\n    Soit x.\n.",
+        "output": "",
+        "input": "",
+        "errors": false
+    },
+    {
+        "name": "2024-10-13_14-01-54_MammaMia",
+        "code": "Soit x L'entier zéro?.\n\n( fun x -> print_int (x + 1) )\nSoit f une fonction qui lorsqu'elle est appelée avec y exécute: \n    Afficher La somme de L'entier un? et de La variable y??.\n.\n\n\nExécuter la fonction f avec les arguments La variable x?. \n\n(Afficher Le résultat de la fonction f avec les arguments La variable x??.)\n",
+        "output": "un\n",
+        "input": "",
+        "errors": false
+    },
+    {
+        "name": "2024-10-13_14-34-45_MammaMia",
+        "code": "Soit i L'entier moins douze?.\n\nPour i allant de L'entier zéro? jusqu'à L'entier dix? faire:\n    Afficher La variable i?.\n.\n",
+        "output": "zéro\nun\ndeux\ntrois\nquatre\ncinq\nsix\nsept\nhuit\nneuf\n",
+        "input": "",
+        "errors": false
+    },
+    {
+        "name": "Quitter boucle dans une double boucle",
+        "code": "Pour i allant de L'entier zéro? jusqu'à L'entier dix? faire:\n    Pour j allant de L'entier zéro? jusqu'à L'entier dix? faire:\n        Afficher La variable j?.\n        Si La valeur de La variable i? est égale à la valeur de La variable j?? alors faire:\n            Quitter la boucle.\n        .\n    .\n.\n",
+        "output": "zéro\nzéro\nun\nzéro\nun\ndeux\nzéro\nun\ndeux\ntrois\nzéro\nun\ndeux\ntrois\nquatre\nzéro\nun\ndeux\ntrois\nquatre\ncinq\nzéro\nun\ndeux\ntrois\nquatre\ncinq\nsix\nzéro\nun\ndeux\ntrois\nquatre\ncinq\nsix\nsept\nzéro\nun\ndeux\ntrois\nquatre\ncinq\nsix\nsept\nhuit\nzéro\nun\ndeux\ntrois\nquatre\ncinq\nsix\nsept\nhuit\nneuf\n",
+        "input": "",
+        "errors": false
     }
 ]

@@ -52,7 +52,6 @@ typedef struct phrase {
     
     int line_number;
     
-    bool first_exec; // to get for loops work correctly
 } phrase_t;
 
 phrase_t* new_phrase(phrase_t* parent);
