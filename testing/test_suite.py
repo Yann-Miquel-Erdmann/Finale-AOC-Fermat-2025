@@ -2,6 +2,8 @@ import json
 import subprocess
 import platform
 
+failed = False
+
 # Path to the JSON file
 json_file = 'testing/tests.json'
 
@@ -40,6 +42,7 @@ for line in data:
 
     res = subprocess.run(command, shell=True, capture_output=True, text=True)
     if res.returncode != 0:
+        failed = True
         print(
             f"\033[91mMemory errors detected by Valgrind on test {line['name']}\033[0m")
         print(f"err:\n{res.stderr}")
@@ -54,6 +57,7 @@ for line in data:
             passed += 1
             print(f"\033[92mTest {line['name']} passed\033[0m")
         else:
+            failed = True
             print(f"\033[91mTest {line['name']} failed\033[0m")
             print(f"\033[91mExpected: '{line['output']}'\033[0m")
             print(f"\033[91mGot: '{res.stdout}'\033[0m")
@@ -63,3 +67,5 @@ for line in data:
     total += 1
 
 print(f"Passed {passed}/{total} tests")
+
+exit(1 if failed else 0) # permet de faire fonctionner le script dans un makefile avec github workflow
