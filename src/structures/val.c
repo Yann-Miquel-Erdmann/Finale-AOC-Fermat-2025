@@ -237,12 +237,6 @@ void set_pointer(val_t* ptr, val_t* dest, phrase_t* p, environnement_t* env) {
     ptr->type = POINTEUR;
     ptr->value.ptr = dest;
     dest->references++;
-
-    if (ptr->references > 1) {  // s'assure qu'il n'y ait pas de boucle de pointeurs
-        if (boucle_pointeur(ptr, p, env)) {
-            custom_error("Il y a une boucle de pointeurs.", p, env);
-        }
-    }
 }
 
 char* str_type(val_t* v) {
