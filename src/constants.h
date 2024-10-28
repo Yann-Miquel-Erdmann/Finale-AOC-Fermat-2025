@@ -99,7 +99,7 @@
 #define POUR_AVEC_PAS 31
 #define QUITTER_BOUCLE 49
 
-// interractions console
+// interactions console
 #define AFFICHER_EXPR 32
 #define AFFICHER_EXPR_NO_RETURN 33
 #define TYPE_EXPR 43
