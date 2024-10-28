@@ -1,10 +1,11 @@
 build/*
 # Ignore all hidden files
-.*
 test
 a.out
+*.out
 *.o
-*.FC
+.VSCodeCounter/*
+.vscode/*
 
 *.code-workspace
 perf.data
