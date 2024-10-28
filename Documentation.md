@@ -1,7 +1,7 @@
 # Documentation du language
 
-## Disclamer
-Le language a été beacoup testé mais il reste surement des bugs et de petits contournements de syntaxe.
+## Disclaimer
+Le language a été beaucoup testé mais il reste sûrement des bugs et de petits contournements de syntaxe.
 
 ## Présentation générale et aspects spécifiques
 Le language a été créé dans le but d'avoir un code le plus clair possible.
@@ -17,7 +17,7 @@ ou des majuscules au milieu de phrases.
 Les phrases sont divisées en deux type:
 * les instructions qui effectuent des actions (se terminent par un point)
 * les expressions qui renvoient une valeur (se terminent par un point d'interrogation)
-Il sera précisé plus tard lorsq'une phrase est une instruction où une expression
+Il sera précisé plus tard lorsqu'une phrase est une instruction où une expression
 
 Vous aurez certainement à écrire des nombres dans votre programme.
 Les plus perspicaces l'auront peut-être deviné, il faudra les écrire en lettre, selon la règle de 1990:
@@ -26,7 +26,7 @@ Les plus perspicaces l'auront peut-être deviné, il faudra les écrire en lettr
 * million et milliard prennent un "s" au pluriel
 * mille est invariable
 
-Les nombres à virgule devront être écrits evac tous les zéro et la virgule par exemple 2.00512: "deux virgule zéro zéro cinq-cent-douze"
+Les nombres à virgule devront être écrits avec tous les zéro et la virgule par exemple 2.00512: "deux virgule zéro zéro cinq-cent-douze"
 
 ## Fonctionnement de la documentation
 Le syntaxes seront décrites de la manière:
@@ -43,7 +43,7 @@ Si
 ...
 {instruction n}.
 ```
-apparait, cela veut dire qu'il faut mettre au moins une instruction mais qu'il est possible d'en mettre autant que l'on veut.
+apparaît, cela veut dire qu'il faut mettre au moins une instruction mais qu'il est possible d'en mettre autant que l'on veut.
 
 Dans le cas de
 ```
@@ -52,10 +52,10 @@ Dans le cas de
 il faut mettre au moins une expression mais il est à nouveau possible d'en mettre autant que l'on veut.
 Il est à noter la présence des virgules entre les différentes expressions qui est obligatoire.
 
-Lorsque `<mettre un truc ici>` apparait, il faut mettre un élément (également sans les `<>`), souvent un nom de variable, de fonction ou un nombre,
+Lorsque `<mettre un truc ici>` apparaît, il faut mettre un élément (également sans les `<>`), souvent un nom de variable, de fonction ou un nombre,
 en suivant ce qui est écrit à l'intérieur.
 
-Les structures données pourrons vous parraître incompréhensible au premmier abord mais des exemples seront donnés à la fin de la documentation.
+Les structures données pourrons vous paraître incompréhensible au premier abord mais des exemples seront donnés à la fin de la documentation.
 
 ## Les expression de base
 Les expressions base sont les expressions que vous utiliserez probablement le plus souvent
@@ -76,7 +76,7 @@ _instruction_
 ```
 Le booléen <vrai ou faux>?
 ```
-* d'une chaîne de carractères
+* d'une chaîne de caractères
 _instruction_
 ```
 La chaîne de caractères "<ce que vous voulez sauf " >"?
@@ -103,7 +103,7 @@ _instruction_
 Soit <nom de la variable> {expression}.
 ```
 
-Pour lui assigner une valeur, on utilisae la syntaxe suivante.
+Pour lui assigner une valeur, on utilisera la syntaxe suivante.
 Elle est plus générale car elle est également utilisée pour d'autres structures de données décrites plus tard.
 _instruction_
 ```
@@ -183,11 +183,11 @@ Remplacer l'élément de {expression: liste} à l'indice {expression: entier} pa
 ```
 
 ## Les opérateurs
-Il a a différents opérateurs qui vous permetterons d'effectuer toute sorte de calculs sur les types de bases
+Il a a différents opérateurs qui vous permettrons d'effectuer toute sorte de calculs sur les types de bases
 La plupart d'entre eux ne fonctionnent que sur les types numériques de base i.e. les entiers, les flottants et les booléens.
 `{expression numérique}` désigne `{expression : entier / flottant / booléen}`
 
-Parmis ces opérateurs, on retrouve
+Parmi ces opérateurs, on retrouve
 * la somme:
 _expression_
 ```
@@ -244,7 +244,7 @@ On a {expression} ou {expression}?
 
 ## Comparateurs et structures conditionnelles
 Pour vos programmes, vous aurez certainement besoin d'executer certains éléments de code seulement si une certaine condition est vérifiée.
-Pour cela, vous pouvez choisir parmis deux structures conditionnelles:
+Pour cela, vous pouvez choisir parmi deux structures conditionnelles:
 * Si alors:
 _instruction_
 ```
@@ -292,7 +292,7 @@ _expression_
 ```
 La valeur de {expression} est plus petite que la valeur de {expression}?
 ```
-* L'ingalité strict inférieur:
+* L'inégalité strict inférieur:
 _expression_
 ```
 La valeur de {expression} est strictement plus petite que la valeur de {expression}?
@@ -309,7 +309,7 @@ La valeur de {expression} est strictement plus grande que la valeur de {expressi
 ```
 
 ## Boucles
-Écrire peut être rapidement fatiguant, surtout s'il sagit de lignes plutôt répétitives.
+Écrire peut être rapidement fatiguant, surtout s'il s'agit de lignes plutôt répétitives.
 Pour régler ce problème, vous aurez plusieurs boucles à votre disposition:
 * Tant que:
 _instruction_
@@ -334,7 +334,7 @@ Pour {nom de la variable} allant de {expression numérique} jusqu'à {expression
 * Pour avec pas:
 _instruction_
 ```
-Pour {nom de la variable} alland de {expression numérique} jusqu'à {expression numérique} en utilisant un pas de {expression numérique} faire:
+Pour {nom de la variable} allant de {expression numérique} jusqu'à {expression numérique} en utilisant un pas de {expression numérique} faire:
     {instruction 1}.
     {instruction 2}.
     ...
@@ -348,7 +348,7 @@ _instruction_
 Quitter la boucle
 ```
 
-## Interractions avec la console
+## Interactions avec la console
 Il pourra en cas d'erreur dans votre code être pratique de pouvoir afficher les éléments qui pourraient poser problème.
 
 On peut tout d'abord afficher toute expression dans la console:
@@ -362,18 +362,18 @@ _instruction_
 Afficher {expression1}, {expression2}, ... {expression n} sans retour à la ligne.
 ```
 
-On peut également récupérer la taille d'une liste ou d'une chaine de caractère:
+On peut également récupérer la taille d'une liste ou d'une chaîne de caractère:
 _expression_
 ```
 La taille de {expression : chaîne de caractère/liste}?
 ```
-On peut également récupérer le type de d'une expression sous forme de chaine de caractère:
+On peut également récupérer le type de d'une expression sous forme de chaîne de caractère:
 _expression_
 ```
 Le type de {expression}?
 ```
 
-On peut également récuperer des entrées de l'utilisateur sous différents types:
+On peut également récupérer des entrées de l'utilisateur sous différents types:
 * Entier:
 _expression_
 ```
@@ -408,7 +408,7 @@ Un nombre aléatoire?
 ```
 
 * Seed:
-Vous pouvez mettre la seed a la valeur que vous voulez pour obtenir un résultat différent (seed unitiale est a 0)
+Vous pouvez mettre la seed a la valeur que vous voulez pour obtenir un résultat différent (seed initiale est a 0)
 _instruction_
 ```
 Mettre la seed aléatoire à {expression : entier}.
@@ -434,7 +434,7 @@ La conversion en flottant de {expression}?
 ```
 
 * Conversion en booléen:
-Si l'entrée est une chaine, renvoie faux si la chaîne est "faux" ou si la chaîne est vide, vrai sinon
+Si l'entrée est une chaîne, renvoie faux si la chaîne est "faux" ou si la chaîne est vide, vrai sinon
 _expression_
 ```
 La conversion en booléen de {expression}?
@@ -482,7 +482,7 @@ Permet de stocker la valeur 2 dans la variable x sans avoir à passer par son no
 
 ## Fonctions
 Les fonctions sont très utiles pour exécuter un morceau de programme souvent réutilisé à différents endroits du votre code.
-Une focntion se définit de la manière suivante:
+Une fonction se définit de la manière suivante:
 _instruction_
 ```
 Soit {nom de la fonction} une fonction qui lorsqu'elle appelée exécute:
