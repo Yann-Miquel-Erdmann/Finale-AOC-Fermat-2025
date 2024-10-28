@@ -29,7 +29,7 @@ void free_environnement(environnement_t* env) {
 
 environnement_t* new_environnement(void) {
     environnement_t* env = safe_alloc(NULL, sizeof(environnement_t));
-    
+
     env->variable_list = safe_alloc(NULL, sizeof(variable_t*) * DEFAULT_VARIABLES_LIST_SIZE);
     env->variable_list_len = 0;
     env->variable_list_size = DEFAULT_VARIABLES_LIST_SIZE;
@@ -95,4 +95,3 @@ int getVariableId(environnement_t* env, char* nom) {
     }
     return -1;
 }
-

@@ -18,6 +18,9 @@ typedef struct val {
         chaine_t* chaine;
         struct val* ptr;
     } value;
+    unsigned int references;
+    bool ouvert;
+    bool ferme;
 } val_t;
 
 
@@ -35,7 +38,7 @@ void set_bool(val_t* v, bool valeur);
 void set_liste(val_t*, liste_t* l);
 void set_char(val_t* v, chaine_t* chaine);
 void set_undefined(val_t* v);
-void set_pointer(val_t* src, val_t* dest, phrase_t* p, environnement_t* env);
+void set_pointer(val_t* ptr, val_t* dest, phrase_t* p, environnement_t* env);
 
 char* str_type(val_t* v);
 

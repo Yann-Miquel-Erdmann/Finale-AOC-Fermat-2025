@@ -34,7 +34,7 @@ int main(int argc, char const* argv[]) {
     for (int i = 2; i< argc; i++){
         if (argv[i][0] == '-' && argv[i][1] == '-'){
             if (require_argument){
-                char error[64]; // argument de taille au plus 15, par de buffer overflow possible
+                char error[64]; // argument de taille au plus 15, pas de buffer overflow possible
                 sprintf(error, "Le paramètre \"%s\" requiert un argument", argv[i-1]);
                 custom_error(error, NULL, NULL);
             }
@@ -90,6 +90,8 @@ int main(int argc, char const* argv[]) {
     }
     
     phrase_t* p = parse_file(f);
+    fclose(f);
+    
     char* nom = safe_alloc(NULL, sizeof(char));
     nom[0] = '\0';
     function_t* function = new_function(nom, p);
@@ -106,7 +108,6 @@ int main(int argc, char const* argv[]) {
 
     free_phrase(p);
     free_function_list(function_list);
-    fclose(f);
     return 0;
 
 }

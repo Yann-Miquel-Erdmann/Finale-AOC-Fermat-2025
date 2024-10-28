@@ -12,7 +12,6 @@ typedef struct liste {
     val_t** valeurs;
     int valeursLen;
     int valeursSize;
-    struct liste* parent_list;
 } liste_t;
 
 void free_liste_t(liste_t* l, bool free_chaine, bool free_liste);

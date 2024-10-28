@@ -157,7 +157,7 @@ void _printPhrase(phrase_t* phrase, int decalage, int last_elem, environnement_t
         }
     }
     printf("%s", phrase->text);
-    if (env != NULL){
+    if (env != NULL) {
         if (phrase->expr && phrase->uniqueId < env->phraseValeurs_len && phrase->uniqueId != -1 && env->phraseValeurs[phrase->uniqueId]->type != -1) {
             switch (env->phraseValeurs[phrase->uniqueId]->type) {
                 case INT:
@@ -172,11 +172,11 @@ void _printPhrase(phrase_t* phrase, int decalage, int last_elem, environnement_t
                     } else {
                         printf("  ->  false");
                     }
-                    
+
                     break;
                 case CHAINE_DE_CHAR:
-                case CHAINE_DE_CHAR_P:
-                    if (env->phraseValeurs[phrase->uniqueId]->value.chaine != NULL){
+
+                    if (env->phraseValeurs[phrase->uniqueId]->value.chaine != NULL) {
                         printf("  ->  %s", env->phraseValeurs[phrase->uniqueId]->value.chaine->chars);
                     }
                 default:

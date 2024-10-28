@@ -1,13 +1,13 @@
 #include "variable.h"
 
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <stdio.h>
 
 #include "../constants.h"
-#include "struct_liste.h"
 #include "../custom_error.h"
 #include "../safe_alloc.h"
+#include "struct_liste.h"
 
 void free_variable_t(variable_t* var) {
     // printf("free variable %p %s\n", var, var->nom);

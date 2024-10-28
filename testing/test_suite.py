@@ -34,14 +34,19 @@ for line in data:
 
     if "input" in line.keys() and line["input"] != "":
         command += "--input testing/input.txt"
+
     if "errors" in line.keys() and not line["errors"]:
         command += "--ignore_errors"
+
     res = subprocess.run(command, shell=True, capture_output=True, text=True)
     if res.returncode != 0:
         print(
             f"\033[91mMemory errors detected by Valgrind on test {line['name']}\033[0m")
         print(f"err:\n{res.stderr}")
         print(f"err:\n{res.stdout}")
+        with open("testing/last_fail.COCS", 'w+') as f:
+            f.write(line["code"])
+
     else:
         # res = subprocess.run(f"""build/interpreter testing/python_test.COCS""", shell=True, capture_output=True, text=True)
 
@@ -52,6 +57,8 @@ for line in data:
             print(f"\033[91mTest {line['name']} failed\033[0m")
             print(f"\033[91mExpected: '{line['output']}'\033[0m")
             print(f"\033[91mGot: '{res.stdout}'\033[0m")
+            with open("testing/last_fail.COCS", 'w+') as f:
+                f.write(line["code"])
 
     total += 1
 

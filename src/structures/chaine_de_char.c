@@ -46,6 +46,9 @@ val_t* new_chaine_val_t(char* c){
     chaine->chars_size = size;
     val->value.chaine = chaine;
     val->type = CHAINE_DE_CHAR;
+    val->ferme = false;
+    val->ouvert = false;
+    val->references = 0;
     return val;
 }
 

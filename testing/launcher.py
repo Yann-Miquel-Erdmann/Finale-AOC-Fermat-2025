@@ -13,5 +13,5 @@ s = os.getcwd().replace(" ", "\\ ")
 if len(sys.argv) == 3 and sys.argv[2] == "exit":
     appscript.app('Terminal').do_script(f'cd {s} && python3 {sys.argv[1]} && osascript -e \'tell app "Xcode" to activate\' && exit').activate()
 else:
-        appscript.app('Terminal').do_script(f'cd {s} && python3 {sys.argv[1]} && osascript -e \'tell app "Xcode" to activate\'').activate()
+    appscript.app('Terminal').do_script(f'cd {s} && python3 {sys.argv[1]} && osascript -e \'tell app "Xcode" to activate\'').activate()
 

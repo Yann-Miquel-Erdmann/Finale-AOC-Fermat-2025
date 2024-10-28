@@ -6,13 +6,13 @@
 #include "eval_numbers.h"
 #include "expressions/comparateurs.h"
 #include "expressions/operateurs/operateurs.h"
-#include "structures/function.h"
-#include "safe_alloc.h"
 #include "remove_constants.h"
+#include "safe_alloc.h"
+#include "structures/function.h"
 
 int elem_liste(char* text) {
     // printf("%s\n", text);
-    if (!strcmp(text, MODIFICATION_VARIABLE_S)){
+    if (!strcmp(text, MODIFICATION_VARIABLE_S)) {
         return MODIFICATION_VARIABLE;
     }
     if (!strcmp(text, SOMME_S)) {
@@ -127,37 +127,37 @@ int elem_liste(char* text) {
     if (!strcmp(text, PARTIE_ENTIERE_S)) {
         return PARTIE_ENTIERE;
     }
-    if (!strcmp(text, POINTEUR_VARIABLE_S)) {
-        return POINTEUR_VARIABLE;
+    if (!strcmp(text, POINTEUR_VERS_VALEUR_S)) {
+        return POINTEUR_VERS_VALEUR;
     }
-    if (!strcmp(text, INPUT_INT_S)){
+    if (!strcmp(text, INPUT_INT_S)) {
         return INPUT_INT;
     }
-    if(!strcmp(text, INPUT_FLOAT_S)){
+    if (!strcmp(text, INPUT_FLOAT_S)) {
         return INPUT_FLOAT;
     }
-    if (!strcmp(text, INPUT_BOOL_S)){
+    if (!strcmp(text, INPUT_BOOL_S)) {
         return INPUT_BOOL;
     }
-    if (!strcmp(text, VALEUR_POINTEE_S)){
+    if (!strcmp(text, VALEUR_POINTEE_S)) {
         return VALEUR_POINTEE;
     }
-    if (!strcmp(text, VALEUR_FINALE_POINTEE_S)){
+    if (!strcmp(text, VALEUR_FINALE_POINTEE_S)) {
         return VALEUR_FINALE_POINTEE;
     }
-    if(!strcmp(text, INPUT_S)){
+    if (!strcmp(text, INPUT_S)) {
         return INPUT;
     }
-    if (!strcmp(text, CONVERT_TO_INT_S)){
+    if (!strcmp(text, CONVERT_TO_INT_S)) {
         return CONVERT_TO_INT;
     }
-    if (!strcmp(text, CONVERT_TO_FLOAT_S)){
+    if (!strcmp(text, CONVERT_TO_FLOAT_S)) {
         return CONVERT_TO_FLOAT;
     }
-    if (!strcmp(text, CONVERT_TO_BOOL_S)){
+    if (!strcmp(text, CONVERT_TO_BOOL_S)) {
         return INPUT;
     }
-    if (!strcmp(text, CONVERT_TO_CHAR_S)){
+    if (!strcmp(text, CONVERT_TO_CHAR_S)) {
         return CONVERT_TO_CHAR;
     }
     return -1;
@@ -205,9 +205,9 @@ void tokenise(phrase_t* phrase, function_t* function, function_list_t* func_list
             // printf("remove consts\n");
             // exit(1);
             removeConstants(phrase);
-            
+
             /*printf("\n");
-            
+
             for (int i = 0; i < phrase->innerPhraseLen; i++) {
                 phrase_t* p = phrase->innerPhrase[i];
                 if (p->phraseId == DEFINITION_FONCTION || p->phraseId == DEFINITION_FONCTION_ARGUMENT){
@@ -220,8 +220,7 @@ void tokenise(phrase_t* phrase, function_t* function, function_list_t* func_list
                 }
                 printf("=======\n\n");
             }*/
-            
-            
+
             // exit(1);
             // links the function calls to their respective functions
             link_function_to_call(func_list, func_call_list, function->env);
@@ -232,12 +231,12 @@ void tokenise(phrase_t* phrase, function_t* function, function_list_t* func_list
             }
             break;
         case MODIFICATION_VARIABLE:
-            if (phrase->innerPhraseLen > 0 || phrase->argsLen != 2){
+            if (phrase->innerPhraseLen > 0 || phrase->argsLen != 2) {
                 custom_error("Syntaxe invalide, modification variable prend 2 arguments", phrase, function->env);
             }
-            
+
             phrase->phraseId = MODIFICATION_VARIABLE;
-            
+
             if (inLoopSuivant) {
                 phrase->suivant = inLoopSuivantPointer;
             }
@@ -245,7 +244,7 @@ void tokenise(phrase_t* phrase, function_t* function, function_list_t* func_list
             for (int i = 0; i < 2; i++) {
                 tokenise(phrase->args[i], function, func_list, func_call_list, uniqueId, parent_loop, false, NULL);
             }
-            
+
             break;
         case SOMME:
             if (phrase->innerPhraseLen > 0 || phrase->argsLen != 2) {
@@ -856,11 +855,11 @@ void tokenise(phrase_t* phrase, function_t* function, function_list_t* func_list
                 taille(phrase, function->env);
                 phrase->constant = true;
             }
-            
+
             if (inLoopSuivant) {
                 phrase->suivant = inLoopSuivantPointer;
             }
-            
+
             break;
         case DEFINIR_SEED:
             if (phrase->innerPhraseLen > 0 || phrase->argsLen != 1) {
@@ -868,20 +867,20 @@ void tokenise(phrase_t* phrase, function_t* function, function_list_t* func_list
             }
             phrase->phraseId = DEFINIR_SEED;
             tokenise(phrase->args[0], function, func_list, func_call_list, uniqueId, parent_loop, false, NULL);
-            
+
             if (inLoopSuivant) {
                 phrase->suivant = inLoopSuivantPointer;
             }
-            
+
             break;
         case NOMBRE_ALEATOIRE:
             phrase->phraseId = NOMBRE_ALEATOIRE;
             function->env->phraseValeurs[phrase->uniqueId]->type = FLOAT;
-            
+
             if (inLoopSuivant) {
                 phrase->suivant = inLoopSuivantPointer;
             }
-            
+
             break;
         case PARTIE_ENTIERE:
             if (phrase->innerPhraseLen > 0 || phrase->argsLen != 1) {
@@ -889,26 +888,26 @@ void tokenise(phrase_t* phrase, function_t* function, function_list_t* func_list
             }
             phrase->phraseId = PARTIE_ENTIERE;
             tokenise(phrase->args[0], function, func_list, func_call_list, uniqueId, parent_loop, false, NULL);
-            
+
             if (inLoopSuivant) {
                 phrase->suivant = inLoopSuivantPointer;
             }
-            
+
             break;
-        case POINTEUR_VARIABLE:
+        case POINTEUR_VERS_VALEUR:
             if (phrase->innerPhraseLen > 0 || phrase->argsLen != 1) {
                 custom_error("Syntaxe invalide, pointeur prend 1 arguments", phrase, function->env);
             }
-            phrase->phraseId = POINTEUR_VARIABLE;
+            phrase->phraseId = POINTEUR_VERS_VALEUR;
             tokenise(phrase->args[0], function, func_list, func_call_list, uniqueId, parent_loop, false, NULL);
             /*if (phrase->args[0]->constant){
                 custom_error("Un pointeur ne peut pas pointer vers une constante", phrase, function->env);
             }*/
-            
+
             if (inLoopSuivant) {
                 phrase->suivant = inLoopSuivantPointer;
             }
-            
+
             break;
         case INPUT_INT:
             phrase->phraseId = INPUT_INT;
@@ -1050,12 +1049,10 @@ void tokenise(phrase_t* phrase, function_t* function, function_list_t* func_list
                 // exit(1);
 
                 // réserve un espace pour la val_t qui dit si la boucle est commencée
-                
 
                 phrase->uniqueId = *uniqueId;
                 (*uniqueId)++;
                 linkValeur(function->env);
-
 
                 function->env->phraseValeurs[phrase->uniqueId]->type = BOOL;
                 function->env->phraseValeurs[phrase->uniqueId]->value.booleen = false;

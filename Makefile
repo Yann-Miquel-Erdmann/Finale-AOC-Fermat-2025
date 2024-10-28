@@ -20,3 +20,6 @@ test_suite:
 
 test:
 	valgrind ./build/interpreter ./testing/test.COCS
+
+last_failed_test:
+	valgrind --leak-check=full ./build/interpreter ./testing/last_fail.COCS
