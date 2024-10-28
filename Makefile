@@ -4,6 +4,7 @@ OBJECTS = $(patsubst %.c,%.o,$(SOURCES))
 CFLAGS = -g -Wall -Wextra -O0 
 
 build_: $(OBJECTS)
+	mkdir -p build
 	gcc -o build/interpreter $^ -lm
 
 build/%.o: src/%.c $(HEADERS)
@@ -15,6 +16,8 @@ fast:
 
 clean:
 	rm -f $(OBJECTS) 
+	rm -rf build
+
 test_suite:
 	python3 ./testing/test_suite.py
 
