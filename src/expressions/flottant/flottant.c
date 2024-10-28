@@ -1,4 +1,5 @@
 #include "../expressions.h"
+#include "../../safe_alloc.h"
 
 int puiss10(int a) {
     float i = 1;
@@ -20,10 +21,8 @@ bool test_expr_flottant(phrase_t* phrase, environnement_t* env) {
         return false;
     }
 
-    if (len > 1) {
-        custom_error("too many arguments given", phrase, env);
-    } else if (len < 1) {
-        custom_error("not enough arguments", phrase, env);
+    if (len != 1) {
+        custom_error("Expression flottante ne prend pas d'arguments", phrase, env);
     }
     
     float num;
@@ -33,7 +32,12 @@ bool test_expr_flottant(phrase_t* phrase, environnement_t* env) {
         phrase->constant = true;
         set_float(env->phraseValeurs[phrase->uniqueId], num);
     } else {
-        custom_error("Flottant invalide", phrase, env);
+        char* err = safe_alloc(NULL, (strlen(result[0]) + 32) * sizeof(char));
+
+        strcpy(err, result[0]);
+        strcat(err, " n'est pas un flottant valide");
+
+        custom_error(err, phrase, env);
     }
 
 

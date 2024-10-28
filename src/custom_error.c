@@ -11,10 +11,10 @@ void set_ignore(void){
 
 void custom_error(char* err_message, phrase_t* phrase, environnement_t* env) {
     if (ignore_errors){
-        printf("\n\n========== ERROR ===========\n\n");
+        printf("\n\n========== ERREUR ===========\n\n");
         printf("Une erreur est survenue avec le message suivant:\n%s\n\n", err_message);
     }else{
-        fprintf(stderr, "\n\n========== ERROR ===========\n\n");
+        fprintf(stderr, "\n\n========== ERREUR ===========\n\n");
         fprintf(stderr, "Une erreur est survenue avec le message suivant:\n%s\n\n", err_message);
     }
 

@@ -676,7 +676,7 @@ void tokenise(phrase_t* phrase, function_t* function, function_list_t* func_list
             phrase->phraseId = QUITTER_BOUCLE;
 
             if (parent_loop == NULL) {
-                custom_error("Il l'y a pas de boucles à quitter", phrase, function->env);
+                custom_error("Il n'y a pas de boucle à quitter", phrase, function->env);
             }
             phrase->suivant = parent_loop;
             break;
@@ -783,7 +783,6 @@ void tokenise(phrase_t* phrase, function_t* function, function_list_t* func_list
                 phrase->suivant = inLoopSuivantPointer;
             }
 
-            function->env->phraseValeurs[phrase->uniqueId]->type = CHAINE_DE_CHAR;
             tokenise(phrase->args[0], function, func_list, func_call_list, uniqueId, parent_loop, false, NULL);
             if (phrase->args[0]->constant) {
                 phrase->constant = true;
@@ -1092,7 +1091,7 @@ void link_function_to_call(function_list_t* func_list, function_list_t* func_cal
 
         f->ast->function = getFunction(func_list, f->nom);
         if (f->ast->function == NULL) {
-            custom_error("Fonction non définie", f->ast, env);
+            custom_error("La fonction appelée n'existe pas", f->ast, env);
         }
 
         free_environnement(f->env);

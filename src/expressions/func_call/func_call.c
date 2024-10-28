@@ -13,7 +13,7 @@ bool test_expr_func_call(phrase_t* phrase, function_list_t* func_list, environne
         return false;
     }
     if (len > 1) {
-        custom_error("too many arguments given", phrase, env);
+        custom_error("Un seul nom de fonction attendu", phrase, env);
     }
 
     phrase->phraseId = APPEL_VALEUR_FONCTION;

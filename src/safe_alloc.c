@@ -7,7 +7,7 @@ void* safe_alloc(void* ptr, size_t size){
         ptr = realloc(ptr, size);
     }
     if (ptr == NULL){
-        custom_error("Out of memory", NULL, NULL);
+        custom_error("Plus d'espace mémoire disponible", NULL, NULL);
     }
     return ptr;
 }

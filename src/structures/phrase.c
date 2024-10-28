@@ -185,7 +185,7 @@ void _printPhrase(phrase_t* phrase, int decalage, int last_elem, environnement_t
         }
     }
     if (phrase->error) {
-        printf("\t\t\t <= ERROR HERE\n");
+        printf("\t\t\t <= ERREUR ICI\n");
     } else {
         printf("\n");
     }

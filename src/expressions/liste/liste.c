@@ -13,14 +13,14 @@ bool test_expr_list(phrase_t* phrase, function_t* function) {
         return false;
     }
     if (len > 1) {
-        custom_error("too many arguments given", phrase, function->env);
+        custom_error("Expression liste ne prend pas d'arguments", phrase, function->env);
     }
 
     phrase->phraseId = EXPR_LISTE;
 
     phrase->variableId = getVariableId(function->env, result[0]);
     if (phrase->variableId == -1) {
-        custom_error("variable not found", phrase, function->env);
+        custom_error("La variable entrée n'existe pas", phrase, function->env);
     }
 
  

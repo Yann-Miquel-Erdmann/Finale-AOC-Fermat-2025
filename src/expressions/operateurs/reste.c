@@ -67,7 +67,7 @@ void reste(phrase_t* phrase, environnement_t* env) {
             break;
 
         default:
-            custom_error("Type non géré reste", phrase, env);
+            custom_error("Type non géré par le reste", phrase, env);
             break;
     }
 };

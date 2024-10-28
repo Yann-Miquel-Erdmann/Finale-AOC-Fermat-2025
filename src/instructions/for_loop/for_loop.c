@@ -13,7 +13,7 @@ bool test_inst_for_loop(phrase_t* phrase, function_t* function) {
         return false;
     }
     if (len > 1) {
-        custom_error("too many arguments given", phrase, function->env);
+        custom_error("Une seule variable peut être définie", phrase, function->env);
     }
 
     phrase->phraseId = POUR_SANS_PAS;

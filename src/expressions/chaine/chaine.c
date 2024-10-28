@@ -12,10 +12,8 @@ bool test_expr_chaine(phrase_t* phrase, environnement_t* env) {
     if (result == NULL) {
         return false;
     }
-    if (len > 1) {
-        custom_error("too many arguments given", phrase, env);
-    } else if (len < 1) {
-        custom_error("not enough arguments given", phrase, env);
+    if (len != 1) {
+        custom_error("L'expression chaîne de caractères prend 1 seul argument", phrase, env);
     }
 
     phrase->phraseId = EXPR_CHAINE;

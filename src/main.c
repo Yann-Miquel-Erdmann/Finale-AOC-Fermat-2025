@@ -18,12 +18,12 @@ int main(int argc, char const* argv[]) {
     if (argc == 2) {
         // help
         if (strcmp(argv[1], "-h") == 0) {
-            printf("Usage: %s <file> [--timeout timeout] [--input input_file] [--ignore_errors]\n", argv[0]);
+            printf("Utilisation: %s <file> [--timeout timeout] [--input input_file] [--ignore_errors]\n", argv[0]);
             return 0;
         }
     }
     if (argc == 1){
-        custom_error("Usage: ./interpreter <file> [--timeout timeout] [--input input_file] [--ignore_errors]1", NULL, NULL);
+        custom_error("Utilisation: ./interpreter <file> [--timeout timeout] [--input input_file] [--ignore_errors]1", NULL, NULL);
     }else{
         if (access(argv[1], F_OK) != 0) {
             custom_error("Le fichier source n'existe pas", NULL, NULL);
@@ -52,7 +52,7 @@ int main(int argc, char const* argv[]) {
         }else{
             switch (require_argument) {
                 case 0:{
-                    char error[64]; // argument de taille au plus 15, par de buffer overflow possible
+                    char error[64]; // argument de taille au plus 15, pas de buffer overflow possible
                     sprintf(error, "Le paramètre \"%s\" ne prend par d'argument", argv[i-1]);
                     custom_error(error, NULL, NULL);
                     break;
@@ -74,7 +74,7 @@ int main(int argc, char const* argv[]) {
         }
     }
     if (require_argument){
-        char error[64]; // argument de taille au plus 15, par de buffer overflow possible
+        char error[64]; // argument de taille au plus 15, pas de buffer overflow possible
         sprintf(error, "Le paramètre \"%s\" requiert un argument", argv[argc-1]);
         custom_error(error, NULL, NULL);
     }

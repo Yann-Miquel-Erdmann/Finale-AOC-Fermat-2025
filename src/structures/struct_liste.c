@@ -66,7 +66,7 @@ val_t* accession(liste_t* liste, int indice, phrase_t* p, environnement_t* env) 
 
 void modification(liste_t* liste, int indice, val_t* valeur, phrase_t* p, environnement_t* env) {
     if (indice < 0 || indice >= liste->valeursLen) {
-        custom_error("indice hors de la liste", p, env);
+        custom_error("Indice hors de la liste", p, env);
     }
 
     copy_val(liste->valeurs[indice], valeur, true, true);
@@ -84,7 +84,7 @@ void ajout(liste_t* liste, val_t* valeur, phrase_t* p, environnement_t* env) {
 
 void inserer(liste_t* liste, int indice, val_t* valeur, phrase_t* p, environnement_t* env) {
     if (indice < 0 || indice > liste->valeursLen) {
-        custom_error("indice hors de la liste", p, env);
+        custom_error("Indice hors de la liste", p, env);
     }
     if (liste->valeursLen == liste->valeursSize) {
         doubleValeursSize(liste);
@@ -101,7 +101,7 @@ void inserer(liste_t* liste, int indice, val_t* valeur, phrase_t* p, environneme
 
 void suppression(liste_t* liste, int indice, phrase_t* p, environnement_t* env) {
     if (indice < 0 || indice >= liste->valeursLen) {
-        custom_error("indice hors de la liste", p, env);
+        custom_error("Indice hors de la liste", p, env);
     }
     free_val_t(liste->valeurs[indice], true, true);
     for (int i = indice; i < liste->valeursLen - 1; i++) {
