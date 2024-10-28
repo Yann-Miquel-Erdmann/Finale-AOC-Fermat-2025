@@ -197,7 +197,7 @@
 #define POUR_AVEC_PAS_S "Pour $ allant de * jusqu'à * en utilisant un pas de * faire:*."  // fait + doc
 #define QUITTER_BOUCLE_S "Quitter la boucle."                                             // fait + doc
 
-// interractions console
+// interactions console
 #define AFFICHER_EXPR_S "Afficher *."                                   // fait + doc
 #define AFFICHER_EXPR_NO_RETURN_S "Afficher * sans retour à la ligne."  // fait + doc
 #define TYPE_EXPR_S "Le type de *?"                                     // fait + doc
