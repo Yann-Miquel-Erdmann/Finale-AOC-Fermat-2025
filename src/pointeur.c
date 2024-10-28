@@ -38,10 +38,12 @@ bool parcours_profondeur(val_t* v, phrase_t* p, environnement_t* env) {
             break;
 
         case POINTEUR:
+        {
             bool res = parcours_profondeur(v->value.ptr, p, env);
             v->ferme = true;
             return res;
             break;
+        }
     }
 
     custom_error("le type de val_t n'est pas reconnu dans parcours_profondeur", p, env);
