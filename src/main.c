@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <string.h>
+#include <time.h>
 
 #include "eval_numbers.h"
 #include "interpreter.h"
@@ -15,6 +16,7 @@
 #include "safe_alloc.h"
 
 int main(int argc, char const* argv[]) {
+    srand((unsigned int)time(NULL));
     if (argc == 2) {
         // help
         if (strcmp(argv[1], "-h") == 0) {
