@@ -11,11 +11,14 @@ a.out
 perf.data
 perf.data.old
 callgrind.out.*
-testing/nombres_premiers_valgrind.FC
+testing/nombres_premiers_valgrind.COCS
 testing/input.txt
 testing/launcher.py
-testing/test.FC
-testing/python_test.FC
+testing/test.COCS
+testing/last_fail.COCS
+testing/python_test.COCS
+
 massif.out.*
 testing/input_capture.txt
 testing/output_capture.txt
+
