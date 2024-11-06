@@ -436,11 +436,13 @@ void interpreter(function_t* function, function_list_t* functions, val_t* result
                 break;
 
             case TYPE_EXPR:
-                env->phraseValeurs[phraseActuelle->uniqueId]->value.chaine = new_chaine_t(str_type(env->phraseValeurs[phraseActuelle->args[0]->uniqueId]));
-                env->phraseValeurs[phraseActuelle->uniqueId]->type = CHAINE_DE_CHAR;
+            {
+                val_t* tmp = new_chaine_val_t(str_type(env->phraseValeurs[phraseActuelle->args[0]->uniqueId]));
+                copy_val(env->phraseValeurs[phraseActuelle->uniqueId], tmp, true, true);
+                free_val_t(tmp, true, true);
                 phraseActuelle = phraseActuelle->suivant;
                 break;
-
+            }
             case ET:
                 et_booleen(phraseActuelle, env);
 
