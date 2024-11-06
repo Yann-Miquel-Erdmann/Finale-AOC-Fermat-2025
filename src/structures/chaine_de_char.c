@@ -31,7 +31,7 @@ chaine_t* new_chaine_t(char* c) {
     return chaine;
 }
 
-val_t* new_chaine_val_t(char* c){
+val_t* new_chaine_val_t(char* c, bool free_after_use){
     val_t* val = safe_alloc(NULL, sizeof(val_t));
     chaine_t* chaine = safe_alloc(NULL, sizeof(chaine_t));
     int len = (int)strlen(c);
@@ -41,6 +41,10 @@ val_t* new_chaine_val_t(char* c){
     }
     chaine->chars = safe_alloc(NULL, size * sizeof(char));
     strcpy(chaine->chars, c);
+    
+    if (free_after_use) {
+        free(c);
+    }
     
     chaine->chars_len = len;
     chaine->chars_size = size;

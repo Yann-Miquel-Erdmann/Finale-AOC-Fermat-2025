@@ -437,9 +437,11 @@ void interpreter(function_t* function, function_list_t* functions, val_t* result
 
             case TYPE_EXPR:
             {
-                val_t* tmp = new_chaine_val_t(str_type(env->phraseValeurs[phraseActuelle->args[0]->uniqueId]));
-                copy_val(env->phraseValeurs[phraseActuelle->uniqueId], tmp, true, true);
+                char* s = str_type(env->phraseValeurs[phraseActuelle->args[0]->uniqueId]);
+                val_t* tmp = new_chaine_val_t(s, true);
+                copy_val(env->phraseValeurs[phraseActuelle->uniqueId], tmp, false, true);
                 free_val_t(tmp, true, true);
+                free(tmp);
                 phraseActuelle = phraseActuelle->suivant;
                 break;
             }
