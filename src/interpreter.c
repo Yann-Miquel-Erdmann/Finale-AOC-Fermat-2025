@@ -437,7 +437,7 @@ void interpreter(function_t* function, function_list_t* functions, val_t* result
 
             case TYPE_EXPR:
                 env->phraseValeurs[phraseActuelle->uniqueId]->value.chaine = new_chaine_t(str_type(env->phraseValeurs[phraseActuelle->args[0]->uniqueId]));
-
+                env->phraseValeurs[phraseActuelle->uniqueId]->type = CHAINE_DE_CHAR;
                 phraseActuelle = phraseActuelle->suivant;
                 break;
 
