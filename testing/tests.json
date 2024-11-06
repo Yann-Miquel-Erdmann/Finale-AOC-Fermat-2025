@@ -312,5 +312,12 @@
         "output": "un\n",
         "input": "",
         "errors": true
+    },
+    {
+        "name": "types",
+        "code": "Soit x L'entier un?.\nSoit y Le flottant deux virgule trois?.\nSoit z Le booléen vrai?.\nSoit a La chaîne de caractères \"test\"?.\nSoit b Un pointeur vers Rien??.\nSoit c Rien?.\nSoit d La liste vide?.\n\nAfficher Le type de La variable x??.\nAfficher Le type de La variable y??.\nAfficher Le type de La variable z??.\nAfficher Le type de La variable a??.\nAfficher Le type de La variable b??.\nAfficher Le type de La variable c??.\nAfficher Le type de La variable d??.\n\n",
+        "output": "int\nfloat\nbool\nchaîne de caractères\npointeur\nrien\nliste\n",
+        "input": "",
+        "errors": true
     }
 ]

@@ -258,7 +258,7 @@ char* str_type(val_t* v) {
             break;
         case CHAINE_DE_CHAR:
 
-            strcpy(type, "chaîne de caractère");
+            strcpy(type, "chaîne de caractères");
             break;
         case UNDEFINED:
             strcpy(type, "rien");
