@@ -38,10 +38,10 @@ Si un type de base est présent aux côtés du mot expression, cela signifie que
 
 Si 
 ```
-{instruction 1}.
-{instruction 2}.
+{instruction 1}
+{instruction 2}
 ...
-{instruction n}.
+{instruction n}
 ```
 apparaît, cela veut dire qu'il faut mettre au moins une instruction mais qu'il est possible d'en mettre autant que l'on veut.
 
@@ -249,10 +249,10 @@ Pour cela, vous pouvez choisir parmi deux structures conditionnelles:
 _instruction_
 ```
 Si {expression} alors faire:
-    {instruction 1}.
-    {instruction 2}.
+    {instruction 1}
+    {instruction 2}
     ...
-    {instruction n}.
+    {instruction n}
 .
 ```
 **/!\ **ne pas oublier le point à la fin de la condition.
@@ -262,15 +262,15 @@ Note: La tabulation n'est pas obligatoire mais permet d'augmenter la lisibilité
 _instruction_
 ```
 Si {expression} alors faire:
-    {instruction 1}.
-    {instruction 2}.
+    {instruction 1}
+    {instruction 2}
     ...
-    {instruction n}.
+    {instruction n}
 sinon faire:
-    {instruction 1}.
-    {instruction 2}.
+    {instruction 1}
+    {instruction 2}
     ...
-    {instruction n}.
+    {instruction n}
 .
 ```
 Note: vous porterez une attention particulière au sinon qui n'a pas de majuscule.
@@ -315,30 +315,30 @@ Pour régler ce problème, vous aurez plusieurs boucles à votre disposition:
 _instruction_
 ```
 Tant que {expression} faire:
-    {instruction 1}.
-    {instruction 2}.
+    {instruction 1}
+    {instruction 2}
     ...
-    {instruction n}.
+    {instruction n}
 .
 ```
 * Pour:
 _instruction_
 ```
 Pour {nom de la variable} allant de {expression numérique} jusqu'à {expression numérique} faire:
-    {instruction 1}.
-    {instruction 2}.
+    {instruction 1}
+    {instruction 2}
     ...
-    {instruction n}.
+    {instruction n}
 .
 ```
 * Pour avec pas:
 _instruction_
 ```
 Pour {nom de la variable} allant de {expression numérique} jusqu'à {expression numérique} en utilisant un pas de {expression numérique} faire:
-    {instruction 1}.
-    {instruction 2}.
+    {instruction 1}
+    {instruction 2}
     ...
-    {instruction n}.
+    {instruction n}
 .
 ```
 Avec ces boucles, vous pourrez également en sortir à tout moment avec l'instruction
@@ -486,20 +486,20 @@ Une fonction se définit de la manière suivante:
 _instruction_
 ```
 Soit {nom de la fonction} une fonction qui lorsqu'elle appelée exécute:
-    {instruction 1}.
-    {instruction 2}.
+    {instruction 1}
+    {instruction 2}
     ...
-    {instruction n}.
+    {instruction n}
 .
 ```
 Elles peuvent être également définies avec des arguments:
 _instruction_
 ```
 Soit {nom de la fonction} une fonction qui lorsqu'elle appelée avec {nom de la variable 1}, ..., {nom de la variable n} exécute:
-    {instruction 1}.
-    {instruction 2}.
+    {instruction 1}
+    {instruction 2}
     ...
-    {instruction n}.
+    {instruction n}
 .
 ```
 
