@@ -37,7 +37,7 @@ ignore_errors = False
 while answer.lower() != "y" and answer.lower() != "n":
     answer = input("Ignorer les erreurs ? (y/n)")
     
-if answer == "y":
+if answer.lower() == "y":
     ignore_errors = True;
 
 # Path to the JSON file

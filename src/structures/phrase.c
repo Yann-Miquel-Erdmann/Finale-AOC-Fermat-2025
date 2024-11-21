@@ -217,10 +217,7 @@ void _printPhrase(phrase_t* phrase, int decalage, int last_elem, environnement_t
 }
 
 void printPhrase(phrase_t* phrase, environnement_t* env) {
-    for (int i = 0; i < phrase->innerPhraseLen; i++) {
-        // printf("print inner %s %d\n", phrase->text, i);
-        _printPhrase(phrase->innerPhrase[i], 0, false, env);
-    }
+    _printPhrase(phrase, 0, false, env);
 }
 
 phrase_t* parent_loop(phrase_t* phrase, environnement_t* env) {

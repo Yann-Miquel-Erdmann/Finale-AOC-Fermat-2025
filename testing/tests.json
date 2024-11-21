@@ -225,7 +225,7 @@
     {
         "name": "2024-10-13_15-46-24_UwUwUwUwU",
         "code": "Soit l La liste vide?.\nAjouter à La liste l? L'entier zéro?.\nAjouter à La liste l? Le flottant un virgule six?.\nAfficher Le type de La liste l??. (pas de problème ici)\nPour i allant de L'entier zéro? jusqu'à L'entier deux? faire:\n    Afficher L'élément de La liste l? à l'indice La variable i??.\n.\n(pas de problème ici)\n\nAfficher Le type de L'élément de La liste l? à l'indice L'entier zéro???.\n(pas de problème ici)\n\nAfficher Le type de L'élément de La liste l? à l'indice L'entier un???.\n(pas de problème ici)\n\nPour i allant de L'entier zéro? jusqu'à L'entier deux? faire:\n    Afficher Le type de La liste l??.\n.\n(pas de pb ici)\n\nPour i allant de L'entier zéro? jusqu'à L'entier deux? faire:\n    Afficher Le type de L'élément de La liste l? à l'indice la variable i??.\n.\n(seg fault)\n",
-        "output": "\n\n========== ERREUR ===========\n\nUne erreur est survenue avec le message suivant:\nSyntaxe Invalide\n\nDans le code suivant: \n\nSoit l *.\nargs:\n\\\tLa liste vide?\n\nAjouter à * *.\nargs:\n|\tLa liste l?\n\\\tL'entier zéro?\n\nAjouter à * *.\nargs:\n|\tLa liste l?\n\\\tLe flottant un virgule six?\n\nAfficher *.\nargs:\n|\tLe type de *?\n|\targs:\n\\\t\\\tLa liste l?\n\nPour i allant de * jusqu'à * faire:*.\nargs:\n|\tL'entier zéro?\n\\\tL'entier deux?\ninner :\n|\t\n|\tAfficher *.\n|\targs:\n|\t|\tL'élément de * à l'indice *?\n|\t|\targs:\n|\t|\t|\tLa liste l?\n\\\t\\\t\\\tLa variable i?\n\nAfficher *.\nargs:\n|\tLe type de *?\n|\targs:\n|\t|\tL'élément de * à l'indice *?\n|\t|\targs:\n|\t|\t|\tLa liste l?\n\\\t\\\t\\\tL'entier zéro?\n\nAfficher *.\nargs:\n|\tLe type de *?\n|\targs:\n|\t|\tL'élément de * à l'indice *?\n|\t|\targs:\n|\t|\t|\tLa liste l?\n\\\t\\\t\\\tL'entier un?\n\nPour i allant de * jusqu'à * faire:*.\nargs:\n|\tL'entier zéro?\n\\\tL'entier deux?\ninner :\n|\t\n|\tAfficher *.\n|\targs:\n|\t|\tLe type de *?\n|\t|\targs:\n\\\t\\\t\\\tLa liste l?\n\nPour i allant de * jusqu'à * faire:*.\nargs:\n|\tL'entier zéro?\n\\\tL'entier deux?\ninner :\n|\t\n|\tAfficher *.\n|\targs:\n|\t|\tLe type de *?\n|\t|\targs:\n|\t|\t|\tL'élément de * à l'indice la variable i?\t\t\t <= ERREUR ICI\n|\t|\t|\targs:\n\\\t\\\t\\\t\\\tLa liste l?\n",
+        "output": "\n\n========== ERREUR ===========\n\nUne erreur est survenue avec le message suivant:\nSyntaxe Invalide\n\nÀ la ligne 22: \n\nAfficher *.\nargs:\n|\tLe type de *?\n|\targs:\n|\t|\tL'élément de * à l'indice la variable i?\t\t\t <= ERREUR ICI\n|\t|\targs:\n\\\t\\\t\\\tLa liste l?\n",
         "input": "",
         "errors": false
     },
@@ -267,42 +267,42 @@
     {
         "name": "Boucle pointeurs 1",
         "code": "Soit x Un pointeur vers La variable x??.\n",
-        "output": "\n\n========== ERREUR ===========\n\nUne erreur est survenue avec le message suivant:\nIl y a une boucle de pointeurs.\n\nDans le code suivant: \n\nSoit x *.\t\t\t <= ERREUR ICI\nargs:\n|\tUn pointeur vers *?\n|\targs:\n\\\t\\\tLa variable x?\n",
+        "output": "\n\n========== ERREUR ===========\n\nUne erreur est survenue avec le message suivant:\nIl y a une boucle de pointeurs.\n\nÀ la ligne 1: \n\nSoit x *.\t\t\t <= ERREUR ICI\nargs:\n|\tUn pointeur vers *?\n|\targs:\n\\\t\\\tLa variable x?\n",
         "input": "",
         "errors": false
     },
     {
         "name": "Boucle pointeurs 2",
         "code": "Soit x.\nSoit y Un pointeur vers La variable x??.\nQue La variable x? devienne Un pointeur vers La variable y??.\n",
-        "output": "\n\n========== ERREUR ===========\n\nUne erreur est survenue avec le message suivant:\nIl y a une boucle de pointeurs.\n\nDans le code suivant: \n\nSoit x.\n\nSoit y *.\nargs:\n|\tUn pointeur vers *?\n|\targs:\n\\\t\\\tLa variable x?\n\nQue * devienne *.\t\t\t <= ERREUR ICI\nargs:\n|\tLa variable x?\n|\tUn pointeur vers *?\n|\targs:\n\\\t\\\tLa variable y?\n",
+        "output": "\n\n========== ERREUR ===========\n\nUne erreur est survenue avec le message suivant:\nIl y a une boucle de pointeurs.\n\nÀ la ligne 3: \n\nQue * devienne *.\t\t\t <= ERREUR ICI\nargs:\n|\tLa variable x?\n|\tUn pointeur vers *?\n|\targs:\n\\\t\\\tLa variable y?\n",
         "input": "",
         "errors": false
     },
     {
         "name": "Boucle pointeurs liste 1",
         "code": "Soit x La liste vide?.\nAjouter à La liste x? Un pointeur vers La liste x??.\n",
-        "output": "\n\n========== ERREUR ===========\n\nUne erreur est survenue avec le message suivant:\nIl y a une boucle de pointeurs.\n\nDans le code suivant: \n\nSoit x *.\nargs:\n\\\tLa liste vide?\n\nAjouter à * *.\t\t\t <= ERREUR ICI\nargs:\n|\tLa liste x?\n|\tUn pointeur vers *?\n|\targs:\n\\\t\\\tLa liste x?\n",
+        "output": "\n\n========== ERREUR ===========\n\nUne erreur est survenue avec le message suivant:\nIl y a une boucle de pointeurs.\n\nÀ la ligne 2: \n\nAjouter à * *.\t\t\t <= ERREUR ICI\nargs:\n|\tLa liste x?\n|\tUn pointeur vers *?\n|\targs:\n\\\t\\\tLa liste x?\n",
         "input": "",
         "errors": false
     },
     {
         "name": "Boucle pointeurs liste 2",
         "code": "Soit x La liste vide?.\nAjouter à La liste x? Un pointeur vers La variable x??.\n",
-        "output": "\n\n========== ERREUR ===========\n\nUne erreur est survenue avec le message suivant:\nIl y a une boucle de pointeurs.\n\nDans le code suivant: \n\nSoit x *.\nargs:\n\\\tLa liste vide?\n\nAjouter à * *.\t\t\t <= ERREUR ICI\nargs:\n|\tLa liste x?\n|\tUn pointeur vers *?\n|\targs:\n\\\t\\\tLa variable x?\n",
+        "output": "\n\n========== ERREUR ===========\n\nUne erreur est survenue avec le message suivant:\nIl y a une boucle de pointeurs.\n\nÀ la ligne 2: \n\nAjouter à * *.\t\t\t <= ERREUR ICI\nargs:\n|\tLa liste x?\n|\tUn pointeur vers *?\n|\targs:\n\\\t\\\tLa variable x?\n",
         "input": "",
         "errors": false
     },
     {
         "name": "Boucle pointeurs liste 3",
         "code": "Soit x La liste vide?.\nAjouter à La variable x? Un pointeur vers La variable x??.\n",
-        "output": "\n\n========== ERREUR ===========\n\nUne erreur est survenue avec le message suivant:\nIl y a une boucle de pointeurs.\n\nDans le code suivant: \n\nSoit x *.\nargs:\n\\\tLa liste vide?\n\nAjouter à * *.\t\t\t <= ERREUR ICI\nargs:\n|\tLa variable x?\n|\tUn pointeur vers *?\n|\targs:\n\\\t\\\tLa variable x?\n",
+        "output": "\n\n========== ERREUR ===========\n\nUne erreur est survenue avec le message suivant:\nIl y a une boucle de pointeurs.\n\nÀ la ligne 2: \n\nAjouter à * *.\t\t\t <= ERREUR ICI\nargs:\n|\tLa variable x?\n|\tUn pointeur vers *?\n|\targs:\n\\\t\\\tLa variable x?\n",
         "input": "",
         "errors": false
     },
     {
         "name": "Boucle pointeurs liste 4",
         "code": "Soit x La liste vide?.\nAjouter à La liste x? La liste des éléments Un pointeur vers La variable x???.\n\n",
-        "output": "\n\n========== ERREUR ===========\n\nUne erreur est survenue avec le message suivant:\nIl y a une boucle de pointeurs.\n\nDans le code suivant: \n\nSoit x *.\nargs:\n\\\tLa liste vide?\n\nAjouter à * *.\t\t\t <= ERREUR ICI\nargs:\n|\tLa liste x?\n|\tLa liste des éléments *?\n|\targs:\n|\t|\tUn pointeur vers *?\n|\t|\targs:\n\\\t\\\t\\\tLa variable x?\n",
+        "output": "\n\n========== ERREUR ===========\n\nUne erreur est survenue avec le message suivant:\nIl y a une boucle de pointeurs.\n\nÀ la ligne 2: \n\nAjouter à * *.\t\t\t <= ERREUR ICI\nargs:\n|\tLa liste x?\n|\tLa liste des éléments *?\n|\targs:\n|\t|\tUn pointeur vers *?\n|\t|\targs:\n\\\t\\\t\\\tLa variable x?\n",
         "input": "",
         "errors": false
     },
