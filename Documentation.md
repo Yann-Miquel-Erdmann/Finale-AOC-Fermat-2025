@@ -530,3 +530,101 @@ _expression_
 ```
 Le résultat de la fonction {nom de la fonction} avec les arguments {expression 1}, ..., {expression n}?
 ```
+
+## Exemples
+Nous avons répertorié ici quelques exemples de codes simples pour que vous puissiez comprendre le code en le lisant ou en l'exécutant.
+
+Test pair/ impair:
+```
+(Test pair / impair avec un si)
+Soit x L'entier un?.
+Si La valeur de Le reste de La variable x? par L'entier deux?? est égale à la valeur de L'entier zéro?? alors faire:
+    Afficher La chaîne de caractères "Pair"?.
+sinon faire:
+    Afficher La chaîne de caractères "Impair"?.
+.
+```
+
+Afficher plusieurs éléments sur la même ligne et parcourir une liste avec un pour
+```
+Soit l La liste des éléments L'entier zéro?, L'entier un?, L'entier deux?, L'entier trois??.
+
+(parcours de la liste)
+Pour i allant de L'entier zéro? jusqu'à La taille de La liste l?? faire:
+    Afficher L'élément de La liste l? à l'indice La variable i??, La chaîne de caractères " "? sans retour à la ligne.
+.
+Afficher La chaîne de caractères ""?.
+
+(ou alors)
+Afficher L'entier zéro?, L'entier un?, L'entier deux?, L'entier trois?.
+```
+
+Boucle tant que et quitter la boucle et assignation variable
+```
+Soit x L'entier un?.
+( pas bien mais contrôlé ici)
+Tant que Le booléen vrai? faire:
+    Afficher La variable x?.
+    Si La valeur de La variable x? est égale à la valeur de L'entier dix?? alors faire:
+        Quitter la boucle.
+    .
+    Que La variable x? devienne La somme de La variable x? et de L'entier un??.
+.
+```
+
+Fonctions, récursivité et renvoi de valeurs
+exemple de la fonction factorielle
+```
+(implémentation de la fonction factorielle de manière récursive
+/!\ La réccursion est considérée comme infinie au dessus de 10000 de profondeur)
+Soit factorielle une fonction qui lorsqu'elle est appelée avec n exécute:
+    Si La valeur de La variable n? est plus petite que la valeur de L'entier zéro?? alors faire:
+        Renvoyer L'entier un?.
+    .
+    Renvoyer Le produit de La variable n? et de Le résultat de la fonction factorielle avec les arguments La différence de La variable n? et de L'entier un????.
+.
+
+( 5! = 1x2x3x4x5 = 6x20 = 120 )
+Afficher Le résultat de la fonction factorielle avec les arguments L'entier cinq??.
+```
+
+Pour traiter les entées d'un programme qui prendrait un nombre d'entrées puis stocke ces entrées dans une liste pour traitement ultérieur
+```
+Soit nb_entrées Une entrée entière?.
+Soit entrées La liste vide?.
+Pour i allant de L'entier zéro? jusqu'à La variable nb_entrées? faire:
+    Ajouter à La liste entrées? Une entrée entière?.
+.
+
+Afficher La liste entrées?.
+```
+Avec l'entrée
+```
+cinq
+un
+deux
+trois
+quatre
+cinq
+```
+le programme renvoie
+```
+[un, deux, trois, quatre, cinq]
+```
+
+Exemple avec des pointeurs
+```
+(modifie la valeur pointée)
+Soit x L'entier zéro?.
+Soit y Un pointeur vers La variable x?.
+Que La valeur pointée par La variable y?? devienne L'entier un?.
+Afficher La variable x?.
+
+(ne modifie pas la valeur pointée)
+Soit a L'entier un?.
+Soit b Un pointeur vers la variable a?.
+Soit c La valeur pointée par La variable b??.
+Que La variable c? devienne L'entier deux?.
+Afficher La chaîne de caractères "a = "?, La variable a?. 
+Afficher La chaîne de caractères "c = "?, La variable c?. 
+```

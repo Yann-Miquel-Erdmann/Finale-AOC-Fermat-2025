@@ -44,7 +44,7 @@ void produit(phrase_t* phrase, environnement_t* env) {
             break;
 
         default:
-            custom_error("Type non géré par le reste", phrase, env);
+            custom_error("Type non géré par le produit", phrase, env);
             break;
     }
 };

@@ -217,7 +217,13 @@ void _printPhrase(phrase_t* phrase, int decalage, int last_elem, environnement_t
 }
 
 void printPhrase(phrase_t* phrase, environnement_t* env) {
-    _printPhrase(phrase, 0, false, env);
+    if (phrase->phraseId == MAIN_PHRASE){
+        for (int i = 0; i < phrase->innerPhraseLen; i++){
+            _printPhrase(phrase->innerPhrase[i], 0, false, env);
+        }
+    }else{
+        _printPhrase(phrase, 0, false, env);
+    }
 }
 
 phrase_t* parent_loop(phrase_t* phrase, environnement_t* env) {

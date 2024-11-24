@@ -74,7 +74,7 @@ bool is_instruction(phrase_t* p){
             return false;
             break;
         default:
-            return false;
+            return p->text[p->textLen-2] == '.';
             
     }
 }
@@ -86,7 +86,7 @@ void set_ignore(void){
 }
 
 void custom_error(char* err_message, phrase_t* phrase, environnement_t* env) {
-    int ligne = phrase->line_number;
+    int ligne;
     if (ignore_errors){
         printf("\n\n========== ERREUR ===========\n\n");
         printf("Une erreur est survenue avec le message suivant:\n%s\n\n", err_message);
@@ -100,6 +100,7 @@ void custom_error(char* err_message, phrase_t* phrase, environnement_t* env) {
         while (phrase->parentPhrase != NULL && !is_instruction(phrase)) {
             phrase = phrase->parentPhrase;
         }
+        ligne = phrase->line_number;
         if (ignore_errors){
             printf("À la ligne %d: \n", ligne);
         }else{
