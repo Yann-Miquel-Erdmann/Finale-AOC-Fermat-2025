@@ -160,7 +160,7 @@ peuvent être remplacés par `La liste <nom de la liste>` ou `L'élément de {ex
 si celui-ci est une liste
 exemple:
 ```
-Ajouter à L'élément de La liste l? à l'indice L'entier un?? L'entier quatre.
+Ajouter à L'élément de La liste l? à l'indice L'entier un?? L'entier quatre?.
 ```
 ajoute 4 au premier élément de la liste l.
 
@@ -324,7 +324,7 @@ Tant que {expression} faire:
 * Pour:
 _instruction_
 ```
-Pour {nom de la variable} allant de {expression numérique} jusqu'à {expression numérique} faire:
+Pour <nom de la variable> allant de {expression numérique} jusqu'à {expression numérique} faire:
     {instruction 1}
     {instruction 2}
     ...
@@ -334,7 +334,7 @@ Pour {nom de la variable} allant de {expression numérique} jusqu'à {expression
 * Pour avec pas:
 _instruction_
 ```
-Pour {nom de la variable} allant de {expression numérique} jusqu'à {expression numérique} en utilisant un pas de {expression numérique} faire:
+Pour <nom de la variable> allant de {expression numérique} jusqu'à {expression numérique} en utilisant un pas de {expression numérique} faire:
     {instruction 1}
     {instruction 2}
     ...
@@ -345,7 +345,7 @@ Avec ces boucles, vous pourrez également en sortir à tout moment avec l'instru
 Quitter boucle:
 _instruction_
 ```
-Quitter la boucle
+Quitter la boucle.
 ```
 
 ## Interactions avec la console
@@ -485,7 +485,7 @@ Les fonctions sont très utiles pour exécuter un morceau de programme souvent r
 Une fonction se définit de la manière suivante:
 _instruction_
 ```
-Soit {nom de la fonction} une fonction qui lorsqu'elle appelée exécute:
+Soit <nom de la fonction> la fonction qui lorsqu'elle appelée exécute:
     {instruction 1}
     {instruction 2}
     ...
@@ -495,7 +495,7 @@ Soit {nom de la fonction} une fonction qui lorsqu'elle appelée exécute:
 Elles peuvent être également définies avec des arguments:
 _instruction_
 ```
-Soit {nom de la fonction} une fonction qui lorsqu'elle appelée avec {nom de la variable 1}, ..., {nom de la variable n} exécute:
+Soit <nom de la fonction> la fonction qui lorsqu'elle appelée avec <nom de la variable 1>, ..., <nom de la variable n> exécute:
     {instruction 1}
     {instruction 2}
     ...
@@ -506,12 +506,12 @@ Soit {nom de la fonction} une fonction qui lorsqu'elle appelée avec {nom de la 
 Pour exécuter une fonction:
 _instruction_
 ```
-Exécuter la fonction f.
+Exécuter la fonction <nom de la fonction>.
 ```
 Et avec des arguments:
 _instruction_
 ```
-Exécuter la fonction f avec les arguments {expression 1}, ..., {expression n}.
+Exécuter la fonction <nom de la fonction> avec les arguments {expression 1}, ..., {expression n}.
 ```
 
 Il peut s'avérer utile de pouvoir renvoyer une valeur dans une fonction et de pouvoir la récupérer.
@@ -523,12 +523,12 @@ Renvoyer {expression}.
 Pour récupérer la valeur:
 _expression_
 ```
-Le résultat de la fonction {nom de la fonction}?
+Le résultat de la fonction <nom de la fonction>?
 ```
 Et avec des arguments:
 _expression_
 ```
-Le résultat de la fonction {nom de la fonction} avec les arguments {expression 1}, ..., {expression n}?
+Le résultat de la fonction <nom de la fonction> avec les arguments {expression 1}, ..., {expression n}?
 ```
 
 ## Exemples
@@ -577,7 +577,7 @@ exemple de la fonction factorielle
 ```
 (implémentation de la fonction factorielle de manière récursive
 /!\ La réccursion est considérée comme infinie au dessus de 10000 de profondeur)
-Soit factorielle une fonction qui lorsqu'elle est appelée avec n exécute:
+Soit factorielle la fonction qui lorsqu'elle est appelée avec n exécute:
     Si La valeur de La variable n? est plus petite que la valeur de L'entier zéro?? alors faire:
         Renvoyer L'entier un?.
     .

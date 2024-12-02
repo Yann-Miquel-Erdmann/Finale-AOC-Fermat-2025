@@ -218,12 +218,12 @@
 #define NOMBRE_ALEATOIRE_S "Un nombre aléatoire?"       // fait + doc
 
 // fonctions
-#define DEFINITION_FONCTION_S "Soit $ une fonction qui lorsqu'elle est appelée exécute:*."  // fait
+#define DEFINITION_FONCTION_S "Soit $ la fonction qui lorsqu'elle est appelée exécute:*."   // fait
 #define EXECUTION_FONCTION_S "Exécuter la fonction $."                                      // fait
 #define RENVOI_FONCTION_S "Renvoyer *."                                                     // fait
 #define APPEL_VALEUR_FONCTION_S "Le résultat de la fonction $?"                             // fait
 
-#define DEFINITION_FONCTION_ARGUMENT_S "Soit $ une fonction qui lorsqu'elle est appelée avec $ exécute:*."  // fait
+#define DEFINITION_FONCTION_ARGUMENT_S "Soit $ la fonction qui lorsqu'elle est appelée avec $ exécute:*."   // fait
 #define EXECUTION_FONCTION_ARGUMENT_S "Exécuter la fonction $ avec les arguments *."                        // fait
 #define APPEL_VALEUR_FONCTION_ARGUMENT_S "Le résultat de la fonction $ avec les arguments *?"               // fait
 
