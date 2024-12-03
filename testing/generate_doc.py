@@ -51,8 +51,10 @@ with open("Documentation.md") as file:
             if code:
                 doctext = doctext[:-1]
                 doctext += "</div>\n"
+                doctext += "  "*(nb_indent+1)+'<div class="copy-container">\n' + "  "*(nb_indent+2)+'<i class="bi bi-copy"></i>\n' + "  "*(nb_indent+1)+'</div>\n' + "  "*nb_indent+'</div>'
             else:
-                doctext += "  "*nb_indent+'<div class="pre">'
+                doctext += "  "*nb_indent + '<div class="pre-container">\n'
+                doctext += "  "*(nb_indent+1)+'<div class="pre">'
             code = not code
         else:
             if code:
