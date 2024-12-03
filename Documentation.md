@@ -616,15 +616,15 @@ Exemple avec des pointeurs
 ```
 (modifie la valeur pointée)
 Soit x L'entier zéro?.
-Soit y Un pointeur vers La variable x?.
+Soit y Un pointeur vers La variable x??.
 Que La valeur pointée par La variable y?? devienne L'entier un?.
 Afficher La variable x?.
 
 (ne modifie pas la valeur pointée)
 Soit a L'entier un?.
-Soit b Un pointeur vers la variable a?.
+Soit b Un pointeur vers La variable a??.
 Soit c La valeur pointée par La variable b??.
 Que La variable c? devienne L'entier deux?.
 Afficher La chaîne de caractères "a = "?, La variable a?. 
-Afficher La chaîne de caractères "c = "?, La variable c?. 
+Afficher La chaîne de caractères "c = "?, La variable c?.
 ```
