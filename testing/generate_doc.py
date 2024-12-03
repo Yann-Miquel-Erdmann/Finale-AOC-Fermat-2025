@@ -12,10 +12,24 @@ documentation = \
       function applyColors(){
         Array.from(document.getElementsByClassName("pre")).forEach((element) => {
           element.innerHTML = colorisation_doc(element.innerHTML);
-          });
-        }
+        });
+      }
 
-        document.addEventListener("DOMContentLoaded", applyColors);
+      document.addEventListener("DOMContentLoaded", () => {
+        Array.from(document.getElementsByClassName("bi-copy")).forEach((element) => {
+        element.addEventListener("mousedown", () => {
+          navigator.clipboard.writeText(element.parentElement.parentElement.firstElementChild.textContent);
+          element.classList.add("bi-check2");
+          element.classList.remove("bi-copy");
+          setTimeout(() => {
+            element.classList.add("bi-copy");
+            element.classList.remove("bi-check2");
+          }, 1000);
+        });
+      });
+      })
+      
+      document.addEventListener("DOMContentLoaded", applyColors);
     </script>
   </head>
   <body>
