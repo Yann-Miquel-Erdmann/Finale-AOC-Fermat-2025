@@ -53,6 +53,7 @@ nb_indent_doc = 4
 nb_indent = 4
 
 in_p = False
+remove_indent = False
 with open("Documentation.md") as file:
     code = False
     for i, line in enumerate(file.readlines()[2:]):
@@ -61,7 +62,8 @@ with open("Documentation.md") as file:
         line = line.replace(">", "&gt;")
         modif = False
         title = False
-        if line == "```\n":
+        if line == "```\n" or line == "  ```\n":
+            remove_indent = line == "  ```\n"
             if code:
                 doctext = doctext[:-1]
                 doctext += "</div>\n"
@@ -72,7 +74,10 @@ with open("Documentation.md") as file:
             code = not code
         else:
             if code:
-                doctext += line
+                if remove_indent:
+                    doctext += line[2:]
+                else:
+                    doctext += line
             if not code:
                 if line[0:2] == "##":
                     id = line[3:].replace(" ", "_").lower().strip()
