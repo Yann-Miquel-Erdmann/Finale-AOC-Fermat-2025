@@ -175,9 +175,9 @@
 #define PARTIE_ENTIERE_S "La partie entière de *?"          // fait + doc
 
 // opérateur booléens
-#define NEGATION_BOOLEENNE_S "La négation booléenne de *?"  // fait + doc
-#define OU_S "On a * ou *?"                                 // fait + doc
-#define ET_S "On a * et *?"                                 // fait + doc
+#define NEGATION_BOOLEENNE_S "La négation de * est vérifiée?"  // fait + doc
+#define OU_S "La disjonction de * et de * est vérifiée?"       // fait + doc
+#define ET_S "La conjonction de * et de * est vérifiée?"       // fait + doc
 
 // comparateurs
 #define EGALITE_S "La valeur de * est égale à la valeur de *?"                                // fait + doc
@@ -188,11 +188,11 @@
 #define STRICT_PLUS_PETIT_S "La valeur de * est strictement plus petite que la valeur de *?"  // fait + doc
 
 // conditions
-#define SI_ALORS_S "Si * alors faire:*."                     // fait + doc
-#define SI_ALORS_SINON_S "Si * alors faire:*sinon faire:*."  // fait + doc
+#define SI_ALORS_S "Si * alors:*."               // fait + doc
+#define SI_ALORS_SINON_S "Si * alors:*sinon:*."  // fait + doc
 
 // boucles
-#define TANT_QUE_S "Tant que * faire:*."                                                  // fait + doc
+#define TANT_QUE_S "Tant que *:*."                                                        // fait + doc
 #define POUR_SANS_PAS_S "Pour $ allant de * jusqu'à * faire:*."                           // fait + doc
 #define POUR_AVEC_PAS_S "Pour $ allant de * jusqu'à * en utilisant un pas de * faire:*."  // fait + doc
 #define QUITTER_BOUCLE_S "Quitter la boucle."                                             // fait + doc

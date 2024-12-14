@@ -263,19 +263,19 @@ Il y a également quelques opérateurs booléens simples:
   _expression_
   
   ```
-  La négation booléenne de {expression}?
+  La négation de {expression} est vérifiée?
   ```
 * La conjonction booléenne :
   _expression_
   
   ```
-  On a {expression} et {expression}?
+  La conjonction de {expression} et de {expression} est vérifiée?
   ```
 * La disjonction booléenne :
   _expression_
   
   ```
-  On a {expression} ou {expression}?
+  La disjonction de {expression} et de {expression} est vérifiée?
   ```
 
 ## Comparateurs et structures conditionnelles
@@ -287,7 +287,7 @@ Pour cela, vous pouvez choisir parmi deux structures conditionnelles :
   _instruction_
   
   ```
-  Si {expression} alors faire:
+  Si {expression} alors:
     {instruction 1}
     {instruction 2}
     ...
@@ -302,12 +302,12 @@ Pour cela, vous pouvez choisir parmi deux structures conditionnelles :
   _instruction_
   
   ```
-  Si {expression} alors faire:
+  Si {expression} alors:
     {instruction 1}
     {instruction 2}
     ...
     {instruction n}
-  sinon faire:
+  sinon:
     {instruction 1}
     {instruction 2}
     ...
@@ -366,7 +366,7 @@ Pour régler ce problème, vous aurez plusieurs boucles à votre disposition :
   _instruction_
   
   ```
-  Tant que {expression} faire:
+  Tant que {expression}:
     {instruction 1}
     {instruction 2}
     ...
@@ -648,9 +648,9 @@ Test pair/ impair
 ```
 (Test pair / impair avec un si)
 Soit x L'entier un?.
-Si La valeur de Le reste de La variable x? par L'entier deux?? est égale à la valeur de L'entier zéro?? alors faire:
+Si La valeur de Le reste de La variable x? par L'entier deux?? est égale à la valeur de L'entier zéro?? alors:
     Afficher La chaîne de caractères "Pair"?.
-sinon faire:
+sinon:
     Afficher La chaîne de caractères "Impair"?.
 .
 ```
@@ -675,9 +675,9 @@ Boucle tant que avec sortie forcée de boucle et assignation variable
 ```
 Soit x L'entier un?.
 (Code illégal mais il fonctionne)
-Tant que Le booléen vrai? faire:
+Tant que Le booléen vrai?:
     Afficher La variable x?.
-    Si La valeur de La variable x? est égale à la valeur de L'entier dix?? alors faire:
+    Si La valeur de La variable x? est égale à la valeur de L'entier dix?? alors:
         Quitter la boucle.
     .
     Que La variable x? devienne La somme de La variable x? et de L'entier un??.
@@ -691,7 +691,7 @@ exemple de la fonction factorielle
 (implémentation de la fonction factorielle de manière récursive
 /!\ La récursion est considérée comme infinie au delà de 10000 appels récursifs)
 Soit factorielle la fonction qui lorsqu'elle est appelée avec n exécute:
-    Si La valeur de La variable n? est plus petite que la valeur de L'entier zéro?? alors faire:
+    Si La valeur de La variable n? est plus petite que la valeur de L'entier zéro?? alors:
         Renvoyer L'entier un?.
     .
     Renvoyer Le produit de La variable n? et de Le résultat de la fonction factorielle avec les arguments La différence de La variable n? et de L'entier un????.
