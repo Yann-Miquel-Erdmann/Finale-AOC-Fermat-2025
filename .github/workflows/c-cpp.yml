@@ -26,5 +26,42 @@ jobs:
     - name: run test suite
       run: 
         make test_suite
+
+    - name: Publish executable
+      uses: actions/upload-artifact@v4
+      with:
+        name: interpreter
+        path: ./build/interpreter
+
+
+
     - name: clean  
       run: make clean
+  
+  # release:
+  #   runs-on: ubuntu-latest
+  #   needs: build
+  #   steps:
+  #     # Checkout the repository
+  #     - name: Checkout code
+  #       uses: actions/checkout@v3
+        
+  #     # Create a tag
+  #     - name: Create a tag
+  #       id: create_tag
+  #       run: |
+  #         # You can customize the version tag format here (e.g., v1.0.0)
+  #         VERSION_TAG="v1.0.${GITHUB_RUN_NUMBER}"
+  #         git tag $VERSION_TAG
+  #         git push origin $VERSION_TAG
+
+  #     # Create a GitHub Release with the tag and attach the artifact
+  #     - name: Create Release
+  #       id: create_release
+  #       uses: softprops/action-gh-release@v1
+  #       with:
+  #         tag_name: ${{ steps.create_tag.outputs.VERSION_TAG }}
+
+  #         files: ./build/interpreter
+  #       env:
+  #         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
