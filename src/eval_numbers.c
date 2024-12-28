@@ -198,7 +198,7 @@ bool eval_number(char* str_num, int len, int* result) {
     char last_separator = ' ';
     int ten_power = 99;  // dernière puissance de dix placée pour savoir si les nombres donnés sont bien dans un bon ordre
     for (int i = 0; i <= len; i++) {
-        if (ten_power == 3 && last_separator != '-'){
+        if (ten_power == 3 && last_separator == ' '){
             free(str);
             return false;
         }
@@ -237,7 +237,7 @@ bool eval_number(char* str_num, int len, int* result) {
                 sign = -1;
             } else if (!strcmp(str, "vingt") && ((last_separator == ' ' && tmp == 0) || (last_separator == '-' && tmp % 100 == 0))) {
                 tmp += 20;
-            } else if (!strcmp(str, "cent") && last_separator == ' ' && tmp == 0) {
+            } else if (!strcmp(str, "cent") && (last_separator == ' ' || last_separator == '-') && tmp == 0) {
                 tmp = 100;
             } else if (!strcmp(str, "cents") && last_separator == '-' && tmp > 1 && tmp < 10) {
                 tmp *= 100;
@@ -250,6 +250,7 @@ bool eval_number(char* str_num, int len, int* result) {
             } else {
                 int result = match_num(str, true);
                 if (result == -1 || last_separator == '*') {
+                    printf("here, %s, '%c'\n", str, last_separator);
                     free(str);
                     return false;
                 } else {
