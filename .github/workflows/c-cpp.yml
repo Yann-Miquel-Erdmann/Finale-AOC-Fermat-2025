@@ -28,7 +28,7 @@ jobs:
         make test_suite
 
     - name: Publish executable
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v4
       with:
         name: interpreter
         path: ./build/interpreter
