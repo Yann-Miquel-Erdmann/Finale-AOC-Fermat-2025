@@ -160,6 +160,9 @@ int elem_liste(char* text) {
     if (!strcmp(text, CONVERT_TO_CHAR_S)) {
         return CONVERT_TO_CHAR;
     }
+    if (!strcmp(text, MOINS_S)){
+        return MOINS;
+    }
     return -1;
 }
 
@@ -994,6 +997,16 @@ void tokenise(phrase_t* phrase, function_t* function, function_list_t* func_list
                 custom_error("Syntaxe invalide, valeur finale pointée prend 1 arguments", phrase, function->env);
             }
             phrase->phraseId = VALEUR_FINALE_POINTEE;
+            tokenise(phrase->args[0], function, func_list, func_call_list, uniqueId, parent_loop, false, NULL);
+            if (inLoopSuivant) {
+                phrase->suivant = inLoopSuivantPointer;
+            }
+            break;
+        case MOINS:
+            if (phrase->innerPhraseLen > 0 || phrase->argsLen != 1) {
+                custom_error("Syntaxe invalide, valeur finale pointée prend 1 arguments", phrase, function->env);
+            }
+            phrase->phraseId = MOINS;
             tokenise(phrase->args[0], function, func_list, func_call_list, uniqueId, parent_loop, false, NULL);
             if (inLoopSuivant) {
                 phrase->suivant = inLoopSuivantPointer;

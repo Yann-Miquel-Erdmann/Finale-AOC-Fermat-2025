@@ -10,4 +10,5 @@ void reste(phrase_t* phrase, environnement_t* env);
 void negation_booleenne(phrase_t* phrase, environnement_t* env);
 void ou_booleen(phrase_t* phrase, environnement_t* env);
 void et_booleen(phrase_t* phrase, environnement_t* env);
+void moins(phrase_t* phrase, environnement_t* env);
 

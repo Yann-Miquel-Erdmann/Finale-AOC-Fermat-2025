@@ -651,7 +651,12 @@ void interpreter(function_t* function, function_list_t* functions, val_t* result
 
                 phraseActuelle = phraseActuelle->suivant;
                 break;
+            case MOINS:
+                moins(phraseActuelle, env);
 
+                phraseActuelle = phraseActuelle->suivant;
+                break;
+                
             case NO_ID:
                 custom_error("Erreur d'interprétation", phraseActuelle, env);
                 break;

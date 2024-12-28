@@ -74,6 +74,7 @@
 #define QUOTIENT_ENTIER 19
 #define RESTE 20
 #define PARTIE_ENTIERE 52
+#define MOINS 64
 
 // opérateurs booléens
 #define NEGATION_BOOLEENNE 21
@@ -127,7 +128,7 @@
 #define EXECUTION_FONCTION_ARGUMENT 39
 #define APPEL_VALEUR_FONCTION_ARGUMENT 40
 
-// current next element: 64
+// current next element: 65
 
 #define DEFAULT_SEPARATOR "?,. "
 #define STRING_SEPARATOR "\""
@@ -173,6 +174,7 @@
 #define QUOTIENT_ENTIER_S "Le quotient entier de * par *?"  // fait + doc
 #define RESTE_S "Le reste de * par *?"                      // fait + doc
 #define PARTIE_ENTIERE_S "La partie entière de *?"          // fait + doc
+#define MOINS_S "Moins *?"
 
 // opérateur booléens
 #define NEGATION_BOOLEENNE_S "La négation de * est vérifiée?"  // fait + doc
@@ -214,7 +216,7 @@
 #define CONVERT_TO_CHAR_S "La conversion en chaîne de caractères de *?"  // fait + doc
 
 // aléatoire
-#define DEFINIR_SEED_S "Mettre la seed aléatoire à *."  // fait + doc
+#define DEFINIR_SEED_S "Mettre la graine aléatoire à *."  // fait + doc
 #define NOMBRE_ALEATOIRE_S "Un nombre aléatoire?"       // fait + doc
 
 // fonctions

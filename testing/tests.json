@@ -319,5 +319,12 @@
         "output": "int\nfloat\nbool\nchaîne de caractères\npointeur\nrien\nliste\n",
         "input": "",
         "errors": true
+    },
+    {
+        "name": "moins",
+        "code": "Afficher Moins L'entier un??.\nAfficher Moins Moins L'entier un???.\n\nAfficher Moins Le flottant douze virgule trois??.\nAfficher Moins Moins Le flottant douze virgule trois???.\n\nSoit x L'entier zéro?.\nAfficher La valeur de La variable x? est égale à la valeur de Moins La variable x???.\n",
+        "output": "moins un\nun\nmoins douze virgule trois millions deux\ndouze virgule trois millions deux\nvrai\n",
+        "input": "",
+        "errors": true
     }
 ]

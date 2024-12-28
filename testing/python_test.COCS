@@ -1,5 +1,8 @@
-Soit f une fonction qui lorsqu'elle est appelée exécute:
-    Renvoyer Un pointeur vers L'entier un??.
-.
+Afficher Moins L'entier un??.
+Afficher Moins Moins L'entier un???.
 
-Afficher La valeur pointée par Le résultat de la fonction f??.
+Afficher Moins Le flottant douze virgule trois??.
+Afficher Moins Moins Le flottant douze virgule trois???.
+
+Soit x L'entier zéro?.
+Afficher La valeur de La variable x? est égale à la valeur de Moins La variable x???.
