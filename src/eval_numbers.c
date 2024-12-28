@@ -278,44 +278,49 @@ bool eval_number(char* str_num, int len, int* result) {
             }
 
         } else if (str_num[i] == '-') {
-            int result = match_num(str, false);
-            if (result != -1) {
-                if (result == 0) {
-                    if (i != len || tmp != 0) {
-                        free(str);
-                        return false;
-                    }
-                } else if (result == 100 && tmp < 100) {
-                    if (tmp == 0) {
-                        tmp = 1;
-                    }
-                    tmp *= 100;
-                } else if (result == 20 && tmp % 100 == 4 && last_separator == '-') {
-                    tmp = tmp - tmp % 100 + 80;
-                } else if ((result < 10 && tmp % 10 == 0) || (result < 100 && tmp % 100 == 0) || tmp == 0) {
-                    tmp += result;
-                } else if (result > 9 && result < 20 && (tmp % 100 == 60 || tmp % 100 == 80)) {
-                    tmp += result;
-                } else {
-                    free(str);
-                    return false;
-                }
+            if (!strcmp(str, "un") && last_separator == '*' && tmp % 10 == 0 && tmp / 10 % 10 > 1 && tmp / 10 % 10 < 7) {
+                tmp++;
+                last_separator = '-';
             } else {
-                if (!strcmp(str, "et") && last_separator == '-' && tmp % 10 == 0 && tmp / 10 % 10 > 1 && tmp / 10 % 10 < 7) {
-                    last_separator = '*';
-                } else if (!strcmp(str, "mille") && ten_power > 3) {
-                    if (tmp == 0) {
-                        tmp = 1;
-                    }else if (last_separator != '-'){
+                int result = match_num(str, false);
+                if (result != -1) {
+                    if (result == 0) {
+                        if (i != len || tmp != 0) {
+                            free(str);
+                            return false;
+                        }
+                    } else if (result == 100 && tmp < 100) {
+                        if (tmp == 0) {
+                            tmp = 1;
+                        }
+                        tmp *= 100;
+                    } else if (result == 20 && tmp % 100 == 4 && last_separator == '-') {
+                        tmp = tmp - tmp % 100 + 80;
+                    } else if ((result < 10 && tmp % 10 == 0) || (result < 100 && tmp % 100 == 0) || tmp == 0) {
+                        tmp += result;
+                    } else if (result > 9 && result < 20 && (tmp % 100 == 60 || tmp % 100 == 80)) {
+                        tmp += result;
+                    } else {
                         free(str);
                         return false;
                     }
-                    n += 1000 * tmp;
-                    tmp = 0;
-                    ten_power = 3;
                 } else {
-                    free(str);
-                    return false;
+                    if (!strcmp(str, "et") && last_separator == '-' && tmp % 10 == 0 && tmp / 10 % 10 > 1 && tmp / 10 % 10 < 7) {
+                        last_separator = '*';
+                    } else if (!strcmp(str, "mille") && ten_power > 3) {
+                        if (tmp == 0) {
+                            tmp = 1;
+                        }else if (last_separator != '-'){
+                            free(str);
+                            return false;
+                        }
+                        n += 1000 * tmp;
+                        tmp = 0;
+                        ten_power = 3;
+                    } else {
+                        free(str);
+                        return false;
+                    }
                 }
             }
             str_len = 2;
