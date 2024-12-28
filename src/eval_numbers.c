@@ -198,6 +198,10 @@ bool eval_number(char* str_num, int len, int* result) {
     char last_separator = ' ';
     int ten_power = 99;  // dernière puissance de dix placée pour savoir si les nombres donnés sont bien dans un bon ordre
     for (int i = 0; i <= len; i++) {
+        if (ten_power == 3 && last_separator != '-'){
+            free(str);
+            return false;
+        }
         if (str_num[i] == ' ' || i == len) {  // espace ou fin du nombre
             if (!strcmp(str, "zéro")) {
                 if (i != len || tmp != 0) {
@@ -302,9 +306,13 @@ bool eval_number(char* str_num, int len, int* result) {
                 } else if (!strcmp(str, "mille") && ten_power > 3) {
                     if (tmp == 0) {
                         tmp = 1;
+                    }else if (last_separator != '-'){
+                        free(str);
+                        return false;
                     }
                     n += 1000 * tmp;
                     tmp = 0;
+                    ten_power = 3;
                 } else {
                     free(str);
                     return false;
