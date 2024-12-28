@@ -333,7 +333,7 @@ bool eval_number(char* str_num, int len, int* result) {
     return true;
 }
 
-char* str_from_chuck(int n) {
+char* str_from_chuck(int n, bool last) {
     int text_size = 1;
     char* text = safe_alloc(NULL, text_size * sizeof(char));
     text[0] = '\0';
@@ -377,7 +377,7 @@ char* str_from_chuck(int n) {
             break;
     }
     if (hundreds != 0) {
-        if (tens == 0 && units == 0 && hundreds != 1) {
+        if (tens == 0 && units == 0 && hundreds != 1 && last) {
             text = add_str(text, &text_size, "-cents");
         } else {
             if (strcmp(text, "")) {
@@ -421,7 +421,7 @@ char* str_from_chuck(int n) {
             break;
         case 8:
             text = add_str(text, &text_size, "quatre-vingt");
-            if (units == 0) {
+            if (units == 0 && last) {
                 text = add_str(text, &text_size, "s");
             }
             break;
@@ -531,7 +531,7 @@ char* str_from_int(int n) {
     int e_9 = n % 1000;
 
     if (e_9 != 0) {
-        char* billions = str_from_chuck(e_9);
+        char* billions = str_from_chuck(e_9, false);
         text = add_str(text, &text_size, billions);
         free(billions);
         text = add_str(text, &text_size, " milliard");
@@ -543,7 +543,7 @@ char* str_from_int(int n) {
         if (e_9 != 0) {
             text = add_str(text, &text_size, " ");
         }
-        char* millions = str_from_chuck(e_6);
+        char* millions = str_from_chuck(e_6, false);
         text = add_str(text, &text_size, millions);
         free(millions);
         text = add_str(text, &text_size, " million");
@@ -558,7 +558,7 @@ char* str_from_int(int n) {
         if (e_3 == 1) {
             text = add_str(text, &text_size, "mille");
         } else {
-            char* thousands = str_from_chuck(e_3);
+            char* thousands = str_from_chuck(e_3, false);
             text = add_str(text, &text_size, thousands);
             free(thousands);
             text = add_str(text, &text_size, "-mille");
@@ -570,7 +570,7 @@ char* str_from_int(int n) {
     if (e_3 != 0 && e_0 != 0){
         text = add_str(text, &text_size, "-");
     }
-    char* hundreds = str_from_chuck(e_0);
+    char* hundreds = str_from_chuck(e_0, true);
     text = add_str(text, &text_size, hundreds);
     free(hundreds);
 
