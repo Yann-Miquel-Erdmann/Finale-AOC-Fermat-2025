@@ -26,5 +26,14 @@ jobs:
     - name: run test suite
       run: 
         make test_suite
+
+    - name: Publish executable
+      uses: actions/upload-artifact@v2
+      with:
+        name: interpreter
+        path: ./build/interpreter
+
+
+
     - name: clean  
       run: make clean
