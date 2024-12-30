@@ -250,7 +250,6 @@ bool eval_number(char* str_num, int len, int* result) {
             } else {
                 int result = match_num(str, true);
                 if (result == -1 || last_separator == '*') {
-                    printf("here, %s, '%c'\n", str, last_separator);
                     free(str);
                     return false;
                 } else {
@@ -281,6 +280,9 @@ bool eval_number(char* str_num, int len, int* result) {
         } else if (str_num[i] == '-') {
             if (!strcmp(str, "un") && last_separator == '*' && tmp % 10 == 0 && tmp / 10 % 10 > 1 && tmp / 10 % 10 < 7) {
                 tmp++;
+                last_separator = '-';
+            } else if (!strcmp(str, "onze") && last_separator == '*' && tmp % 10 == 0 && tmp / 10 % 10 > 1 && tmp / 10 % 10 < 7) {
+                tmp+= 11;
                 last_separator = '-';
             } else {
                 int result = match_num(str, false);
