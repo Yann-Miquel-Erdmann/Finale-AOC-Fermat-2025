@@ -327,6 +327,10 @@ bool is_equal(val_t* v1, val_t* v2, phrase_t* p, environnement_t* env) {
         case UNDEFINED << 4 | UNDEFINED:
             return true;
             break;
+        
+        case POINTEUR << 4 | POINTEUR:
+            return v1->value.ptr == v2->value.ptr;
+            break;
 
         default: {
             char* error = safe_alloc(NULL, 128 * sizeof(char));

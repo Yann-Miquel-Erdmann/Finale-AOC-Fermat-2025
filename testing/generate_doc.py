@@ -3,6 +3,7 @@ documentation = \
 """<!DOCTYPE html>
 <html style="--theme-color-1: rgb(92, 207, 230); --theme-color-2: rgb(255, 209, 115); --theme-color-3: rgb(115, 208, 255); --theme-color-4: rgb(213, 255, 128); --theme-color-5: rgb(149, 230, 203); --theme-color-6: rgb(242, 135, 121);">
   <head>
+    <meta charset="UTF-8" />
     <link rel="stylesheet" href="static/css/documentation.css">
     <link rel="stylesheet" href="static/css/colors.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">

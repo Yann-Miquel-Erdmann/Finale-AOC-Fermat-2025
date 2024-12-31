@@ -203,7 +203,7 @@
 #define AFFICHER_EXPR_S "Afficher *."                                   // fait + doc
 #define AFFICHER_EXPR_NO_RETURN_S "Afficher * sans retour à la ligne."  // fait + doc
 #define TYPE_EXPR_S "Le type de *?"                                     // fait + doc
-#define TAILLE_S "La taille de *?"                                      // fait + doc
+#define TAILLE_S "La longueur de *?"                                      // fait + doc
 #define INPUT_INT_S "Une entrée entière?"                               // fait + doc
 #define INPUT_FLOAT_S "Une entrée flottante?"                           // fait + doc
 #define INPUT_BOOL_S "Une entrée booléenne?"                            // fait + doc
