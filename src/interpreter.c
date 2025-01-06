@@ -303,8 +303,8 @@ void interpreter(function_t* function, function_list_t* functions, val_t* result
                 }
                 modification(env->phraseValeurs[phraseActuelle->args[0]->uniqueId]->value.liste, env->phraseValeurs[phraseActuelle->args[1]->uniqueId]->value.entier, env->phraseValeurs[phraseActuelle->args[2]->uniqueId], phraseActuelle, env);
 
-                if (env->phraseValeurs[phraseActuelle->args[0]->uniqueId]->references > 1) {  // s'assure qu'il n'y ait pas de boucle de pointeurs
-                    if (boucle_pointeur(env->phraseValeurs[phraseActuelle->args[0]->uniqueId], phraseActuelle, env)) {
+                if (env->phraseValeurs[phraseActuelle->args[0]->uniqueId]->value.liste->valeurs[env->phraseValeurs[phraseActuelle->args[1]->uniqueId]->value.entier]->references) {  // s'assure qu'il n'y ait pas de boucle de pointeurs
+                    if (boucle_pointeur(env->phraseValeurs[phraseActuelle->args[0]->uniqueId]->value.liste->valeurs [env->phraseValeurs [phraseActuelle->args [1]->uniqueId]->value.entier], phraseActuelle, env)) {
                         custom_error("Il y a une boucle de pointeurs.", phraseActuelle, env);
                     }
                 }
@@ -318,8 +318,8 @@ void interpreter(function_t* function, function_list_t* functions, val_t* result
                 }
                 ajout(env->phraseValeurs[phraseActuelle->args[0]->uniqueId]->value.liste, env->phraseValeurs[phraseActuelle->args[1]->uniqueId], phraseActuelle, env);
 
-                if (env->phraseValeurs[phraseActuelle->args[0]->uniqueId]->references > 1) {  // s'assure qu'il n'y ait pas de boucle de pointeurs
-                    if (boucle_pointeur(env->phraseValeurs[phraseActuelle->args[0]->uniqueId], phraseActuelle, env)) {
+                if (env->phraseValeurs[phraseActuelle->args[0]->uniqueId]->value.liste->valeurs[env->phraseValeurs[phraseActuelle->args[0]->uniqueId]->value.liste->valeursLen-1]->references) {  // s'assure qu'il n'y ait pas de boucle de pointeurs
+                    if (boucle_pointeur(env->phraseValeurs[phraseActuelle->args[0]->uniqueId]->value.liste->valeurs[env->phraseValeurs[phraseActuelle->args[0]->uniqueId]->value.liste->valeursLen-1], phraseActuelle, env)) {
                         custom_error("Il y a une boucle de pointeurs.", phraseActuelle, env);
                     }
                 }
@@ -348,8 +348,8 @@ void interpreter(function_t* function, function_list_t* functions, val_t* result
                 }
                 inserer(env->phraseValeurs[phraseActuelle->args[1]->uniqueId]->value.liste, env->phraseValeurs[phraseActuelle->args[2]->uniqueId]->value.entier, env->phraseValeurs[phraseActuelle->args[0]->uniqueId], phraseActuelle, env);
 
-                if (env->phraseValeurs[phraseActuelle->args[0]->uniqueId]->references > 1) {  // s'assure qu'il n'y ait pas de boucle de pointeurs
-                    if (boucle_pointeur(env->phraseValeurs[phraseActuelle->args[0]->uniqueId], phraseActuelle, env)) {
+                if (env->phraseValeurs[phraseActuelle->args[1]->uniqueId]->value.liste->valeurs[env->phraseValeurs[phraseActuelle->args[2]->uniqueId]->value.entier]->references) {  // s'assure qu'il n'y ait pas de boucle de pointeurs
+                    if (boucle_pointeur(env->phraseValeurs[phraseActuelle->args[1]->uniqueId]->value.liste->valeurs[env->phraseValeurs[phraseActuelle->args[2]->uniqueId]->value.entier], phraseActuelle, env)) {
                         custom_error("Il y a une boucle de pointeurs.", phraseActuelle, env);
                     }
                 }

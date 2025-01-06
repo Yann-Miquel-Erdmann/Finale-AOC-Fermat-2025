@@ -1,0 +1,56 @@
+Soit max la fonction qui lorsqu'elle est appelée avec ptr exécute:
+    Soit maxi L'entier zéro?.
+    Pour i allant de L'entier zéro? jusqu'à La longueur de La valeur pointée par La variable ptr??? faire:
+        Si La valeur de La variable maxi? est plus petite que la valeur de L'élément de La valeur pointée par La variable ptr?? à l'indice La variable i??? alors:
+            Que La variable maxi? devienne L'élément de La valeur pointée par La variable ptr?? à l'indice La variable i??.
+        .
+    .
+    Renvoyer La variable maxi?.
+.
+
+Soit n Une entrée entière?.
+Soit l1 La liste vide?.
+Soit l2 La liste vide?.
+
+Pour i allant de L'entier zéro? jusqu'à La variable n? faire:
+    Ajouter à La liste l1? Une entrée entière?.
+.
+
+Pour i allant de L'entier zéro? jusqu'à La variable n? faire:
+    Ajouter à La liste l2? Une entrée entière?.
+.
+
+Soit max1 Le résultat de la fonction max avec les arguments Un pointeur vers La liste l1???.
+Soit max2 Le résultat de la fonction max avec les arguments Un pointeur vers La liste l2???.
+
+Soit max.
+
+Si La valeur de La variable max1? est plus petite que la valeur de La variable max2?? alors:
+    Que La variable max? devienne La variable max2?.
+sinon:
+    Que La variable max? devienne La variable max1?.
+.
+
+Soit val1 La liste vide?.
+Soit val2 La liste vide?.
+
+Pour i allant de L'entier zéro? jusqu'à La somme de La variable max? et de L'entier un?? faire:
+    Ajouter à La liste val1? L'entier zéro?.
+    Ajouter à La liste val2? L'entier zéro?.
+.
+
+Pour i allant de L'entier zéro? jusqu'à La variable n? faire:
+    Soit n1 L'élément de La liste l1? à l'indice La variable i??.
+    Soit n2 L'élément de La liste l2? à l'indice La variable i??.
+    Remplacer l'élément de La liste val1? à l'indice La variable n1? par La somme de L'élément de La liste val1? à l'indice La variable n1?? et de L'entier un??.
+    Remplacer l'élément de La liste val2? à l'indice La variable n2? par La somme de L'élément de La liste val2? à l'indice La variable n2?? et de L'entier un??.
+.
+
+
+Soit sum L'entier zéro?.
+
+Pour i allant de L'entier zéro? jusqu'à La somme de La variable max? et de L'entier un?? faire:
+   Que La variable sum? devienne La somme de La variable sum? et de Le produit de La variable i? et de Le produit de L'élément de La liste val1? à l'indice La variable i?? et de L'élément de La liste val2? à l'indice La variable i?????.
+.
+
+Afficher La variable sum?.

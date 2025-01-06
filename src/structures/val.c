@@ -79,15 +79,6 @@ void __attribute__((hot)) copy_val(val_t* dest, val_t* src, bool cp_chaine, bool
             }
             break;
 
-            //
-            //     if (cp_liste) {
-            //         dest->value.liste = copy_liste(src->value.liste);
-            //         dest->type = LISTE;
-            //     } else {
-            //         dest->value.liste = src->value.liste;
-            //     }
-            //     break;
-
         case CHAINE_DE_CHAR:
             if (cp_chaine) {
                 dest->value.chaine = copy_chaine(src->value.chaine);
