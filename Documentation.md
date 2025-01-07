@@ -207,6 +207,13 @@ Plusieurs opérations sont possibles sur les listes :
   Remplacer l'élément de {expression: liste} à l'indice {expression: entier} par {expression}.
   ```
 
+On peut également récupérer la longueur d'une liste ou d'une chaîne de caractère :
+_expression_
+
+```
+La longueur de {expression : chaîne de caractère/liste}?
+```
+
 ## Les opérateurs
 
 Les opérateurs les plus courants sont disponibles dans ce langage, et la plupart d'entres-eux ne fonctionnent que sur les types numériques de base i.e. les entiers, les flottants et les booléens.
@@ -420,13 +427,6 @@ _instruction_
 
 ```
 Afficher {expression1}, {expression2}, ... {expression n} sans retour à la ligne.
-```
-
-On peut également récupérer la taille d'une liste ou d'une chaîne de caractère :
-_expression_
-
-```
-La taille de {expression : chaîne de caractère/liste}?
 ```
 
 Pour récupérer le type de d'une expression sous forme de chaîne de caractère :
