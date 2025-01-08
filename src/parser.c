@@ -233,13 +233,8 @@ phrase_t* parse_file(FILE* f) {
         custom_error("Une parenthèse n'a pas été fermée", NULL, NULL);
     }
     if (mainPhrase != phraseActuelle) {
-        char* err_mess = safe_alloc(NULL, (strlen(phraseActuelle->text) + 1) * sizeof(char));
-        for (int i = 0; i < (int)strlen(phraseActuelle->text); i++) {
-            strcat(err_mess, "~");
-        }
-        
-        char* error = safe_alloc(NULL, 256 * sizeof(char));
-        sprintf(error, "Erreur de syntaxe à la ligne %d : \"%s\" \n\t*\t Il manque un point ici :  %s^", phraseActuelle->line_number, phraseActuelle->text, err_mess);
+        char* error = safe_alloc(NULL, (64+strlen(phraseActuelle->text)) * sizeof(char));
+        sprintf(error, "Erreur de syntaxe à la ligne %d : \"%s\" \nIl manque un point à la fin de la ligne.", phraseActuelle->line_number, phraseActuelle->text);
         
         custom_error(error, NULL, NULL);
     }
