@@ -2,7 +2,7 @@
 #include "../../safe_alloc.h"
 
 bool test_expr_entier(phrase_t* phrase, environnement_t* env) {
-    if (phrase->phraseId != -1) {
+    if (phrase->phraseId != NO_ID) {
         return false;
     }
 

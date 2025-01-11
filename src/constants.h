@@ -1,3 +1,6 @@
+#ifndef CONSTANTS_H
+#define CONSTANTS_H
+
 // constantes structures phrase_t
 #define DEFAULT_PHRASE_TEXT_SIZE 128
 #define DEFAULT_PHRASE_ARGS 10
@@ -17,14 +20,15 @@
 #define DEFAULT_FUNCTION_LIST_SIZE 64
 
 // val_t type
-#define UNDEFINED 6
-#define INT 1
-#define FLOAT 2
-#define BOOL 3
-#define LISTE 4
-#define CHAINE_DE_CHAR 5
-// type pour les pointeurs
-#define POINTEUR 7
+typedef enum valType_e {
+    UNDEFINED,
+    INT,
+    FLOAT,
+    BOOL,
+    LISTE,
+    CHAINE_DE_CHAR,
+    POINTEUR
+} valType;
 
 // constantes pour l'interpréteur
 #define MAX_RECUSION_DEPTH 10000
@@ -33,102 +37,101 @@
 #define DEFAULT_RES_SIZE 10
 #define DEFAULT_CURR_SIZE 20
 
-#define NO_ID -1
-#define MAIN_PHRASE 0
-
-// expressions
-#define EXPR_ENTIER 1
-#define EXPR_FLOTTANT 2
-#define EXPR_BOOLEEN 3
-#define EXPR_CHAINE 4
-#define EXPR_RIEN 46
-
-// structures de données
-//  * variable
-#define DEFINITION_VARIABLE_AVEC_INIT 5
-#define DEFINITION_VARIABLE_SANS_INIT 6
-#define ACCESSION_VARIABLE 7
-#define MODIFICATION_VARIABLE 8
-
-//  * pointeurs
-#define POINTEUR_VERS_VALEUR 53
-#define VALEUR_POINTEE 57
-#define VALEUR_FINALE_POINTEE 58
-
-//  * liste
-#define EXPR_LISTE_VIDE 9
-#define ACCESSION_LISTE 10
-#define MODIFICATION_LISTE 11
-#define AJOUT_LISTE 12
-#define SUPPRESSION_LISTE 13
-#define TAILLE 14
-#define INSERTION_LISTE 41
-#define EXPR_LISTE 42
-#define EXPR_LISTE_ELEM 47
-
-// opérateurs
-#define SOMME 15
-#define DIFFERENCE 16
-#define PRODUIT 17
-#define QUOTIENT 18
-#define QUOTIENT_ENTIER 19
-#define RESTE 20
-#define PARTIE_ENTIERE 52
-#define MOINS 64
-
-// opérateurs booléens
-#define NEGATION_BOOLEENNE 21
-#define OU 44
-#define ET 45
-
-// comparateurs
-
-#define EGALITE 22
-#define INEGALITE 48
-#define PLUS_GRAND 23
-#define PLUS_PETIT 24
-#define STRICT_PLUS_GRAND 25
-#define STRICT_PLUS_PETIT 26
-
-// conditions
-#define SI_ALORS 27
-#define SI_ALORS_SINON 28
-
-// boucles
-#define TANT_QUE 29
-#define POUR_SANS_PAS 30
-#define POUR_AVEC_PAS 31
-#define QUITTER_BOUCLE 49
-
-// interactions console
-#define AFFICHER_EXPR 32
-#define AFFICHER_EXPR_NO_RETURN 33
-#define TYPE_EXPR 43
-#define INPUT_INT 54
-#define INPUT_FLOAT 55
-#define INPUT_BOOL 56
-#define INPUT 59
-
-// conversions de types
-#define CONVERT_TO_INT 60
-#define CONVERT_TO_FLOAT 61
-#define CONVERT_TO_BOOL 62
-#define CONVERT_TO_CHAR 63
-
-// aléatoire
-#define DEFINIR_SEED 50
-#define NOMBRE_ALEATOIRE 51
-
-// fonctions
-#define DEFINITION_FONCTION 34
-#define EXECUTION_FONCTION 35
-#define RENVOI_FONCTION 36
-#define APPEL_VALEUR_FONCTION 37
-#define DEFINITION_FONCTION_ARGUMENT 38
-#define EXECUTION_FONCTION_ARGUMENT 39
-#define APPEL_VALEUR_FONCTION_ARGUMENT 40
-
-// current next element: 65
+typedef enum phraseType_e {
+    NO_ID,
+    MAIN_PHRASE,
+    
+    // expressions
+    EXPR_ENTIER,
+    EXPR_FLOTTANT,
+    EXPR_BOOLEEN,
+    EXPR_CHAINE,
+    EXPR_RIEN,
+    
+    // structures de données
+    //  * variable
+    DEFINITION_VARIABLE_AVEC_INIT,
+    DEFINITION_VARIABLE_SANS_INIT,
+    ACCESSION_VARIABLE,
+    MODIFICATION_VARIABLE,
+    
+    //  * pointeurs
+    POINTEUR_VERS_VALEUR,
+    VALEUR_POINTEE,
+    VALEUR_FINALE_POINTEE,
+    
+    //  * liste
+    EXPR_LISTE_VIDE,
+    ACCESSION_LISTE,
+    MODIFICATION_LISTE,
+    AJOUT_LISTE,
+    SUPPRESSION_LISTE,
+    TAILLE,
+    INSERTION_LISTE,
+    EXPR_LISTE,
+    EXPR_LISTE_ELEM,
+    
+    // opérateurs
+    SOMME,
+    DIFFERENCE,
+    PRODUIT,
+    QUOTIENT,
+    QUOTIENT_ENTIER,
+    RESTE,
+    PARTIE_ENTIERE,
+    MOINS,
+    
+    // opérateurs booléens
+    NEGATION_BOOLEENNE,
+    ET,
+    OU,
+    
+    // comparateurs
+    EGALITE,
+    INEGALITE,
+    PLUS_GRAND,
+    PLUS_PETIT,
+    STRICT_PLUS_GRAND,
+    STRICT_PLUS_PETIT,
+    
+    // conditions
+    SI_ALORS,
+    SI_ALORS_SINON,
+    
+    // boucles
+    TANT_QUE,
+    POUR_SANS_PAS,
+    POUR_AVEC_PAS,
+    QUITTER_BOUCLE,
+    
+    // interactions console
+    AFFICHER_EXPR,
+    AFFICHER_EXPR_NO_RETURN,
+    TYPE_EXPR,
+    INPUT_INT,
+    INPUT_FLOAT,
+    INPUT_BOOL,
+    INPUT,
+    
+    // conversions de types
+    CONVERT_TO_INT,
+    CONVERT_TO_FLOAT,
+    CONVERT_TO_BOOL,
+    CONVERT_TO_CHAR,
+    
+    // aléatoire
+    DEFINIR_SEED,
+    NOMBRE_ALEATOIRE,
+    
+    // fonctions
+    DEFINITION_FONCTION,
+    EXECUTION_FONCTION,
+    RENVOI_FONCTION,
+    APPEL_VALEUR_FONCTION,
+    DEFINITION_FONCTION_ARGUMENT,
+    EXECUTION_FONCTION_ARGUMENT,
+    APPEL_VALEUR_FONCTION_ARGUMENT
+} phraseType;
 
 #define DEFAULT_SEPARATOR "?,. "
 #define STRING_SEPARATOR "\""
@@ -238,3 +241,5 @@
 #define __result_use_check __attribute__((warn_unused_result))
 #define __alloc_size(m) __attribute__((alloc_size(m)))
 #endif
+
+#endif /* CONSTANTS_H */

@@ -67,7 +67,7 @@ void interpreter(function_t* function, function_list_t* functions, val_t* result
                 new_func->ast = phraseActuelle->function->ast;
                 new_func->function_arg_count = phraseActuelle->function->function_arg_count;
                 new_func->env = copy_environnement(phraseActuelle->function->env);
-                new_func->ast->phraseId = 0;
+                new_func->ast->phraseId = MAIN_PHRASE;
 
                 if (phraseActuelle->phraseId == APPEL_VALEUR_FONCTION_ARGUMENT || phraseActuelle->phraseId == EXECUTION_FONCTION_ARGUMENT) {
                     if (phraseActuelle->argsLen != new_func->function_arg_count) {

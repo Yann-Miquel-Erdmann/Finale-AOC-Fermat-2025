@@ -2,7 +2,7 @@
 #include "../expressions.h"
 
 bool test_expr_chaine(phrase_t* phrase, environnement_t* env) {
-    if (phrase->phraseId != -1) {
+    if (phrase->phraseId != NO_ID) {
         return false;
     }
     int len = 0;

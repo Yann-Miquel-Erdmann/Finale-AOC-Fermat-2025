@@ -1,7 +1,7 @@
 #include "../expressions.h"
 
 bool test_expr_func_call(phrase_t* phrase, function_list_t* func_list, environnement_t* env) {
-    if (phrase->phraseId != -1) {
+    if (phrase->phraseId != NO_ID) {
         return false;
     }
 

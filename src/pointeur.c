@@ -66,6 +66,8 @@ void reset_pointeur_graph(val_t* v) {
         case POINTEUR:
             reset_pointeur_graph(v->value.ptr);
             break;
+        default:
+            break;
     }
 }
 

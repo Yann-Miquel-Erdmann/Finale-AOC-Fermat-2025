@@ -163,11 +163,11 @@ int elem_liste(char* text) {
     if (!strcmp(text, MOINS_S)){
         return MOINS;
     }
-    return -1;
+    return NO_ID;
 }
 
 void tokenise(phrase_t* phrase, function_t* function, function_list_t* func_list, function_list_t* func_call_list, int* uniqueId, phrase_t* parent_loop, bool inLoopSuivant, phrase_t* inLoopSuivantPointer) {
-    if (phrase->phraseId != -1) {
+    if (phrase->phraseId != NO_ID) {
         return;
     }
 
@@ -1012,7 +1012,7 @@ void tokenise(phrase_t* phrase, function_t* function, function_list_t* func_list
                 phrase->suivant = inLoopSuivantPointer;
             }
             break;
-        default: {
+        case NO_ID: {
             if (test_expr_entier(phrase, function->env)) {
             } else if (test_expr_flottant(phrase, function->env)) {
             } else if (test_expr_booleen(phrase, function->env)) {
