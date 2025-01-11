@@ -11,7 +11,7 @@ int puiss10(int a) {
 }
 
 bool test_expr_flottant(phrase_t* phrase, environnement_t* env) {
-    if ((int)strlen(phrase->text) < 13 || phrase->phraseId != -1) {
+    if ((int)strlen(phrase->text) < 13 || phrase->phraseId != NO_ID) {
         return false;
     }
 

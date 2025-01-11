@@ -1,7 +1,7 @@
 #include "../expressions.h"
 
 bool test_expr_access_var(phrase_t* phrase, function_t* function) {
-    if (phrase->phraseId != -1) {
+    if (phrase->phraseId != NO_ID) {
         return false;
     }
 

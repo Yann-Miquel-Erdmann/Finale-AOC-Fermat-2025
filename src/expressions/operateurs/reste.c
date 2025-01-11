@@ -21,9 +21,8 @@ void reste(phrase_t* phrase, environnement_t* env) {
             
             break;
 
-        // default:
-        //     custom_error("Type non géré reste", phrase, env);
-        //     break;
+         default:
+             break;
     }
 
     switch (env->phraseValeurs[phrase->args[0]->uniqueId]->type << 4 | env->phraseValeurs[phrase->args[1]->uniqueId]->type) {

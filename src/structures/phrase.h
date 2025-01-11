@@ -44,7 +44,7 @@ typedef struct phrase {
 
     // variables et fonction appelées dans la phrase actuelle (ne peut y en avoir qu'un par expression)
     function_t* function;
-    int variableId;  // indice de la variable associée dans l'environnement
+    phraseType variableId;  // indice de la variable associée dans l'environnement
 
     bool constant_removed;
     bool constant;

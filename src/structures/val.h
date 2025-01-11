@@ -3,13 +3,14 @@
 #include <stdbool.h>
 
 #include "chaine_de_char.h"
+#include "../constants.h"
 
 typedef struct environnement environnement_t;
 typedef struct liste liste_t;
 typedef struct phrase phrase_t;
 
 typedef struct val {
-    char type;
+    valType type;
     union Value{
         int entier;
         float flottant;

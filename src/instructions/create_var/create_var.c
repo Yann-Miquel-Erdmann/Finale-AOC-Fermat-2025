@@ -1,6 +1,6 @@
 #include "../instructions.h"
 bool test_inst_create_var(phrase_t* phrase, function_t* function) {
-    if (phrase->phraseId != -1) {
+    if (phrase->phraseId != NO_ID) {
         return false;
     }
 
