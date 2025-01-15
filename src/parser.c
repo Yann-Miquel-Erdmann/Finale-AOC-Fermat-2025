@@ -37,6 +37,21 @@ phrase_t* parse_file(FILE* f) {
     char prec_c = '\0';
     bool escape = false;
     while (fscanf(f, "%c", &c) != EOF) {
+        if (!in_string) {  // we don’t want to alter strings
+            if (c == '\342'){  // support the ’ character
+                char c1;
+                char c2;
+                fscanf(f, "%c", &c1);
+                fscanf(f, "%c", &c2);
+                if (c1 == '\200' && c2 == '\231'){
+                    c = '\'';
+                } else {
+                    char* errorphrase = safe_alloc(NULL, 100*sizeof(char));
+                    sprintf(errorphrase, "\\%c\\%c\\%c n'est pas un caractère valide", c, c1, c2);
+                    custom_error(errorphrase, phraseActuelle, NULL);
+                }
+            }
+        }
         if (in_string) {
             if (c == '"' && !escape) {
                 in_string = !in_string;
