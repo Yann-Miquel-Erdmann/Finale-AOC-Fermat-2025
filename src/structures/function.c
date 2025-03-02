@@ -74,10 +74,12 @@ void free_function_list(function_list_t* func_list) {
 }
 
 function_t* getFunction(function_list_t* func_list, char* nom) {
+    int last_occ = -1;
     for (int i = 0; i < func_list->function_list_len; i++) {
         if (strcmp(func_list->function_list[i]->nom, nom) == 0) {
-            return func_list->function_list[i];
+            last_occ = i;
         }
     }
-    return NULL;
+    if (last_occ == -1) return NULL;
+    return func_list->function_list[last_occ];
 }
